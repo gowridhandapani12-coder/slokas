@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sudarshana Kavacham</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Nārada to a sage · Sanskrit · 15 verses</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Sudarshana Kavacham</h1>
+          <p class="lead" style="margin-top:8px">“The armour of Sudarśana.” A sage asks Nārada for the sacred kavacam; Nārada teaches it. Each part of the body is placed under a name of Sudarśana — head, forehead, nose, eyes, down to the feet — and the last verses tell what this armour does: it drives away evil spirits, heals illness, and fulfils every wish.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><span>Taught by</span><b>Nārada</b><span>at a sage's request</span></div>
+        <div class="fact"><span>Deity</span><b>Sudarśana</b><span>Mahāviṣṇu as the discus</span></div>
+        <div class="fact"><span>Ṛṣi · metre</span><b>Brahmā · anuṣṭubh</b><span>verse 3</span></div>
+        <div class="fact"><span>Bīja</span><b>hrāṃ · hrīṃ · kroṃ</b><span>verse 4</span></div>
+        <div class="fact"><span>Source</span><b>Her PDF</b><span>Sunder Kidāmbi, prapatti.com</span></div>
+        <div class="fact"><span>On her plan</span><b>Saturday</b><span>with Ṣoḍaśāyudha Stotram</span></div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h2>Four parts</h2>
+          <div class="ladder" style="margin-top:10px">
+            <div class="step"><span class="n">1–2</span><div><span class="vb" style="font-family:var(--f-display)">The request</span> <span class="en">— “Nārada, teach me the kavacam”</span></div><span></span></div>
+            <div class="step"><span class="n">3–4</span><div><span class="vb" style="font-family:var(--f-display)">Its parts</span> <span class="en">— ṛṣi, metre, deity, bīja, śakti, kīlaka</span></div><span></span></div>
+            <div class="step"><span class="n">4–11</span><div><span class="vb" style="font-family:var(--f-display)">Head to foot</span> <span class="en">— each limb under a name of Sudarśana</span></div><span></span></div>
+            <div class="step"><span class="n">11–15</span><div><span class="vb" style="font-family:var(--f-display)">The fruit</span> <span class="en">— spirits flee, illness goes, wishes come true</span></div><span></span></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each verse, in order.</p>
+          <div class="mn" id="openings"></div>
+          <div class="tip" style="margin-top:14px"><b>The body, top to bottom (verses 4–11):</b> head · forehead · nose · eyes · ears · cheeks · mouth · tongue · throat · shoulders · arms · hands · heart · middle · navel · hips · thighs · secret parts · knees · shins · ankles · feet — then the whole body. Almost every half-line has <b>pātu</b>, “may he protect”.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>Sudarśana, as the kavacam names him</h2><span class="muted" style="font-size:.85rem">Tap one to see the word in its verse</span></div>
+        <div class="icons" id="icons" style="margin-top:14px"></div>
+      </div>
+      <div class="card">
+        <h2>What it gives</h2>
+        <p class="muted" style="margin:6px 0 12px">Verses 12–15: one who reads it daily, pure —</p>
+        <div class="benefits" id="benefits"></div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+const W = s => s.split(";").map(x => { const [dv, g, b] = x.split("|").map(y => y.trim()); return [dv, g, b || g]; });
+const v = (n, part, hook, lines, en, ta, extra) => Object.assign({id:"v" + n, n:String(n), label:"Verse " + n, part, hook, lines:lines.map(W), en, ta}, extra || {});
+const VERSES = [
+ v(1, "The request", "Be gracious, Nārada, knower of all mantras — tell me truly the holy Sudarśana armour.",
+  ["प्रसीद|be gracious; भगवन्|O revered one; ब्रह्मन्|O sage; सर्वमन्त्रज्ञ|knower of all mantras; नारद|O Nārada",
+   "सौदर्शनं|of Sudarśana; तु|indeed; कवचं|the armour; पवित्रं|holy; ब्रूहि|tell; तत्त्वतः|truly"],
+  "Be gracious, O revered sage Nārada, knower of all mantras — tell me truly the holy armour of Sudarśana.",
+  "பகவானே, பிரம்மரிஷியே, எல்லா மந்திரங்களும் அறிந்த நாரதரே, அருள்புரிவீர் — புனிதமான சுதர்சன கவசத்தை உண்மையாகச் சொல்வீராக.",
+  {tip:"A sage asks — <b>prasīda</b>, “be gracious”. Nārada answers from verse 2."}),
+ v(2, "The request", "Nārada: Listen, best of the twice-born — this wondrous armour brings both seen and unseen fruits.",
+  ["शृणुष्वेह|listen here|śṛṇuṣva · iha; द्विजश्रेष्ठ|O best of the twice-born; पवित्रं|holy; परमाद्भुतम्|most wonderful",
+   "सौदर्शनं|of Sudarśana; तु|indeed; कवचं|the armour; दृष्टादृष्टार्थसाधकम्|achieving the seen and unseen aims"],
+  "Nārada said: Listen, O best of the twice-born, to the holy and most wonderful armour of Sudarśana, which achieves aims both seen (in this life) and unseen (hereafter).",
+  "நாரதர் சொன்னார்: இருபிறப்பாளர்களில் சிறந்தவரே, இம்மை மறுமைப் பலன்களைத் தரும், புனிதமும் மிக அற்புதமுமான சுதர்சன கவசத்தைக் கேளும்.",
+  {tip:"<b>dṛṣṭādṛṣṭa</b> — the seen and the unseen — the same phrase that ends the Lakṣmī Sahasranāma."}),
+ v(3, "Its parts", "Its ṛṣi is Brahmā, its metre anuṣṭubh, its deity Sudarśana-Mahāviṣṇu.",
+  ["कवचस्यास्य|of this armour; ऋषिर्ब्रह्मा|the seer is Brahmā|ṛṣiḥ · brahmā; छन्दोऽनुष्टुप्तथा|the metre anuṣṭubh, so|chandaḥ · anuṣṭup · tathā; स्मृतम्|it is taught",
+   "सुदर्शनमहाविष्णुर्देवता|the deity is Sudarśana-Mahāviṣṇu|sudarśana · mahāviṣṇuḥ · devatā; सम्प्रचक्षते|they declare"],
+  "Of this armour the seer is Brahmā, and the metre is taught as anuṣṭubh; the deity, they declare, is Sudarśana-Mahāviṣṇu.",
+  "இந்தக் கவசத்தின் ரிஷி பிரம்மா, சந்தஸ் அனுஷ்டுப்; தேவதை சுதர்சன மகாவிஷ்ணு என்று சொல்கிறார்கள்.",
+  {irreg:true, tip:"The <b>viniyoga</b>: ṛṣi · chandas · devatā. Line 1 has 17 syllables (<i>asya ṛṣiḥ</i> is not joined) — a known irregular line."}),
+ v(4, "Head to foot", "Bīja hrāṃ, śakti hrīṃ, kīlaka kroṃ — may Sudarśana guard my head, the lord of the discus my forehead.",
+  ["ह्रां|hrāṃ; बीजं|the seed; शक्तिरत्रोक्ता|the power here is said (to be)|śaktiḥ · atra · uktā; ह्रीं|hrīṃ; क्रों|kroṃ; कीलकमिष्यते|is the pin (kīlaka)|kīlakam · iṣyate",
+   "शिरस्सुदर्शनः|the head, Sudarśana|śiraḥ · sudarśanaḥ; पातु|may (he) protect; ललाटं|the forehead; चक्रनायकः|the lord of the discus"],
+  "Hrāṃ is the bīja (seed), hrīṃ the śakti (power), kroṃ the kīlaka (pin). May Sudarśana protect my head, and the lord of the discus my forehead.",
+  "ஹ்ராம் பீஜம், ஹ்ரீம் சக்தி, க்ரோம் கீலகம். சுதர்சனன் என் தலையையும், சக்ரநாயகன் நெற்றியையும் காக்கட்டும்.",
+  {tip:"Now the armour proper: <b>śiraḥ</b> (head) → <b>lalāṭam</b> (forehead) …"}),
+ v(5, "Head to foot", "Nose, eyes, ears, cheeks — guarded by the foe of demons, the thousand-spoked one, the gods' beloved.",
+  ["घ्राणं|the nose; पातु|may (he) protect; महादैत्य|of the great demons; रिपुरव्याद्दृशौ|the enemy, may (he) guard the eyes|ripuḥ · avyāt · dṛśau; मम|my",
+   "सहस्रारश्श्रुतिं|the thousand-spoked, the ears|sahasrāraḥ · śrutim; पातु|may protect; कपोलं|the cheeks; देववल्लभः|beloved of the gods"],
+  "May (he) protect my nose; may the enemy of the great demons guard my eyes; may the thousand-spoked one protect my ears; and the beloved of the gods my cheeks.",
+  "மகா அசுரர்களின் பகைவன் என் மூக்கையும் கண்களையும் காக்கட்டும்; ஆயிரம் ஆரங்களுடையவன் காதுகளையும், தேவர்களின் பிரியன் கன்னங்களையும் காக்கட்டும்."),
+ v(6, "Head to foot", "Mouth, tongue, throat, shoulders — the Self of all, Hari made of knowledge, the great flame, the lord of weapons.",
+  ["विश्वात्मा|the Self of all; पातु|may protect; मे|my; वक्त्रं|mouth; जिह्वां|tongue; विद्यामयो|made of knowledge; हरिः|Hari",
+   "कण्ठं|throat; पातु|may protect; महाज्वालः|the great flame; स्कन्धौ|shoulders; दिव्यायुधेश्वरः|lord of divine weapons"],
+  "May the Self of all protect my mouth; Hari, made of knowledge, my tongue; may the great flame protect my throat; the lord of divine weapons my shoulders.",
+  "விஸ்வாத்மா என் வாயையும், வித்யாமயனான ஹரி நாக்கையும் காக்கட்டும்; மகாஜ்வாலன் கழுத்தையும், திவ்யாயுதேஸ்வரன் தோள்களையும் காக்கட்டும்.",
+  {tip:"The <b>tongue</b> is protected by Hari “made of knowledge” (vidyāmaya) — fitting for the organ of speech."}),
+ v(7, "Head to foot", "Arms, hands, heart — the victorious one, the slayer of Kaiṭabha, the one in the six-pointed star.",
+  ["भुजौ|arms; मे|my; पातु|may protect; विजयी|the victorious; करौ|hands; कैटभनाशनः|destroyer of Kaiṭabha",
+   "षट्कोणसंस्थितः|dwelling in the six-cornered (yantra); पातु|may protect; हृदयं|heart; धाम|abode; मामकम्|my"],
+  "May the victorious one protect my arms; the destroyer of Kaiṭabha my hands; may he who dwells in the six-cornered yantra protect my heart, my inner abode.",
+  "வெற்றியாளன் என் தோள்களையும், கைடபனை அழித்தவன் கைகளையும் காக்கட்டும்; அறுகோணத்தில் இருப்பவன் என் இதயம் எனும் இருப்பிடத்தைக் காக்கட்டும்.",
+  {tip:"<b>ṣaṭkoṇa</b> — the six-pointed star of the Sudarśana yantra."}),
+ v(8, "Head to foot", "Middle, navel, hips — the mighty one, the three-eyed, the one made of all weapons, the radiant.",
+  ["मध्यं|middle; पातु|may protect; महावीर्यस्|the mighty; त्रिणेत्रो|the three-eyed; नाभिमण्डलम्|the circle of the navel",
+   "सर्वायुधमयः|made of all weapons; पातु|may protect; कटिं|waist; श्रोणिं|hips; महाद्युतिः|the greatly radiant"],
+  "May the mighty one protect my middle; the three-eyed one the circle of my navel; may he who is made of all weapons protect my waist, and the radiant one my hips.",
+  "மகாவீர்யன் என் நடுவுடலையும், முக்கண்ணன் நாபி மண்டலத்தையும் காக்கட்டும்; சர்வாயுதமயன் இடுப்பையும், மகாத்யுதி பிருஷ்டத்தையும் காக்கட்டும்."),
+ v(9, "Head to foot", "Thighs, private parts, knees — he whose eyes are sun, moon and fire; the great Māyā; the lord of the world.",
+  ["सोमसूर्याग्निनयनः|whose eyes are moon, sun and fire; ऊरू|thighs; पातु|may protect; च|and; मामकौ|my",
+   "गुह्यं|private parts; पातु|may protect; महामायो|the great wonder-worker; जानुनी|knees; तु|and; जगत्पतिः|lord of the world"],
+  "May he whose eyes are the moon, sun and fire protect my thighs; may the great wonder-worker protect my private parts; and the lord of the world my knees.",
+  "சந்திரன், சூரியன், அக்னியைக் கண்களாக உடையவன் என் தொடைகளையும், மகாமாயன் மறைவிடத்தையும், ஜகத்பதி முழங்கால்களையும் காக்கட்டும்."),
+ v(10, "Head to foot", "Shins, ankles, feet — the well-worshipped Ahirbudhnya, the pure Self, the conqueror of enemy cities.",
+  ["जङ्घे|shins; पातु|may protect; ममाजस्रम्|my, always|mama · ajasram; अहिर्बुध्न्यः|Ahirbudhnya; सुपूजितः|well worshipped",
+   "गुल्फौ|ankles; पातु|may protect; विशुद्धात्मा|the pure Self; पादौ|feet; परपुरञ्जयः|conqueror of enemy cities"],
+  "May the well-worshipped Ahirbudhnya always protect my shins; may the pure Self protect my ankles; and the conqueror of enemy cities my feet.",
+  "நன்கு பூஜிக்கப்பட்ட அஹிர்புத்ன்யன் என் கணைக்கால்களை எப்போதும் காக்கட்டும்; விசுத்தாத்மா கணுக்கால்களையும், பரபுரஞ்ஜயன் பாதங்களையும் காக்கட்டும்.",
+  {tip:"<b>Ahirbudhnya</b> — the form of Śiva who taught the Sudarśana mantra in the Pāñcarātra (Ahirbudhnya Saṃhitā)."}),
+ v(11, "The fruit", "May Sudarśana, full of all weapons, guard my whole body. Whoever (reads) this divine armour, giver of supreme bliss —",
+  ["सकलायुधसम्पूर्णो|full of all weapons; निखिलाङ्गं|the whole body; सुदर्शनः|Sudarśana",
+   "य|who; इदं|this; कवचं|armour; दिव्यं|divine; परमानन्ददायिनम्|giver of supreme bliss"],
+  "May Sudarśana, complete with all weapons, protect my whole body. Whoever (reads) this divine armour, giver of supreme bliss —",
+  "எல்லா ஆயுதங்களும் நிறைந்த சுதர்சனன் என் முழு உடலையும் காக்கட்டும். பரமானந்தம் தரும் இந்தத் திவ்ய கவசத்தை யார் —",
+  {tip:"The sentence runs on into verse 12."}),
+ v(12, "The fruit", "— this Sudarśana armour, always pure — success in every aim surely comes into his hand.",
+  ["सौदर्शनमिदं|this (armour) of Sudarśana; यो|who; वै|indeed; सदा|always; शुद्धः|pure; पठेन्नरः|a man reads|paṭhet · naraḥ",
+   "तस्यार्थसिद्धिर्विपुला|for him, abundant success in aims|tasya · artha · siddhiḥ · vipulā; करस्था|in his hand; भवति|becomes; ध्रुवम्|surely"],
+  "— the man who, always pure, reads this armour of Sudarśana: abundant success in all his aims surely comes into his hand.",
+  "— எப்போதும் தூய்மையுடன் இந்தச் சுதர்சன கவசத்தைப் படிக்கும் மனிதனுக்கு, எல்லா நோக்கங்களிலும் பெரும் வெற்றி நிச்சயமாகக் கைவசமாகிறது."),
+ v(13, "The fruit", "Kūṣmāṇḍas, fierce spirits and evil planets flee in terror from the power of this armour.",
+  ["कूश्माण्डचण्डभूताद्याः|kūṣmāṇḍas, fierce spirits and others; ये|which; च|and; दुष्टा|evil; ग्रहाः|planets, seizers; स्मृताः|are known",
+   "पलायन्तेऽनिशं|flee always|palāyante · aniśam; भीता|afraid; वर्मणोऽस्य|of this armour|varmaṇaḥ · asya; प्रभावतः|from the power"],
+  "Kūṣmāṇḍas, fierce spirits and others, and those known as evil grahas (planets and seizers), flee always in fear, from the power of this armour.",
+  "கூஷ்மாண்டர்கள், சண்ட பூதங்கள் முதலியவையும், தீய கிரகங்களும் இந்தக் கவசத்தின் சக்தியால் எப்போதும் அஞ்சி ஓடுகின்றன."),
+ v(14, "The fruit", "Leprosy, epilepsy, tumours and diseases born of karma vanish in seven days by drinking water charged with it.",
+  ["कुष्ठापस्मारगुल्माद्या|leprosy, epilepsy, tumours and others; व्याधयः|diseases; कर्महेतुकाः|caused by karma",
+   "नश्यन्त्येतन्मन्त्रिताम्बु|perish — water charged with this|naśyanti · etat · mantrita · ambu; पानात्|by drinking; सप्तदिनावधि|within seven days"],
+  "Leprosy, epilepsy, abdominal tumours and other diseases caused by karma perish within seven days by drinking water charged with this (kavacam).",
+  "தொழுநோய், காக்காய் வலிப்பு, குன்மம் முதலிய கர்ம வினையால் வரும் நோய்கள், இதனால் மந்திரித்த நீரைப் பருகினால் ஏழு நாட்களுக்குள் அழிகின்றன."),
+ v(15, "The fruit", "A tilak of tulasī-root earth charged with this charms the three worlds; by this armour one gains every wish.",
+  ["अनेन|with this; मन्त्रितां|charged; मृत्स्नां|clay; तुलसीमूलसंस्थिताम्|from the root of the tulasī",
+   "ललाटे|on the forehead; तिलकं|a tilak; कृत्वा|making; मोहयेत्त्रिजगन्नरः|a man would charm the three worlds|mohayet · trijagat · naraḥ",
+   "वर्मणोऽस्य|of this armour; प्रभावेन|by the power; सर्वान्कामानवाप्नुयात्|he would gain all desires|sarvān · kāmān · avāpnuyāt"],
+  "Making a tilak on the forehead with clay from the root of the tulasī, charged with this (kavacam), a man would charm the three worlds; by the power of this armour he would gain all his desires.",
+  "இதனால் மந்திரித்த துளசி வேரின் மண்ணால் நெற்றியில் திலகம் இட்டவன் மூவுலகையும் வசீகரிப்பான்; இந்தக் கவசத்தின் சக்தியால் எல்லா விருப்பங்களையும் அடைவான்.",
+  {kind:"phala", short:"Phala-śruti", tip:"Three lines in this verse. <b>tulasī-mūla</b> — earth from the root of the tulasī plant."})
+];
+const S = 'fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"';
+const ICONS = [
+  {t:"Sudarśana", w:"शिरस्सुदर्शनः", v:"v4", d:"guards the head", svg:`<circle cx="17" cy="17" r="11" ${S}/><circle cx="17" cy="17" r="3" ${S}/><path d="M17 6v8M17 20v8M6 17h8M20 17h8" ${S}/>`},
+  {t:"Lord of the discus", w:"चक्रनायकः", v:"v4", d:"guards the forehead", svg:`<path d="M17 4l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z" ${S}/>`},
+  {t:"Thousand spokes", w:"सहस्रारश्श्रुतिं", v:"v5", d:"guards the ears", svg:`<circle cx="17" cy="17" r="10" ${S}/><path d="M17 7v20M7 17h20M10 10l14 14M24 10L10 24" ${S}/>`},
+  {t:"Made of knowledge", w:"विद्यामयो", v:"v6", d:"guards the tongue", svg:`<path d="M4 8c5-2 9-2 13 2 4-4 8-4 13-2v18c-5-2-9-2-13 2-4-4-8-4-13-2zM17 10v18" ${S}/>`},
+  {t:"The great flame", w:"महाज्वालः", v:"v6", d:"guards the throat", svg:`<path d="M17 4c-4 6-8 9-8 15a8 8 0 0 0 16 0c0-6-4-9-8-15z" ${S}/>`},
+  {t:"Six-pointed star", w:"षट्कोणसंस्थितः", v:"v7", d:"guards the heart", svg:`<path d="M17 4l11 19H6zM17 30L6 11h22z" ${S}/>`},
+  {t:"Three-eyed", w:"त्रिणेत्रो", v:"v8", d:"guards the navel", svg:`<path d="M3 20s5-6 14-6 14 6 14 6-5 6-14 6-14-6-14-6z" ${S}/><circle cx="17" cy="20" r="3" ${S}/><path d="M14 8c1-2 5-2 6 0-1 2-5 2-6 0z" ${S}/>`},
+  {t:"Sun, moon, fire eyes", w:"सोमसूर्याग्निनयनः", v:"v9", d:"guards the thighs", svg:`<circle cx="9" cy="17" r="4" ${S}/><path d="M21 13a4 4 0 1 0 0 8 3 3 0 0 1 0-8zM28 21c-2-3-2-5 0-8 2 3 2 5 0 8z" ${S}/>`},
+  {t:"Ahirbudhnya", w:"अहिर्बुध्न्यः", v:"v10", d:"guards the shins", svg:`<path d="M6 28c0-6 4-8 8-8s6-4 6-8-3-6-6-6M14 6c3 0 6 3 6 6M20 12c4 0 8 2 8 6" ${S}/>`},
+  {t:"Tulasī tilak", w:"तुलसीमूलसंस्थिताम्", v:"v15", d:"earth from the tulasī root", svg:`<path d="M17 30V12M17 14c-5 0-8-3-8-7 5 0 8 3 8 7zM17 14c5 0 8-3 8-7-5 0-8 3-8 7zM11 30h12" ${S}/>`}
+];
+const BENEFITS = [["दृष्टादृष्टार्थसाधकम्","Seen and unseen fruits"],["परमानन्ददायिनम्","Supreme bliss"],["तस्यार्थसिद्धिर्विपुला","Success in every aim"],["पलायन्तेऽनिशं","Evil forces flee"],["सप्तदिनावधि","Healing within seven days"],["सर्वान्कामानवाप्नुयात्","All wishes fulfilled"]];
+return {
+  key:"sdk", titleDv:"श्रीसुदर्शनकवचम्", verses:VERSES, icons:ICONS, benefits:BENEFITS,
+  meter:{name:"Anuṣṭubh", kind:"anushtubh",
+    intro:"Each verse has four quarters of 8 syllables — shown here as two lines of 16. The beat is free at the start of each quarter, but syllables 5–6–7 keep a fixed swing: <b>short–long–long</b> in the first quarter, <b>short–long–short</b> in the second (outlined). Verse 3 has one extra syllable (<i>asya ṛṣiḥ</i>), as is usual in kavacams.",
+    quiz:{q:"Who teaches the Sudarśana Kavacam?", opts:["Nārada","Brahmā","Ahirbudhnya","Vyāsa"],
+      why:"A sage asks “sarva-mantrajña nārada” (verse 1) and Nārada answers. Brahmā is its ṛṣi."}}
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

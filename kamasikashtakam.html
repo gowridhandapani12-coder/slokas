@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Kamasikashtakam</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+<style>
+.metres{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.mt{border-radius:12px;padding:10px 12px;background:var(--surface-2);text-align:left;font-weight:400;border:1.5px solid transparent}
+.mt:hover{border-color:var(--terra)}
+.mt i{font-style:normal;font-family:var(--f-mono);font-size:.7rem;color:var(--muted)}
+.mt b{display:block;font-family:var(--f-display);font-weight:600}
+.mt span{font-size:.78rem;color:var(--muted)}
+.kantha{font-family:var(--f-verse);font-size:1.15rem;line-height:1.9;overflow-wrap:anywhere}
+.kantha mark{background:var(--blush);color:#3b2b21;border-radius:4px;padding:0 2px}
+.big8{font-family:var(--f-verse);font-size:1.25rem;color:var(--terra-ink);line-height:1.6;overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Svāmi Vedānta Deśika · Sanskrit · 8 verses + 1</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Kamasikashtakam</h1>
+          <p class="lead" style="margin-top:8px">Eight verses to Kāmāsikā Narasiṃha of Thiruvēḷukkai, near Kanchipuram — the Lord who, by his own wish (<i>kāma</i>), chose to sit (<i>āsikā</i>) in yoga on the bank of the Vegavatī. Deśika was born at Thuppul, just next to this temple.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+
+      <div class="facts">
+        <div class="fact"><span>Composed by</span><b>Vedānta Deśika</b><span>signs as “Veṅkaṭeśa” in verse 9</span></div>
+        <div class="fact"><span>Deity</span><b>Yoga Narasiṃha</b><span>Azhagiya Singar, Thiruvēḷukkai</span></div>
+        <div class="fact"><span>Place</span><b>Vegavatī bank</b><span>a Divya Deśam near Kanchipuram</span></div>
+        <div class="fact"><span>Metres</span><b>Six</b><span>a different rhythm almost every verse</span></div>
+        <div class="fact"><span>Posture</span><b>Paryaṅka-bandha</b><span>seated yoga pose, facing west</span></div>
+        <div class="fact"><span>Learning from</span><b>Arthaanubhavam</b><span>her workshop notes (PDF)</span></div>
+      </div>
+
+      <div class="card">
+        <div class="sec-head"><h2>A new rhythm almost every verse</h2><span class="muted" style="font-size:.85rem">Tap one to hear its beat</span></div>
+        <p class="muted" style="margin:6px 0 12px">Deśika changes the metre as the picture changes: calm for the yogi, racing for the lion's fury. Knowing which verse “sounds” which way is a strong memory aid.</p>
+        <div class="metres" id="metres"></div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h2>Verse 3 plays on “kaṇṭha”</h2>
+          <p class="muted" style="margin:6px 0 12px">kaṇṭha = neck. Five words in one verse chime with it:</p>
+          <div class="kantha" id="kantha"></div>
+          <div class="tip" style="margin-top:12px"><b>Verse 4 does it with “bandh”:</b> bandhum · bandhura · bandha. <b>Verse 2 with “tāpa”:</b> tapana · tāpān · tāpanīya.</div>
+        </div>
+        <div class="card">
+          <h2>The heart of the hymn</h2>
+          <p class="muted" style="margin:6px 0 12px">Verse 8 is often quoted on its own:</p>
+          <div class="big8" id="big8"></div>
+          <p style="margin-top:8px">“When you protect me, what use are other protectors? When you do not, what use are they? Sure of this, I always take refuge in you, Nṛhari, who dwell on the Vegavatī's bank.”</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="sec-head"><h2>The Lord, as the hymn describes him</h2><span class="muted" style="font-size:.85rem">Tap one to see the word in its verse</span></div>
+        <div class="icons" id="icons" style="margin-top:14px"></div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+const VT = "GGLGLLLGLLGLGx";
+const VERSES = [
+ {id:"v1", n:"1", label:"Verse 1", hook:"The wondrous lion who lives, by his own wish, south of the Vegavatī.",
+  tip:"A pun: he lives in the <b>uttara</b> (later / northern) part of the Vedas — the Upaniṣads — and on the <b>dakṣiṇa</b> (southern) bank of the Vegavatī.",
+  lines:[
+   [["श्रुतीनाम्","of the Vedas","śruti = what is heard, the Veda"],["उत्तरं","the later","uttara = later; also northern"],["भागं","part (the Upaniṣads)","bhāga = portion"],["वेगवत्याश्च","and of the Vegavatī","vegavatī = the river at Kanchipuram · ca = and"],["दक्षिणम्","the southern (bank)","dakṣiṇa = south"]],
+   [["कामाद्","by his own wish","kāma = desire, will"],["अधिवसन्","dwelling in","adhivasat = residing"],["जीयात्","may he triumph","jīyāt = may he be victorious"],["कश्चिद्","a certain","kaścit = someone"],["अद्भुतकेसरी","wondrous lion","adbhuta = wonderful · kesarin = maned one, lion"]]
+  ],
+  en:"Victory to that wondrous lion who, by his own wish, dwells in the later part of the Vedas (the Upaniṣads) and on the southern bank of the Vegavatī.",
+  ta:"வேதங்களின் உத்தர பாகமான உபநிஷத்துகளிலும், வேகவதி ஆற்றின் தென் கரையிலும் தன் விருப்பத்தால் வசிக்கும் அந்த அற்புதச் சிங்கம் வெல்லட்டும்."},
+ {id:"v2", n:"2", label:"Verse 2", hook:"His three eyes — sun, moon and fire — burn away our sufferings.",
+  tip:"<b>tāpa</b> sounds: tapana (sun) · tāpān (sufferings) · tāpanīya (the Nṛsiṃha Tāpanīya Upaniṣad). Three eyes, three kinds of suffering.",
+  lines:[
+   [["तपनेन्द्वग्निनयनः","whose eyes are sun, moon and fire","tapana = sun · indu = moon · agni = fire · nayana = eye"],["तापान्","sufferings","tāpa = affliction"],["अपचिनोतु","may he remove","apacinotu = take away"],["नः","our","naḥ"]],
+   [["तापनीयरहस्यानां","of the secret Tāpanīya Upaniṣads","tāpanīya = the Nṛsiṃha Tāpanīya Upaniṣad · rahasya = secret"],["सारः","the essence","sāra"],["कामासिकाहरिः","Hari of Kāmāsikā","kāmāsikā · hari"]]
+  ],
+  en:"May Hari of Kāmāsikā, whose eyes are the sun, the moon and fire, and who is the essence of the secret Tāpanīya Upaniṣads, take away our sufferings.",
+  ta:"சூரியன், சந்திரன், அக்னி ஆகியவற்றைக் கண்களாகக் கொண்டவரும், ரகசியமான தாபனீய உபநிஷத்துகளின் சாரமுமான காமாஸிகா ஹரி நம் துன்பங்களைப் போக்கட்டும்."},
+ {id:"v3", n:"3", label:"Verse 3", meter:"giti", moras:[12,18,12,18], meterNote:"Gīti, a form of Āryā: it counts beats, not syllables (short = 1, long = 2) — 12 · 18 · 12 · 18. A swaying, song-like rhythm.",
+  hook:"The Ādi Puruṣa below the neck, a lion above — who left Vaikuṇṭha for the Vegavatī.",
+  tip:"Listen for <b>kaṇṭha</b>: ā-<b>kaṇṭha</b>m · <b>kaṇṭh</b>īravam · <b>kuṇṭh</b>ita · upa-<b>kaṇṭh</b>a · vai-<b>kuṇṭh</b>a.",
+  lines:[
+   [["आकण्ठम्","up to the neck","ā = up to · kaṇṭha = neck"],["आदिपुरुषं","the primal Person","ādi = first · puruṣa = person"]],
+   [["कण्ठीरवम्","a lion","kaṇṭhī-rava = one who roars from the throat"],["उपरि","above","upari"],["कुण्ठितारातिम्","who blunted his enemies","kuṇṭhita = made blunt · arāti = enemy"]],
+   [["वेगोपकण्ठसङ्गात्","from being close to the Vegavatī","vegā = the Vegavatī · upakaṇṭha = vicinity · saṅga = contact"]],
+   [["विमुक्तवैकुण्ठबहुमतिम्","who gave up his love for Vaikuṇṭha","vimukta = released · vaikuṇṭha · bahumati = high regard"],["उपासे","I worship","upāse"]]
+  ],
+  en:"I worship him who is the primal Person up to the neck and a lion above it, who has blunted his enemies, and who, for the joy of being near the Vegavatī, has given up his fondness for Vaikuṇṭha.",
+  ta:"கழுத்து வரை ஆதிபுருஷனாகவும், அதற்கு மேல் சிங்கமாகவும் இருப்பவரும், பகைவர்களை அடக்கியவரும், வேகவதிக் கரையின் அருகாமையால் வைகுண்டத்தின் மீதான பற்றையும் விட்டவருமான அவரை உபாசிக்கிறேன்."},
+ {id:"v4", n:"4", label:"Verse 4", meter:"giti", moras:[12,18,12,18], meterNote:"Gīti again: 12 · 18 · 12 · 18 beats.",
+  hook:"Kinsman of every being, seated in yoga, with uneven (three) eyes.",
+  tip:"<b>bandh</b> three times: bandhum (kinsman) · bandhura (graceful) · bandha (the yoga posture). <b>viṣama-vilocana</b> = odd-numbered eyes — three.",
+  lines:[
+   [["बन्धुम्","the kinsman","bandhu = relative, friend"],["अखिलस्य","of every","akhila = all"],["जन्तोः","living being","jantu = creature"]],
+   [["बन्धुरपर्यङ्कबन्धरमणीयम्","lovely in his graceful yoga seat","bandhura = graceful · paryaṅka-bandha = seated yoga posture · ramaṇīya = charming"]],
+   [["विषमविलोचनम्","with uneven (three) eyes","viṣama = odd, uneven · vilocana = eye"],["ईडे","I praise","īḍe"]],
+   [["वेगवतीपुलिनकेलिनरसिंहम्","Narasiṃha at play on the Vegavatī's sands","vegavatī · pulina = sandbank · keli = play · narasiṃha"]]
+  ],
+  en:"I praise Narasiṃha, kinsman of every living being, lovely in his graceful seated yoga posture, of uneven (three) eyes, who plays on the sandbanks of the Vegavatī.",
+  ta:"எல்லா உயிர்களுக்கும் உறவினரும், அழகிய பர்யங்க யோக ஆசனத்தில் வீற்றிருப்பவரும், மூன்று கண்களை உடையவரும், வேகவதி மணல் திட்டுகளில் விளையாடுபவருமான நரசிம்மரைப் போற்றுகிறேன்."},
+ {id:"v5", n:"5", label:"Verse 5", meter:"sardula", pat:"GGGLLGLGLLLGGGLGGLx", meterNote:"Śārdūlavikrīḍita, “the tiger's play”: 19 syllables a quarter — long, powerful strides for the Lord who teaches yoga.",
+  hook:"Master of breath and senses, he sits in yoga — as if teaching it to us.",
+  tip:"The <b>yoga</b> verse: winds held (marud-gaṇān niyamayan) · senses mastered (svādhīna-sarvendriyaḥ) · posture steady (paryaṅka-sthira) · teaching his own yoga (yogaṃ nijaṃ śikṣayan).",
+  lines:[
+   [["स्वस्थानेषु","each in its own place","sva = own · sthāna = place"],["मरुद्गणान्","the winds (the vital breaths)","marut = wind · gaṇa = group"],["नियमयन्","holding in check","niyamayat = controlling"],["स्वाधीनसर्वेन्द्रियः","master of all his senses","svādhīna = under one's control · sarva · indriya = sense"]],
+   [["पर्यङ्कस्थिरधारणाप्रकटितप्रत्यङ्मुखावस्थितिः","firm in the yoga seat, facing west, turned within","paryaṅka = yoga seat · sthira = steady · dhāraṇā = concentration · prakaṭita = shown · pratyaṅ-mukha = facing west / inward · avasthiti = posture"]],
+   [["प्रायेण","as if","prāyeṇa = as it were"],["प्रणिपेदुषां","for those who have surrendered","praṇipeduṣ = one who has bowed down"],["प्रभुरसौ","this Lord","prabhuḥ · asau = that one"],["योगं","yoga","yoga"],["निजं","his own","nija"],["शिक्षयन्","teaching","śikṣayat"]],
+   [["कामान्","the wishes","kāma"],["आतनुताद्","may he fulfil","ātanutāt = may he spread, grant"],["अशेषजगतां","of all the worlds","aśeṣa · jagat"],["कामासिकाकेसरी","the lion of Kāmāsikā","kāmāsikā · kesarin"]]
+  ],
+  en:"Holding the winds — the breaths — each in its place, master of all his senses, steady in the yoga seat facing west and turned within, as if teaching his own yoga to those who surrender to him: may this Lord, the lion of Kāmāsikā, fulfil the wishes of all the worlds.",
+  ta:"மூச்சுகளை அவற்றின் இடத்தில் அடக்கி, எல்லாப் புலன்களையும் தன் வசப்படுத்தி, பர்யங்க ஆசனத்தில் மேற்கு நோக்கி நிலையாக அமர்ந்து, சரணடைந்தவர்களுக்குத் தன் யோகத்தைக் கற்பிப்பது போல் இருக்கும் காமாஸிகா சிங்கம் உலகங்களின் விருப்பங்களை நிறைவேற்றட்டும்."},
+ {id:"v6", n:"6", label:"Verse 6", meter:"prthvi", pat:"LGLLLGLGLLLGLGGLx", meterNote:"Pṛthvī: 17 syllables a quarter — a rushing, jagged beat for the battle.",
+  hook:"May his arms protect me — the arms that tore Hiraṇya, glowing red like dusk.",
+  tip:"The <b>arms</b> verse (bāhavaḥ is the very last word). Picture: claws like thunderbolts → torn chest → rivers of blood like dusk → arms racing each other, “me first!”.",
+  lines:[
+   [["विकस्वरनखस्वरुक्षतहिरण्यवक्षःस्थली","(arms) whose bright claws, like thunderbolts, tore Hiraṇya's broad chest","vikasvara = spreading, bright · nakha = claw · svaru = thunderbolt · kṣata = torn · hiraṇya · vakṣaḥsthalī = broad chest"]],
+   [["निरर्गलविनिर्गलद्रुधिरसिन्धुसन्ध्यायिताः","glowing like dusk with rivers of blood pouring out unchecked","nirargala = unstoppable · vinirgalat = flowing out · rudhira = blood · sindhu = river · sandhyāyita = made like twilight"]],
+   [["अवन्तु","may (they) protect","avantu"],["मदनासिकामनुजपञ्चवक्त्रस्य","of the man-lion of Kāmāsikā","madana = kāma · āsikā = seat · manuja = man · pañcavaktra = lion"],["माम्","me","mām"]],
+   [["अहम्प्रथमिकामिथःप्रकटिताहवा","racing one another, “me first!”, into the fight","aham-prathamikā = “I first” rivalry · mithaḥ = with each other · prakaṭita = shown · āhava = battle"],["बाहवः","the arms","bāhu = arm"]]
+  ],
+  en:"May they protect me — the arms of the man-lion of Kāmāsikā, whose bright thunderbolt-claws tore Hiraṇya's broad chest, which glowed like dusk with rivers of blood pouring out unchecked, and which raced one another, each wanting to be first in the fight.",
+  ta:"இடிபோன்ற ஒளிரும் நகங்களால் ஹிரண்யனின் அகன்ற மார்பைப் பிளந்தவையும், தடையின்றிப் பெருகிய ரத்த ஆறுகளால் அந்திவானம் போல் சிவந்தவையும், “நான் முதலில்” என்று ஒன்றோடொன்று போட்டியிட்டுப் போரிட்டவையுமான காமாஸிகா நரசிம்மனின் கைகள் என்னைக் காக்கட்டும்."},
+ {id:"v7", n:"7", label:"Verse 7", meter:"prthvi", pat:"LGLLLGLGLLLGLGGLx", meterNote:"Pṛthvī again: 17 syllables a quarter.",
+  hook:"Fierce face, roaring laugh — yet his lotus eyes fed Prahlāda like a mother.",
+  tip:"Two halves: lines 1–2 the <b>fierce face</b> (mane, laughter, anger, frown); lines 3–4 the <b>gentle eyes</b> that nursed Prahlāda (danuja-ḍimbha = the demon's child).",
+  lines:[
+   [["सटापटलभीषणे","terrible with its mass of mane","saṭā = mane · paṭala = mass · bhīṣaṇa = terrifying"],["सरभसाट्टहासोद्भटे","fierce with sudden roaring laughter","sa-rabhasa = sudden · aṭṭahāsa = loud laugh · udbhaṭa = fierce"]],
+   [["स्फुरत्क्रुधि","blazing with anger","sphurat = flashing · krudh = anger"],["परिस्फुटद्भ्रुकुटिके","with brows knitted in a frown","parisphuṭat = clearly showing · bhrukuṭi = frown"],["ऽपि","even though","api"],["वक्त्रे","(your) face","vaktra = face"],["कृते","was made so","kṛte"]],
+   [["कृपाकपटकेसरिन्","O you who wear a lion's guise out of mercy","kṛpā = mercy · kapaṭa = disguise · kesarin = lion"],["दनुजडिम्भदत्तस्तना","(a glance) that gave milk to the demon's child","danuja = demon · ḍimbha = child (Prahlāda) · datta = given · stana = breast"]],
+   [["सरोजसदृशा","lotus-like","saroja = lotus · sadṛśa = like"],["दृशा","by (your) eye","dṛś = eye, glance"],["व्यतिभिषज्य","healing, tending","vyatibhiṣajya = nursing, healing"],["ते","your","te"],["व्यज्यते","is revealed","vyajyate"]]
+  ],
+  en:"Even though your face was made terrible with its mane, fierce with sudden roaring laughter, blazing with anger and knitted in a frown — O you who wear a lion's guise only out of mercy — your lotus-like eye, which nursed the demon's child like a mother's breast, reveals your true nature.",
+  ta:"பிடரி மயிர்க்கூட்டத்தால் பயங்கரமாகவும், திடீர் அட்டகாசச் சிரிப்பால் உக்கிரமாகவும், கோபத்தால் ஒளிர்ந்து புருவம் நெரித்ததாகவும் உமது முகம் இருந்தபோதும் — கருணையால் சிங்க வேடம் பூண்டவரே — அசுரனின் குழந்தைக்குத் தாய் போல் பாலூட்டிய தாமரைக் கண் பார்வை உமது உண்மைத் தன்மையை வெளிப்படுத்துகிறது."},
+ {id:"v8", n:"8", label:"Verse 8", meter:"aupacchandasika", pat:"LLGLLGLGLGx" + "LLGGLLGLGLGx", padaLen:11, meterNote:"Aupacchandasika: quarters of 11 and 12 syllables — a calm, settled rhythm for the moment of surrender.",
+  hook:"If you protect me, who else do I need? If you don't, what can others do?",
+  tip:"Line 1 says almost the same thing twice: <b>tvayi rakṣati</b> … <b>tvayi ca arakṣati</b> … — “when you protect / when you don't protect” — each followed by <b>rakṣakaiḥ kim anyaiḥ</b>.",
+  lines:[
+   [["त्वयि","when you","tvayi = in you (when you…)"],["रक्षति","protect","rakṣati"],["रक्षकैः","protectors","rakṣaka = guardian"],["किम्","what use (are)","kim = what"],["अन्यैः","other","anya = other"],["त्वयि","when you","tvayi"],["चारक्षति","and do not protect","ca = and · a-rakṣati = not protecting"],["रक्षकैः","protectors","rakṣaka"],["किम्","what use","kim"],["अन्यैः","other","anya"]],
+   [["इति","thus","iti"],["निश्चितधीः","with a firm mind","niścita = settled · dhī = understanding"],["श्रयामि","I take refuge","śrayāmi"],["नित्यं","always","nityam"],["नृहरे","O Nṛhari","nṛ = man · hari = lion"],["वेगवतीतटाश्रयं","who dwells on the Vegavatī's bank","vegavatī · taṭa = bank · āśraya = dwelling"],["त्वाम्","in you","tvām"]]
+  ],
+  en:"When you protect me, what use are other protectors? When you do not, what use are they? Firmly sure of this, I always take refuge in you, O Nṛhari, who dwell on the bank of the Vegavatī.",
+  ta:"நீர் காக்கும்போது வேறு காவலர்களால் என்ன பயன்? நீர் காக்காவிட்டால் வேறு காவலர்களால் என்ன பயன்? இவ்வாறு உறுதியான மனதுடன், வேகவதிக் கரையில் வசிக்கும் நரஹரியே, எப்போதும் உம்மைச் சரணடைகிறேன்."},
+ {id:"v9", n:"9", label:"Phala 9", short:"Phala-śruti", kind:"phala", meter:"vasantatilaka", pat:VT, meterNote:"Vasantatilakā: 14 syllables a quarter — a graceful close.",
+  hook:"Praised even once with these eight verses, he fulfils every wish.",
+  tip:"Deśika signs his name here: <b>śrī-veṅkaṭeśa-racitaiḥ</b> — “composed by Veṅkaṭeśa”. Sins are pictured as a wild <b>elephant</b> the lion splits apart.",
+  lines:[
+   [["इत्थं","thus","ittham"],["स्तुतः","praised","stuta"],["सकृदिहाष्टभिरेष","even once, here, with these eight","sakṛt = once · iha = here · aṣṭabhiḥ = by eight · eṣaḥ = he"],["पद्यैः","verses","padya = verse"]],
+   [["श्रीवेङ्कटेशरचितैस्","composed by Śrī Veṅkaṭeśa","veṅkaṭeśa = Vedānta Deśika's name · racita = composed"],["त्रिदशेन्द्रवन्द्यः","worshipped by the lords of the gods","tridaśa = the gods · indra = chief · vandya = to be worshipped"]],
+   [["दुर्दान्तघोरदुरितद्विरदेन्द्रभेदी","who splits the untameable, terrible elephant of sin","durdānta = untameable · ghora = terrible · durita = sin · dvirada-indra = great elephant · bhedin = splitting"]],
+   [["कामासिकानरहरिर्","the man-lion of Kāmāsikā","kāmāsikā · narahari"],["वितनोतु","may he grant","vitanotu"],["कामान्","all wishes","kāma"]]
+  ],
+  en:"Praised thus even once with these eight verses composed by Śrī Veṅkaṭeśa, may the man-lion of Kāmāsikā — worshipped by the lords of the gods, who splits apart the untameable, terrible elephant of sin — grant all our wishes.",
+  ta:"ஸ்ரீ வேங்கடேசரால் இயற்றப்பட்ட இந்த எட்டுச் செய்யுள்களால் ஒருமுறை துதிக்கப்பட்டாலும், தேவர் தலைவர்களால் வணங்கப்படுபவரும், அடங்காத கொடிய பாவம் எனும் யானையைப் பிளப்பவருமான காமாஸிகா நரஹரி எல்லா விருப்பங்களையும் அருளட்டும்."}
+];
+const ICONS = [
+  {t:"Three eyes", w:"तपनेन्द्वग्निनयनः", v:"v2", d:"sun, moon and fire", svg:'<circle cx="9" cy="20" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="25" cy="20" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M17 6c-3 3-3 6 0 8 3-2 3-5 0-8z" fill="none" stroke="currentColor" stroke-width="2"/>'},
+  {t:"Lion above the neck", w:"कण्ठीरवम्", v:"v3", d:"the Ādi Puruṣa below", svg:'<circle cx="17" cy="13" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 9c-2 4-1 8 2 10M26 9c2 4 1 8-2 10M10 30v-6h14v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'},
+  {t:"Yoga seat", w:"बन्धुरपर्यङ्कबन्धरमणीयम्", v:"v4", d:"paryaṅka-bandha", svg:'<circle cx="17" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M17 11v8M9 16l8 3 8-3M6 27c4-3 8-4 11-4s7 1 11 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'},
+  {t:"Vegavatī sands", w:"वेगवतीपुलिनकेलिनरसिंहम्", v:"v4", d:"he plays on the riverbank", svg:'<path d="M3 14c5-4 9 4 14 0s9 4 14 0M3 22c5-4 9 4 14 0s9 4 14 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'},
+  {t:"Breath held still", w:"मरुद्गणान्", v:"v5", d:"master of the vital winds", svg:'<path d="M4 12h18a4 4 0 1 0-4-4M4 18h24a4 4 0 1 1-4 4M4 24h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'},
+  {t:"Thunderbolt claws", w:"विकस्वरनखस्वरुक्षतहिरण्यवक्षःस्थली", v:"v6", d:"tore Hiraṇya's chest", svg:'<path d="M8 6c2 8 2 14-2 22M15 5c2 9 2 15-1 24M22 6c2 8 2 14 0 22M28 9c1 6 0 11-2 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'},
+  {t:"Dusk-red arms", w:"बाहवः", v:"v6", d:"racing to protect", svg:'<path d="M4 24h26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M9 24a8 8 0 0 1 16 0" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 30h22" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".5"/>'},
+  {t:"Roaring laughter", w:"सरभसाट्टहासोद्भटे", v:"v7", d:"shook Hiraṇya's palace", svg:'<path d="M8 12a9 9 0 0 1 18 0v4a9 9 0 0 1-18 0z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 17c2 3 10 3 12 0M3 8l3 2M31 8l-3 2M3 20l3-1M31 20l-3-1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'},
+  {t:"Mother's glance", w:"दनुजडिम्भदत्तस्तना", v:"v7", d:"nursed Prahlāda", svg:'<path d="M17 28s-10-6-10-13a5 5 0 0 1 10-2 5 5 0 0 1 10 2c0 7-10 13-10 13z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>'},
+  {t:"The only refuge", w:"वेगवतीतटाश्रयं", v:"v8", d:"tvayi rakṣati…", svg:'<path d="M17 4l11 4v8c0 7-5 12-11 14C11 28 6 23 6 16V8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>'}
+];
+const METRES = [["v1","Anuṣṭubh","8 a quarter · story-telling"],["v2","Anuṣṭubh","8 a quarter"],["v3","Gīti (Āryā)","counts beats · swaying"],["v4","Gīti (Āryā)","counts beats · swaying"],["v5","Śārdūlavikrīḍita","19 · the tiger's play"],["v6","Pṛthvī","17 · rushing, jagged"],["v7","Pṛthvī","17 · rushing, jagged"],["v8","Aupacchandasika","11 / 12 · calm surrender"],["v9","Vasantatilakā","14 · graceful close"]];
+return {
+  key:"kma", titleDv:"श्रीकामासिकाष्टकम्", verses:VERSES, icons:ICONS,
+  meter:{name:"Six metres", kind:"anushtubh",
+    intro:"Deśika uses six metres in nine verses. Each verse's page below shows its own pattern; anuṣṭubh verses outline syllables 5–6–7; verses 3–4 (Gīti, a form of Āryā) count beats instead of syllables.",
+    quiz:{q:"Which verses are in Gīti (a form of Āryā), which counts beats instead of syllables?", opts:["Verses 3 and 4","Verses 1 and 2","Verse 5","Verses 6 and 7"],
+      why:"Verses 3 and 4. Gīti counts mātrās: 12 · 18 · 12 · 18 beats."}},
+  overview({R, esc, goVerse}){
+    document.getElementById("metres").innerHTML = METRES.map(([v, m, d]) => `<button class="mt" data-go="${v}"><i>verse ${v.slice(1)}</i><b>${esc(m)}</b><span>${esc(d)}</span></button>`).join("");
+    document.querySelectorAll("#metres .mt").forEach(b => b.onclick = () => { location.hash = "#rhythm"; setTimeout(() => goVerse(b.dataset.go), 30); });
+    const k = ["आकण्ठम्","कण्ठीरवम्","कुण्ठितारातिम्","वेगोपकण्ठसङ्गात्","विमुक्तवैकुण्ठबहुमतिम्"];
+    document.getElementById("kantha").innerHTML = k.map(w => `<mark>${R(w)}</mark>`).join(" · ");
+    document.getElementById("big8").innerHTML = VERSES[7].L.map(l => l.words.map(w => R(w[0])).join(" ")).join("<br>");
+  }
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

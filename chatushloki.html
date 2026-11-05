@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chatushloki</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Āḷavandār (Yāmunācārya) · Sanskrit · 4 verses</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Chatushloki</h1>
+          <p class="lead" style="margin-top:8px">“Four verses” to Śrī by Āḷavandār, the great ācārya before Rāmānuja. Short, but dense: who Lakṣmī is, why even Viṣṇu cannot measure her glory, how all good comes only by her grace, and how she embraces every form of the Lord.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><span>Composed by</span><b>Āḷavandār</b><span>Yāmunācārya, 10th c.</span></div>
+        <div class="fact"><span>Goddess</span><b>Śrī (Lakṣmī)</b><span>the Lord's inseparable consort</span></div>
+        <div class="fact"><span>Metre</span><b>Śārdūlavikrīḍita</b><span>19 syllables a quarter</span></div>
+        <div class="fact"><span>Verses</span><b>Four</b><span>catuḥ + ślokī</span></div>
+        <div class="fact"><span>Source</span><b>Standard text</b><span>her PDF's font doesn't extract — compare</span></div>
+        <div class="fact"><span>On her plan</span><b>Friday</b><span>the Lakṣmī day</span></div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>Four verses, four ideas</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h2>The four ideas</h2>
+          <div class="tip"><b>1</b> Everything around Viṣṇu is hers: husband, bed, vehicle, curtain, servants — how can we praise you? · <b>2</b> Even Viṣṇu cannot measure her glory, yet I, her servant, will praise her fearlessly · <b>3</b> One glance of hers revives the worlds; no good comes without her grace · <b>4</b> She embraces every form of the Lord with a matching form of her own.</div>
+        </div>
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each verse, in order.</p>
+          <div class="mn" id="openings"></div>
+        </div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+const SV = {meter:"sardula", pat:"GGGLLGLGLLLGGGLGGLx", meterNote:"Śārdūlavikrīḍita, “the tiger's play”: 19 syllables a quarter."};
+const v = (id, n, hook, tip, lines, en, ta) => Object.assign({id, n, label:"Verse " + n, hook, tip, lines, en, ta}, SV);
+const VERSES = [
+ v("v1", "1", "Your husband, bed, vehicle, curtain, servants — Bhagavatī, how can we praise you?", "A list of everything that is hers: <b>kāntaḥ</b> (husband) · <b>phaṇipatiḥ</b> (Śeṣa, the bed) · <b>vihageśvaraḥ</b> (Garuḍa, the vehicle) · <b>māyā</b> (the curtain) · the gods (her servants).", [
+   [["कान्तस्ते","your husband","kāntaḥ · te"],["पुरुषोत्तमः","is Puruṣottama","puruṣottama"],["फणिपतिः","the lord of serpents (Śeṣa)","phaṇi · pati"],["शय्यासनं","your bed and seat","śayyā · āsana"],["वाहनं","your vehicle","vāhana"]],
+   [["वेदात्मा","the soul of the Vedas","veda · ātman"],["विहगेश्वरो","the king of birds (Garuḍa)","vihaga · īśvara"],["यवनिका","your curtain","yavanikā"],["माया","is Māyā","māyā"],["जगन्मोहिनी","who bewitches the world","jagat · mohinī"]],
+   [["ब्रह्मेशादिसुरव्रजः","the host of gods, Brahmā, Śiva and the rest","brahma · īśa · ādi · sura · vraja"],["सदयितस्त्वद्दासदासीगणः","with their wives, are your servants and maids","sa-dayita · tvat · dāsa · dāsī · gaṇa"]],
+   [["श्रीरित्येव","“Śrī”, just that","śrīḥ · iti · eva"],["च","and","ca"],["नाम","is your name","nāma"],["ते","your","te"],["भगवति","O Bhagavatī","bhagavatī"],["ब्रूमः","shall we speak","brūmaḥ"],["कथं","how","katham"],["त्वां","of you","tvām"],["वयम्","we","vayam"]]],
+  "Your husband is Puruṣottama; your bed and seat is Śeṣa, lord of serpents; your vehicle is Garuḍa, whose soul is the Vedas; your curtain is Māyā, who bewitches the world; Brahmā, Śiva and all the gods with their wives are your servants and maids; and your very name is “Śrī”. O Bhagavatī, how can we speak of you?",
+  "உன் கணவன் புருஷோத்தமன்; உன் படுக்கையும் ஆசனமும் ஆதிசேஷன்; உன் வாகனம் வேத வடிவான கருடன்; உன் திரை உலகை மயக்கும் மாயை; பிரம்மா, சிவன் முதலிய தேவர்கள் தம் மனைவியருடன் உன் அடியார்கள்; உன் பெயரே “ஸ்ரீ”. பகவதியே, உன்னை நாங்கள் எப்படிப் போற்றுவோம்?"),
+ v("v2", "2", "Even Viṣṇu cannot measure your glory — yet I, your servant, will praise you fearlessly.", "<b>nālam mātum</b> — “not able to measure”: even her Lord can't fathom her greatness. Yet <b>stoṣyāmy ahaṃ nirbhayaḥ</b> — “I will praise you, unafraid”.", [
+   [["यस्यास्ते","whose","yasyāḥ · te"],["महिमानमात्मन","greatness, like his own","mahiman · ātmanaḥ"],["इव","like","iva"],["त्वद्वल्लभोऽपि","even your beloved","tvat · vallabha · api"],["प्रभुः","the Lord","prabhu"]],
+   [["नालं","is not able","na · alam"],["मातुमियत्तया","to measure as “this much”","mātum · iyattā"],["निरवधिं","limitless","niravadhi"],["नित्यानुकूलं","always favourable","nitya · anukūla"],["स्वतः","by nature","svataḥ"]],
+   [["तां","that","tām"],["त्वां","you","tvām"],["दास","“a servant”","dāsa"],["इति","so","iti"],["प्रपन्न","“one who has surrendered”","prapanna"],["इति","so","iti"],["च","and","ca"],["स्तोष्याम्यहं","I shall praise","stoṣyāmi · aham"],["निर्भयो","without fear","nirbhaya"]],
+   [["लोकैकेश्वरि","O sole sovereign of the worlds","loka · eka · īśvarī"],["लोकनाथदयिते","O beloved of the Lord of the worlds","loka-nātha · dayitā"],["दान्ते","O gentle one","dāntā"],["दयां","compassion","dayā"],["ते","your","te"],["विदन्","knowing","vidan"]]],
+  "Your greatness — limitless, naturally ever-favourable — even your beloved Lord cannot measure, any more than his own. Yet I, as your servant, as one who has surrendered, will praise you without fear, O sole sovereign of the worlds, beloved of the Lord of the worlds, gentle one, knowing your compassion.",
+  "எல்லையற்றதும், இயல்பாகவே எப்போதும் அனுகூலமானதுமான உன் பெருமையை, தன் பெருமையைப் போலவே, உன் காதலனான பிரபுவாலும் அளக்க முடியாது. ஆயினும் உன் அடியவன், சரணடைந்தவன் என்ற முறையில், உன் கருணையை அறிந்து, அச்சமின்றி உன்னைப் போற்றுவேன் — உலகங்களின் ஒரே அரசியே, உலக நாதனின் பிரியையே."),
+ v("v3", "3", "A glance of your mercy revives the worlds — no good comes to anyone without your grace.", "Before her glance, the worlds were <b>naṣṭam</b> (lost); now <b>ananta-udayam</b> (endlessly rising). Line 3: <b>śreyo na hi … prasādād ṛte</b> — “no good without her grace”.", [
+   [["ईषत्त्वत्करुणानिरीक्षणसुधासन्धुक्षणाद्रक्ष्यते","is saved by the nectar-revival of even a slight merciful glance of yours","īṣat · tvat · karuṇā · nirīkṣaṇa · sudhā · sandhukṣaṇa = reviving · rakṣyate"]],
+   [["नष्टं","ruined","naṣṭa"],["प्राक्तदलाभतस्त्रिभुवनं","before, for lack of it, the three worlds","prāk · tad · alābhataḥ · tribhuvana"],["सम्प्रत्यनन्तोदयम्","now endlessly flourishing","samprati · ananta · udaya"]],
+   [["श्रेयो","good","śreyas"],["न","not","na"],["ह्यरविन्दलोचनमनःकान्ताप्रसादादृते","indeed, without the grace of the beloved of the lotus-eyed Lord","hi · aravinda-locana · manaḥ · kāntā · prasāda · ṛte = without"]],
+   [["संसृत्यक्षरवैष्णवाध्वसु","in the paths of worldly life, of the self, or of Viṣṇu","saṃsṛti · akṣara · vaiṣṇava · adhvan"],["नृणां","for people","nṛ"],["सम्भाव्यते","is possible","sambhāvyate"],["कर्हिचित्","ever","karhicit"]]],
+  "The three worlds, ruined before for lack of it, are now saved and endlessly flourishing by the nectar-revival of even a slight merciful glance of yours. Indeed, without the grace of the beloved of the lotus-eyed Lord, no good is ever possible for people — whether on the path of worldly life, of the self, or of Viṣṇu.",
+  "முன்பு உன் கருணையின்றி அழிந்திருந்த மூவுலகமும், இப்போது உன் சிறு கருணைப் பார்வை எனும் அமுதத்தால் உயிர்பெற்று எல்லையின்றிச் செழிக்கிறது. தாமரைக் கண்ணனின் மனதுக்கினியவளின் அருளின்றி, உலக வாழ்விலோ, ஆத்ம வழியிலோ, வைஷ்ணவ வழியிலோ மனிதர்களுக்கு எந்த நன்மையும் ஒருபோதும் கிட்டாது."),
+ v("v4", "4", "Every form of the Lord — the supreme, the incarnations — you embrace with a matching form of your own.", "Three kinds of Viṣṇu's forms — the supreme <b>para</b>, the beloved <b>mūrta</b> form, and all the playful <b>avatāras</b> — and she embraces each with an <b>anurūpa</b> (matching) form.", [
+   [["शान्तानन्तमहाविभूति","peaceful, endless, of great glory","śānta · ananta · mahā · vibhūti"],["परमं","supreme","parama"],["यद्ब्रह्म","the Brahman","yat · brahman"],["रूपं","form","rūpa"],["हरेः","of Hari","hari"]],
+   [["मूर्तं","embodied","mūrta"],["ब्रह्म","Brahman","brahman"],["ततोऽपि","even more than that","tataḥ · api"],["तत्प्रियतरं","dearer to him","tat · priyatara"],["रूपं","the form","rūpa"],["यदत्यद्भुतम्","which is most wonderful","yat · ati · adbhuta"]],
+   [["यान्यन्यानि","whatever other","yāni · anyāni"],["यथासुखं","as he pleases","yathā · sukham"],["विहरतो","playing","viharat"],["रूपाणि","forms","rūpa"],["सर्वाणि","all","sarva"]],
+   [["तान्याहुः","those, they say","tāni · āhuḥ"],["स्वैरनुरूपरूपविभवैर्","by your own glorious matching forms","svaiḥ · anurūpa · rūpa · vibhava"],["गाढोपगूढानि","are closely embraced","gāḍha · upagūḍha"],["ते","by you","te"]]],
+  "Hari's supreme form — the peaceful, endless Brahman of great glory; his embodied form, dearer to him and most wonderful; and all the other forms he takes as he pleases in play — all of them, the sages say, are closely embraced by you with glorious matching forms of your own.",
+  "அமைதியானதும், முடிவற்றதும், பெருமை மிக்கதுமான ஹரியின் பரப்பிரம்ம வடிவமும், அதைவிட அவனுக்குப் பிரியமான அற்புதத் திருமேனியும், அவன் விருப்பப்படி லீலைக்காக எடுக்கும் பிற வடிவங்கள் அனைத்தும் — உன் பொருத்தமான திவ்ய வடிவங்களால் நெருக்கமாக அணைக்கப்பட்டுள்ளன என்று சான்றோர் சொல்கின்றனர்.")
+];
+// Verse 4's third and fourth quarters are fused by sandhi (tāny-āhuḥ), so it is shown as two half-verses.
+const v4 = VERSES[3]; v4.lines = [[...v4.lines[0], ...v4.lines[1]], [...v4.lines[2], ...v4.lines[3]]]; v4.pat = SV.pat.repeat(2); v4.padaLen = 19;
+return {
+  key:"csl", titleDv:"चतुःश्लोकी", verses:VERSES,
+  meter:{name:"Śārdūlavikrīḍita", kind:"sardula", hook:SV.meterNote,
+    intro:"All four verses are in <b>śārdūlavikrīḍita</b>, “the tiger's play”: 19 syllables a quarter, three long, two short… — a long, majestic stride.",
+    quiz:{q:"In verse 1, what is Lakṣmī's “curtain” (yavanikā)?", opts:["Māyā, who bewitches the world","The night sky","The ocean of milk","Garuḍa's wings"],
+      why:"yavanikā māyā jagan-mohinī — Māyā, the world-bewitching power, is her curtain."}}
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

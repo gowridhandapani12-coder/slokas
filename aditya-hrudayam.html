@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Aditya Hrudayam</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+<style>
+/* Page-only: the story timeline */
+.story{display:grid;gap:8px}
+.chap{display:grid;grid-template-columns:86px minmax(0,1fr);gap:12px;align-items:center;text-align:left;border-radius:14px;padding:10px 12px;background:var(--surface-2);border:1.5px solid transparent;font-weight:400}
+.chap:hover{border-color:var(--terra)}
+.chap .rng{font-family:var(--f-mono);font-size:.75rem;color:var(--muted)}
+.chap .bar{height:8px;border-radius:99px;background:var(--apricot);margin-top:6px}
+.chap b{font-family:var(--f-display);font-size:1.05rem;font-weight:600;display:block}
+.chap span.d{font-size:.85rem;color:var(--muted)}
+.chap.sun{background:var(--blush);color:#3b2b21}
+.chap.sun span.d,.chap.sun .rng{color:#6b4f3c}
+</style>
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Vālmīki Rāmāyaṇa · Yuddha Kāṇḍa, sarga 105 · Sanskrit · dhyānam + 31 verses</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Aditya Hrudayam</h1>
+          <p class="lead" style="margin-top:8px">“The heart of the Sun.” Rāma stands exhausted on the battlefield, Rāvaṇa in front of him. The sage Agastya appears and teaches him this hymn to the Sun. Rāma chants it three times, and goes on to win.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+
+      <div class="facts">
+        <div class="fact"><span>Taught by</span><b>Sage Agastya</b><span>to Śrī Rāma</span></div>
+        <div class="fact"><span>Deity</span><b>Sūrya · Āditya</b><span>the Sun, son of Aditi</span></div>
+        <div class="fact"><span>Metre</span><b>Anuṣṭubh</b><span>last verse: Puṣpitāgrā</span></div>
+        <div class="fact"><span>Title</span><b>Āditya + hṛdaya</b><span>the Sun + heart</span></div>
+        <div class="fact"><span>How often</span><b>Three times</b><span>“etat triguṇitaṃ japtvā” — verse 26</span></div>
+        <div class="fact"><span>Best time</span><b>Facing the rising Sun</b><span>verse 6 · “samudyantam”</span></div>
+      </div>
+
+      <div class="card">
+        <div class="sec-head"><h2>The story in eight steps</h2><span class="muted" style="font-size:.85rem">Tap a step to open its verses</span></div>
+        <p class="muted" style="margin-top:6px">Only the middle (verses 6–24) is the hymn itself. Around it is the story of how Rāma received it. Bar length = number of verses.</p>
+        <div class="story" id="story" style="margin-top:14px"></div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h2>The salutation verses</h2>
+          <p class="muted" style="margin:6px 0 12px">Verses 16–21 are a chain of <b>namaḥ</b> — “salutations to…”. Almost every name ends in <b>-āya</b> or <b>-e</b>, meaning “to the one who…”.</p>
+          <div class="refrain" id="namah" style="font-family:var(--f-verse);font-size:1.25rem;color:var(--terra-ink);line-height:1.7"></div>
+          <div class="tip" style="margin-top:12px"><b>Tip.</b> Learn 16–21 as one block. Clap on every <i>namo namaḥ</i>.</div>
+        </div>
+        <div class="card">
+          <h2>All the gods are the Sun</h2>
+          <p class="muted" style="margin:6px 0 12px">Verses 8–9 say the Sun <i>is</i> every god. Read them as a list:</p>
+          <div class="benefits" id="gods"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="sec-head"><h2>The Sun, as the hymn describes him</h2><span class="muted" style="font-size:.85rem">Tap one to see the word in its verse</span></div>
+        <div class="icons" id="icons" style="margin-top:14px"></div>
+      </div>
+
+      <div class="card">
+        <h2>What Agastya promises</h2>
+        <p class="muted" style="margin:6px 0 12px">Verses 4–5 and 25–26: whoever chants it, in any trouble, will not sink.</p>
+        <div class="benefits" id="benefits"></div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+// A verse: [devanagari, meaning, how-the-word-is-built] words per line; each line = half-verse (two quarters of 8).
+const VERSES = [
+ {id:"dh", n:"ॐ", label:"Dhyānam", short:"Dhyānam", kind:"dhyana", part:"Opening", meter:"vamsastha", pat:"LGLGGLLGLGLx".repeat(2), padaLen:12,
+  meterNote:"Vaṃśastha: 12 syllables a quarter, always short–long–short–long–long–short–short–long–short–long–short–long.",
+  hook:"Salutations to the Sun, the one eye of the world.",
+  tip:"Four quarters: who he is (Savitṛ, the world's eye) · what he does (birth, life, end) · what he is made of (the Vedas, the guṇas) · who he is (Brahmā, Nārāyaṇa, Śiva).",
+  lines:[
+   [["नमस्सवित्रे","salutations to Savitṛ, the Sun","namaḥ = salutation · savitṛ = the one who sets all in motion"],["जगदेकचक्षुषे","the one eye of the world","jagat = world · eka = one · cakṣus = eye"],["जगत्प्रसूतिस्थितिनाशहेतवे","the cause of the world's birth, life and end","prasūti = birth · sthiti = staying · nāśa = end · hetu = cause"]],
+   [["त्रयीमयाय","made of the three Vedas","trayī = the three Vedas · maya = made of"],["त्रिगुणात्मधारिणे","who holds the three guṇas","tri = three · guṇa = quality (sattva, rajas, tamas) · dhārin = holding"],["विरिञ्चिनारायणशङ्करात्मने","whose self is Brahmā, Nārāyaṇa and Śiva","viriñci = Brahmā · nārāyaṇa · śaṅkara = Śiva · ātman = self"]]
+  ],
+  en:"Salutations to Savitṛ, the one eye of the world, the cause of its birth, life and dissolution; who is made of the three Vedas, holds the three guṇas, and whose self is Brahmā, Nārāyaṇa and Śiva.",
+  ta:"உலகின் ஒரே கண்ணாகவும், உலகின் தோற்றம், நிலைப்பு, அழிவுக்குக் காரணமாகவும், மூன்று வேதங்களின் வடிவாகவும், முக்குணங்களைத் தாங்குபவராகவும், பிரம்மா, நாராயணன், சிவன் ஆகியோரின் ஆத்மாவாகவும் இருக்கும் சவிதாவுக்கு (சூரியனுக்கு) நமஸ்காரம்."},
+
+ {id:"v1", n:"1", label:"Verse 1", part:"The scene", hook:"Rāma, exhausted, faces Rāvaṇa.",
+  lines:[
+   [["ततो","then","tataḥ = then"],["युद्धपरिश्रान्तं","worn out by battle","yuddha = battle · pariśrānta = exhausted"],["समरे","on the battlefield","samara = battle"],["चिन्तया","lost in thought","cintā = worry, thought"],["स्थितम्","standing","sthita = standing"]],
+   [["रावणं","Rāvaṇa","rāvaṇa"],["चाग्रतो","and in front","ca = and · agrataḥ = in front"],["दृष्ट्वा","seeing","dṛṣṭvā = having seen"],["युद्धाय","for battle","yuddhāya = for the fight"],["समुपस्थितम्","standing ready","samupasthita = arrived, ready"]]
+  ],
+  en:"Then, seeing Rāma standing on the battlefield, worn out by the fight and lost in thought, with Rāvaṇa in front of him ready for battle —",
+  ta:"போரில் களைத்து, சிந்தனையில் ஆழ்ந்து நின்ற ராமனையும், அவர் முன்னே போருக்குத் தயாராக நின்ற ராவணனையும் கண்டு —"},
+ {id:"v2", n:"2", label:"Verse 2", part:"The scene", hook:"Agastya arrives with the gods.",
+  lines:[
+   [["दैवतैश्च","together with the gods","daivataiḥ = with the gods · ca = and"],["समागम्य","having come together","samāgamya = having gathered"],["द्रष्टुम्","to watch","draṣṭum = to see"],["अभ्यागतो","who had come","abhyāgata = arrived"],["रणम्","the battle","raṇa = battle"]],
+   [["उपागम्याब्रवीद्","came near and said","upāgamya = approaching · abravīt = said"],["रामम्","to Rāma","rāma"],["अगस्त्यो","Agastya","agastya = the great sage"],["भगवान्","the revered","bhagavān = holy, revered"],["ऋषिः","sage","ṛṣi = seer"]]
+  ],
+  en:"— the revered sage Agastya, who had come with the gods to watch the battle, came up to Rāma and said:",
+  ta:"தேவர்களுடன் சேர்ந்து போரைக் காண வந்திருந்த பகவான் அகஸ்திய முனிவர் ராமனை அணுகிச் சொன்னார்:"},
+
+ {id:"v3", n:"3", label:"Verse 3", part:"Agastya's promise", hook:"“Rāma, listen to this ancient secret.”",
+  tip:"Starts with <b>Rāma Rāma</b> — easy to remember. Ends with <b>vijayiṣyasi</b>, “you will win”, which comes back in verse 26.",
+  lines:[
+   [["राम","O Rāma","rāma"],["राम","O Rāma","rāma"],["महाबाहो","O mighty-armed one","mahā = great · bāhu = arm"],["शृणु","listen","śṛṇu = hear"],["गुह्यं","to the secret","guhya = secret"],["सनातनम्","eternal","sanātana = ancient, eternal"]],
+   [["येन","by which","yena = by which"],["सर्वान्","all","sarva = all"],["अरीन्","enemies","ari = enemy"],["वत्स","my child","vatsa = dear child"],["समरे","in battle","samara = battle"],["विजयिष्यसि","you will conquer","vijayiṣyasi = you will win"]]
+  ],
+  en:"“Rāma, Rāma, mighty-armed one, listen to this eternal secret, by which, my child, you will conquer all your enemies in battle.”",
+  ta:"“ராமா, ராமா, நீண்ட கைகளை உடையவனே! மகனே, போரில் எல்லாப் பகைவர்களையும் வெல்லக்கூடிய, என்றும் உள்ள இந்த ரகசியத்தைக் கேள்.”"},
+ {id:"v4", n:"4", label:"Verse 4", part:"Agastya's promise", hook:"The Āditya Hṛdayam: holy, destroys all enemies, brings victory.",
+  lines:[
+   [["आदित्यहृदयं","the Heart of the Sun","āditya = the Sun, son of Aditi · hṛdaya = heart"],["पुण्यं","holy","puṇya = sacred, meritorious"],["सर्वशत्रुविनाशनम्","destroyer of all enemies","sarva = all · śatru = enemy · vināśana = destroying"]],
+   [["जयावहं","bringer of victory","jaya = victory · āvaha = bringing"],["जपेन्","one should chant","japet = should recite"],["नित्यम्","always","nitya = every day"],["अक्षय्यं","never-failing","akṣayya = imperishable"],["परमं","supreme","parama = highest"],["शिवम्","auspicious","śiva = auspicious"]]
+  ],
+  en:"“This is the Āditya Hṛdayam, holy, destroyer of all enemies, bringer of victory. One should chant it always: it is imperishable, supreme and auspicious.",
+  ta:"“இது ஆதித்ய ஹ்ருதயம் — புனிதமானது, எல்லாப் பகைவர்களையும் அழிப்பது, வெற்றி தருவது. இதை எப்போதும் ஜபிக்க வேண்டும்; இது அழிவற்றது, மேலானது, மங்களமானது."},
+ {id:"v5", n:"5", label:"Verse 5", part:"Agastya's promise", hook:"Most auspicious, removes sin, calms worry, lengthens life.",
+  tip:"Four benefits, each a long compound: <b>sarva-maṅgala</b> · <b>sarva-pāpa</b> · <b>cintā-śoka</b> · <b>āyur-vardhanam</b>.",
+  lines:[
+   [["सर्वमङ्गलमाङ्गल्यं","the most auspicious of all auspicious things","sarva = all · maṅgala = blessing · māṅgalya = auspiciousness"],["सर्वपापप्रणाशनम्","destroyer of all sins","sarva = all · pāpa = sin · praṇāśana = destroying"]],
+   [["चिन्ताशोकप्रशमनम्","calmer of worry and grief","cintā = worry · śoka = grief · praśamana = calming"],["आयुर्वर्धनम्","increaser of life","āyus = life · vardhana = increasing"],["उत्तमम्","the best","uttama = excellent"]]
+  ],
+  en:"It is the most auspicious of all auspicious things, the destroyer of all sins, the calmer of worry and grief, and the best increaser of life.",
+  ta:"இது மங்களங்களில் எல்லாம் மிக மங்களமானது, எல்லாப் பாவங்களையும் அழிப்பது, கவலையையும் துயரத்தையும் தணிப்பது, ஆயுளை வளர்ப்பதில் சிறந்தது."},
+
+ {id:"v6", n:"6", label:"Verse 6", part:"Who the Sun is", hook:"Worship the rising Sun, lord of the worlds.",
+  lines:[
+   [["रश्मिमन्तं","the one full of rays","raśmi = ray · -mat = having"],["समुद्यन्तं","rising","samudyat = rising up"],["देवासुरनमस्कृतम्","honoured by gods and demons","deva = god · asura = demon · namaskṛta = bowed to"]],
+   [["पूजयस्व","worship","pūjayasva = worship (him)"],["विवस्वन्तं","Vivasvān, the brilliant","vivasvat = the shining one"],["भास्करं","the maker of light","bhās = light · kara = maker"],["भुवनेश्वरम्","lord of the worlds","bhuvana = world · īśvara = lord"]]
+  ],
+  en:"Worship the rising Sun, full of rays, honoured by gods and demons alike — Vivasvān, maker of light, lord of the worlds.",
+  ta:"கதிர்கள் நிறைந்தவரும், உதிப்பவரும், தேவர்களாலும் அசுரர்களாலும் வணங்கப்படுபவரும், ஒளியை உண்டாக்குபவரும், உலகங்களின் தலைவருமான விவஸ்வானை (சூரியனை) பூஜிப்பாயாக."},
+ {id:"v7", n:"7", label:"Verse 7", part:"Who the Sun is", hook:"He is the self of all gods and protects all worlds with his rays.",
+  lines:[
+   [["सर्वदेवात्मको","the self of all the gods","sarva = all · deva = god · ātmaka = whose self is"],["ह्येष","indeed he","hi = indeed · eṣaḥ = he"],["तेजस्वी","radiant","tejasvin = brilliant"],["रश्मिभावनः","the source of rays","raśmi = ray · bhāvana = bringing forth"]],
+   [["एष","he","eṣaḥ = this one"],["देवासुरगणान्","the hosts of gods and demons","deva · asura · gaṇa = host"],["लोकान्","the worlds","loka = world"],["पाति","protects","pāti = guards"],["गभस्तिभिः","with his rays","gabhasti = ray of light"]]
+  ],
+  en:"He is the self of all the gods, radiant, the source of rays. With his rays he protects the gods, the demons and all the worlds.",
+  ta:"இவரே எல்லாத் தேவர்களின் ஆத்மா; ஒளிமிக்கவர்; கதிர்களின் பிறப்பிடம். இவர் தம் கதிர்களால் தேவர்களையும் அசுரர்களையும் உலகங்களையும் காக்கிறார்."},
+ {id:"v8", n:"8", label:"Verse 8", part:"Who the Sun is", hook:"He is Brahmā, Viṣṇu, Śiva, Skanda… every god.",
+  tip:"A list of gods, three per quarter: <b>Brahmā, Viṣṇu</b> · <b>Śiva, Skanda, Prajāpati</b> · <b>Indra, Kubera, Kāla</b> · <b>Yama, Soma, Varuṇa</b>.",
+  lines:[
+   [["एष","he is","eṣaḥ = this one"],["ब्रह्मा","Brahmā","the creator"],["च","and","ca = and"],["विष्णुश्च","and Viṣṇu","viṣṇu = the preserver · ca"],["शिवः","Śiva","the auspicious one"],["स्कन्दः","Skanda","Murugan, Kārttikeya"],["प्रजापतिः","Prajāpati","prajā = creatures · pati = lord"]],
+   [["महेन्द्रो","Indra","mahā = great · indra = king of the gods"],["धनदः","Kubera","dhana = wealth · da = giver"],["कालो","Time","kāla = time"],["यमः","Yama","lord of death and dharma"],["सोमो","Soma","the Moon"],["ह्यपां","indeed, of the waters","hi = indeed · apām = of the waters"],["पतिः","the lord (Varuṇa)","pati = lord"]]
+  ],
+  en:"He is Brahmā, Viṣṇu and Śiva; Skanda and Prajāpati; Indra, Kubera and Time; Yama, the Moon, and Varuṇa, lord of the waters.",
+  ta:"இவரே பிரம்மா, விஷ்ணு, சிவன், ஸ்கந்தன், பிரஜாபதி; இந்திரன், குபேரன், காலம், யமன், சந்திரன், நீர்களின் தலைவனான வருணன்."},
+ {id:"v9", n:"9", label:"Verse 9", part:"Who the Sun is", hook:"The ancestors, the Vasus, the winds, fire, breath of all beings.",
+  lines:[
+   [["पितरो","the ancestors","pitṛ = forefathers"],["वसवः","the Vasus","eight gods of the elements"],["साध्या","the Sādhyas","a class of celestial beings"],["ह्यश्विनौ","and the twin Aśvins","hi = indeed · aśvin = divine healers"],["मरुतो","the Maruts","storm gods"],["मनुः","Manu","the first man, law-giver"]],
+   [["वायुर्","Vāyu","the wind"],["वह्निः","fire","vahni = Agni"],["प्रजाप्राणः","breath of all beings","prajā = creatures · prāṇa = breath"],["ऋतुकर्ता","maker of the seasons","ṛtu = season · kartṛ = maker"],["प्रभाकरः","maker of light","prabhā = light · kara = maker"]]
+  ],
+  en:"He is the ancestors, the Vasus, the Sādhyas, the twin Aśvins, the Maruts and Manu; the wind, fire, the breath of all beings, maker of the seasons and maker of light.",
+  ta:"இவரே பித்ருக்கள், வசுக்கள், சாத்யர்கள், அஸ்வினி தேவர்கள், மருத்துக்கள், மனு; வாயு, அக்னி, உயிர்களின் பிராணன், பருவங்களை உண்டாக்குபவர், ஒளியைத் தருபவர்."},
+
+ {id:"v10", n:"10", label:"Verse 10", part:"Names of the Sun", irreg:true, hook:"Āditya, Savitā, Sūrya — the golden one, maker of day.",
+  tip:"The last quarter <b>hiraṇyaretā divākaraḥ</b> has 9 syllables, not 8 — that is how the Rāmāyaṇa has it. Her book also notes a reading “svarṇaretā”.",
+  lines:[
+   [["आदित्यः","Āditya, son of Aditi","āditya"],["सविता","Savitā, the life-giver","savitṛ = who sets in motion"],["सूर्यः","Sūrya, the Sun","sūrya"],["खगः","who moves through the sky","kha = sky · ga = going"],["पूषा","Pūṣan, the nourisher","pūṣan = nourisher"],["गभस्तिमान्","the one with rays","gabhasti = ray · -mat = having"]],
+   [["सुवर्णसदृशो","golden","su-varṇa = gold · sadṛśa = like"],["भानुर्","Bhānu, the shining","bhānu = light"],["हिरण्यरेता","whose seed is gold","hiraṇya = gold · retas = seed"],["दिवाकरः","maker of the day","divā = day · kara = maker"]]
+  ],
+  en:"He is Āditya, Savitā and Sūrya; he moves through the sky; he is Pūṣan the nourisher, full of rays; golden, shining, whose seed is gold, the maker of day.",
+  ta:"இவர் ஆதித்யன், சவிதா, சூரியன், வானில் செல்பவர், போஷிப்பவர், கதிர்கள் உடையவர்; பொன் போன்றவர், ஒளிர்பவர், பொன் வித்தானவர், பகலை உண்டாக்குபவர்."},
+ {id:"v11", n:"11", label:"Verse 11", part:"Names of the Sun", hook:"Seven horses, a thousand rays, destroyer of darkness.",
+  lines:[
+   [["हरिदश्वः","whose horses are golden-green","harit = tawny, green · aśva = horse"],["सहस्रार्चिः","with a thousand flames","sahasra = thousand · arcis = flame, ray"],["सप्तसप्तिर्","drawn by seven horses","sapta = seven · sapti = horse"],["मरीचिमान्","full of light","marīci = ray of light"]],
+   [["तिमिरोन्मथनः","destroyer of darkness","timira = darkness · unmathana = churning away"],["शम्भुस्","giver of happiness","śam = happiness · bhu = source"],["त्वष्टा","the fashioner (Tvaṣṭṛ)","tvaṣṭṛ = divine craftsman"],["मार्ताण्डकोंऽशुमान्","Mārtāṇḍa, the rayed one","mārtāṇḍa = born of the lifeless egg · aṃśumān = with rays"]]
+  ],
+  en:"He has golden-green horses and a thousand flames; seven horses draw him; he is full of light. He destroys darkness, gives happiness; he is Tvaṣṭṛ the fashioner, Mārtāṇḍa, the rayed one.",
+  ta:"பச்சைக் குதிரைகள் உடையவர், ஆயிரம் கதிர்கள் உடையவர், ஏழு குதிரைகள் பூட்டியவர், ஒளி நிறைந்தவர்; இருளை அழிப்பவர், இன்பம் தருபவர், த்வஷ்டா, மார்த்தாண்டன், கதிர்கள் உடையவர்."},
+ {id:"v12", n:"12", label:"Verse 12", part:"Names of the Sun", hook:"The golden womb, cooling and heating, son of Aditi.",
+  lines:[
+   [["हिरण्यगर्भः","the golden womb (of creation)","hiraṇya = gold · garbha = womb"],["शिशिरस्","the cooling one","śiśira = cool, soothing"],["तपनो","the heating one","tapana = giving heat"],["भास्करो","maker of light","bhās = light · kara = maker"],["रविः","Ravi","ravi = the Sun"]],
+   [["अग्निगर्भो","who holds fire within","agni = fire · garbha = womb"],["ऽदितेः","of Aditi","aditi = mother of the gods"],["पुत्रः","the son","putra = son"],["शङ्खः","Śaṅkha, bright as a conch","śaṅkha = conch"],["शिशिरनाशनः","destroyer of cold","śiśira = cold · nāśana = destroying"]]
+  ],
+  en:"He is Hiraṇyagarbha, the golden womb; he cools and he heats; he is the maker of light, Ravi; he holds fire within; he is Aditi's son, bright as a conch, destroyer of cold.",
+  ta:"இவர் ஹிரண்யகர்ப்பன் (பொன் கருவானவர்), குளிர்விப்பவர், வெப்பம் தருபவர், ஒளி தருபவர், ரவி; உள்ளே அக்னியைக் கொண்டவர், அதிதியின் மைந்தன், சங்கு போல் ஒளிர்பவர், குளிரைப் போக்குபவர்."},
+ {id:"v13", n:"13", label:"Verse 13", part:"Names of the Sun", hook:"Lord of the sky, master of the three Vedas, friend of the waters.",
+  lines:[
+   [["व्योमनाथस्","lord of the sky","vyoman = sky · nātha = lord"],["तमोभेदी","piercer of darkness","tamas = darkness · bhedin = splitting"],["ऋग्यजुःसामपारगः","master of the Ṛg, Yajur and Sāma Vedas","ṛk · yajus · sāman · pāraga = who has crossed to the far shore"]],
+   [["घनवृष्टिर्","giver of heavy rain","ghana = cloud · vṛṣṭi = rain"],["अपां","of the waters","apām = of the waters"],["मित्रो","friend","mitra = friend"],["विन्ध्यवीथीप्लवङ्गमः","who swiftly travels the Vindhya path","vindhya · vīthī = path · plavaṅgama = moving swiftly"]]
+  ],
+  en:"He is lord of the sky, piercer of darkness, master of the Ṛg, Yajur and Sāma Vedas; he brings heavy rain, he is the friend of the waters, and he swiftly travels the path over the Vindhyas.",
+  ta:"இவர் வானின் தலைவர், இருளைப் பிளப்பவர், ரிக், யஜுர், ஸாம வேதங்களைக் கடந்தவர்; பெருமழை தருபவர், நீர்களின் நண்பர், விந்திய மலைப் பாதையில் விரைந்து செல்பவர்."},
+ {id:"v14", n:"14", label:"Verse 14", part:"Names of the Sun", hook:"Heat-giver, the radiant disc, the wise, origin of all.",
+  lines:[
+   [["आतपी","who gives heat","ātapin = shining hot"],["मण्डली","with a radiant disc","maṇḍala = disc"],["मृत्युः","death (the end of all)","mṛtyu = death"],["पिङ्गलः","golden-tawny","piṅgala = reddish-yellow"],["सर्वतापनः","who warms all","sarva = all · tāpana = heating"]],
+   [["कविर्","the wise seer","kavi = poet, sage"],["विश्वो","the universe","viśva = all, the universe"],["महातेजा","of great splendour","mahā = great · tejas = splendour"],["रक्तः","crimson, beloved","rakta = red; also dear"],["सर्वभवोद्भवः","origin of all that exists","sarva = all · bhava = being · udbhava = source"]]
+  ],
+  en:"He gives heat, he is the radiant disc, he is death; golden-tawny, he warms all. He is the wise seer, the universe itself, of great splendour, crimson, the origin of all that exists.",
+  ta:"இவர் வெப்பம் தருபவர், ஒளி வட்டம் உடையவர், மரணமானவர், பொன்னிறமானவர், எல்லாவற்றையும் வெப்பமூட்டுபவர்; ஞானி, உலகமானவர், பெரும் ஒளியுடையவர், சிவந்தவர், எல்லாவற்றின் தோற்றத்துக்கும் காரணமானவர்."},
+ {id:"v15", n:"15", label:"Verse 15", part:"Names of the Sun", hook:"Lord of stars and planets — O twelve-formed one, salutations!",
+  tip:"The names end with the first salutation: <b>dvādaśātman namo'stu te</b> — “O you of twelve forms (one Sun for each month), salutations to you.”",
+  lines:[
+   [["नक्षत्रग्रहताराणाम्","of the constellations, planets and stars","nakṣatra = constellation · graha = planet · tārā = star"],["अधिपो","lord","adhipa = ruler"],["विश्वभावनः","who brings the universe into being","viśva = universe · bhāvana = creating"]],
+   [["तेजसाम्","of all bright things","tejas = brightness"],["अपि","even","api = even"],["तेजस्वी","the brightest","tejasvin = brilliant"],["द्वादशात्मन्","O you of twelve forms","dvādaśa = twelve · ātman = self"],["नमोऽस्तु","salutations be","namaḥ · astu = may it be"],["ते","to you","te = to you"]]
+  ],
+  en:"Lord of the constellations, planets and stars, who brings the universe into being, brighter than all bright things — O you of twelve forms, salutations to you.",
+  ta:"நட்சத்திரங்கள், கிரகங்கள், தாரகைகளின் தலைவரே, உலகத்தைப் படைப்பவரே, ஒளிகளுக்கெல்லாம் ஒளியானவரே, பன்னிரண்டு வடிவங்கள் கொண்டவரே, உமக்கு நமஸ்காரம்."},
+
+ {id:"v16", n:"16", label:"Verse 16", part:"Salutations", hook:"To the eastern and western mountains, lord of the day.",
+  lines:[
+   [["नमः","salutations","namaḥ"],["पूर्वाय","to the eastern","pūrva = east"],["गिरये","mountain","giri = mountain (where he rises)"],["पश्चिमायाद्रये","to the western mountain","paścima = west · adri = mountain (where he sets)"],["नमः","salutations","namaḥ"]],
+   [["ज्योतिर्गणानां","of the hosts of lights","jyotis = light · gaṇa = host"],["पतये","to the lord","pati = lord"],["दिनाधिपतये","to the lord of the day","dina = day · adhipati = ruler"],["नमः","salutations","namaḥ"]]
+  ],
+  en:"Salutations to the eastern mountain, salutations to the western mountain; to the lord of the hosts of lights, the lord of the day, salutations.",
+  ta:"கிழக்கு மலைக்கு நமஸ்காரம், மேற்கு மலைக்கு நமஸ்காரம்; ஒளிக்கூட்டங்களின் தலைவருக்கு, பகலின் அதிபதிக்கு நமஸ்காரம்."},
+ {id:"v17", n:"17", label:"Verse 17", part:"Salutations", hook:"To victory, to the thousand-rayed Āditya — namo namaḥ.",
+  tip:"<b>namo namaḥ</b> four times: twice at the end of line 1, then line 2 begins and ends with it.",
+  lines:[
+   [["जयाय","to victory","jaya = victory"],["जयभद्राय","to the blessing of victory","jaya = victory · bhadra = blessing"],["हर्यश्वाय","to him of the golden horses","hari = golden, tawny · aśva = horse"],["नमो","salutations","namaḥ"],["नमः","salutations","namaḥ"]],
+   [["नमो","salutations","namaḥ"],["नमः","salutations","namaḥ"],["सहस्रांशो","O thousand-rayed one","sahasra = thousand · aṃśu = ray"],["आदित्याय","to Āditya","āditya = son of Aditi"],["नमो","salutations","namaḥ"],["नमः","salutations","namaḥ"]]
+  ],
+  en:"To victory, to the blessing of victory, to him of the golden horses — salutations, salutations. Salutations, O thousand-rayed one; to Āditya, salutations, salutations.",
+  ta:"வெற்றியானவருக்கு, வெற்றியின் மங்களமானவருக்கு, பொன்னிறக் குதிரைகள் உடையவருக்கு நமஸ்காரம். ஆயிரம் கதிர்களை உடையவரே, ஆதித்யனுக்கு நமஸ்காரம், நமஸ்காரம்."},
+ {id:"v18", n:"18", label:"Verse 18", part:"Salutations", hook:"To the fierce hero who wakes the lotuses.",
+  lines:[
+   [["नम","salutations","namaḥ (before a vowel)"],["उग्राय","to the fierce one","ugra = fierce, mighty"],["वीराय","to the hero","vīra = hero"],["सारङ्गाय","to the swift one","sāraṅga = swift-moving"],["नमो","salutations","namaḥ"],["नमः","salutations","namaḥ"]],
+   [["नमः","salutations","namaḥ"],["पद्मप्रबोधाय","to him who wakes the lotuses","padma = lotus · prabodha = awakening"],["मार्ताण्डाय","to Mārtāṇḍa","mārtāṇḍa = born of the lifeless egg"],["नमो","salutations","namaḥ"],["नमः","salutations","namaḥ"]]
+  ],
+  en:"Salutations to the fierce one, the hero, the swift one — salutations, salutations. Salutations to him who wakes the lotuses, to Mārtāṇḍa — salutations, salutations.",
+  ta:"உக்கிரமானவருக்கு, வீரருக்கு, விரைந்து செல்பவருக்கு நமஸ்காரம். தாமரைகளை மலரச் செய்பவருக்கு, மார்த்தாண்டனுக்கு நமஸ்காரம், நமஸ்காரம்."},
+ {id:"v19", n:"19", label:"Verse 19", part:"Salutations", hook:"Lord of Brahmā, Śiva and Viṣṇu, devourer of all.",
+  lines:[
+   [["ब्रह्मेशानाच्युतेशाय","to the lord of Brahmā, Śiva and Viṣṇu","brahma · īśāna = Śiva · acyuta = Viṣṇu · īśa = lord"],["सूर्यायादित्यवर्चसे","to Sūrya, with Āditya's splendour","sūrya · āditya · varcas = splendour"]],
+   [["भास्वते","to the shining one","bhāsvat = luminous"],["सर्वभक्षाय","to the devourer of all","sarva = all · bhakṣa = eating (at the end of time)"],["रौद्राय","to the fierce one","raudra = terrible, Rudra-like"],["वपुषे","to (him in) that form","vapus = body, form"],["नमः","salutations","namaḥ"]]
+  ],
+  en:"To the lord of Brahmā, Śiva and Viṣṇu, to Sūrya with Āditya's splendour; to the shining one, the devourer of all, whose form is fierce — salutations.",
+  ta:"பிரம்மா, சிவன், விஷ்ணு ஆகியோரின் தலைவருக்கு, ஆதித்ய ஒளியுடைய சூரியனுக்கு, ஒளிர்பவருக்கு, அனைத்தையும் விழுங்குபவருக்கு, உக்கிர வடிவினருக்கு நமஸ்காரம்."},
+ {id:"v20", n:"20", label:"Verse 20", part:"Salutations", hook:"Slayer of darkness, cold, enemies and the ungrateful.",
+  tip:"Four <b>-ghna</b> (slayer) words: tamo-ghna · hima-ghna · śatru-ghna · kṛtaghna-ghna (slayer of the ungrateful).",
+  lines:[
+   [["तमोघ्नाय","to the slayer of darkness","tamas = darkness · ghna = slayer"],["हिमघ्नाय","to the destroyer of cold","hima = cold, snow · ghna = slayer"],["शत्रुघ्नायामितात्मने","to the slayer of enemies, the boundless one","śatru = enemy · ghna · amita = immeasurable · ātman = self"]],
+   [["कृतघ्नघ्नाय","to the destroyer of the ungrateful","kṛtaghna = ungrateful · ghna = slayer"],["देवाय","to the god","deva = god"],["ज्योतिषां","of all lights","jyotis = light"],["पतये","to the lord","pati = lord"],["नमः","salutations","namaḥ"]]
+  ],
+  en:"To the slayer of darkness, of cold, of enemies, the boundless one; to the destroyer of the ungrateful, the god, the lord of all lights — salutations.",
+  ta:"இருளை அழிப்பவருக்கு, குளிரைப் போக்குபவருக்கு, பகைவர்களை அழிப்பவருக்கு, அளவற்றவருக்கு, நன்றி மறந்தவர்களை அழிப்பவருக்கு, ஒளிகளின் தலைவரான தேவனுக்கு நமஸ்காரம்."},
+ {id:"v21", n:"21", label:"Verse 21", part:"Salutations", hook:"Glowing like molten gold — witness of the world.",
+  lines:[
+   [["तप्तचामीकराभाय","to him who glows like molten gold","tapta = heated · cāmīkara = gold · ābhā = glow"],["वह्नये","to the fire","vahni = fire"],["विश्वकर्मणे","to the maker of all","viśva = all · karman = work"]],
+   [["नमस्","salutations","namaḥ"],["तमोऽभिनिघ्नाय","to the destroyer of darkness","tamas = darkness · abhinighna = striking down"],["रवये","to Ravi","ravi = the Sun"],["लोकसाक्षिणे","to the witness of the world","loka = world · sākṣin = witness"]]
+  ],
+  en:"To him who glows like molten gold, to the fire, to the maker of all; salutations to the destroyer of darkness, to Ravi, the witness of the world.",
+  ta:"உருக்கிய பொன் போல் ஒளிர்பவருக்கு, அக்னிக்கு, அனைத்தையும் படைப்பவருக்கு, இருளை அழிப்பவருக்கு, ரவிக்கு, உலகின் சாட்சிக்கு நமஸ்காரம்."},
+
+ {id:"v22", n:"22", label:"Verse 22", part:"What the Sun does", hook:"He destroys and creates; he sustains, heats and rains.",
+  tip:"Line 2 is three <b>-ty eṣa</b> verbs: pāyaty eṣa · tapaty eṣa · varṣaty eṣa — “he sustains, he heats, he rains”.",
+  lines:[
+   [["नाशयत्येष","he destroys","nāśayati = destroys · eṣaḥ = he"],["वै","truly","vai = indeed"],["भूतं","all that exists","bhūta = being"],["तदेव","that very thing","tat = that · eva = itself"],["सृजति","creates","sṛjati = creates"],["प्रभुः","the Lord","prabhu = master"]],
+   [["पायत्येष","he sustains","pāyati = protects, nourishes"],["तपत्येष","he heats","tapati = heats"],["वर्षत्येष","he rains","varṣati = rains"],["गभस्तिभिः","with his rays","gabhasti = ray"]]
+  ],
+  en:"The Lord truly destroys all that exists, and creates it again. With his rays he sustains, he heats and he rains.",
+  ta:"இவ்விறைவனே உயிர்களை அழிக்கிறார், அவற்றையே மீண்டும் படைக்கிறார். தம் கதிர்களால் காக்கிறார், வெப்பம் தருகிறார், மழை பொழிகிறார்."},
+ {id:"v23", n:"23", label:"Verse 23", part:"What the Sun does", hook:"Awake in those who sleep; he is the fire-offering and its fruit.",
+  lines:[
+   [["एष","he","eṣaḥ"],["सुप्तेषु","among those who sleep","supta = asleep"],["जागर्ति","stays awake","jāgarti = is awake"],["भूतेषु","in all beings","bhūta = being"],["परिनिष्ठितः","firmly dwelling","pariniṣṭhita = established"]],
+   [["एष","he","eṣaḥ"],["एवाग्निहोत्रं","is the fire-offering itself","eva = indeed · agnihotra = daily fire ritual"],["च","and","ca"],["फलं","the fruit","phala = result"],["चैवाग्निहोत्रिणाम्","of those who offer it too","ca · eva · agnihotrin = one who keeps the sacred fire"]]
+  ],
+  en:"Dwelling in all beings, he stays awake while they sleep. He is the fire-offering itself, and also the fruit gained by those who offer it.",
+  ta:"எல்லா உயிர்களிலும் நிலைபெற்று, அவை உறங்கும்போதும் இவர் விழித்திருக்கிறார். இவரே அக்னிஹோத்ரம், அக்னிஹோத்ரம் செய்பவர்களின் பலனும் இவரே."},
+ {id:"v24", n:"24", label:"Verse 24", part:"What the Sun does", hook:"The Vedas, the sacrifices and their fruit — all are Ravi.",
+  lines:[
+   [["वेदाश्च","the Vedas too","veda · ca = and"],["क्रतवश्चैव","and the sacrifices as well","kratu = sacrifice · ca · eva"],["क्रतूनां","of the sacrifices","kratu = sacrifice"],["फलमेव","the very fruit","phala = fruit · eva = itself"],["च","and","ca"]],
+   [["यानि","whatever","yāni = which"],["कृत्यानि","actions","kṛtya = deed"],["लोकेषु","in the worlds","loka = world"],["सर्व","all of them","sarva = all"],["एष","he","eṣaḥ"],["रविः","Ravi","ravi = the Sun"],["प्रभुः","the Lord","prabhu = master"]]
+  ],
+  en:"The Vedas, the sacrifices and the fruit of the sacrifices, and whatever actions there are in the worlds — all of them are this Lord, Ravi.",
+  ta:"வேதங்களும், யாகங்களும், யாகங்களின் பலனும், உலகங்களில் நடக்கும் எல்லாச் செயல்களும் — இவை அனைத்தும் இந்த ரவி பகவானே."},
+
+ {id:"v25", n:"25", label:"Verse 25", part:"Phala-śruti", hook:"In any danger, whoever sings his praise does not sink.",
+  lines:[
+   [["एनम्","him","enam = this one"],["आपत्सु","in calamities","āpad = disaster"],["कृच्छ्रेषु","in hardships","kṛcchra = difficulty"],["कान्तारेषु","in wild places","kāntāra = wilderness"],["भयेषु","in fears","bhaya = fear"],["च","and","ca"]],
+   [["कीर्तयन्","singing (his praise)","kīrtayat = praising"],["पुरुषः","a person","puruṣa = person"],["कश्चिन्","anyone","kaścit = whoever"],["नावसीदति","does not sink","na = not · avasīdati = sinks, despairs"],["राघव","O Rāghava","descendant of Raghu (Rāma)"]]
+  ],
+  en:"O Rāghava, anyone who sings his praise in calamity, in hardship, in the wilderness or in fear, does not sink into despair.",
+  ta:"ராகவா, ஆபத்துகளிலும், கஷ்டங்களிலும், காடுகளிலும், அச்சங்களிலும் இவரைப் போற்றுபவர் எவரும் துன்பத்தில் மூழ்குவதில்லை."},
+ {id:"v26", n:"26", label:"Verse 26", part:"Phala-śruti", hook:"Worship him with a focused mind; chant it three times and win.",
+  tip:"The instruction everyone remembers: <b>etat triguṇitaṃ japtvā</b> — chant this three times. Then <b>vijayiṣyasi</b>, “you will win”, from verse 3.",
+  lines:[
+   [["पूजयस्वैनम्","worship him","pūjayasva = worship · enam = him"],["एकाग्रो","with a focused mind","eka = one · agra = point"],["देवदेवं","the god of gods","deva · deva"],["जगत्पतिम्","lord of the world","jagat = world · pati = lord"]],
+   [["एतत्","this","etat = this"],["त्रिगुणितं","three times","tri = three · guṇita = multiplied"],["जप्त्वा","having chanted","japtvā = having recited"],["युद्धेषु","in battles","yuddha = battle"],["विजयिष्यसि","you will win","vijayiṣyasi = you will conquer"]]
+  ],
+  en:"Worship him with a focused mind, the god of gods, lord of the world. Having chanted this three times, you will win your battles.",
+  ta:"ஒருமுகப்பட்ட மனதுடன் தேவர்களின் தேவனும் உலகின் தலைவனுமான இவரைப் பூஜிப்பாயாக. இதை மூன்று முறை ஜபித்தால் போர்களில் வெல்வாய்."},
+ {id:"v27", n:"27", label:"Verse 27", part:"Phala-śruti", hook:"“This very moment you will slay Rāvaṇa” — and Agastya left.",
+  lines:[
+   [["अस्मिन्","in this","asmin = in this"],["क्षणे","very moment","kṣaṇa = moment"],["महाबाहो","O mighty-armed one","mahā = great · bāhu = arm"],["रावणं","Rāvaṇa","rāvaṇa"],["त्वं","you","tvam = you"],["वधिष्यसि","will slay","vadhiṣyasi = you will kill"]],
+   [["एवमुक्त्वा","having said this","evam = thus · uktvā = having said"],["तदागस्त्यो","then Agastya","tadā = then · agastyaḥ"],["जगाम","went","jagāma = went"],["च","and","ca"],["यथागतम्","the way he had come","yathā = as · āgata = come"]]
+  ],
+  en:"“In this very moment, mighty-armed one, you will slay Rāvaṇa.” Having said this, Agastya went back the way he had come.",
+  ta:"“நீண்ட கைகளை உடையவனே, இந்தக் கணத்திலேயே நீ ராவணனை வதைப்பாய்.” இவ்வாறு சொல்லிவிட்டு அகஸ்தியர் வந்த வழியே சென்றார்."},
+
+ {id:"v28", n:"28", label:"Verse 28", part:"Rāma's victory", hook:"Hearing this, Rāma's sorrow vanished.",
+  lines:[
+   [["एतच्छ्रुत्वा","hearing this","etat = this · śrutvā = having heard"],["महातेजा","the radiant one","mahā = great · tejas = splendour"],["नष्टशोकोऽभवत्","became free of sorrow","naṣṭa = gone · śoka = grief · abhavat = became"],["तदा","then","tadā = then"]],
+   [["धारयामास","held it in his heart","dhārayām āsa = kept, took in"],["सुप्रीतो","delighted","su = very · prīta = pleased"],["राघवः","Rāghava","Rāma"],["प्रयतात्मवान्","with a controlled mind","prayata = disciplined · ātmavān = self-possessed"]]
+  ],
+  en:"Hearing this, the radiant Rāma was freed from sorrow. Delighted and with a disciplined mind, he took the hymn to heart.",
+  ta:"இதைக் கேட்ட ஒளிமிக்க ராமன் துயரம் நீங்கியவரானார். மகிழ்ந்து, அடக்கமான மனதுடன் அதை மனதில் தாங்கிக்கொண்டார்."},
+ {id:"v29", n:"29", label:"Verse 29", part:"Rāma's victory", hook:"Looking at the Sun, he chanted; pure, he took up his bow.",
+  lines:[
+   [["आदित्यं","at the Sun","āditya"],["प्रेक्ष्य","looking","prekṣya = having looked"],["जप्त्वा","having chanted","japtvā"],["तु","then","tu"],["परं","supreme","para = highest"],["हर्षम्","joy","harṣa = delight"],["अवाप्तवान्","he gained","avāptavān = attained"]],
+   [["त्रिराचम्य","sipping water three times","triḥ = thrice · ācamya = sipping water (ācamana)"],["शुचिर्भूत्वा","having become pure","śuci = pure · bhūtvā = having become"],["धनुरादाय","taking up his bow","dhanus = bow · ādāya = taking"],["वीर्यवान्","the valiant one","vīryavān = full of valour"]]
+  ],
+  en:"Looking at the Sun and chanting the hymn, he felt supreme joy. Sipping water three times to purify himself, the valiant one took up his bow.",
+  ta:"சூரியனைப் பார்த்து ஜபித்து, பெரும் மகிழ்ச்சி அடைந்தார். மூன்று முறை ஆசமனம் செய்து தூய்மையாகி, வீரனான ராமன் வில்லை எடுத்தார்."},
+ {id:"v30", n:"30", label:"Verse 30", part:"Rāma's victory", hook:"Joyful, he faced Rāvaṇa, resolved to end him.",
+  lines:[
+   [["रावणं","Rāvaṇa","rāvaṇa"],["प्रेक्ष्य","seeing","prekṣya = having looked at"],["हृष्टात्मा","glad at heart","hṛṣṭa = joyful · ātman = self"],["युद्धाय","for battle","yuddhāya = to fight"],["समुपागमत्","came forward","samupāgamat = advanced"]],
+   [["सर्वयत्नेन","with every effort","sarva = all · yatna = effort"],["महता","great","mahat = great"],["वधे","on the slaying","vadha = killing"],["तस्य","of him","tasya = his"],["धृतोऽभवत्","became resolved","dhṛta = determined · abhavat = became"]]
+  ],
+  en:"Seeing Rāvaṇa, glad at heart, he came forward to fight, resolved with all his great effort to slay him.",
+  ta:"ராவணனைக் கண்டு மனம் மகிழ்ந்து போருக்கு முன்னேறினார்; பெரும் முயற்சியுடன் அவனை வதைக்க உறுதி கொண்டார்."},
+ {id:"v31", n:"31", label:"Verse 31", part:"Rāma's victory", meter:"pushpitagra", padaLen:12, pat:"LLLLLLGLGLGx" + "LLLLGLLGLGLGx",
+  meterNote:"Puṣpitāgrā: a longer, flowing metre for the grand finale — 12 then 13 syllables, opening with a run of short ones.",
+  hook:"The Sun himself says to Rāma: “Hurry!”",
+  tip:"A different, longer rhythm — let it flow. The last word <b>tvareti</b> is the Sun's own word: “Hurry!”",
+  lines:[
+   [["अथ","then","atha"],["रविरवदन्","the Sun spoke","raviḥ = the Sun · avadat = said"],["निरीक्ष्य","looking at","nirīkṣya = having looked"],["रामं","Rāma","rāma"],["मुदितमनाः","with a joyful mind","mudita = glad · manas = mind"],["परमं","supremely","paramam = most"],["प्रहृष्यमाणः","delighted","prahṛṣyamāṇa = rejoicing"]],
+   [["निशिचरपतिसंक्षयं","the end of the lord of the night-wanderers","niśi = at night · cara = wanderer (rākṣasa) · pati = lord · saṃkṣaya = destruction"],["विदित्वा","knowing","viditvā = having known"],["सुरगणमध्यगतो","standing among the hosts of gods","sura = god · gaṇa = host · madhya = middle · gata = gone"],["वचस्","the word","vacas = speech"],["त्वरेति","“Hurry!”","tvara = make haste · iti = (so he said)"]]
+  ],
+  en:"Then the Sun, standing among the hosts of gods, looked at Rāma with a joyful mind and, rejoicing greatly, knowing that the end of the lord of the rākṣasas was near, said: “Hurry!”",
+  ta:"அப்போது, தேவர் கூட்டத்தின் நடுவே நின்ற சூரியன், ராக்ஷச அரசனின் அழிவை அறிந்து, மிகவும் மகிழ்ந்த மனதுடன் ராமனை நோக்கி “விரைவாக!” என்று சொன்னார்."}
+];
+
+const ICONS = [
+  {t:"Rising sun", w:"समुद्यन्तं", v:"v6", d:"worship him as he rises", svg:'<path d="M4 24h26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M9 24a8 8 0 0 1 16 0" fill="none" stroke="currentColor" stroke-width="2"/><path d="M17 8v4M8 12l3 3M26 12l-3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'},
+  {t:"Seven horses", w:"सप्तसप्तिर्", v:"v11", d:"his chariot is drawn by seven", svg:'<path d="M5 22h20l3-6M8 22a3 3 0 1 0 0 .1M22 22a3 3 0 1 0 0 .1M6 10h10M6 14h12M6 18h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'},
+  {t:"A thousand rays", w:"सहस्रार्चिः", v:"v11", d:"sahasra = thousand", svg:'<circle cx="17" cy="17" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M17 3v6M17 25v6M3 17h6M25 17h6M7 7l4 4M23 23l4 4M27 7l-4 4M7 27l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'},
+  {t:"Destroyer of darkness", w:"तिमिरोन्मथनः", v:"v11", d:"churns away the night", svg:'<path d="M22 6a12 12 0 1 0 6 20A10 10 0 1 1 22 6z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 6l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'},
+  {t:"Master of the Vedas", w:"ऋग्यजुःसामपारगः", v:"v13", d:"Ṛg, Yajur and Sāma", svg:'<path d="M6 8h9a3 3 0 0 1 3 3v15a3 3 0 0 0-3-3H6zM28 8h-9a3 3 0 0 0-3 3v15a3 3 0 0 1 3-3h9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>'},
+  {t:"Twelve forms", w:"द्वादशात्मन्", v:"v15", d:"one Sun for each month", svg:'<circle cx="17" cy="17" r="12" fill="none" stroke="currentColor" stroke-width="2"/><g fill="currentColor"><circle cx="17" cy="8" r="1.4"/><circle cx="17" cy="26" r="1.4"/><circle cx="8" cy="17" r="1.4"/><circle cx="26" cy="17" r="1.4"/><circle cx="11" cy="11" r="1.4"/><circle cx="23" cy="23" r="1.4"/><circle cx="23" cy="11" r="1.4"/><circle cx="11" cy="23" r="1.4"/></g>'},
+  {t:"Wakes the lotuses", w:"पद्मप्रबोधाय", v:"v18", d:"lotuses open at sunrise", svg:'<path d="M17 6c-4 5-4 12 0 18 4-6 4-13 0-18zM17 24c-6-1-10-6-11-12 5 1 9 5 11 12zM17 24c6-1 10-6 11-12-5 1-9 5-11 12zM6 27h22" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>'},
+  {t:"Molten gold", w:"तप्तचामीकराभाय", v:"v21", d:"his glow", svg:'<path d="M8 12h18l-3 14H11z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 8c0-2 2-2 2-4M17 8c0-2 2-2 2-4M22 8c0-2 2-2 2-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>'},
+  {t:"Witness of the world", w:"लोकसाक्षिणे", v:"v21", d:"he sees everything", svg:'<path d="M3 17c4-7 10-10 14-10s10 3 14 10c-4 7-10 10-14 10S7 24 3 17z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="17" r="4" fill="none" stroke="currentColor" stroke-width="2"/>'},
+  {t:"Awake while we sleep", w:"जागर्ति", v:"v23", d:"dwelling in every being", svg:'<path d="M6 22c3 3 19 3 22 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="17" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="12" r="1.6" fill="currentColor"/>'}
+];
+const BENEFITS = [["सर्वशत्रुविनाशनम्","Victory over all enemies"],["जयावहं","Brings success"],["सर्वपापप्रणाशनम्","Removes sin"],["चिन्ताशोकप्रशमनम्","Calms worry and grief"],["आयुर्वर्धनम्","Long life"],["नावसीदति","You won't sink in hard times"]];
+const PARTS = [["Opening","dh","dh","Dhyānam to the Sun"],["The scene","v1","v2","Rāma exhausted; Agastya arrives"],["Agastya's promise","v3","v5","what this hymn will do"],["Who the Sun is","v6","v9","he is every god",1],["Names of the Sun","v10","v15","a garland of names",1],["Salutations","v16","v21","namo namaḥ…",1],["What the Sun does","v22","v24","creates, sustains, rains",1],["Phala-śruti","v25","v27","chant it three times"],["Rāma's victory","v28","v31","Rāma chants and goes to battle"]];
+const GODS = ["ब्रह्मा","विष्णुश्च","शिवः","स्कन्दः","प्रजापतिः","महेन्द्रो","धनदः","कालो","यमः","सोमो","पितरो","वसवः","ह्यश्विनौ","मरुतो","मनुः","वायुर्","वह्निः"];
+
+return {
+  key:"ah", titleDv:"आदित्यहृदयम्", verses:VERSES, icons:ICONS, benefits:BENEFITS,
+  meter:{name:"Anuṣṭubh", kind:"anushtubh",
+    intro:"Most verses have four quarters of 8 syllables — shown as two lines of 16. Syllables 5–6–7 keep a fixed swing: <b>short–long–long</b> in the first quarter, <b>short–long–short</b> in the second (outlined; dashed where Vālmīki bends it). The dhyānam and verse 31 use longer metres.",
+    quiz:{q:"Which metre are most verses of the Āditya Hṛdayam in?", opts:["Anuṣṭubh: 4 quarters of 8 syllables","Pañcacāmara: short–long × 8","Puṣpitāgrā throughout","Free verse with no fixed metre"],
+      why:"Anuṣṭubh, Vālmīki's own metre — the Rāmāyaṇa is almost all anuṣṭubh. Only the final verse switches to Puṣpitāgrā."}},
+  overview({R, esc, VERSES, goVerse}){
+    const idx = id => VERSES.findIndex(v => v.id === id);
+    document.getElementById("story").innerHTML = PARTS.map(([t, a, b, d, sun]) => { const n = idx(b) - idx(a) + 1;
+      return `<button class="chap ${sun ? "sun" : ""}" data-go="${a}"><div><span class="rng">${a === "dh" ? "dhyānam" : n > 1 ? `verses ${a.slice(1)}–${b.slice(1)}` : "verse " + a.slice(1)}</span><div class="bar" style="width:${Math.max(10, n * 12)}px"></div></div><div><b>${esc(t)}</b><span class="d">${esc(d)}</span></div></button>`; }).join("");
+    document.querySelectorAll("#story .chap").forEach(b => b.onclick = () => goVerse(b.dataset.go));
+    document.getElementById("namah").innerHTML = ["नमः पूर्वाय गिरये","जयाय जयभद्राय","नम उग्राय वीराय","नमः पद्मप्रबोधाय","तमोघ्नाय हिमघ्नाय","नमस्तमोऽभिनिघ्नाय"].map((s, i) => `${R(s)} <span class="muted" style="font-family:var(--f-mono);font-size:.7rem">${16 + i}</span>`).join("<br>");
+    document.getElementById("gods").innerHTML = GODS.map(w => `<span class="chip" style="font-family:var(--f-verse);font-weight:400">${R(w)}</span>`).join("");
+  }
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

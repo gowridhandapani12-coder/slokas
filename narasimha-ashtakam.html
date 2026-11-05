@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Narasimha Ashtakam</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+<style>
+.refrain{font-family:var(--f-verse);font-size:1.5rem;color:var(--terra-ink);line-height:1.5;overflow-wrap:anywhere}
+.beat{display:flex;gap:6px;flex-wrap:wrap;align-items:flex-end;margin:10px 0}
+.beat i{display:block;height:16px;border-radius:5px;background:var(--sage);width:16px}
+.beat i.G{background:var(--apricot);width:34px}
+.beat span{width:10px}
+</style>
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Azhagiya Maṇavāḷa Jīyar (as in her PDF) · Sanskrit · 8 verses + 1</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Narasimha Ashtakam</h1>
+          <p class="lead" style="margin-top:8px">Eight verses that each end with the Lord's name called twice — <i>narasiṃha, narasiṃha!</i> His mane like ten million moons, claws red with Hiraṇya's blood, Lakṣmī by his side, and a prayer that he will come on Garuḍa at our last moment.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+
+      <div class="facts">
+        <div class="fact"><span>Given by</span><b>Azhagiya Maṇavāḷa Jīyar</b><span>“anugṛhītam”, her PDF</span></div>
+        <div class="fact"><span>Deity</span><b>Lakṣmī Nṛsiṃha</b><span>with Ramā (Lakṣmī), verses 3, 5, 7</span></div>
+        <div class="fact"><span>Rhythm</span><b>14 syllables</b><span>long–short–short–short × 3, then long–long</span></div>
+        <div class="fact"><span>Refrain</span><b>narasiṃha! narasiṃha!</b><span>ends every verse</span></div>
+        <div class="fact"><span>On her plan</span><b>Tue · Thu</b><span>with the Śani stuti and Kāmāsikāṣṭakam</span></div>
+        <div class="fact"><span>Fruit</span><b>Verse 9</b><span>removes fear of sin, grants wishes</span></div>
+      </div>
+
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h2>One rhythm all the way</h2>
+          <p class="muted" style="margin:6px 0 6px">Every one of the 36 lines has the same beat. Clap on each long syllable:</p>
+          <div class="beat" id="beat"></div>
+          <p class="muted" style="font-size:.88rem">DUM-ta-ta-ta · DUM-ta-ta-ta · DUM-ta-ta-ta · DUM-DUM. Once your body knows this beat, the words fall into place by themselves.</p>
+          <div class="refrain" id="refrain" style="margin-top:10px"></div>
+        </div>
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each verse, in order.</p>
+          <div class="mn" id="openings"></div>
+          <div class="tip" style="margin-top:14px"><b>A story in the order.</b> 1–3 his form and the battle · 4 his feet on my head · 5 come at my last hour · 6–7 his ornaments and eyes in my mind · 8 his names · 9 the fruit.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>What it gives</h2>
+        <p class="muted" style="margin:6px 0 12px">Verse 9: whoever always recites this octet reaches his abode, and it:</p>
+        <div class="benefits" id="benefits"></div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+const PAT = "GLLLGLLLGLLLGx", NOTE = "14 syllables a quarter: long–short–short–short three times, then long–long. A dancing four-beat rhythm.";
+const R2 = [["नरसिंह","O Narasiṃha","nara = man · siṃha = lion"],["नरसिंह","O Narasiṃha!","said twice, calling out"]];
+const v = (id, n, hook, tip, lines, en, ta, extra) => Object.assign({id, n, label:"Verse " + n, hook, tip, lines, en, ta, meter:"nrsimha", pat:PAT, meterNote:NOTE}, extra || {});
+const VERSES = [
+ v("v1", "1", "Lovely with a mane like ten million moons — save me from the sea of life.",
+  "Starts with <b>śrīmad</b> and the moon: his mane shines like <b>śaśi-koṭi</b>, ten million full moons. Then the plea: <b>pālaya</b>, protect me.", [
+   [["श्रीमदकलङ्कपरिपूर्णशशिकोटि","of ten million spotless full moons","śrīmat = splendid · akalaṅka = spotless · paripūrṇa = full · śaśin = moon · koṭi = ten million"]],
+   [["श्रीधर","bearing the splendour","śrī = splendour · dhara = bearing"],["मनोहरसटापटलकान्त","O you lovely with your charming mane","manohara = charming · saṭā = mane · paṭala = mass · kānta = lovely"]],
+   [["पालय","protect","pālaya"],["कृपालय","O abode of mercy","kṛpā = mercy · ālaya = home"],["भवाम्बुधिनिमग्नं","(me,) sunk in the ocean of worldly life","bhava = worldly existence · ambudhi = ocean · nimagna = sunk"]],
+   [["दैत्यवरकाल","O death of the demon chief","daitya = demon · vara = chief · kāla = death"], ...R2]
+  ],
+  "O you who bear the splendour of ten million spotless full moons, lovely with your charming mane, O abode of mercy — protect me, sunk in the ocean of worldly life, O death of the demon chief, Narasiṃha! Narasiṃha!",
+  "கோடி களங்கமற்ற முழு நிலவுகளின் ஒளியைத் தாங்கி, அழகிய பிடரியால் மனம் கவர்பவரே, கருணையின் இருப்பிடமே, பிறவிக் கடலில் மூழ்கியிருக்கும் என்னைக் காப்பீராக — அசுரத் தலைவனுக்கு எமனானவரே, நரசிம்மா! நரசிம்மா!"),
+ v("v2", "2", "A forest fire to the sins of all who bow — protect me by your mercy alone.",
+  "Three <b>pā</b> words chime: <b>pāda</b> (feet) · <b>pātaki</b> (sinners) · <b>pātaka</b> (sin). He burns sin like a forest fire (<b>dava-anala</b>) and flies Garuḍa on his banner.", [
+   [["पादकमलावनतपातकिजनानां","of sinners who bow at your lotus feet","pāda = foot · kamala = lotus · avanata = bowed · pātakin = sinner · jana = people"]],
+   [["पातकदवानल","O forest fire to their sins","pātaka = sin · dava-anala = forest fire"],["पतत्रिवरकेतो","O you with Garuḍa on your banner","patatrin = bird · vara = best (Garuḍa) · ketu = banner"]],
+   [["भावन","O giver of being","bhāvana = who brings into being"],["परायण","O highest refuge","parāyaṇa = final refuge"],["भवार्तिहरया","(with mercy) that removes worldly suffering","bhava = worldly life · ārti = suffering · harā = removing"],["मां","me","mām"]],
+   [["पाहि","protect","pāhi"],["कृपयैव","by your mercy alone","kṛpayā = by mercy · eva = alone"], ...R2]
+  ],
+  "O forest fire to the sins of the sinners who bow at your lotus feet, O you who have Garuḍa on your banner, giver of being, highest refuge — protect me by your mercy alone, which removes worldly suffering, Narasiṃha! Narasiṃha!",
+  "உமது தாமரைப் பாதங்களில் வணங்கும் பாவிகளின் பாவங்களுக்குக் காட்டுத்தீ போன்றவரே, கருடக் கொடியுடையவரே, எல்லாவற்றையும் படைப்பவரே, இறுதிப் புகலிடமே — பிறவித் துன்பத்தைப் போக்கும் உமது கருணையால் மட்டுமே என்னைக் காப்பீராக, நரசிம்மா! நரசிம்மா!"),
+ v("v3", "3", "Chest red with the demon's blood like fresh kuṅkuma — salutations, lotus-seated one.",
+  "The battle verse, full of <b>paṅka</b> sounds: paṅkti (rows of claws) · paṅka (paste) · vipaṅkila (smeared) · paṅkaja (lotus). The blood on his chest looks like fresh <b>kuṅkuma</b>.", [
+   [["तुङ्गनखपङ्क्तिदलितासुरवरासृक्","the blood of the demon chief, torn by rows of long claws","tuṅga = long · nakha = claw · paṅkti = row · dalita = torn · asura-vara = demon chief · asṛk = blood"]],
+   [["पङ्कनवकुङ्कुमविपङ्किलमहोरः","whose broad chest is smeared with it like fresh kuṅkuma","paṅka = paste · nava = fresh · kuṅkuma = vermilion · vipaṅkila = smeared · mahā-uras = broad chest"]],
+   [["पण्डितनिधान","O treasure of the wise","paṇḍita = the wise · nidhāna = treasure"],["कमलालय","O home of Kamalā (Lakṣmī)","kamalā = Lakṣmī · ālaya = home"],["नमस्ते","salutations to you","namaḥ · te"]],
+   [["पङ्कजनिषण्ण","O you seated on a lotus","paṅkaja = lotus · niṣaṇṇa = seated"], ...R2]
+  ],
+  "O you whose broad chest is smeared, like fresh kuṅkuma paste, with the blood of the demon chief torn by your rows of long claws; O treasure of the wise, home of Lakṣmī, seated on a lotus — salutations to you, Narasiṃha! Narasiṃha!",
+  "உமது நீண்ட நகவரிசையால் பிளக்கப்பட்ட அசுரத் தலைவனின் ரத்தம், புதிய குங்குமக் குழம்பு போல் உமது அகன்ற மார்பில் பூசப்பட்டுள்ளது; ஞானிகளின் புதையலே, லக்ஷ்மியின் இருப்பிடமே, தாமரையில் அமர்ந்தவரே — உமக்கு நமஸ்காரம், நரசிம்மா! நரசிம்மா!"),
+ v("v4", "4", "Your feet, the jewel on the gods' heads — place them on my head.",
+  "Three places where his feet rest: the <b>heads of the gods</b> · the <b>hearts of yogis</b> · the <b>heads of the Vedas</b> (Upaniṣads) — and now, please, <b>on my head</b> (mama mūrdhni).", [
+   [["मौलिषु","on the heads","mauli = crown, head"],["विभूषणमिवामरवराणां","like an ornament, of the best of the gods","vibhūṣaṇa = ornament · iva = like · amara-vara = chief gods"]],
+   [["योगिहृदयेषु","in the hearts of yogis","yogin · hṛdaya = heart"],["च","and","ca"],["शिरस्सु","on the heads","śiras = head"],["निगमानाम्","of the Vedas","nigama = Veda (its 'heads' = the Upaniṣads)"]],
+   [["राजदरविन्दरुचिरं","lovely as a shining lotus","rājat = shining · aravinda = lotus · rucira = beautiful"],["पदयुगं","pair of feet","pada = foot · yuga = pair"],["ते","your","te"]],
+   [["देहि","place","dehi = give"],["मम","my","mama"],["मूर्ध्नि","on (my) head","mūrdhan = head"], ...R2]
+  ],
+  "Your pair of feet, lovely as shining lotuses — which are like an ornament on the heads of the chief gods, in the hearts of yogis and on the heads of the Vedas — place them on my head, Narasiṃha! Narasiṃha!",
+  "தேவர் தலைவர்களின் சிரசுகளில் அணிகலன் போலவும், யோகிகளின் இதயங்களிலும், வேதங்களின் சிரசுகளிலும் விளங்கும், ஒளிரும் தாமரை போன்ற உமது இரு பாதங்களை என் தலைமேல் வைப்பீராக, நரசிம்மா! நரசிம்மா!"),
+ v("v5", "5", "At my last hour, when my senses fail, come with Lakṣmī, riding Garuḍa.",
+  "The tender verse: <b>mad-antima-daśāyām</b> — “at my final hour”. <b>ehi</b> — “come!” — with <b>Ramā</b>, riding the lord of birds.", [
+   [["वारिजविलोचन","O lotus-eyed one","vārija = lotus (born in water) · vilocana = eye"],["मदन्तिमदशायां","at my last moment","mat = my · antima = final · daśā = state"]],
+   [["क्लेशविवशीकृतसमस्तकरणायाम्","when all my senses are overcome by pain","kleśa = pain · vivaśīkṛta = made helpless · samasta = all · karaṇa = sense"]],
+   [["एहि","come","ehi"],["रमया","with Ramā (Lakṣmī)","ramā"],["सह","together","saha"],["शरण्य","O refuge","śaraṇya = one to take refuge in"],["विहगानां","of the birds","vihaga = bird"]],
+   [["नाथमधिरुह्य","riding their lord (Garuḍa)","nātha = lord · adhiruhya = mounting"], ...R2]
+  ],
+  "O lotus-eyed one, at my last moment, when all my senses are overcome by pain — come, O refuge, together with Lakṣmī, riding Garuḍa, the lord of birds, Narasiṃha! Narasiṃha!",
+  "தாமரைக் கண்ணரே, என் இறுதிக் காலத்தில், வலியால் எல்லாப் புலன்களும் செயலிழக்கும்போது — புகலிடமே, லக்ஷ்மியுடன் பறவைகளின் அரசனான கருடன் மீது ஏறி வருவீராக, நரசிம்மா! நரசிம்மா!"),
+ v("v6", "6", "Crown, necklace, garland, girdle, earrings — may that adorned form shine in my mind.",
+  "A head-to-waist list of <b>ornaments</b>: kirīṭa (crown) · hāra (necklace) · vanamālā (garland) · raśanā (girdle) · makara-kuṇḍala (fish earrings) · maṇīndra (the great jewel).", [
+   [["हाटककिरीटवरहारवनमाला","golden crown, fine necklace and forest garland","hāṭaka = gold · kirīṭa = crown · vara-hāra = fine necklace · vanamālā = garland of forest flowers"]],
+   [["ताररशनामकरकुण्डलमणीन्द्रैः","shining girdle, fish-shaped earrings and great jewels","tāra = shining · raśanā = girdle · makara-kuṇḍala = fish earrings · maṇi-indra = finest gem (Kaustubha)"]],
+   [["भूषितमशेषनिलयं","adorned, the home of all things","bhūṣita = adorned · aśeṣa = all · nilaya = abode"],["तव","your","tava"],["वपुर्","form","vapus = body"],["मे","my","me"]],
+   [["चेतसि","in (my) mind","cetas = mind"],["चकास्तु","may it shine","cakāstu = let it shine"], ...R2]
+  ],
+  "Your form, the home of all things, adorned with a golden crown, a fine necklace, a garland of forest flowers, a shining girdle, fish-shaped earrings and great jewels — may it shine in my mind, Narasiṃha! Narasiṃha!",
+  "பொன் கிரீடம், சிறந்த ஹாரம், வனமாலை, ஒளிரும் ஒட்டியாணம், மகர குண்டலங்கள், சிறந்த ரத்தினங்கள் ஆகியவற்றால் அலங்கரிக்கப்பட்ட, அனைத்தின் இருப்பிடமான உமது திருமேனி என் மனதில் ஒளிரட்டும், நரசிம்மா! நரசிம்மா!"),
+ v("v7", "7", "Eyes of moon, sun and fire, home of Ramā — may my mind delight in you.",
+  "Same three eyes as the Kāmāsikāṣṭakam: <b>indu · ravi · pāvaka</b> — moon, sun, fire. Rhymes: <b>indu · mandira · sundara · nandita</b>.", [
+   [["इन्दुरविपावकविलोचन","O you whose eyes are moon, sun and fire","indu = moon · ravi = sun · pāvaka = fire · vilocana = eye"],["रमायाः","of Ramā","ramā = Lakṣmī"]],
+   [["मन्दिर","O home","mandira = dwelling"],["महाभुजलसद्वररथाङ्ग","with the fine discus shining in your mighty arm","mahā-bhuja = mighty arm · lasat = shining · vara = fine · rathāṅga = discus"]],
+   [["सुन्दर","O beautiful one","sundara"],["चिराय","for ever","cirāya = for long"],["रमतां","may (it) delight","ramatām"],["त्वयि","in you","tvayi"],["मनो","mind","manas"],["मे","my","me"]],
+   [["नन्दितसुरेश","O you who gladden the lord of the gods","nandita = gladdened · sura-īśa = Indra"], ...R2]
+  ],
+  "O you whose eyes are the moon, sun and fire, home of Lakṣmī, with the fine discus shining in your mighty arm, O beautiful one who gladdens the lord of the gods — may my mind delight in you for ever, Narasiṃha! Narasiṃha!",
+  "சந்திரன், சூரியன், அக்னி ஆகியவற்றைக் கண்களாகக் கொண்டவரே, லக்ஷ்மியின் இருப்பிடமே, வலிய கரத்தில் ஒளிரும் சக்கரம் ஏந்தியவரே, அழகரே, தேவேந்திரனை மகிழ்விப்பவரே — என் மனம் என்றும் உம்மிடம் மகிழட்டும், நரசிம்மா! நரசிம்மா!"),
+ v("v8", "8", "Mādhava, Mukunda, Madhusūdana… be the refuge of those who bow.",
+  "A garland of names: <b>Mādhava · Mukunda · Madhusūdana · Murāri · Vāmana · Nṛsiṃha</b> — four starting with “m”. Then: may I spend my time (<b>nayeyaṃ kālam</b>) with you.", [
+   [["माधव","O Mādhava","consort of Mā (Lakṣmī)"],["मुकुन्द","O Mukunda","giver of liberation"],["मधुसूदन","O slayer of Madhu","madhu · sūdana = slayer"],["मुरारे","O enemy of Mura","mura · ari = enemy"]],
+   [["वामन","O Vāmana","the dwarf avatāra"],["नृसिंह","O Nṛsiṃha","man-lion"],["शरणं","refuge","śaraṇa"],["भव","be","bhava"],["नतानाम्","of those who bow","nata = bowed"]],
+   [["कामद","O granter of wishes","kāma · da = giver"],["घृणिन्","O compassionate one","ghṛṇin = full of compassion"],["निखिलकारण","O cause of everything","nikhila = all · kāraṇa = cause"],["नयेयं","may I spend","nayeyam = may I pass"]],
+   [["कालम्","(my) time","kāla"],["अमरेश","O lord of the immortals","amara = god · īśa = lord"], ...R2]
+  ],
+  "O Mādhava, Mukunda, Madhusūdana, Murāri, Vāmana, Nṛsiṃha — be the refuge of those who bow. O granter of wishes, compassionate one, cause of everything, lord of the gods — may I spend my time with you, Narasiṃha! Narasiṃha!",
+  "மாதவா, முகுந்தா, மதுசூதனா, முராரி, வாமனா, நரசிம்மா — வணங்குபவர்களுக்குப் புகலிடமாவீராக. விருப்பங்களை அருள்பவரே, கருணையாளரே, எல்லாவற்றுக்கும் காரணமானவரே, தேவர் தலைவரே — என் காலத்தை உம்முடன் கழிப்பேனாக, நரசிம்மா! நரசிம்மா!"),
+ v("p9", "9", "This octet removes fear of sin and grants wishes; the reciter reaches his abode.",
+  "Two “-ghna” (destroyer) words: <b>bhaya-ghnam</b> (fear) and <b>ripu-ghnam</b> (enemies). Ends as always: narasiṃha narasiṃha.", [
+   [["अष्टकमिदं","this octet","aṣṭaka = group of eight · idam = this"],["सकलपातकभयघ्नं","removes the fear of all sins","sakala = all · pātaka = sin · bhaya = fear · ghna = destroying"]],
+   [["कामदम्","grants wishes","kāma · da"],["अशेषदुरितामयरिपुघ्नम्","destroys all sins, illnesses and enemies","aśeṣa = all · durita = sin · āmaya = illness · ripu = enemy · ghna = destroying"]],
+   [["यः","whoever","yaḥ"],["पठति","recites","paṭhati"],["सन्ततम्","always","santatam"],["अशेषनिलयं","the home of all","aśeṣa · nilaya"],["ते","your","te"]],
+   [["गच्छति","reaches","gacchati"],["पदं","abode","pada = place, state"],["स","that person","saḥ"], ...R2]
+  ],
+  "This octet removes the fear of all sins, grants wishes, and destroys every sin, illness and enemy. Whoever always recites it reaches your abode, the home of all, Narasiṃha! Narasiṃha!",
+  "இந்த அஷ்டகம் எல்லாப் பாவ அச்சத்தையும் போக்கி, விருப்பங்களை அருளி, எல்லாப் பாவம், நோய், பகை ஆகியவற்றை அழிக்கும். இதை எப்போதும் படிப்பவர் அனைத்தின் இருப்பிடமான உமது பதத்தை அடைவார், நரசிம்மா! நரசிம்மா!",
+  {kind:"phala", short:"Phala-śruti", label:"Phala 9"})
+];
+const BENEFITS = [["सकलपातकभयघ्नं","No fear of sin"],["कामदम्","Wishes granted"],["अशेषदुरितामयरिपुघ्नम्","Sins, illness and enemies removed"],["गच्छति","Reaches his abode"]];
+return {
+  key:"nas", titleDv:"श्रीनृसिंहाष्टकम्", verses:VERSES, benefits:BENEFITS,
+  meter:{name:"One dancing beat", kind:"nrsimha", hook:NOTE,
+    intro:"Every line has 14 syllables in one repeating beat: <b>long–short–short–short</b> three times, then <b>long–long</b>. All 36 lines follow it exactly.",
+    quiz:{q:"What is the beat of every line of this aṣṭakam?", opts:["long–short–short–short × 3, then long–long","short–long × 8","8 syllables a quarter (anuṣṭubh)","It changes every verse"],
+      why:"DUM-ta-ta-ta three times, then DUM-DUM — 14 syllables, the same in all 36 lines."}},
+  overview({R}){
+    document.getElementById("refrain").innerHTML = R("नरसिंह नरसिंह");
+    document.getElementById("beat").innerHTML = [..."GLLLGLLLGLLLGG"].map((c, i) => (i && i % 4 === 0 ? "<span></span>" : "") + `<i class="${c}"></i>`).join("");
+  }
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ganapathy Atharvashirsham</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+<style>.refrain{font-family:var(--f-verse);font-size:1.15rem;color:var(--terra-ink);line-height:1.7;overflow-wrap:anywhere}</style>
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Atharva Veda · Upaniṣad · Vedic Sanskrit prose · śānti + 14 mantras + śānti</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Ganapathy Atharvashirsham</h1>
+          <p class="lead" style="margin-top:8px">“The head of the Atharva Veda” — a short Upaniṣad to Gaṇapati. It speaks to him directly: <i>tvam eva pratyakṣaṃ tattvam asi</i>, “you alone are the truth made visible.” Then it gives his mantra <b>gaṃ</b>, his Gāyatrī, his picture, and what chanting it brings.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><span>Source</span><b>Atharva Veda</b><span>a Gaṇapati Upaniṣad</span></div>
+        <div class="fact"><span>Ṛṣi</span><b>Gaṇaka</b><span>named in mantra 7</span></div>
+        <div class="fact"><span>Metre</span><b>Nicṛd Gāyatrī</b><span>Vedic prose, with two verse passages</span></div>
+        <div class="fact"><span>Mantra</span><b>ॐ गं</b><span>om gaṃ gaṇapataye namaḥ</span></div>
+        <div class="fact"><span>Source</span><b>Her PDF</b><span>sanskritdocuments.org, Tamil script</span></div>
+        <div class="fact"><span>On her plan</span><b>Wednesday</b><span>with the other Gaṇeśa hymns</span></div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the Upaniṣad</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h2>Lines that come back</h2>
+          <p class="muted" style="margin:6px 0 12px">Learn these and half the text is learnt:</p>
+          <div class="refrain" id="refrains"></div>
+        </div>
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each mantra, in order.</p>
+          <div class="mn" id="openings"></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Reading this text</h2>
+        <p class="muted" style="margin:6px 0 12px">The Upaniṣad is prose, so the page breaks each mantra into short lines at its natural pauses (her book's | marks). There is no syllable count to check, except in the opening verse and the dhyāna verses of mantra 9, which are anuṣṭubh.</p>
+        <div class="tip"><b>Svaras.</b> Her PDF prints the text without svara marks, so none are shown here. If she chants it with svaras, learn them by ear from her teacher (the Sri Suktam page shows how the marks look). Her book writes <b>ꣳ</b> in <i>tuṣṭuvāꣳsas</i>; the page writes it ṃ.</div>
+      </div>
+      <div class="card">
+        <h2>What it gives</h2>
+        <p class="muted" style="margin:6px 0 12px">From the phala-śruti, mantras 11–14:</p>
+        <div class="benefits" id="benefits"></div>
+      </div>
+      <div class="tip"><b>About this page.</b> The words follow her PDF (sanskritdocuments.org, Tamil script); its text extracts imperfectly, so it was read against the standard text. Where books differ the page follows hers, e.g. <i>brahmādyācaraṇam</i> (12; many read <i>brahmādyāvaraṇam</i>). Please compare with her book. The Tamil meanings are drafts.</div>
+</template>
+<script>
+const SLOKA = (() => {
+const W = s => s.split(";").reduce((a, x) => { if (!x.includes("|")) { a[a.length - 1][1] += ";" + x; return a; } a.push(x.split("|").map(y => y.trim())); return a; }, [])
+  .map(([dv, g, b]) => [dv, g, b || g]);
+const VED = "Vedic prose: the lines follow the mantra's pauses, not a metre, so there is no syllable check.";
+const m = (n, part, hook, lines, en, ta, extra) => Object.assign({id:"m" + n, n:String(n), label:"Mantra " + n, part, hook, lines:lines.map(W), en, ta, meter:"vedic", meterNote:VED}, extra || {});
+const PH = "Phala-śruti";
+const SHANTI = [
+  "भद्रं|auspicious things|bhadra; कर्णेभिः|with our ears|karṇa; शृणुयाम|may we hear|śṛṇuyāma; देवाः|O gods|deva",
+  "भद्रं|auspicious things|bhadra; पश्येमाक्षभिर्यजत्राः|may we see with our eyes, O worshipful ones|paśyema · akṣabhiḥ · yajatra",
+  "स्थिरैरङ्गैस्तुष्टुवांसस्तनूभिः|with steady limbs and bodies, praising|sthiraiḥ · aṅgaiḥ · tuṣṭuvāṃsaḥ · tanūbhiḥ",
+  "व्यशेम|may we enjoy|vyaśema; देवहितं|the life given by the gods|deva · hita; यदायुः|which is our span of life|yat · āyuḥ",
+  "स्वस्ति|well-being|svasti; न|to us|naḥ; इन्द्रो|may Indra|indra; वृद्धश्रवाः|of great fame|vṛddha · śravas",
+  "स्वस्ति|well-being|svasti; नः|to us|naḥ; पूषा|may Pūṣan|pūṣan; विश्ववेदाः|the all-knowing|viśva · vedas",
+  "स्वस्ति|well-being|svasti; नस्तार्क्ष्यो|to us, may Tārkṣya (Garuḍa)|naḥ · tārkṣya; अरिष्टनेमिः|whose wheel is unharmed|ariṣṭa · nemi",
+  "स्वस्ति|well-being|svasti; नो|to us|naḥ; बृहस्पतिर्दधातु|may Bṛhaspati grant|bṛhaspatiḥ · dadhātu",
+  "ओं|Om|om; शान्तिः|peace|śānti; शान्तिः|peace|śānti; शान्तिः|peace|śānti"];
+const SH_EN = "O gods, may we hear auspicious things with our ears; O worshipful ones, may we see auspicious things with our eyes. Praising you with steady limbs and bodies, may we enjoy the span of life the gods have given. May Indra of great fame give us well-being; may Pūṣan, who knows all, give us well-being; may Tārkṣya, whose wheel is never harmed, give us well-being; may Bṛhaspati grant us well-being. Om, peace, peace, peace.";
+const SH_TA = "தேவர்களே, காதுகளால் நல்லதையே கேட்போமாக; கண்களால் நல்லதையே காண்போமாக. உறுதியான அங்கங்களுடன் உங்களைத் துதித்து, தேவர்கள் தந்த ஆயுளை அனுபவிப்போமாக. புகழ்மிக்க இந்திரன், எல்லாம் அறிந்த பூஷா, தார்க்ஷ்யன் (கருடன்), பிருஹஸ்பதி ஆகியோர் நமக்கு நலம் அருளட்டும். ஓம் சாந்தி சாந்தி சாந்தி.";
+const VERSES = [
+ {id:"o1", n:"·", label:"Opening verse", short:"Opening verse", kind:"dhyana", part:"Opening", meter:"anushtubh",
+  hook:"Bowing to him, sages reach his state without obstacle — I am that all-pervading Brahman.",
+  lines:[W("यं|whom|yam; नत्वा|having bowed to|natvā; मुनयः|the sages|muni; सर्वे|all|sarva; निर्विघ्नं|without obstacle|nirvighnam; यान्ति|reach|yānti; तत्पदम्|that state|tat · pada"),
+         W("गणेशोपनिषद्वेद्यं|known through the Gaṇeśa Upaniṣad|gaṇeśa · upaniṣad · vedya; तद्ब्रह्मैवास्मि|that Brahman I am|tat · brahma · eva · asmi; सर्वगम्|all-pervading|sarva · ga")],
+  en:"Bowing to whom all sages reach that state without obstacle — that Brahman, known through the Gaṇeśa Upaniṣad, all-pervading, I am.",
+  ta:"எவனை வணங்கி முனிவர்கள் அனைவரும் தடையின்றி அந்த நிலையை அடைகிறார்களோ, கணேச உபநிஷத்தால் அறியப்படும் எங்கும் நிறைந்த அந்தப் பிரம்மமே நான்.",
+  tip:"An anuṣṭubh verse said before the śānti (checked)."},
+ {id:"s1", n:"·", label:"Śānti", short:"Śānti", kind:"dhyana", part:"Opening", meter:"vedic", meterNote:"The Atharva Veda śānti mantra — the same one opens the Praśna and Muṇḍaka Upaniṣads.",
+  hook:"May we hear and see only good; may the gods give us well-being.", lines:SHANTI.map(W), en:SH_EN, ta:SH_TA,
+  tip:"Four <b>svasti</b> lines: Indra, Pūṣan, Tārkṣya, Bṛhaspati."},
+ m(1, "You alone", "You alone are the visible truth — you alone create, hold and destroy; you are Brahman, the Self.", [
+  "हरिः|Hari|hariḥ; ओं|Om|om; नमस्ते|salutations to you|namaḥ · te; गणपतये|O Gaṇapati|gaṇa · pati = lord of the hosts",
+  "त्वमेव|you alone|tvam · eva; प्रत्यक्षं|visible|pratyakṣa; तत्त्वमसि|are the truth|tattvam · asi",
+  "त्वमेव|you alone|tvam · eva; केवलं|only|kevalam; कर्तासि|are the creator|kartā · asi",
+  "त्वमेव|you alone|tvam · eva; केवलं|only|kevalam; धर्तासि|are the sustainer|dhartā · asi",
+  "त्वमेव|you alone|tvam · eva; केवलं|only|kevalam; हर्तासि|are the destroyer|hartā · asi",
+  "त्वमेव|you alone|tvam · eva; सर्वं|all|sarvam; खल्विदं|indeed this|khalu · idam; ब्रह्मासि|Brahman you are|brahma · asi",
+  "त्वं|you|tvam; साक्षादात्मासि|are the Self itself|sākṣāt · ātmā · asi; नित्यम्|always|nityam"],
+  "Hariḥ Om. Salutations to you, Gaṇapati. You alone are the truth made visible. You alone are the creator, you alone the sustainer, you alone the destroyer. You alone are all this — Brahman. You are the Self itself, always.",
+  "ஹரி: ஓம். கணபதியே, உனக்கு நமஸ்காரம். நீயே கண்கூடான உண்மை. நீயே படைப்பவன், நீயே காப்பவன், நீயே அழிப்பவன். இவை அனைத்துமான பிரம்மம் நீயே. நீயே என்றும் சாட்சாத் ஆத்மா.",
+  {tip:"Three lines run <b>tvam eva kevalaṃ kartāsi · dhartāsi · hartāsi</b> — creator, sustainer, destroyer."}),
+ m(2, "You alone", "I speak what is right; I speak what is true.", [
+  "ऋतं|what is right|ṛta; वच्मि|I speak|vacmi",
+  "सत्यं|what is true|satya; वच्मि|I speak|vacmi"],
+  "I speak what is right; I speak what is true.",
+  "நான் நேர்மையானதையே பேசுகிறேன்; உண்மையையே பேசுகிறேன்."),
+ m(3, "Protect me", "Protect me — the speaker, the listener, the giver, the teacher, the pupil — from every side.", [
+  "अव|protect|ava; त्वं|you|tvam; माम्|me|mām",
+  "अव|protect|ava; वक्तारम्|the speaker|vaktṛ; अव|protect|ava; श्रोतारम्|the listener|śrotṛ",
+  "अव|protect|ava; दातारम्|the giver|dātṛ; अव|protect|ava; धातारम्|the one who holds (it)|dhātṛ",
+  "अवानूचानमव|protect the teacher; protect|ava · anūcāna = the learned teacher · ava; शिष्यम्|the pupil|śiṣya",
+  "अव|protect|ava; पश्चात्तात्|from behind|paścāttāt; अव|protect|ava; पुरस्तात्|from the front|purastāt",
+  "अवोत्तरात्तात्|protect from the north (left)|ava · uttarāttāt; अव|protect|ava; दक्षिणात्तात्|from the south (right)|dakṣiṇāttāt",
+  "अव|protect|ava; चोर्ध्वात्तात्|and from above|ca · ūrdhvāttāt; अवाधरात्तात्|protect from below|ava · adharāttāt",
+  "सर्वतो|from all sides|sarvataḥ; मां|me|mām; पाहि|protect|pāhi; पाहि|protect|pāhi; समन्तात्|all around|samantāt"],
+  "Protect me. Protect the speaker; protect the listener. Protect the giver; protect the one who holds it. Protect the teacher; protect the pupil. Protect me from behind and in front, from the left and the right, from above and below. Protect, protect me from all sides, all around.",
+  "என்னைக் காப்பாய். சொல்பவனைக் காப்பாய்; கேட்பவனைக் காப்பாய். கொடுப்பவனைக் காப்பாய்; தாங்குபவனைக் காப்பாய். ஆசிரியனைக் காப்பாய்; சீடனைக் காப்பாய். பின்னும் முன்னும், இடமும் வலமும், மேலும் கீழும் காப்பாய். எல்லாப் பக்கங்களிலும் என்னைக் காப்பாய், காப்பாய்.",
+  {tip:"Count the <b>ava</b> (protect) — seven people (me, speaker, listener, giver, holder, teacher, pupil), then six directions, then <b>pāhi pāhi</b>."}),
+ m(4, "What you are", "You are speech and awareness, bliss and Brahman — Being-Awareness-Bliss, without a second.", [
+  "त्वं|you|tvam; वाङ्मयस्त्वं|are made of speech; you|vāk · maya · tvam; चिन्मयः|are made of awareness|cit · maya",
+  "त्वमानन्दमयस्त्वं|you are made of bliss; you|tvam · ānanda · maya · tvam; ब्रह्ममयः|are made of Brahman|brahma · maya",
+  "त्वं|you|tvam; सच्चिदानन्दाद्वितीयोऽसि|are Being-Awareness-Bliss, without a second|sat · cit · ānanda · advitīyaḥ · asi",
+  "त्वं|you|tvam; प्रत्यक्षं|visible|pratyakṣa; ब्रह्मासि|Brahman are|brahma · asi",
+  "त्वं|you|tvam; ज्ञानमयो|are made of knowledge|jñāna · maya; विज्ञानमयोऽसि|are made of wisdom|vijñāna · mayaḥ · asi"],
+  "You are made of speech; you are made of awareness. You are made of bliss; you are made of Brahman. You are Being-Awareness-Bliss, without a second. You are Brahman made visible. You are knowledge and wisdom.",
+  "நீ வாக்கு மயமானவன், சித் மயமானவன், ஆனந்த மயமானவன், பிரம்ம மயமானவன். நீ இரண்டற்ற சச்சிதானந்தம். நீ கண்கூடான பிரம்மம். நீ ஞான மயமானவன், விஞ்ஞான மயமானவன்.",
+  {tip:"A <b>-maya</b> (made of) chain: vāṅ · cin · ānanda · brahma · jñāna · vijñāna."}),
+ m(5, "What you are", "This whole world is born from you, stands in you, dissolves into you — you are the five elements.", [
+  "सर्वं|all|sarvam; जगदिदं|this world|jagat · idam; त्वत्तो|from you|tvattaḥ; जायते|is born|jāyate",
+  "सर्वं|all|sarvam; जगदिदं|this world|jagat · idam; त्वत्तस्तिष्ठति|stands through you|tvattaḥ · tiṣṭhati",
+  "सर्वं|all|sarvam; जगदिदं|this world|jagat · idam; त्वयि|into you|tvayi; लयमेष्यति|will dissolve|layam · eṣyati",
+  "सर्वं|all|sarvam; जगदिदं|this world|jagat · idam; त्वयि|in you|tvayi; प्रत्येति|returns|pratyeti",
+  "त्वं|you|tvam; भूमिरापोऽनलोऽनिलो|are earth, water, fire, wind|bhūmiḥ · āpaḥ · analaḥ · anilaḥ; नभः|and space|nabhas",
+  "त्वं|you|tvam; चत्वारि|the four|catvāri; वाक्पदानि|levels of speech|vāk · pada"],
+  "This whole world is born from you. This whole world stands through you. This whole world will dissolve into you. This whole world returns to you. You are earth, water, fire, wind and space. You are the four levels of speech.",
+  "இவ்வுலகம் முழுதும் உன்னிடமிருந்து தோன்றுகிறது, உன்னால் நிலைக்கிறது, உன்னில் ஒடுங்கும், உன்னிடமே திரும்புகிறது. நீயே நிலம், நீர், நெருப்பு, காற்று, ஆகாயம். நீயே வாக்கின் நான்கு நிலைகள்.",
+  {tip:"Four lines begin <b>sarvaṃ jagad idam</b> — born · stands · dissolves · returns."}),
+ m(6, "What you are", "Beyond the three guṇas, states, bodies and times; you dwell in the mūlādhāra; you are every god.", [
+  "त्वं|you|tvam; गुणत्रयातीतः|are beyond the three guṇas|guṇa · traya · atīta",
+  "त्वमवस्थात्रयातीतः|you are beyond the three states (waking, dream, sleep)|tvam · avasthā · traya · atīta",
+  "त्वं|you|tvam; देहत्रयातीतः|are beyond the three bodies|deha · traya · atīta",
+  "त्वं|you|tvam; कालत्रयातीतः|are beyond the three times|kāla · traya · atīta",
+  "त्वं|you|tvam; मूलाधारस्थितोऽसि|dwell in the mūlādhāra|mūlādhāra · sthitaḥ · asi; नित्यम्|always|nityam",
+  "त्वं|you|tvam; शक्तित्रयात्मकः|are the three powers|śakti · traya · ātmaka",
+  "त्वां|you|tvām; योगिनो|the yogis|yogin; ध्यायन्ति|meditate on|dhyāyanti; नित्यम्|always|nityam",
+  "त्वं|you|tvam; ब्रह्मा|are Brahmā|brahmā; त्वं|you|tvam; विष्णुस्त्वं|are Viṣṇu; you|viṣṇuḥ · tvam; रुद्रस्त्वम्|are Rudra; you|rudraḥ · tvam",
+  "इन्द्रस्त्वम्|are Indra; you|indraḥ · tvam; अग्निस्त्वं|are Agni; you|agniḥ · tvam; वायुस्त्वं|are Vāyu; you|vāyuḥ · tvam; सूर्यस्त्वं|are Sūrya; you|sūryaḥ · tvam; चन्द्रमास्त्वं|are the Moon; you|candramāḥ · tvam",
+  "ब्रह्म|are Brahman|brahma; भूर्भुवः|earth, sky|bhūḥ · bhuvaḥ; स्वरोम्|heaven, Om|svaḥ · om"],
+  "You are beyond the three guṇas, beyond the three states, beyond the three bodies, beyond the three times. You dwell always in the mūlādhāra. You are the three powers. Yogis meditate on you always. You are Brahmā, Viṣṇu, Rudra, Indra, Agni, Vāyu, the Sun and the Moon; you are Brahman — earth, sky, heaven and Om.",
+  "நீ மூன்று குணங்கள், மூன்று நிலைகள், மூன்று உடல்கள், மூன்று காலங்கள் கடந்தவன். நீ எப்போதும் மூலாதாரத்தில் இருப்பவன். நீ மூன்று சக்திகளின் வடிவம். யோகிகள் உன்னை எப்போதும் தியானிக்கிறார்கள். நீயே பிரம்மா, விஷ்ணு, ருத்ரன், இந்திரன், அக்னி, வாயு, சூரியன், சந்திரன்; நீயே பிரம்மம் — பூ:, புவ:, ஸுவ:, ஓம்.",
+  {tip:"A <b>-traya-atīta</b> (beyond the three) chain: guṇa · avasthā · deha · kāla."}),
+ m(7, "The mantra", "How the mantra is built: g, then a, then the nasal ṃ — gaṃ. Its seer, metre and deity.", [
+  "गणादिं|the first letter of “gaṇa” (g)|gaṇa · ādi; पूर्वमुच्चार्य|saying first|pūrvam · uccārya; वर्णादिंस्तदनन्तरम्|then the first of the letters (a)|varṇa · ādi · tat · anantaram",
+  "अनुस्वारः|the anusvāra (ṃ)|anusvāra; परतरः|after that|paratara",
+  "अर्धेन्दुलसितम्|shining with the half-moon|ardha · indu · lasita",
+  "तारेण|with Om|tāra = the syllable Om; ऋद्धम्|enriched|ṛddha",
+  "एतत्तव|this is your|etat · tava; मनुस्वरूपम्|mantra-form|manu = mantra · svarūpa",
+  "गकारः|the letter g|ga-kāra; पूर्वरूपम्|is the first form|pūrva · rūpa",
+  "अकारो|the letter a|a-kāra; मध्यमरूपम्|is the middle form|madhyama · rūpa",
+  "अनुस्वारश्चान्त्यरूपम्|the anusvāra is the last form|anusvāraḥ · ca · antya · rūpa",
+  "बिन्दुरुत्तररूपम्|the bindu is the higher form|binduḥ · uttara · rūpa",
+  "नादः|the sound|nāda; सन्धानम्|is the joining|sandhāna",
+  "संहिता|the union|saṃhitā; सन्धिः|is the meeting|sandhi",
+  "सैषा|this is the|sā · eṣā; गणेशविद्या|Gaṇeśa vidyā|gaṇeśa · vidyā",
+  "गणक|Gaṇaka|gaṇaka; ऋषिः|is the seer|ṛṣi; निचृद्गायत्री|nicṛd gāyatrī|nicṛt · gāyatrī; छन्दः|is the metre|chandas",
+  "महागणपतिर्देवता|Mahāgaṇapati is the deity|mahā · gaṇapatiḥ · devatā",
+  "ओं|Om|om; गं|gaṃ|gaṃ = the seed syllable; गणपतये|to Gaṇapati|gaṇapati; नमः|salutations|namaḥ"],
+  "First say the first letter of “gaṇa” (g), then the first of the letters (a), then the anusvāra, shining with the half-moon, joined with Om. This is the form of your mantra: g is the first form, a the middle form, the anusvāra the last form, the bindu the higher form; the sound joins them; their union is the meeting. This is the Gaṇeśa-vidyā. Its seer is Gaṇaka, its metre nicṛd gāyatrī, its deity Mahāgaṇapati. Om gaṃ gaṇapataye namaḥ.",
+  "முதலில் ‘கண’வின் முதலெழுத்தை (க), பின் எழுத்துகளின் முதலான ‘அ’வை, பின் அனுஸ்வாரத்தைச் சொல்லி, அரை நிலவோடு ஒளிர, ஓங்காரத்தோடு சேர்ப்பது உன் மந்திர வடிவம். ‘க’ முதல் வடிவம், ‘அ’ நடு வடிவம், அனுஸ்வாரம் இறுதி வடிவம், பிந்து மேலான வடிவம்; நாதம் இணைப்பு; சம்ஹிதை சந்தி. இதுவே கணேச வித்யை. ரிஷி கணகர், சந்தஸ் நிச்ருத் காயத்ரீ, தேவதை மஹாகணபதி. ஓம் கம் கணபதயே நம:.",
+  {tip:"The whole mantra built in front of you: <b>g + a + ṃ = gaṃ</b>, with Om. Ends <b>om gaṃ gaṇapataye namaḥ</b>."}),
+ m(8, "Gāyatrī", "Gaṇapati Gāyatrī: we know the one-tusked one; we meditate on the curved trunk.", [
+  "एकदन्ताय|the one-tusked one|eka · danta; विद्महे|we know|vidmahe",
+  "वक्रतुण्डाय|the one with the curved trunk|vakra · tuṇḍa; धीमहि|we meditate on|dhīmahi",
+  "तन्नो|may he, us|tat · naḥ; दन्तिः|the tusked one|dantin; प्रचोदयात्|inspire|pracodayāt"],
+  "We know the one-tusked one; we meditate on the one with the curved trunk. May that tusked one inspire us.",
+  "ஒற்றைத் தந்தனை அறிவோம்; வளைந்த துதிக்கையனைத் தியானிப்போம். அந்தத் தந்தி நம்மை வழிநடத்தட்டும்.",
+  {meterNote:"Gāyatrī: three quarters of about 8 syllables.", tip:"The Gāyatrī pattern: <b>vidmahe · dhīmahi · pracodayāt</b> — the same shape as the Lakṣmī Gāyatrī in her Śrī Sūktam."}),
+ m(9, "Dhyānam", "One tusk, four hands — noose, goad, tusk and boon; mouse on his banner; red, big-bellied, fan-eared.", [
+  "एकदन्तं|one-tusked|eka · danta; चतुर्हस्तं|four-handed|catur · hasta; पाशमङ्कुशधारिणम्|holding the noose and the goad|pāśam · aṅkuśa · dhārin",
+  "रदं|the tusk|rada; च|and|ca; वरदं|the boon-gesture|vara · da; हस्तैर्बिभ्राणं|holding in his hands|hastaiḥ · bibhrāṇa; मूषकध्वजम्|with the mouse as his banner|mūṣaka · dhvaja",
+  "रक्तं|red|rakta; लम्बोदरं|big-bellied|lamba · udara; शूर्पकर्णकं|with ears like winnowing fans|śūrpa · karṇaka; रक्तवाससम्|in red clothes|rakta · vāsas",
+  "रक्तगन्धानुलिप्ताङ्गं|his body smeared with red sandal|rakta · gandha · anulipta · aṅga; रक्तपुष्पैः|with red flowers|rakta · puṣpa; सुपूजितम्|well worshipped|su · pūjita",
+  "भक्तानुकम्पिनं|compassionate to devotees|bhakta · anukampin; देवं|the God|deva; जगत्कारणमच्युतम्|cause of the world, unfailing|jagat · kāraṇam · acyutam",
+  "आविर्भूतं|who appeared|āvirbhūta; च|and|ca; सृष्ट्यादौ|at the start of creation|sṛṣṭi · ādau; प्रकृतेः|beyond nature|prakṛti; पुरुषात्परम्|and beyond spirit|puruṣāt · param",
+  "एवं|thus|evam; ध्यायति|meditates|dhyāyati; यो|who|yaḥ; नित्यं|daily|nityam; स|he|saḥ; योगी|is a yogi|yogin; योगिनां|of yogis|yogin; वरः|the best|vara"],
+  "One-tusked, four-handed, holding the noose and the goad, the tusk and the boon-gesture, with the mouse as his banner; red, big-bellied, with ears like winnowing fans, in red clothes, his body smeared with red sandal, worshipped with red flowers; compassionate to devotees, the God, the unfailing cause of the world, who appeared at the start of creation, beyond nature and spirit — whoever meditates on him thus every day is the best of yogis.",
+  "ஒற்றைத் தந்தமும் நான்கு கைகளும் உடையவன்; பாசம், அங்குசம், தந்தம், வரம் தாங்கியவன்; எலிக் கொடியோன்; சிவந்தவன், பெருவயிறன், முறம் போன்ற காதுகளன், செவ்வாடை அணிந்தவன், செஞ்சந்தனம் பூசியவன், செம்மலர்களால் பூஜிக்கப்படுபவன்; பக்தர்களிடம் கருணையுள்ளவன்; உலகின் காரணம்; அச்யுதன்; படைப்பின் தொடக்கத்தில் தோன்றியவன்; பிரகிருதிக்கும் புருஷனுக்கும் மேலானவன் — இவ்வாறு தினமும் தியானிப்பவன் யோகிகளில் சிறந்தவன்.",
+  {meter:"anushtubh", meterNote:null, tip:"These seven lines are anuṣṭubh verse (checked). Count the <b>rakta</b> (red): five."}),
+ m(10, "Salutations", "Salutations to the lord of the hosts, of the gaṇas, of the pramathas — big-bellied, one-tusked, Śiva's son.", [
+  "नमो|salutations|namaḥ; व्रातपतये|to the lord of the hosts|vrāta · pati",
+  "नमो|salutations|namaḥ; गणपतये|to the lord of the gaṇas|gaṇa · pati",
+  "नमः|salutations|namaḥ; प्रमथपतये|to the lord of the pramathas (Śiva's attendants)|pramatha · pati",
+  "नमस्तेऽस्तु|salutations be to you|namaḥ · te · astu; लम्बोदरायैकदन्ताय|the big-bellied, the one-tusked|lambodarāya · ekadantāya",
+  "विघ्नविनाशिने|the destroyer of obstacles|vighna · vināśin; शिवसुताय|the son of Śiva|śiva · suta",
+  "वरदमूर्तये|the boon-giving form|vara · da · mūrti; नमः|salutations|namaḥ"],
+  "Salutations to the lord of the hosts; salutations to the lord of the gaṇas; salutations to the lord of the pramathas. Salutations to you — the big-bellied, the one-tusked, the destroyer of obstacles, the son of Śiva, the boon-giving form.",
+  "கூட்டங்களின் தலைவனுக்கு நமஸ்காரம்; கணங்களின் தலைவனுக்கு நமஸ்காரம்; பிரமதர்களின் தலைவனுக்கு நமஸ்காரம். பெருவயிறனே, ஒற்றைத் தந்தனே, தடைகளை அழிப்பவனே, சிவ மைந்தனே, வரம் தரும் வடிவமே — உனக்கு நமஸ்காரம்.",
+  {tip:"Three <b>-pataye</b> (to the lord of): vrāta · gaṇa · pramatha."}),
+ m(11, PH, "Whoever studies it becomes Brahman, is free of obstacles and great sins; morning and evening chanting removes the day's and night's sins.", [
+  "एतदथर्वशीर्षं|this Atharvaśīrṣa|etat · atharvaśīrṣa; योऽधीते|whoever studies|yaḥ · adhīte",
+  "स|he|saḥ; ब्रह्मभूयाय|for becoming Brahman|brahma · bhūya; कल्पते|is fit|kalpate",
+  "स|he|saḥ; सर्वविघ्नैर्न|by any obstacle not|sarva · vighnaiḥ · na; बाध्यते|is troubled|bādhyate",
+  "स|he|saḥ; सर्वतः|everywhere|sarvataḥ; सुखमेधते|grows in happiness|sukham · edhate",
+  "स|he|saḥ; पञ्चमहापापात्|from the five great sins|pañca · mahā · pāpa; प्रमुच्यते|is freed|pramucyate",
+  "सायमधीयानो|chanting in the evening|sāyam · adhīyāna; दिवसकृतं|done in the day|divasa · kṛta; पापं|sin|pāpa; नाशयति|destroys|nāśayati",
+  "प्रातरधीयानो|chanting in the morning|prātaḥ · adhīyāna; रात्रिकृतं|done in the night|rātri · kṛta; पापं|sin|pāpa; नाशयति|destroys|nāśayati",
+  "सायं|evening|sāyam; प्रातः|and morning|prātaḥ; प्रयुञ्जानो|practising|prayuñjāna; पापोऽपापो|the sinner sinless|pāpaḥ · apāpaḥ; भवति|becomes|bhavati",
+  "धर्मार्थकाममोक्षं|dharma, wealth, desire and liberation|dharma · artha · kāma · mokṣa; च|and|ca; विन्दति|gains|vindati",
+  "इदमथर्वशीर्षमशिष्याय|this Atharvaśīrṣa, to one not a disciple|idam · atharvaśīrṣam · aśiṣyāya; न|not|na; देयम्|should be given|deya",
+  "यो|who|yaḥ; यदि|if|yadi; मोहाद्|out of delusion|mohāt; दास्यति|gives it|dāsyati; स|he|saḥ; पापीयान्|more sinful|pāpīyas; भवति|becomes|bhavati",
+  "सहस्रावर्तनाद्यं|by a thousand recitations, whatever|sahasra · āvartanāt · yam; यं|whatever|yam; काममधीते|wish he studies for|kāmam · adhīte; तं|that|tam; तमनेन|that, by this|tam · anena; साधयेत्|he will attain|sādhayet"],
+  "Whoever studies this Atharvaśīrṣa becomes fit to be Brahman; no obstacle troubles him; he grows in happiness everywhere; he is freed from the five great sins. Chanting it in the evening destroys the sins of the day; in the morning, the sins of the night; practising it evening and morning, the sinner becomes sinless, and gains dharma, wealth, desire and liberation. It must not be given to one who is not a disciple; whoever gives it out of delusion becomes more sinful. By reciting it a thousand times one attains whatever wish one studies it for.",
+  "இந்த அதர்வசீர்ஷத்தை ஓதுபவர் பிரம்ம நிலைக்குத் தகுதியாகிறார்; எந்தத் தடையும் அவரைத் துன்புறுத்தாது; எங்கும் இன்பத்தில் வளர்வார்; ஐந்து பெரும் பாவங்களிலிருந்து விடுபடுவார். மாலையில் ஓதினால் பகலின் பாவமும், காலையில் ஓதினால் இரவின் பாவமும் அழியும். காலை மாலை இரண்டிலும் ஓதுபவர் பாவமற்றவராகி அறம், பொருள், இன்பம், வீடு அடைவார். சீடர் அல்லாதவருக்கு இதைத் தரக்கூடாது. ஆயிரம் முறை ஓதினால் எந்த விருப்பத்துக்காக ஓதுகிறாரோ அதை அடைவார்.",
+  {kind:"phala", short:"Phala 11", tip:"<b>sāyam … prātar …</b> — evening for the day's faults, morning for the night's."}),
+ m(12, PH, "Bathe Gaṇapati with it — eloquence; chant fasting on Caturthī — learning; then no fear ever.", [
+  "अनेन|with this|anena; गणपतिमभिषिञ्चति|bathes Gaṇapati|gaṇapatim · abhiṣiñcati; स|he|saḥ; वाग्मी|eloquent|vāgmin; भवति|becomes|bhavati",
+  "चतुर्थ्यामनश्नन्|on Caturthī, fasting|caturthyām · anaśnan; जपति|chants|japati; स|he|saḥ; विद्यावान्|learned|vidyāvat; भवति|becomes|bhavati",
+  "इत्यथर्वणवाक्यम्|thus says the Atharvaṇa (Veda)|iti · atharvaṇa · vākya",
+  "ब्रह्माद्याचरणं|the practice of Brahmā and the others|brahma · ādi · ācaraṇa; विद्यान्न|knowing, not|vidyāt · na; बिभेति|fears|bibheti; कदाचनेति|ever — thus|kadācana · iti"],
+  "Whoever bathes Gaṇapati while chanting this becomes eloquent. Whoever chants it fasting on Caturthī becomes learned. So says the Atharvaṇa. Knowing the practice of Brahmā and the others, one never fears.",
+  "இதைச் சொல்லிக் கணபதிக்கு அபிஷேகம் செய்பவர் சொல்வன்மை பெறுவார். சதுர்த்தியன்று உண்ணாமல் ஜபிப்பவர் கல்விமான் ஆவார். இது அதர்வண வாக்கு. பிரம்மா முதலானோரின் நெறியை அறிந்தவர் ஒருபோதும் அஞ்சமாட்டார்.",
+  {kind:"phala", short:"Phala 12", tip:"Her book reads <b>brahmādyācaraṇam</b> (many read <i>brahmādyāvaraṇam</i>)."}),
+ m(13, PH, "Offer dūrvā grass — wealth like Kubera; puffed rice — fame and wisdom; a thousand modakas — your wish; ghee and sticks — everything.", [
+  "यो|who|yaḥ; दूर्वाङ्कुरैर्यजति|worships with dūrvā sprouts|dūrvā · aṅkuraiḥ · yajati; स|he|saḥ; वैश्रवणोपमो|like Vaiśravaṇa (Kubera)|vaiśravaṇa · upama; भवति|becomes|bhavati",
+  "यो|who|yaḥ; लाजैर्यजति|worships with puffed rice|lājaiḥ · yajati; स|he|saḥ; यशोवान्|famous|yaśovat; भवति|becomes|bhavati",
+  "स|he|saḥ; मेधावान्|wise|medhāvat; भवति|becomes|bhavati",
+  "यो|who|yaḥ; मोदकसहस्रेण|with a thousand modakas|modaka · sahasra; यजति|worships|yajati; स|he|saḥ; वाञ्छितफलमवाप्नोति|gains the fruit he wished|vāñchita · phalam · avāpnoti",
+  "यः|who|yaḥ; साज्य|with ghee|sa · ājya; समिद्भिर्यजति|worships with sacred sticks|samidbhiḥ · yajati",
+  "स|he|saḥ; सर्वं|everything|sarvam; लभते|gains|labhate; स|he|saḥ; सर्वं|everything|sarvam; लभते|gains|labhate"],
+  "Whoever worships with dūrvā sprouts becomes like Kubera. Whoever worships with puffed rice becomes famous and wise. Whoever worships with a thousand modakas gains the fruit he wishes. Whoever worships with sacred sticks and ghee gains everything — gains everything.",
+  "அறுகம்புல்லால் வழிபடுபவர் குபேரனைப் போல் ஆவார். பொரியால் வழிபடுபவர் புகழும் அறிவும் பெறுவார். ஆயிரம் மோதகங்களால் வழிபடுபவர் விரும்பிய பலனைப் பெறுவார். நெய்யுடன் சமித்துகளால் வழிபடுபவர் எல்லாவற்றையும் பெறுவார், எல்லாவற்றையும் பெறுவார்.",
+  {kind:"phala", short:"Phala 13", tip:"Four offerings: <b>dūrvā · lāja · modaka · samidh with ājya</b>."}),
+ m(14, PH, "Teach it to eight brāhmaṇas — radiance like the sun; chant it at an eclipse by a great river — the mantra is perfected.", [
+  "अष्टौ|eight|aṣṭau; ब्राह्मणान्|brāhmaṇas|brāhmaṇa; सम्यग्ग्राहयित्वा|having made them learn it well|samyak · grāhayitvā",
+  "सूर्यवर्चस्वी|radiant as the sun|sūrya · varcasvin; भवति|becomes|bhavati",
+  "सूर्यग्रहे|at a solar eclipse|sūrya · graha; महानद्यां|by a great river|mahā · nadī; प्रतिमासन्निधौ|or before the image|pratimā · sannidhi; वा|or|vā; जप्त्वा|having chanted|japtvā",
+  "सिद्धमन्त्रो|one whose mantra is perfected|siddha · mantra; भवति|becomes|bhavati",
+  "महाविघ्नात्|from great obstacles|mahā · vighna; प्रमुच्यते|is freed|pramucyate; महादोषात्|from great faults|mahā · doṣa; प्रमुच्यते|is freed|pramucyate",
+  "महापापात्|from great sins|mahā · pāpa; प्रमुच्यते|is freed|pramucyate; महाप्रत्यवायात्|from great lapses|mahā · pratyavāya; प्रमुच्यते|is freed|pramucyate",
+  "स|he|saḥ; सर्वविद्भवति|becomes all-knowing|sarvavit · bhavati; स|he|saḥ; सर्वविद्भवति|becomes all-knowing|sarvavit · bhavati",
+  "य|who|yaḥ; एवं|thus|evam; वेद|knows|veda; इत्युपनिषत्|thus the Upaniṣad|iti · upaniṣat"],
+  "Having taught it well to eight brāhmaṇas, one becomes radiant as the sun. Chanting it at a solar eclipse by a great river, or before the image, one's mantra is perfected. One is freed from great obstacles, great faults, great sins and great lapses. He becomes all-knowing, all-knowing — he who knows this. Thus the Upaniṣad.",
+  "எட்டு அந்தணர்களுக்கு இதை நன்கு கற்பித்தால் சூரியனைப் போல் ஒளிர்வார். சூரிய கிரகணத்தில் பெருநதிக்கரையிலோ, திருவுருவத்தின் முன்னிலையிலோ ஜபித்தால் மந்திர சித்தி பெறுவார். பெரும் தடைகள், பெரும் குற்றங்கள், பெரும் பாவங்கள், பெரும் வழுக்கள் இவற்றிலிருந்து விடுபடுவார். இவ்வாறு அறிபவர் எல்லாம் அறிந்தவர் ஆவார். இது உபநிஷத்.",
+  {kind:"phala", short:"Phala 14", tip:"Four <b>mahā- … pramucyate</b>: vighna · doṣa · pāpa · pratyavāya."}),
+ {id:"s2", n:"·", label:"Śānti (closing)", short:"Closing śānti", kind:"refrain", part:"Closing", meter:"vedic", meterNote:"The same śānti mantra closes the Upaniṣad.",
+  hook:"The opening peace chant is said again.", lines:SHANTI.map(W), en:SH_EN, ta:SH_TA,
+  tip:"Her book ends: <b>iti gaṇapaty-upaniṣat samāptā</b>."}
+];
+const BENEFITS = [["ब्रह्मभूयाय","Becoming one with Brahman"],["सर्वविघ्नैर्न बाध्यते","No obstacle troubles you"],["सुखमेधते","Growing happiness"],["वाग्मी","Eloquence"],["विद्यावान्","Learning"],["वैश्रवणोपमो","Wealth like Kubera's"],["यशोवान्","Fame"],["सूर्यवर्चस्वी","Radiance like the sun"]];
+return {
+  key:"gas", titleDv:"गणपत्यथर्वशीर्षोपनिषत्", verses:VERSES, benefits:BENEFITS, unit:"mantra",
+  meter:{name:"Vedic prose", kind:"vedic", hook:VED,
+    intro:"The Upaniṣad is prose: it is chanted phrase by phrase, so each mantra is shown as short lines at its natural pauses, without a syllable check. The opening verse and the dhyāna of mantra 9 are anuṣṭubh and are checked.",
+    quiz:{q:"In mantra 7, how is the seed syllable gaṃ built?", opts:["g + a + the anusvāra ṃ","g + ā + ḥ","ga + ṇa + pa","Om + ga"],
+      why:"Gakāraḥ pūrvarūpam, akāro madhyamarūpam, anusvāraś cāntyarūpam — g first, a in the middle, ṃ at the end."}},
+  overview({R}){
+    document.getElementById("refrains").innerHTML = [["त्वमेव केवलं","mantra 1 — “you alone” (×3)"],["अव","mantra 3 — “protect” (×13)"],["सर्वं जगदिदं","mantra 5 — “this whole world” (×4)"],["त्रयातीतः","mantra 6 — “beyond the three” (×4)"],["स … भवति","mantras 11–14 — “he becomes …”"]].map(([dv, en]) => `${dv.split(" ").map(x => R(x)).join(" ")}<br><span class="muted" style="font-family:var(--f-body);font-size:.85rem">${en}</span>`).join("<br>");
+  }
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

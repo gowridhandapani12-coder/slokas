@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Kanakadhara Stotram</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Ādi Śaṅkara · Sanskrit · 18 verses</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Kanakadhara Stotram</h1>
+          <p class="lead" style="margin-top:8px">“The hymn of the golden shower.” As a boy, Śaṅkara begged at a poor woman's door; she had nothing but one dry amla fruit, and gave it. Moved, he sang these verses to Lakṣmī — and golden amla fruits rained on the house.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><span>Composed by</span><b>Ādi Śaṅkara</b><span>as a young brahmacārin</span></div>
+        <div class="fact"><span>Goddess</span><b>Mahālakṣmī</b><span>as Hari's beloved</span></div>
+        <div class="fact"><span>Main theme</span><b>Her glance</b><span>kaṭākṣa — verses 1–9</span></div>
+        <div class="fact"><span>Metres</span><b>Mostly vasantatilakā</b><span>14 syllables; six others</span></div>
+        <div class="fact"><span>Source</span><b>Standard text</b><span>not in her folder — compare with her book</span></div>
+        <div class="fact"><span>On her plan</span><b>Sun · Tue · Thu · Fri</b><span>right after Sri Suktam</span></div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h2>Three movements</h2>
+          <div class="ladder" style="margin-top:10px">
+            <div class="step"><span class="n">1–9</span><div><span class="vb" style="font-family:var(--f-display)">Her glance</span> <span class="en">— each verse pictures the side-glance she gives Viṣṇu, and asks it to fall on me</span></div><span></span></div>
+            <div class="step"><span class="n">10–12</span><div><span class="vb" style="font-family:var(--f-display)">Namaḥ</span> <span class="en">— salutations to her many forms</span></div><span></span></div>
+            <div class="step"><span class="n">13–18</span><div><span class="vb" style="font-family:var(--f-display)">Prayer & fruit</span> <span class="en">— worship of her, and what it brings</span></div><span></span></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each verse, in order.</p>
+          <div class="mn" id="openings"></div>
+          <div class="tip" style="margin-top:14px"><b>Verses 11 and 12</b> are chains of <i>namo'stu</i> — “salutations to…”. Verse 9 rhymes on <i>-iṣṭa</i>: iṣṭā · viśiṣṭa · triviṣṭapa · prahṛṣṭa · puṣṭim · kṛṣīṣṭa · viṣṭarāyāḥ.</div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>What it gives</h2>
+        <p class="muted" style="margin:6px 0 12px">Verse 18: those who praise her daily with these verses —</p>
+        <div class="benefits" id="benefits"></div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+const VT = {meter:"vasantatilaka", pat:"GGLGLLLGLLGLGx", meterNote:"Vasantatilakā: 14 syllables a quarter, long–long–short–long–short–short–short–long–short–short–long–short–long–long."};
+const v = (id, n, part, hook, lines, en, ta, extra) => Object.assign({id, n, label:"Verse " + n, part, hook, lines, en, ta}, VT, extra || {});
+const VERSES = [
+ v("v1", "1", "Her glance", "Like a bee on a dark tamāla bud, her glance rests on Hari — may it bring me blessings.", [
+   [["अङ्गं","the body","aṅga"],["हरेः","of Hari","hari"],["पुलकभूषणमाश्रयन्ती","adorned with thrills of joy, resting on","pulaka = hair standing on end · bhūṣaṇa = ornament · āśrayantī = resting on"]],
+   [["भृङ्गाङ्गनेव","like a female bee","bhṛṅga = bee · aṅganā = female · iva = like"],["मुकुलाभरणं","adorned with buds","mukula = bud · ābharaṇa = ornament"],["तमालम्","the tamāla tree","tamāla = a dark tree"]],
+   [["अङ्गीकृताखिलविभूतिरपाङ्गलीला","the playful side-glance that holds all wealth","aṅgīkṛta = accepted · akhila = all · vibhūti = wealth · apāṅga = side-glance · līlā = play"]],
+   [["माङ्गल्यदास्तु","may it give blessings","māṅgalya-dā = giving auspiciousness · astu = may it be"],["मम","to me","mama"],["मङ्गलदेवतायाः","of the goddess of blessings","maṅgala · devatā"]]],
+  "Like a female bee resting on the dark tamāla tree adorned with buds, her playful side-glance rests on Hari's body, thrilled with joy. May that glance of the goddess of blessings, which holds all wealth, bring blessings to me.",
+  "மொட்டுகள் அணிந்த கருந்தமால மரத்தில் அமரும் பெண் வண்டு போல், ஆனந்தப் புளகத்தால் அலங்கரிக்கப்பட்ட ஹரியின் திருமேனியில் தங்கும், எல்லாச் செல்வங்களையும் கொண்ட மங்கள தேவதையின் கடைக்கண் விளையாட்டு எனக்கு மங்களம் தரட்டும்.",
+  {tip:"The <b>aṅga</b> sounds: aṅgam · bhṛṅgāṅganā · aṅgīkṛta · apāṅga · māṅgalya · maṅgala. The picture: a <b>bee</b> on a dark tree."}),
+ v("v2", "2", "Her glance", "Shy glances that come and go on Murāri's face, like a bee at a blue lotus.", [
+   [["मुग्धा","charming","mugdhā"],["मुहुर्विदधती","again and again making","muhuḥ = repeatedly · vidadhatī = making"],["वदने","on the face","vadana"],["मुरारेः","of Murāri","mura · ari"]],
+   [["प्रेमत्रपाप्रणिहितानि","full of love and shyness","prema = love · trapā = shyness · praṇihita = directed"],["गतागतानि","comings and goings","gata · āgata"]],
+   [["माला","the row","mālā"],["दृशोर्मधुकरीव","of glances, like a bee","dṛśoḥ = of the eyes · madhukarī = bee · iva"],["महोत्पले","on a great blue lotus","mahā · utpala"],["या","which","yā"]],
+   [["सा","may that","sā"],["मे","to me","me"],["श्रियं","wealth","śrī"],["दिशतु","grant","diśatu"],["सागरसम्भवायाः","of the ocean-born (Lakṣmī)","sāgara = ocean · sambhavā = born"]]],
+  "Her glances, charming, full of love and shyness, come and go again and again on Murāri's face, like a bee hovering at a great blue lotus. May that row of glances of the ocean-born goddess grant me wealth.",
+  "காதலும் நாணமும் கலந்து, முராரியின் முகத்தில் மீண்டும் மீண்டும் சென்று வரும், பெரிய நீலோத்பலத்தில் வண்டு போல் அமையும் கடல்மகளின் பார்வை வரிசை எனக்குச் செல்வம் தரட்டும்."),
+ v("v3", "3", "Her glance", "Her half-glance, which gives Indra his throne, delights even Viṣṇu — may it rest on me a moment.", [
+   [["विश्वामरेन्द्रपदविभ्रमदानदक्षम्","able to give the glory of Indra's throne over the world","viśva · amara-indra = Indra · pada = position · vibhrama = splendour · dāna · dakṣa = able"]],
+   [["आनन्दहेतुरधिकं","the deeper cause of joy","ānanda · hetu = cause · adhikam = greatly"],["मुरविद्विषोऽपि","even for the enemy of Mura","mura-vidviṣ = Viṣṇu · api = even"]],
+   [["ईषन्निषीदतु","may it rest a little","īṣat = slightly · niṣīdatu = may it settle"],["मयि","on me","mayi"],["क्षणमीक्षणार्धम्","for a moment, the half-glance","kṣaṇam = a moment · īkṣaṇa-ardha = half a look"]],
+   [["इन्दीवरोदरसहोदरम्","sister to the heart of a blue lily","indīvara = blue lily · udara = inside · sahodara = sibling, like"],["इन्दिरायाः","of Indirā (Lakṣmī)","indirā"]]],
+  "Her half-glance, able to give the splendour of Indra's throne, the deeper joy even of Viṣṇu, like the inside of a blue lily — may Indirā's glance rest on me, even a little, for a moment.",
+  "இந்திரப் பதவியின் பெருமையையும் தர வல்லதும், முராரிக்கும் பேரானந்தம் தருவதும், நீலோத்பலத்தின் உட்பகுதி போன்றதுமான இந்திரையின் அரைப் பார்வை ஒரு கணமேனும் என்மீது சற்றுத் தங்கட்டும்."),
+ v("v4", "4", "Her glance", "Half-closed eyes gazing unblinking at Mukunda — may they bring me prosperity.", [
+   [["आमीलिताक्षमधिगम्य","with half-closed eyes, finding","āmīlita = half-closed · akṣa = eye · adhigamya = reaching"],["मुदा","with joy","mudā"],["मुकुन्दम्","Mukunda","mukunda"]],
+   [["आनन्दकन्दमनिमेषमनङ्गतन्त्रम्","the root of bliss, unblinking, under love's spell","ānanda-kanda = root of joy · animeṣa = unblinking · anaṅga-tantra = love's power"]],
+   [["आकेकरस्थितकनीनिकपक्ष्मनेत्रं","eyes with pupils and lashes slanting sideways","ākekara = sidelong · sthita · kanīnikā = pupil · pakṣma = eyelash · netra"]],
+   [["भूत्यै","for prosperity","bhūti"],["भवेन्मम","may it be, mine","bhavet · mama"],["भुजङ्गशयाङ्गनायाः","of the consort of him who lies on the serpent","bhujaṅga = serpent · śaya = lying · aṅganā = wife"]]],
+  "May the eyes of the consort of him who rests on the serpent — eyes that joyfully find Mukunda, the root of bliss, gazing at him half-closed and unblinking, under love's spell, with pupils and lashes turned sideways — be for my prosperity.",
+  "பாம்பணையில் துயில்பவனின் தேவியின் கண்கள் — ஆனந்தத்தின் வேரான முகுந்தனை மகிழ்ச்சியுடன் பாதி மூடியபடி இமையாமல் நோக்கும், கருவிழியும் இமையும் சாய்ந்த அந்தக் கண்கள் — எனக்குச் செல்வத்துக்குக் காரணமாகட்டும்."),
+ v("v5", "5", "Her glance", "Like a sapphire necklace on Hari's chest — may her glance bring me good.", [
+   [["बाह्वन्तरे","on the chest","bāhu-antara = between the arms"],["मधुजितः","of the conqueror of Madhu","madhu · jit"],["श्रितकौस्तुभे","where the Kaustubha rests","śrita = resting · kaustubha = the jewel"],["या","which","yā"]],
+   [["हारावलीव","like a necklace","hāra-āvalī · iva"],["हरिनीलमयी","of sapphires","hari-nīla = sapphire · mayī = made of"],["विभाति","shines","vibhāti"]],
+   [["कामप्रदा","granting wishes","kāma · pradā"],["भगवतोऽपि","even to the Lord","bhagavat · api"],["कटाक्षमाला","the garland of glances","kaṭākṣa · mālā"]],
+   [["कल्याणमावहतु","may it bring good","kalyāṇa · āvahatu"],["मे","to me","me"],["कमलालयायाः","of her who dwells in the lotus","kamala · ālayā"]]],
+  "The garland of glances that shines like a necklace of sapphires on the chest of Madhu's conqueror, where the Kaustubha rests, and grants wishes even to the Lord — may that garland of the lotus-dweller bring me good.",
+  "கௌஸ்துபம் தங்கும் மதுசூதனனின் மார்பில் நீலமணி மாலை போல் ஒளிர்ந்து, பகவானுக்கே விருப்பங்களை அருளும், தாமரையில் வசிப்பவளின் கடைக்கண் மாலை எனக்கு நன்மை கொண்டு வரட்டும்."),
+ v("v6", "6", "Her glance", "Like lightning in a dark rain cloud on Kaiṭabha's foe — may she grant me good fortune.", [
+   [["कालाम्बुदालिललितोरसि","on the chest lovely as a row of dark clouds","kāla = dark · ambuda = cloud · āli = row · lalita = lovely · uras = chest"],["कैटभारेर्","of Kaiṭabha's foe","kaiṭabha · ari"]],
+   [["धाराधरे","in the rain cloud","dhārā-dhara = rain-bearer"],["स्फुरति","flashes","sphurati"],["या","who","yā"],["तडिदङ्गनेव","like a lady of lightning","taḍit = lightning · aṅganā · iva"]],
+   [["मातुः","of the mother","mātṛ"],["समस्तजगतां","of all the worlds","samasta · jagat"],["महनीयमूर्तिर्","whose form is to be revered","mahanīya · mūrti"]],
+   [["भद्राणि","blessings","bhadra"],["मे","to me","me"],["दिशतु","may (she) grant","diśatu"],["भार्गवनन्दनायाः","of Bhṛgu's daughter","bhārgava-nandanā"]]],
+  "She who flashes like lightning in the rain cloud of Viṣṇu's chest, lovely as a row of dark clouds — may that revered form of Bhṛgu's daughter, mother of all the worlds, grant me blessings.",
+  "கரிய மேகக் கூட்டம் போல் அழகிய கைடபாரியின் மார்பெனும் மழைமேகத்தில் மின்னல் மங்கை போல் ஒளிர்பவளும், உலக அன்னையும், போற்றத்தக்க வடிவினளுமான பார்கவியின் மகள் எனக்கு நலன்களை அருளட்டும்."),
+ v("v7", "7", "Her glance", "Through her power Kāma first reached Viṣṇu — may that slow, gentle half-glance fall on me.", [
+   [["प्राप्तं","was gained","prāpta"],["पदं","a place","pada"],["प्रथमतः","first of all","prathamataḥ"],["किल","indeed","kila"],["यत्प्रभावान्","by whose power","yat · prabhāva"]],
+   [["माङ्गल्यभाजि","in the auspicious one","māṅgalya-bhāj"],["मधुमाथिनि","in the slayer of Madhu","madhu · māthin"],["मन्मथेन","by Manmatha (Kāma)","manmatha = god of love"]],
+   [["मय्यापतेत्तदिह","may it fall on me here","mayi · āpatet · tat · iha"],["मन्थरमीक्षणार्धं","the slow half-glance","manthara = slow · īkṣaṇa-ardha"]],
+   [["मन्दालसं","gentle and languid","manda · alasa"],["च","and","ca"],["मकरालयकन्यकायाः","of the ocean's daughter","makara-ālaya = ocean · kanyakā = daughter"]]],
+  "By whose power the god of love first found a place in Viṣṇu, the auspicious slayer of Madhu — may that slow, gentle, languid half-glance of the ocean's daughter fall on me here.",
+  "யாருடைய ஆற்றலால் மன்மதன் மங்களமான மதுசூதனனிடம் முதலில் இடம் பெற்றானோ, அந்தக் கடல்மகளின் மெதுவான, மென்மையான அரைப் பார்வை இங்கே என்மீது விழட்டும்."),
+ v("v8", "8", "Her glance", "Her eyes, rain clouds blown by the wind of mercy — rain wealth on this poor fledgling.", [
+   [["दद्याद्दयानुपवनो","may (the cloud), driven by the wind of mercy, give","dadyāt = may give · dayā = mercy · anupavana = following wind"],["द्रविणाम्बुधाराम्","a stream of the water of wealth","draviṇa = wealth · ambu-dhārā = rain shower"]],
+   [["अस्मिन्नकिञ्चनविहङ्गशिशौ","on this poor fledgling bird","asmin · akiñcana = destitute · vihaṅga-śiśu = baby bird"],["विषण्णे","despairing","viṣaṇṇa"]],
+   [["दुष्कर्मघर्ममपनीय","taking away the heat of bad karma","duṣkarma · gharma = heat · apanīya = removing"],["चिराय","for ever","cirāya"],["दूरं","far","dūram"]],
+   [["नारायणप्रणयिनीनयनाम्बुवाहः","the rain cloud that is the eye of Nārāyaṇa's beloved","nārāyaṇa · praṇayinī = beloved · nayana = eye · ambuvāha = cloud"]]],
+  "May the rain cloud of the eyes of Nārāyaṇa's beloved, driven by the wind of mercy, drive the heat of my bad karma far away for ever and pour a shower of wealth on this despairing, destitute fledgling — me.",
+  "நாராயணனின் பிரியையின் கண்களெனும் மழைமேகம், கருணைக் காற்றால் உந்தப்பட்டு, தீவினை எனும் வெப்பத்தை நெடுந்தூரம் விரட்டி, ஏழையான, வாடிய இந்தப் பறவைக் குஞ்சின் மீது செல்வ மழையைப் பொழியட்டும்.",
+  {tip:"The <b>rain cloud</b> verse — and the story's heart: Śaṅkara asks the golden rain for the poor woman (<b>akiñcana</b>, “who has nothing”)."}),
+ v("v9", "9", "Her glance", "Her glance, bright as an opened lotus — may it give me the nourishment I seek.", [
+   [["इष्टा","dear ones","iṣṭa"],["विशिष्टमतयोऽपि","the noble-minded too","viśiṣṭa = distinguished · mati = mind · api"],["यया","by which","yayā"],["दयार्द्रदृष्ट्या","by the glance moist with mercy","dayā · ārdra = moist · dṛṣṭi = glance"],["त्रिविष्टपपदं","the place of heaven","triviṣṭapa = heaven · pada"],["सुलभं","easily","sulabha"],["लभन्ते","gain","labhante"]],
+   [["दृष्टिः","the glance","dṛṣṭi"],["प्रहृष्टकमलोदरदीप्तिरिष्टां","bright as the heart of an opened lotus — the desired","prahṛṣṭa = blooming · kamala-udara = lotus centre · dīpti = brightness · iṣṭā = wished-for"],["पुष्टिं","nourishment, prosperity","puṣṭi"],["कृषीष्ट","may (it) make","kṛṣīṣṭa"],["मम","for me","mama"],["पुष्करविष्टरायाः","of her whose seat is the lotus","puṣkara = lotus · viṣṭara = seat"]]],
+  "By her glance moist with mercy, the noble-minded and the dear easily gain even heaven. May that glance of the lotus-seated goddess, bright as the heart of an opened lotus, bring me the prosperity I seek.",
+  "கருணையால் நெகிழ்ந்த அவளுடைய பார்வையால் சான்றோர் சுவர்க்கப் பதவியையும் எளிதில் அடைகிறார்கள். மலர்ந்த தாமரையின் உட்பகுதி போல் ஒளிரும், தாமரையை ஆசனமாகக் கொண்டவளின் அந்தப் பார்வை நான் விரும்பும் வளத்தை எனக்கு அருளட்டும்.",
+  {pat:"GGLGLLLGLLGLGx".repeat(2), padaLen:14}),
+ v("v10", "10", "Salutations", "Called Sarasvatī, Garuḍa-bannered one's beauty, Śākambharī, Śiva's beloved — salutations.", [
+   [["गीर्देवतेति","as the goddess of speech","gīr-devatā = Sarasvatī · iti"],["गरुडध्वजसुन्दरीति","as the beauty of Garuḍa-bannered Viṣṇu","garuḍa-dhvaja · sundarī · iti"]],
+   [["शाकम्भरीति","as Śākambharī","śākambharī = nourisher with greens"],["शशिशेखरवल्लभेति","as the beloved of the moon-crested (Śiva)","śaśi-śekhara · vallabhā · iti"]],
+   [["सृष्टिस्थितिप्रलयकेलिषु","in the play of creation, preservation and dissolution","sṛṣṭi · sthiti · pralaya · keli = play"],["संस्थितायै","to her who abides","saṃsthitā"]],
+   [["तस्यै","to her","tasyai"],["नमस्त्रिभुवनैकगुरोस्तरुण्यै","salutations, to the young consort of the one teacher of the three worlds","namaḥ · tribhuvana · eka-guru · taruṇī"]]],
+  "Salutations to her — called the goddess of speech, the beauty of Garuḍa-bannered Viṣṇu, Śākambharī, the beloved of the moon-crested Śiva — who abides in the play of creation, preservation and dissolution, the young consort of the one teacher of the three worlds.",
+  "வாக்கின் தேவதை என்றும், கருடக் கொடியோனின் அழகி என்றும், சாகம்பரி என்றும், சந்திரசேகரனின் பிரியை என்றும் போற்றப்பட்டு, படைப்பு, காப்பு, அழிவு எனும் விளையாட்டுகளில் நிலைத்திருக்கும், மூவுலக குருவின் இளம் தேவியான அவளுக்கு நமஸ்காரம்."),
+ v("v11", "11", "Salutations", "Salutations to her as Śruti, Rati, Śakti and Puṣṭi.", [
+   [["श्रुत्यै","to Śruti (the Veda)","śruti"],["नमोऽस्तु","salutations","namaḥ · astu"],["शुभकर्मफलप्रसूत्यै","who gives the fruit of good deeds","śubha-karma · phala · prasūti = giving birth"]],
+   [["रत्यै","to Rati (delight)","rati"],["नमोऽस्तु","salutations","namo'stu"],["रमणीयगुणार्णवायै","an ocean of lovely qualities","ramaṇīya · guṇa · arṇava = ocean"]],
+   [["शक्त्यै","to Śakti (power)","śakti"],["नमोऽस्तु","salutations","namo'stu"],["शतपत्रनिकेतनायै","who dwells in the hundred-petalled lotus","śata-patra = lotus · niketana = home"]],
+   [["पुष्ट्यै","to Puṣṭi (nourishment)","puṣṭi"],["नमोऽस्तु","salutations","namo'stu"],["पुरुषोत्तमवल्लभायै","the beloved of Puruṣottama","puruṣottama · vallabhā"]]],
+  "Salutations to her as Śruti, who gives the fruit of good deeds; as Rati, an ocean of lovely qualities; as Śakti, who dwells in the hundred-petalled lotus; as Puṣṭi, the beloved of Puruṣottama.",
+  "நற்செயல்களின் பலனைத் தரும் சுருதிக்கு நமஸ்காரம்; இனிய குணங்களின் கடலான ரதிக்கு நமஸ்காரம்; நூறிதழ்த் தாமரையில் வசிக்கும் சக்திக்கு நமஸ்காரம்; புருஷோத்தமனின் பிரியையான புஷ்டிக்கு நமஸ்காரம்.",
+  {tip:"Four lines, four names, each followed by <b>namo'stu</b>: <b>śrutyai · ratyai · śaktyai · puṣṭyai</b>."}),
+ v("v12", "12", "Salutations", "Lotus-faced, born of the milk ocean, sister of the moon — Nārāyaṇa's beloved.", [
+   [["नमोऽस्तु","salutations","namo'stu"],["नालीकनिभाननायै","to her of the lotus-like face","nālīka = lotus · nibha = like · ānana = face"]],
+   [["नमोऽस्तु","salutations","namo'stu"],["दुग्धोदधिजन्मभूत्यै","to the wealth born of the milk ocean","dugdha-udadhi = milk ocean · janma · bhūti = wealth"]],
+   [["नमोऽस्तु","salutations","namo'stu"],["सोमामृतसोदरायै","to the sister of the moon and nectar","soma = moon · amṛta = nectar · sodarā = sister"]],
+   [["नमोऽस्तु","salutations","namo'stu"],["नारायणवल्लभायै","to Nārāyaṇa's beloved","nārāyaṇa · vallabhā"]]],
+  "Salutations to her of the lotus-like face; salutations to the wealth born of the milk ocean; salutations to the sister of the moon and of nectar; salutations to Nārāyaṇa's beloved.",
+  "தாமரை முகத்தவளுக்கு நமஸ்காரம்; பாற்கடலில் பிறந்த செல்வத்துக்கு நமஸ்காரம்; சந்திரனுக்கும் அமுதத்துக்கும் சகோதரிக்கு நமஸ்காரம்; நாராயணனின் பிரியைக்கு நமஸ்காரம்.",
+  {meter:"upajati", pat:"xGLGGLLGLGx", meterNote:"Upajāti: 11 syllables a quarter. Every quarter starts namo'stu.", tip:"Every line starts with <b>namo'stu</b>. The moon and nectar both rose from the milk ocean with her — so they are her siblings."}),
+ v("v13", "13", "Prayer & fruit", "O lotus-eyed mother, may worshipping you bring wealth and joy, and remove sin.", [
+   [["सम्पत्कराणि","bringing wealth","sampat · kara"],["सकलेन्द्रियनन्दनानि","delighting all the senses","sakala · indriya · nandana"]],
+   [["साम्राज्यदानविभवानि","able to give sovereignty","sāmrājya · dāna · vibhava"],["सरोरुहाक्षि","O lotus-eyed one","saroruha = lotus · akṣī"]],
+   [["त्वद्वन्दनानि","salutations to you","tvat · vandana"],["दुरिताहरणोद्यतानि","eager to remove sins","durita = sin · āharaṇa = removing · udyata = ready"]],
+   [["मामेव","me alone","mām · eva"],["मातरनिशं","O mother, always","mātaḥ · aniśam"],["कलयन्तु","may (they) bless","kalayantu"],["मान्ये","O honoured one","mānyā"]]],
+  "O lotus-eyed one, O honoured mother — may salutations to you, which bring wealth, delight all the senses, give sovereignty and are eager to remove sins, always bless me.",
+  "தாமரைக் கண்ணாளே, போற்றுதற்குரிய தாயே — செல்வம் தருவதும், எல்லாப் புலன்களையும் மகிழ்விப்பதும், அரசுப் பதவியைத் தர வல்லதும், பாவங்களைப் போக்கத் துடிப்பதுமான உனக்குச் செய்யும் வணக்கங்கள் என்னை எப்போதும் அருள்புரியட்டும்."),
+ v("v14", "14", "Prayer & fruit", "Worshipping her glance brings every wealth — I worship Murāri's heart's queen.", [
+   [["यत्कटाक्षसमुपासनाविधिः","the worship of whose glance","yat · kaṭākṣa · samupāsana · vidhi = rite"],["सेवकस्य","for the devotee","sevaka"],["सकलार्थसम्पदः","every wealth and aim","sakala · artha · sampad"]],
+   [["सन्तनोति","brings about","santanoti"],["वचनाङ्गमानसैस्त्वां","by word, body and mind, you","vacana · aṅga · mānasa · tvām"],["मुरारिहृदयेश्वरीं","queen of Murāri's heart","murāri · hṛdaya · īśvarī"],["भजे","I worship","bhaje"]]],
+  "The worship of whose glance brings the devotee every wealth and aim — you, queen of Murāri's heart, I worship with word, body and mind.",
+  "யாருடைய கடைக்கண் வழிபாடு பக்தருக்கு எல்லாச் செல்வங்களையும் நோக்கங்களையும் தருகிறதோ, முராரியின் இதய நாயகியான உன்னை சொல், உடல், மனத்தால் வணங்குகிறேன்.",
+  {meter:"rathoddhata", pat:"GLGLLLGLGLx".repeat(2), padaLen:11, meterNote:"Rathoddhatā: 11 syllables a quarter, long–short–long–short–short–short–long–short–long–short–long."}),
+ v("v15", "15", "Prayer & fruit", "Lotus-dweller, in white silk and garlands, Hari's beloved — be gracious to me.", [
+   [["सरसिजनिलये","O dweller in the lotus","sarasija · nilayā"],["सरोजहस्ते","O lotus-handed","saroja · hastā"],["धवलतमांशुकगन्धमाल्यशोभे","shining in the whitest silk, sandal and garlands","dhavalatama = whitest · aṃśuka = silk · gandha = sandal · mālya = garland · śobhā"]],
+   [["भगवति","O Goddess","bhagavatī"],["हरिवल्लभे","O Hari's beloved","hari · vallabhā"],["मनोज्ञे","O charming one","manojñā"],["त्रिभुवनभूतिकरि","O giver of prosperity to the three worlds","tribhuvana · bhūti · karī"],["प्रसीद","be gracious","prasīda"],["मह्यम्","to me","mahyam"]]],
+  "O dweller in the lotus, lotus in hand, shining in the whitest silk, sandal paste and garlands; O Goddess, Hari's charming beloved, giver of prosperity to the three worlds — be gracious to me.",
+  "தாமரையில் வசிப்பவளே, தாமரை ஏந்தியவளே, வெண்பட்டு, சந்தனம், மாலைகளால் ஒளிர்பவளே, பகவதியே, ஹரியின் இனிய பிரியையே, மூவுலகுக்கும் செல்வம் தருபவளே — எனக்கு அருள் புரிவாயாக.",
+  {meter:"pushpitagra", pat:"LLLLLLGLGLGx" + "LLLLGLLGLGLGx", padaLen:12, meterNote:"Puṣpitāgrā: quarters of 12 and 13 syllables, opening with a run of short ones."}),
+ v("v16", "16", "Prayer & fruit", "Bathed at dawn by the elephants of the quarters with golden pots of Gaṅgā — I bow to her.", [
+   [["दिग्घस्तिभिः","by the elephants of the quarters","dik = direction · hastin = elephant"],["कनककुम्भमुखावसृष्ट","poured from the mouths of golden pots","kanaka · kumbha · mukha · avasṛṣṭa = poured"]],
+   [["स्वर्वाहिनीविमलचारुजलप्लुताङ्गीम्","her body bathed in the pure lovely water of the heavenly river","svar-vāhinī = Gaṅgā · vimala · cāru · jala · pluta = bathed · aṅga"]],
+   [["प्रातर्नमामि","at dawn I bow","prātaḥ · namāmi"],["जगतां","of the worlds","jagat"],["जननीमशेष","the mother, of all","jananī · aśeṣa"]],
+   [["लोकाधिनाथगृहिणीममृताब्धिपुत्रीम्","the wife of the lord of all worlds, daughter of the nectar ocean","loka-adhinātha · gṛhiṇī = wife · amṛta-abdhi · putrī"]]],
+  "At dawn I bow to the mother of the worlds, wife of the lord of all the worlds, daughter of the ocean of nectar, whose body is bathed by the elephants of the quarters with the pure, lovely water of the heavenly Gaṅgā poured from golden pots.",
+  "திசை யானைகள் பொற்குடங்களின் வாயிலிருந்து பொழியும் வான கங்கையின் தூய இனிய நீரால் நீராட்டப்பட்டவளும், உலகங்களின் தாயும், எல்லா உலக நாதனின் மனைவியும், அமுதக் கடலின் மகளுமானவளை அதிகாலையில் வணங்குகிறேன்.",
+  {tip:"The <b>Gaja-Lakṣmī</b> picture again (as in Sri Suktam): elephants pouring water from golden pots. Say it at dawn — <b>prātar namāmi</b>."}),
+ v("v17", "17", "Prayer & fruit", "O Kamalā, look on me with your waves of mercy — I am the first who deserves your compassion.", [
+   [["कमले","O Kamalā","kamalā"],["कमलाक्षवल्लभे","beloved of the lotus-eyed (Viṣṇu)","kamala-akṣa · vallabhā"],["त्वं","you","tvam"],["करुणापूरतरङ्गितैरपाङ्गैः","with side-glances rippling with floods of mercy","karuṇā · pūra = flood · taraṅgita = rippling · apāṅga"]],
+   [["अवलोकय","look upon","avalokaya"],["मामकिञ्चनानां","me, of the destitute","mām · akiñcana"],["प्रथमं","the first","prathama"],["पात्रमकृत्रिमं","the true vessel","pātra · akṛtrima = genuine"],["दयायाः","of compassion","dayā"]]],
+  "O Kamalā, beloved of the lotus-eyed Lord, with your side-glances rippling with floods of mercy, look upon me — the foremost of the destitute, the true vessel for your compassion.",
+  "கமலையே, தாமரைக் கண்ணனின் பிரியையே, கருணை வெள்ளம் அலைமோதும் உன் கடைக்கண்களால் என்னைப் பாராய் — ஏழைகளில் முதன்மையான, உன் கருணைக்கு உண்மையான பாத்திரம் நான்.",
+  {meter:"aupacchandasika", pat:"LLGLLGLGLGx" + "LLGGLLGLGLGx", padaLen:11, meterNote:"Aupacchandasika: quarters of 11 and 12 syllables — a calm, pleading rhythm."}),
+ v("v18", "18", "Prayer & fruit", "Those who praise her daily with these verses become rich in virtue and great good fortune.", [
+   [["स्तुवन्ति","praise","stuvanti"],["ये","those who","ye"],["स्तुतिभिरमूभिरन्वहं","with these hymns every day","stutibhiḥ · amūbhiḥ = these · anvaham = daily"]],
+   [["त्रयीमयीं","made of the three Vedas","trayī-mayī"],["त्रिभुवनमातरं","the mother of the three worlds","tribhuvana · mātṛ"],["रमाम्","Ramā","ramā"]],
+   [["गुणाधिका","rich in virtues","guṇa · adhika"],["गुरुतरभाग्यभागिनो","sharers in great good fortune","gurutara = greater · bhāgya = fortune · bhāgin"]],
+   [["भवन्ति","become","bhavanti"],["ते","they","te"],["भुवि","on earth","bhū"],["बुधभाविताशयाः","whose minds are honoured by the wise","budha = the wise · bhāvita = honoured · āśaya = mind"]]],
+  "Those who praise Ramā every day with these hymns — she who is made of the three Vedas, the mother of the three worlds — become rich in virtue, share in great good fortune, and are honoured by the wise on earth.",
+  "இந்தத் துதிகளால் மூன்று வேதங்களின் வடிவானவளும் மூவுலகத் தாயுமான ரமையைத் தினமும் போற்றுபவர்கள் நற்குணம் நிறைந்தவர்களாகவும், பெரும் பாக்கியம் பெற்றவர்களாகவும், இவ்வுலகில் அறிஞர்களால் மதிக்கப்படுபவர்களாகவும் ஆகிறார்கள்.",
+  {kind:"phala", short:"Phala-śruti", meter:"rucira", pat:"LGLGLLLLGLGLx", meterNote:"Rucirā: 13 syllables a quarter.", padaLen:0})
+];
+const BENEFITS = [["गुणाधिका","Rich in virtue"],["गुरुतरभाग्यभागिनो","Great good fortune"],["बुधभाविताशयाः","Honoured by the wise"],["श्रियं","Wealth"],["कल्याणमावहतु","Every good"]];
+return {
+  key:"kdh", titleDv:"कनकधारास्तोत्रम्", verses:VERSES, benefits:BENEFITS,
+  meter:{name:"Seven metres", kind:"vasantatilaka",
+    intro:"Most verses are <b>vasantatilakā</b> (14 syllables a quarter, long–long–short–long…). Verses 12, 14, 15, 17 and 18 switch to upajāti, rathoddhatā, puṣpitāgrā, aupacchandasika and rucirā. Each verse is checked against its pattern.",
+    quiz:{q:"What is the main picture in verses 1–9?", opts:["Lakṣmī's side-glance (kaṭākṣa)","Lakṣmī's lotus feet","The milk ocean","Garuḍa"],
+      why:"Her glance: a bee on a tamāla tree, a sapphire necklace, lightning in a cloud, a rain cloud of mercy."}}
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

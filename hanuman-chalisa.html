@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Hanuman Chalisa</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+<style>
+.say{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.say div{border-radius:14px;background:var(--surface-2);padding:12px}
+.say b{display:block;font-family:var(--f-verse);color:var(--terra-ink);font-size:1.05rem;overflow-wrap:anywhere}
+.say span{font-size:.85rem;color:var(--muted)}
+@media (max-width:620px){.say{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Tulasīdās · Awadhi (old Hindi) · 2 dohās + dhyānam + 40 caupāīs + closing dohā</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Hanuman Chalisa</h1>
+          <p class="lead" style="margin-top:8px">“Forty verses to Hanumān.” Tulasīdās first cleans the mirror of his mind with the dust of his guru's feet, then sings Hanumān's story — the leap to Laṅkā, the burning city, the sañjīvanī mountain — and what his name does: no ghost comes near, illness goes, every hardship is cut away.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><span>Poet</span><b>Tulasīdās</b><span>16th century, author of the Rāmacaritamānas</span></div>
+        <div class="fact"><span>Deity</span><b>Hanumān</b><span>Añjanī's son, Rāma's messenger</span></div>
+        <div class="fact"><span>Language</span><b>Awadhi</b><span>old Hindi — not Sanskrit</span></div>
+        <div class="fact"><span>Metres</span><b>Dohā · caupāī</b><span>counted in beats, not syllables</span></div>
+        <div class="fact"><span>Source</span><b>Her PDF</b><span>Vaidika Vignanam, Tamil script</span></div>
+        <div class="fact"><span>On her plan</span><b>Tuesday</b><span>Hanumān's day</span></div>
+      </div>
+      <div class="card">
+        <h2>Saying Awadhi words</h2>
+        <p class="muted" style="margin:6px 0 12px">The page spells every word in full, as her book does (ஜய, jaya). When it is sung, the short <b>a</b> at the end of a word is mostly not said, and a few letters soften:</p>
+        <div class="say">
+          <div><b>jaya hanumāna jñāna guṇa sāgara</b><span>is sung <b>jai hanumān gyān gun sāgar</b></span></div>
+          <div><b>ṣ · ś</b><span>in Hindi both are said like <b>sh</b>; <b>ṇ</b> like <b>n</b></span></div>
+          <div><b>jñāna</b><span>said <b>gyān</b> in Hindi (in Sanskrit, <i>jñāna</i>)</span></div>
+          <div><b>ai · au at the end (gāvai, sumirau)</b><span>a long open <b>ai</b> / <b>au</b> sound</span></div>
+        </div>
+        <div class="tip" style="margin-top:12px"><b>Tip.</b> Keep the final <b>a</b> where the tune needs a beat — singers often hold it at the end of a line (<i>sāgara</i>, <i>ujāgara</i>). The Memorise tab's recording lets you compare with the way she learnt it.</div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h2>The story in the verses</h2>
+          <div class="ladder" style="margin-top:10px">
+            <div class="step"><span class="n">1–5</span><div><span class="vb" style="font-family:var(--f-display)">Who he is</span> <span class="en">— ocean of wisdom, Añjanī's son, golden, with mace and flag</span></div><span></span></div>
+            <div class="step"><span class="n">6–10</span><div><span class="vb" style="font-family:var(--f-display)">Rāma's servant</span> <span class="en">— tiny before Sītā, huge to burn Laṅkā</span></div><span></span></div>
+            <div class="step"><span class="n">11–15</span><div><span class="vb" style="font-family:var(--f-display)">Rāma's embrace</span> <span class="en">— sañjīvanī for Lakṣmaṇa; “dear to me as Bharata”</span></div><span></span></div>
+            <div class="step"><span class="n">16–20</span><div><span class="vb" style="font-family:var(--f-display)">Great deeds</span> <span class="en">— Sugrīva, Vibhīṣaṇa, the sun swallowed, the ocean leapt</span></div><span></span></div>
+            <div class="step"><span class="n">21–30</span><div><span class="vb" style="font-family:var(--f-display)">The guardian</span> <span class="en">— at Rāma's door; ghosts, illness and trouble flee</span></div><span></span></div>
+            <div class="step"><span class="n">31–40</span><div><span class="vb" style="font-family:var(--f-display)">His gifts</span> <span class="en">— eight siddhis, nine treasures, Rāma himself</span></div><span></span></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each caupāī, in order.</p>
+          <div class="mn" id="openings"></div>
+          <div class="tip" style="margin-top:14px"><b>Patterns:</b> 1 starts <b>jaya … jaya</b>; 9 and 10 both use <b>rūpa dhari</b> (taking a form); 21 and 30 end <b>rakhavāre</b> (guardian); 24–26 are the protection verses; 38–39 promise the fruit; 40 signs the poet's name.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>Hanumān, as the verses picture him</h2><span class="muted" style="font-size:.85rem">Tap one to see the word in its verse</span></div>
+        <div class="icons" id="icons" style="margin-top:14px"></div>
+      </div>
+      <div class="card">
+        <h2>What it gives</h2>
+        <p class="muted" style="margin:6px 0 12px">Caupāīs 24–26 and 35–39 say what Hanumān's name does:</p>
+        <div class="benefits" id="benefits"></div>
+      </div>
+      <div class="tip"><b>About this page.</b> The words follow her Vaidika Vignanam PDF (Tamil script), written here in Devanagari: <i>karive, sunive</i> (7, 8), <i>aura manoratha jo koyi lāvai</i> (28), <i>kaṭai</i> (36, her book also prints “(ha)” for <i>haṭai</i>). Some books differ slightly — compare with the way she sings it. The Tamil meanings are drafts.</div>
+</template>
+<script>
+const SLOKA = (() => {
+// W("शब्द|meaning|breakdown; …") makes one line; breakdown defaults to the meaning.
+const W = s => s.split(";").map(x => { const [dv, g, b] = x.split("|").map(y => y.trim()); return [dv, g, b || g]; });
+const DOHA = "Dohā: two lines, each of 13 + 11 beats (short = 1, long = 2). Awadhi metres count beats and allow the silent final a, so the page does not check them.";
+const CAU = "Caupāī: each line has 16 beats (short = 1, long = 2). Sung to a steady tune; the page does not check the count, because Awadhi drops or keeps the final a as the tune needs.";
+const c = (n, hook, l1, l2, en, ta, extra) => Object.assign({id:"c" + n, n:String(n), label:"Caupāī " + n, hook, lines:[W(l1), W(l2)], en, ta, part:"The forty caupāīs", meter:"caupai", meterNote:CAU}, extra || {});
+const VERSES = [
+ {id:"d1", n:"1", label:"Dohā 1", short:"Dohā 1", kind:"dhyana", part:"Opening", meter:"doha", meterNote:DOHA,
+  hook:"With the dust of my guru's lotus feet I clean the mirror of my mind, and sing Rāma's pure fame.",
+  lines:[W("श्रीगुरु|the revered guru|śrī-guru; चरण|feet|caraṇa; सरोज|lotus|saroja = lotus; रज|dust|raja = dust (pollen); निजमन|my own mind|nija = own · mana = mind; मुकुर|mirror|mukura; सुधारि|having cleaned|sudhāri = polishing"),
+         W("वरणौ|I describe|varaṇau = I tell; रघुवर|of the best of Raghus (Rāma)|raghu-vara; विमलयश|pure fame|vimala = spotless · yaśa = fame; जो|which|jo; दायक|giver|dāyaka; फलचारि|of the four fruits|phala = fruit · cāri = four")],
+  en:"Cleaning the mirror of my mind with the dust of my guru's lotus feet, I describe the spotless fame of Rāma, best of the Raghus, which gives the four fruits of life.",
+  ta:"குருவின் தாமரைப் பாதத் தூசியால் என் மனக் கண்ணாடியைத் துடைத்து, நான்கு பலன்களையும் தரும் ரகுவரனின் (ராமனின்) தூய புகழைப் பாடுகிறேன்.",
+  tip:"The <b>four fruits</b>: dharma, artha, kāma, mokṣa."},
+ {id:"d2", n:"2", label:"Dohā 2", short:"Dohā 2", kind:"dhyana", part:"Opening", meter:"doha", meterNote:DOHA,
+  hook:"Knowing I lack wisdom, I remember you, son of the Wind — give me strength, wisdom and learning.",
+  lines:[W("बुद्धिहीन|lacking wisdom|buddhi = intellect · hīna = without; तनुजानिकै|knowing this body (myself)|tanu = body · jānikai = knowing; सुमिरौ|I remember|sumirau; पवन|of the Wind|pavana; कुमार|son|kumāra"),
+         W("बल|strength|bala; बुद्धि|wisdom|buddhi; विद्या|learning|vidyā; देहु|give|dehu; मोहि|to me|mohi; हरहु|take away|harahu; कलेश|troubles|kaleśa = kleśa, suffering; विकार|and faults|vikāra")],
+  en:"Knowing myself to be without wisdom, I remember you, son of the Wind. Give me strength, wisdom and learning; take away my troubles and faults.",
+  ta:"அறிவற்றவன் என்று என்னை அறிந்து, வாயு குமாரனே, உன்னை நினைக்கிறேன். எனக்கு பலம், புத்தி, வித்தை அருள்வாய்; துன்பங்களையும் குறைகளையும் போக்குவாய்.",
+  tip:"<b>bala buddhi vidyā</b> — strength, wisdom, learning: the three gifts asked for."},
+ {id:"h1", n:"·", label:"Dhyānam 1", short:"Dhyānam 1", kind:"dhyana", part:"Opening", meter:"anushtubh",
+  hook:"The ocean became a calf's hoof-print, the demons mosquitoes — I bow to the Wind's son, jewel of the Rāmāyaṇa.",
+  lines:[W("गोष्पदीकृतवाराशिं|who made the ocean a cow's hoof-print|goṣpada = hoof-print · kṛta = made · vārāśi = ocean; मशकीकृतराक्षसम्|who made the demons mosquitoes|maśaka = mosquito · rākṣasa"),
+         W("रामायणमहामालारत्नं|the jewel of the great garland, the Rāmāyaṇa|rāmāyaṇa · mahā · mālā · ratna; वन्देऽनिलात्मजम्|I bow to the son of the Wind|vande · anila = wind · ātmaja = son")],
+  en:"I bow to the son of the Wind, who made the ocean as small as a cow's hoof-print and the demons as small as mosquitoes — the jewel in the great garland of the Rāmāyaṇa.",
+  ta:"கடலைப் பசுவின் குளம்படி போலவும், அரக்கர்களைக் கொசுக்கள் போலவும் ஆக்கியவனும், ராமாயணம் என்ற பெரும் மாலையின் ரத்தினமுமான வாயு புத்திரனை வணங்குகிறேன்.",
+  tip:"This dhyānam is <b>Sanskrit</b> (anuṣṭubh, checked). The rest of the hymn is Awadhi."},
+ {id:"h2", n:"·", label:"Dhyānam 2", short:"Dhyānam 2", kind:"dhyana", part:"Opening", meter:"rathoddhata", pat:"GLGLLLGLGLx".repeat(2), meterNote:"Rathoddhatā (Sanskrit): 11 syllables a quarter, two quarters to a line.",
+  hook:"Wherever Rāma's name is sung, there he stands, hands joined above his head, eyes full of tears.",
+  lines:[W("यत्र|wherever|yatra; यत्र|wherever|yatra; रघुनाथकीर्तनं|Rāma's praise is sung|raghunātha · kīrtana; तत्र|there|tatra; तत्र|there|tatra; कृतमस्तकाञ्जलिम्|with hands joined above his head|kṛta · mastaka = head · añjali = joined palms"),
+         W("बाष्पवारिपरिपूर्णलोचनं|his eyes filled with tears|bāṣpa · vāri = water · paripūrṇa = full · locana = eye; मारुतिं|Māruti (Hanumān)|māruti; नमत|bow to|namata; राक्षसान्तकम्|the slayer of demons|rākṣasa · antaka")],
+  en:"Wherever Rāma's praise is sung, there, with hands joined above his head and eyes full of tears, is Māruti, the slayer of demons — bow to him.",
+  ta:"எங்கெல்லாம் ரகுநாதனின் புகழ் பாடப்படுகிறதோ, அங்கெல்லாம் தலைமேல் கைகூப்பி, கண்ணீர் நிறைந்த கண்களுடன் நிற்கும் அரக்கரை அழிக்கும் மாருதியை வணங்குங்கள்.",
+  tip:"<b>yatra yatra … tatra tatra</b> — “wherever … there”."},
+ c(1, "Victory to Hanumān, ocean of wisdom and virtue; victory to the lord of monkeys, light of the three worlds.",
+  "जय|victory|jaya (sung jai); हनुमान|to Hanumān|hanumāna; ज्ञान|of wisdom|jñāna (sung gyān); गुण|and virtue|guṇa; सागर|ocean|sāgara",
+  "जय|victory|jaya; कपीश|to the lord of monkeys|kapi = monkey · īśa = lord; तिहु|three|tihu; लोक|worlds|loka; उजागर|who lights up|ujāgara = illuminating, famous",
+  "Victory to Hanumān, ocean of wisdom and virtue! Victory to the lord of monkeys, who lights up the three worlds!",
+  "ஞானமும் குணமும் நிறைந்த கடலான ஹனுமானுக்கு ஜயம்! மூவுலகையும் ஒளிர்விக்கும் வானரத் தலைவனுக்கு ஜயம்!",
+  {tip:"Starts with <b>jaya</b> twice. In singing: <i>jai hanumān gyān gun sāgar</i>."}),
+ c(2, "Rāma's messenger, home of matchless strength — Añjanī's son, called the son of the Wind.",
+  "रामदूत|Rāma's messenger|rāma · dūta; अतुलित|matchless|atulita; बलधामा|home of strength|bala · dhāma",
+  "अञ्जनि|Añjanī's|añjanī; पुत्र|son|putra; पवनसुत|son of the Wind|pavana · suta; नामा|by name|nāmā",
+  "Rāma's messenger, the home of matchless strength — Añjanī's son, known by the name “son of the Wind”.",
+  "ராமனின் தூதன்; ஒப்பற்ற பலத்தின் இருப்பிடம்; அஞ்சனையின் மைந்தன்; வாயு புத்திரன் என்ற பெயருடையவன்."),
+ c(3, "Great hero, mighty as a thunderbolt — he drives out bad thinking and keeps good thinking company.",
+  "महावीर|great hero|mahā · vīra; विक्रम|valiant|vikrama; बजरङ्गी|with a body like a thunderbolt|bajaraṅgī = vajra-aṅga",
+  "कुमति|bad thinking|ku = bad · mati = mind; निवार|removing|nivāra; सुमति|of good thinking|su = good · mati; के|the|ke = of; सङ्गी|companion|saṅgī",
+  "Great hero, valiant, with a body strong as a thunderbolt — you remove bad thinking and are the companion of good thinking.",
+  "மகாவீரன், வீரம் மிக்கவன், வஜ்ர உடல் கொண்டவன்; தீய எண்ணத்தைப் போக்கி, நல்ல எண்ணத்துக்குத் துணையாக இருப்பவன்.",
+  {tip:"<b>kumati</b> / <b>sumati</b> — bad mind out, good mind in."}),
+ c(4, "Golden in colour, finely dressed, with earrings and curly hair.",
+  "कञ्चन|golden|kañcana = gold; वरण|in colour|varaṇa = varṇa; विराज|shining|virāja; सुवेशा|finely dressed|su · veśa",
+  "कानन|in his ears|kānana = ears; कुण्डल|earrings|kuṇḍala; कुञ्चित|curly|kuñcita; केशा|hair|keśa",
+  "Golden in colour, shining, finely dressed, with earrings in his ears and curly hair.",
+  "பொன்னிறத்தவன், அழகிய உடையில் ஒளிர்பவன்; காதுகளில் குண்டலங்களும், சுருண்ட கூந்தலும் உடையவன்."),
+ c(5, "Thunderbolt-mace and flag in his hands, the sacred thread of muñja grass on his shoulder.",
+  "हाथवज्र|in his hand a thunderbolt (mace)|hātha = hand · vajra; औ|and|au; ध्वजा|a flag|dhvajā; विराजै|shine|virājai",
+  "कान्धे|on his shoulder|kāndhe; मूञ्ज|of muñja grass|mūñja; जनेवू|sacred thread|janevū = yajñopavīta; साजै|adorns|sājai",
+  "In his hands shine the thunderbolt and the flag; the sacred thread of muñja grass adorns his shoulder.",
+  "கையில் வஜ்ராயுதமும் கொடியும் ஒளிர்கின்றன; தோளில் முஞ்சைப் புல்லால் ஆன பூணூல் அழகு செய்கிறது."),
+ c(6, "Śiva's own form, Kesarī's son — your glory and splendour are honoured by the whole world.",
+  "शङ्कर|of Śaṅkara (Śiva)|śaṅkara; सुवन|the son, the form|suvana = son (amśa); केसरी|of Kesarī|kesarī = his father; नन्दन|the son|nandana",
+  "तेज|radiance|teja; प्रताप|and glory|pratāpa; महाजग|by the great world|mahā · jaga; वन्दन|honoured|vandana",
+  "Born of Śiva, son of Kesarī — your radiance and glory are honoured by the whole great world.",
+  "சங்கரனின் அம்சமே, கேசரியின் மைந்தனே — உன் ஒளியும் பெருமையும் உலகம் முழுவதாலும் வணங்கப்படுகின்றன.",
+  {tip:"Two fathers: <b>Kesarī</b> (earthly) and <b>pavana</b> (the Wind, caupāī 2); Śiva's portion (śaṅkara suvana)."}),
+ c(7, "Learned, virtuous, very clever — always eager to do Rāma's work.",
+  "विद्यावान|learned|vidyāvāna; गुणी|virtuous|guṇī; अति|very|ati; चातुर|clever|cātura",
+  "राम|Rāma's|rāma; काज|work|kāja; करिवे|to do|karive; को|for|ko; आतुर|eager|ātura",
+  "Learned, virtuous and very clever, you are always eager to do Rāma's work.",
+  "கல்வியும் நற்குணமும் உடையவன், மிகவும் சாதுர்யம் மிக்கவன்; ராமனின் பணியைச் செய்வதில் எப்போதும் ஆர்வமுடையவன்."),
+ c(8, "He delights in hearing the Lord's story; Rāma, Lakṣmaṇa and Sītā live in his heart.",
+  "प्रभु|the Lord's|prabhu; चरित्र|story|caritra; सुनिवे|in hearing|sunive; को|of|ko; रसिया|lover|rasiyā = one who delights",
+  "रामलखन|Rāma and Lakṣmaṇa|rāma · lakhana; सीता|Sītā|sītā; मन|in his heart|mana; बसिया|dwell|basiyā",
+  "You delight in hearing the Lord's story; Rāma, Lakṣmaṇa and Sītā dwell in your heart.",
+  "பிரபுவின் சரிதத்தைக் கேட்பதில் இன்புறுபவன்; ராமன், லக்ஷ்மணன், சீதை அவன் மனதில் வசிக்கின்றனர்.",
+  {tip:"The famous picture: Hanumān opening his chest to show Rāma and Sītā inside."}),
+ c(9, "Tiny, he showed himself to Sītā; huge and fearsome, he burnt Laṅkā.",
+  "सूक्ष्म|a tiny|sūkṣma; रूपधरि|form taking|rūpa · dhari = taking; सियहि|to Sītā|siyahi; दिखावा|showed (himself)|dikhāvā",
+  "विकट|a fearsome|vikaṭa; रूपधरि|form taking|rūpa · dhari; लङ्क|Laṅkā|laṅka; जलावा|burnt|jalāvā",
+  "Taking a tiny form, you showed yourself to Sītā; taking a fearsome form, you burnt Laṅkā.",
+  "சிறிய வடிவம் கொண்டு சீதைக்குக் காட்சி தந்தவன்; பயங்கர வடிவம் கொண்டு இலங்கையை எரித்தவன்.",
+  {tip:"<b>sūkṣma</b> (tiny) and <b>vikaṭa</b> (fearsome) — two forms, the same <b>rūpa dhari</b>."}),
+ c(10, "In a terrible form he destroyed the demons, and finished Rāma's work.",
+  "भीम|a terrible|bhīma; रूपधरि|form taking|rūpa · dhari; असुर|the demons|asura; संहारे|destroyed|saṃhāre",
+  "रामचन्द्र|Rāmacandra's|rāmacandra; के|the|ke; काज|work|kāja; संवारे|accomplished|saṃvāre",
+  "Taking a terrible form, you destroyed the demons and accomplished Rāmacandra's work.",
+  "பயங்கர வடிவம் கொண்டு அசுரர்களை அழித்து, ராமசந்திரனின் பணிகளை நிறைவேற்றியவன்."),
+ c(11, "Bringing the sañjīvanī herb, he revived Lakṣmaṇa; Rāma, overjoyed, held him to his heart.",
+  "लाय|bringing|lāya; सञ्जीवन|the sañjīvanī herb|sañjīvana = life-giving; लखन|Lakṣmaṇa|lakhana; जियाये|brought back to life|jiyāye",
+  "श्री|Śrī|śrī; रघुवीर|the hero of the Raghus|raghu · vīra; हरषि|rejoicing|haraṣi; उरलाये|held to his chest|ura = chest · lāye",
+  "Bringing the sañjīvanī herb, you brought Lakṣmaṇa back to life; Śrī Raghuvīra, rejoicing, held you to his heart.",
+  "சஞ்சீவினி மூலிகையைக் கொண்டு வந்து லக்ஷ்மணனை உயிர்ப்பித்தவன்; ஸ்ரீ ரகுவீரன் மகிழ்ந்து அவனை மார்போடு அணைத்தான்."),
+ c(12, "Rāma praised him greatly: “You are as dear to me as my brother Bharata.”",
+  "रघुपति|Rāma, lord of the Raghus|raghu · pati; कीन्ही|did|kīnhī; बहुत|much|bahuta; बडाई|praise|baḍāī",
+  "तुम|you|tuma; मम|to me|mama; प्रिय|dear|priya; भरत|Bharata|bharata; सम|like|sama; भाई|brother|bhāī",
+  "Raghupati praised you greatly: “You are as dear to me as my brother Bharata.”",
+  "ரகுபதி உன்னை மிகவும் புகழ்ந்தான்: “நீ என் தம்பி பரதனைப் போல் எனக்குப் பிரியமானவன்.”",
+  {tip:"Rāma's words: <b>tuma mama priya bharata sama bhāī</b>."}),
+ c(13, "“May the thousand-mouthed serpent sing your fame,” said Śrī's Lord, and embraced him.",
+  "सहस|thousand|sahasa = sahasra; वदन|mouthed (Ādiśeṣa)|vadana = mouth; तुम्हरो|your|tumharo; यश|fame|yaśa; गावै|sings|gāvai",
+  "अस|thus|asa; कहि|saying|kahi; श्रीपति|Śrī's Lord (Rāma)|śrī · pati; कण्ठ|to the neck|kaṇṭha; लगावै|embraces|lagāvai",
+  "“The thousand-mouthed one sings your fame” — saying this, Śrī's Lord embraced you.",
+  "“ஆயிரம் வாயுடைய ஆதிசேஷனும் உன் புகழைப் பாடுகிறான்” என்று சொல்லி ஸ்ரீபதி உன்னைக் கழுத்தோடு அணைத்தான்."),
+ c(14, "Sanaka and the sages, Brahmā and the gods, Nārada, Sarasvatī and the serpent king —",
+  "सनकादिक|Sanaka and the others|sanaka · ādika; ब्रह्मादि|Brahmā and the others|brahma · ādi; मुनीशा|great sages|muni · īśa",
+  "नारद|Nārada|nārada; शारद|Śāradā (Sarasvatī)|śārada; सहित|together with|sahita; अहीशा|the lord of serpents|ahi · īśa",
+  "Sanaka and the other sages, Brahmā and the gods, the great munis, Nārada, Śāradā and the lord of serpents —",
+  "சனகாதி முனிவர்கள், பிரம்மா முதலான தேவர்கள், முனிவர் தலைவர்கள், நாரதர், சாரதை, நாகராஜன் —",
+  {tip:"Caupāīs 14–15 are one sentence: all these cannot fully tell your glory."}),
+ c(15, "— Yama, Kubera, the guardians of the directions, poets and scholars — how could they tell it all?",
+  "यम|Yama|yama; कुबेर|Kubera|kubera; दिगपाल|the guardians of the directions|diga · pāla; जहां|where|jahāṃ; ते|from|te",
+  "कवि|poets|kavi; कोविद|scholars|kovida; कहि|tell|kahi; सके|could|sake; कहां|how|kahāṃ; ते|then|te",
+  "— Yama, Kubera, the guardians of the quarters, and all the poets and scholars — how could they tell your glory?",
+  "— யமன், குபேரன், திக்பாலர்கள், கவிஞர்கள், அறிஞர்கள் — இவர்கள் உன் புகழை எப்படி முழுதும் சொல்ல முடியும்?"),
+ c(16, "You helped Sugrīva — you brought him to Rāma and gave him the kingdom.",
+  "तुम|you|tuma; उपकार|help|upakāra; सुग्रीवहि|to Sugrīva|sugrīva; कीन्हा|did|kīnhā",
+  "राम|with Rāma|rāma; मिलाय|uniting|milāya; राजपद|the throne|rāja · pada; दीन्हा|gave|dīnhā",
+  "You did Sugrīva a great service: you brought him to Rāma and gave him the throne.",
+  "நீ சுக்ரீவனுக்கு உதவி செய்தாய்; அவனை ராமனுடன் சேர்த்து அரச பதவியைத் தந்தாய்."),
+ c(17, "Vibhīṣaṇa took your advice and became lord of Laṅkā — the whole world knows it.",
+  "तुम्हरो|your|tumharo; मन्त्र|counsel|mantra; विभीषण|Vibhīṣaṇa|vibhīṣaṇa; माना|accepted|mānā",
+  "लङ्केश्वर|lord of Laṅkā|laṅkā · īśvara; भये|became|bhaye; सब|all|saba; जग|the world|jaga; जाना|knows|jānā",
+  "Vibhīṣaṇa accepted your counsel and became lord of Laṅkā — the whole world knows it.",
+  "விபீஷணன் உன் ஆலோசனையை ஏற்று இலங்கை வேந்தன் ஆனான் — இதை உலகம் முழுதும் அறியும்."),
+ c(18, "The sun, thousands of yojanas away — you swallowed it, thinking it a sweet fruit.",
+  "युग|yuga (12,000)|yuga; सहस्र|thousand|sahasra; योजन|yojanas|yojana = a measure of distance; पर|away|para; भानू|the sun|bhānu",
+  "लील्यो|swallowed|līlyo; ताहि|it|tāhi; मधुर|a sweet|madhura; फल|fruit|phala; जानू|thinking|jānū",
+  "The sun, thousands of yojanas away — you swallowed it, thinking it was a sweet fruit.",
+  "ஆயிரக்கணக்கான யோஜனை தொலைவில் உள்ள சூரியனை இனிய பழம் என்று நினைத்து விழுங்கினாய்.",
+  {tip:"Baby Hanumān's leap at the rising sun. <b>yuga sahasra yojana</b> is often read as 12,000 × 1,000 yojanas — the distance to the sun."}),
+ c(19, "With the Lord's ring in your mouth you leapt the ocean — no wonder.",
+  "प्रभु|the Lord's|prabhu; मुद्रिका|ring|mudrikā; मेलि|placing|meli; मुख|the mouth|mukha; माहीं|in|māhīṃ",
+  "जलधि|the ocean|jaladhi; लाङ्घि|leaping|lāṅghi; गये|went|gaye; अचरज|wonder|acaraja; नाहीं|no|nāhīṃ",
+  "Holding the Lord's ring in your mouth, you leapt across the ocean — no wonder at all.",
+  "பிரபுவின் மோதிரத்தை வாயில் வைத்துக்கொண்டு கடலைத் தாண்டினாய் — இதில் வியப்பில்லை."),
+ c(20, "Every hard task in the world becomes easy by your grace.",
+  "दुर्गम|hard|durgama; काज|tasks|kāja; जगत|the world|jagata; के|of|ke; जेते|as many as|jete",
+  "सुगम|easy|sugama; अनुग्रह|by the grace|anugraha; तुम्हरे|your|tumhare; तेते|so many|tete",
+  "However many hard tasks there are in the world, they all become easy by your grace.",
+  "உலகில் எத்தனை கடினமான பணிகள் உண்டோ, அவை அனைத்தும் உன் அருளால் எளிதாகின்றன."),
+ c(21, "You guard Rāma's door; no one enters without your leave.",
+  "राम|Rāma's|rāma; दुआरे|at the door|duāre; तुम|you|tuma; रखवारे|are the guard|rakhavāre",
+  "होत|there is|hota; न|no|na; आज्ञा|permission|ājñā; बिनु|without|binu; पैसारे|entering|paisāre",
+  "You are the guard at Rāma's door; without your permission no one can enter.",
+  "ராமனின் வாயிலின் காவலன் நீ; உன் அனுமதி இன்றி யாரும் உள்ளே நுழைய முடியாது.",
+  {tip:"To reach Rāma, go through Hanumān."}),
+ c(22, "Whoever takes refuge in you finds every joy; with you as protector, why fear anyone?",
+  "सब|all|saba; सुख|happiness|sukha; लहै|gains|lahai; तुम्हारी|your|tumhārī; शरणा|refuge|śaraṇa",
+  "तुम|you|tuma; रक्षक|the protector|rakṣaka; काहू|anyone|kāhū; को|of|ko; डर|fear|ḍara; ना|no|nā",
+  "Whoever takes refuge in you gains every happiness; when you are the protector, there is no fear of anyone.",
+  "உன்னைச் சரணடைந்தவர் எல்லா இன்பமும் பெறுவார்; நீ காவலனாக இருக்கும்போது யாருக்கும் அஞ்ச வேண்டியதில்லை."),
+ c(23, "Only you can hold back your own power; at your roar the three worlds tremble.",
+  "आपन|your own|āpana; तेज|power|teja; सम्हारो|hold back|samhāro; आपै|yourself|āpai",
+  "तीनों|the three|tīnoṃ; लोक|worlds|loka; हाङ्क|roar|hāṅka; ते|at|te; काम्पै|tremble|kāmpai",
+  "Only you can hold your own power in check; at your roar all three worlds tremble.",
+  "உன் வலிமையை நீயே அடக்க முடியும்; உன் கர்ஜனையால் மூவுலகும் நடுங்குகின்றன."),
+ c(24, "Ghosts and spirits do not come near when the name of Mahāvīra is spoken.",
+  "भूत|ghosts|bhūta; पिशाच|and spirits|piśāca; निकट|near|nikaṭa; नहि|do not|nahi; आवै|come|āvai",
+  "महवीर|Mahāvīra's (Hanumān's)|mahavīra; जब|when|jaba; नाम|name|nāma; सुनावै|is spoken|sunāvai",
+  "Ghosts and evil spirits do not come near when the name of Mahāvīra is spoken.",
+  "மகாவீரனின் பெயரைச் சொன்னால் பூதங்களும் பிசாசுகளும் அருகில் வருவதில்லை.",
+  {tip:"The first of the protection verses (24–26)."}),
+ c(25, "Illness perishes and all pain goes, for whoever keeps chanting brave Hanumān's name.",
+  "नासै|perishes|nāsai; रोग|illness|roga; हरै|takes away|harai; सब|all|saba; पीरा|pain|pīrā",
+  "जपत|chanting|japata; निरन्तर|ceaselessly|nirantara; हनुमत|Hanumān|hanumata; वीरा|the brave|vīrā",
+  "Illness is destroyed and all pain removed for one who chants unceasingly the name of brave Hanumān.",
+  "வீர ஹனுமானை இடைவிடாது ஜபிப்பவரின் நோய் அழிந்து எல்லா வலியும் நீங்குகிறது."),
+ c(26, "Hanumān frees from trouble whoever fixes on him in mind, deed and word.",
+  "सङ्कट|trouble|saṅkaṭa; से|from|se; हनुमान|Hanumān|hanumāna; छुडावै|frees|chuḍāvai",
+  "मन|in mind|mana; क्रम|deed|krama = karma; वचन|and word|vacana; ध्यान|meditation|dhyāna; जो|who|jo; लावै|brings|lāvai",
+  "Hanumān frees from trouble whoever meditates on him in mind, deed and word.",
+  "மனம், செயல், சொல் மூன்றாலும் தியானிப்பவரை ஹனுமான் துன்பத்திலிருந்து விடுவிக்கிறான்.",
+  {tip:"<b>mana krama vacana</b> — mind, deed, word: all three."}),
+ c(27, "Rāma the ascetic king is above all — and you accomplished all his work.",
+  "सब|all|saba; पर|above|para; राम|Rāma|rāma; तपस्वी|the ascetic|tapasvī; राजा|king|rājā",
+  "तिनके|his|tinake; काज|works|kāja; सकल|all|sakala; तुम|you|tuma; साजा|accomplished|sājā",
+  "Rāma, the ascetic king, is above all; and all his works were accomplished by you.",
+  "தவக்கோல அரசனான ராமன் எல்லாருக்கும் மேலானவன்; அவனுடைய பணிகள் அனைத்தையும் நீயே நிறைவேற்றினாய்."),
+ c(28, "Whatever other wish one brings to you, one gains its fruit without limit in this life.",
+  "और|any other|aura; मनोरथ|wish|manoratha; जो|which|jo; कोयि|anyone|koyi; लावै|brings|lāvai",
+  "तासु|his|tāsu; अमित|boundless|amita; जीवन|in life|jīvana; फल|fruit|phala; पावै|gains|pāvai",
+  "Whatever other wish anyone brings to you, he gains its fruit in boundless measure in his life.",
+  "வேறு எந்த விருப்பத்துடன் ஒருவர் வந்தாலும், அவர் வாழ்வில் அளவற்ற பலனைப் பெறுவார்.",
+  {tip:"Her book: <b>aura manoratha jo koyi lāvai / tāsu amita jīvana phala pāvai</b> (others: <i>soī amita…</i>)."}),
+ c(29, "Your glory fills all four ages; your light is famous through the world.",
+  "चारो|in all four|cāro; युग|ages|yuga; प्रताप|glory|pratāpa; तुम्हारा|your|tumhārā",
+  "है|is|hai; प्रसिद्ध|famous|prasiddha; जगत|in the world|jagata; उजियारा|light|ujiyārā",
+  "Your glory spreads through all four ages; your light is famous throughout the world.",
+  "நான்கு யுகங்களிலும் உன் பெருமை பரவியுள்ளது; உன் ஒளி உலகம் முழுதும் புகழ்பெற்றது."),
+ c(30, "Guardian of saints and sages, destroyer of demons, Rāma's darling.",
+  "साधु|of the good|sādhu; सन्त|and saints|santa; के|the|ke; तुम|you|tuma; रखवारे|guardian|rakhavāre",
+  "असुर|of demons|asura; निकन्दन|destroyer|nikandana; राम|Rāma's|rāma; दुलारे|darling|dulāre",
+  "You are the guardian of the good and the saints, the destroyer of demons, Rāma's beloved.",
+  "சாதுக்களுக்கும் சந்தர்களுக்கும் காவலன் நீ; அசுரர்களை அழிப்பவன்; ராமனின் அன்புக்குரியவன்.",
+  {tip:"<b>rakhavāre</b> (guardian) again, as in 21."}),
+ c(31, "Giver of the eight siddhis and nine treasures — Mother Jānakī gave you this boon.",
+  "अष्ठसिद्धि|the eight siddhis|aṣṭa · siddhi = powers; नव|nine|nava; निधि|treasures|nidhi; के|of|ke; दाता|giver|dātā",
+  "अस|such|asa; वर|a boon|vara; दीन्ह|gave|dīnha; जानकी|Jānakī (Sītā)|jānakī; माता|Mother|mātā",
+  "You are the giver of the eight siddhis and the nine treasures — Mother Jānakī gave you this boon.",
+  "எட்டு சித்திகளையும் ஒன்பது நிதிகளையும் தருபவன் நீ — ஜானகி மாதா உனக்கு இந்த வரத்தைத் தந்தாள்.",
+  {tip:"Sītā's boon in the Aśoka grove."}),
+ c(32, "You hold the elixir of Rāma's name; may you always remain Rāma's servant.",
+  "राम|Rāma's|rāma; रसायन|elixir|rasāyana; तुम्हारे|your|tumhāre; पासा|with|pāsā",
+  "सदा|always|sadā; रहो|remain|raho; रघुपति|of Raghupati|raghu · pati; के|the|ke; दासा|servant|dāsā",
+  "You hold the elixir of Rāma; may you always remain the servant of Raghupati.",
+  "ராம நாம அமுதம் உன்னிடம் உள்ளது; நீ என்றும் ரகுபதியின் தாசனாகவே இருப்பாய்."),
+ c(33, "Through singing of you one reaches Rāma, and forgets the sorrows of birth after birth.",
+  "तुम्हरे|your|tumhare; भजन|singing|bhajana; रामको|Rāma|rāma · ko; पावै|one reaches|pāvai",
+  "जन्म|of birth|janma; जन्म|after birth|janma; के|the|ke; दुख|sorrows|dukha; बिसरावै|forgets|bisarāvai",
+  "By singing your praise one reaches Rāma and forgets the sorrows of birth after birth.",
+  "உன்னைப் பாடுவதால் ராமனை அடையலாம்; பிறவிதோறும் வந்த துன்பங்கள் மறந்து போகும்."),
+ c(34, "At the end one goes to Rāma's city; wherever born, one is called Hari's devotee.",
+  "अन्त|at the end|anta; काल|time|kāla; रघुपति|of Raghupati|raghu · pati; पुरजायी|goes to the city|pura · jāyī",
+  "जहां|where|jahāṃ; जन्म|birth|janma; हरिभक्त|Hari's devotee|hari · bhakta; कहायी|is called|kahāyī",
+  "At the time of death one goes to Raghupati's city; wherever one is born, one is called a devotee of Hari.",
+  "இறுதிக் காலத்தில் ரகுபதியின் நகரை அடைவார்; எங்கு பிறந்தாலும் ஹரிபக்தர் என்று அழைக்கப்படுவார்."),
+ c(35, "One need hold no other god in mind — serving Hanumān gives every joy.",
+  "और|other|aura; देवता|gods|devatā; चित्त|in mind|citta; न|not|na; धरयी|hold|dharayī",
+  "हनुमत|Hanumān|hanumata; सेयि|serving|seyi; सर्व|all|sarva; सुख|happiness|sukha; करयी|gives|karayī",
+  "One need not hold any other god in mind; serving Hanumān alone brings every happiness.",
+  "வேறு தெய்வத்தை மனதில் வைக்க வேண்டியதில்லை; ஹனுமானை வழிபட்டாலே எல்லா இன்பமும் கிடைக்கும்."),
+ c(36, "Troubles are cut, all pain ends, for whoever remembers mighty, brave Hanumān.",
+  "सङ्कट|troubles|saṅkaṭa; कटै|are cut away|kaṭai (her book also: haṭai); मिटै|ends|miṭai; सब|all|saba; पीरा|pain|pīrā",
+  "जो|who|jo; सुमिरै|remembers|sumirai; हनुमत|Hanumān|hanumata; बल|mighty|bala; वीरा|brave|vīrā",
+  "Troubles are cut away and all pain ends for whoever remembers the mighty, brave Hanumān.",
+  "வலிமை மிக்க வீர ஹனுமானை நினைப்பவரின் துன்பங்கள் நீங்கி, எல்லா வலியும் மறையும்."),
+ c(37, "Victory, victory, victory to Lord Hanumān — be gracious to me, as my guru is.",
+  "जै|victory|jai; जै|victory|jai; जै|victory|jai; हनुमान|Hanumān|hanumāna; गोसायी|lord|gosāyī = gosvāmī",
+  "कृपा|grace|kṛpā; करहु|show|karahu; गुरुदेव|the guru|gurudeva; की|like|kī; नायी|as|nāyī",
+  "Victory, victory, victory to you, Lord Hanumān! Be gracious to me, as a guru is.",
+  "ஜய ஜய ஜய ஹனுமான் பிரபுவே! குருதேவரைப் போல் என்மீது அருள் புரிவாயாக.",
+  {tip:"Three <b>jai</b> — the hymn's climax. Here the page spells it जै, as her book does."}),
+ c(38, "Whoever reads it a hundred times is freed from bondage and gains great joy.",
+  "जो|who|jo; शत|a hundred|śata; वार|times|vāra; पाठ|recitation|pāṭha; कर|does|kara; कोयी|anyone|koyī",
+  "छूटहि|is freed|chūṭahi; बन्दि|from bondage|bandi; महा|great|mahā; सुख|joy|sukha; होयी|comes|hoyī",
+  "Whoever recites it a hundred times is freed from bondage and gains great joy.",
+  "நூறு முறை பாராயணம் செய்பவர் கட்டுகளிலிருந்து விடுபட்டுப் பேரின்பம் அடைவார்.",
+  {tip:"The fruit: <b>śata vāra</b>, a hundred times."}),
+ c(39, "Whoever reads this Hanumān Cālīsā gains success — Gaurī's Lord (Śiva) is the witness.",
+  "जो|who|jo; यह|this|yaha; पडै|reads|paḍai; हनुमान|Hanumān|hanumāna; चालीसा|Cālīsā (the forty)|cālīsā",
+  "होय|comes|hoya; सिद्धि|success|siddhi; साखी|witness|sākhī; गौरीशा|is Gaurī's Lord (Śiva)|gaurī · īśa",
+  "Whoever reads this Hanumān Cālīsā gains success; Śiva, the Lord of Gaurī, is witness to it.",
+  "இந்த ஹனுமான் சாலீசாவைப் படிப்பவருக்குச் சித்தி கிடைக்கும்; கௌரியின் நாயகனான சிவனே இதற்குச் சாட்சி.",
+  {tip:"The name of the hymn is in this verse: <b>hanumāna cālīsā</b>."}),
+ c(40, "Tulasīdās, ever Hari's servant, prays: Lord, make your home in my heart.",
+  "तुलसीदास|Tulasīdās|tulasī · dāsa; सदा|ever|sadā; हरि|Hari's|hari; चेरा|servant|cerā",
+  "कीजै|make|kījai; नाथ|O Lord|nātha; हृदय|my heart|hṛdaya; मह|in|maha; डेरा|your dwelling|ḍerā",
+  "Tulasīdās, ever the servant of Hari, prays: O Lord, make your dwelling in my heart.",
+  "என்றும் ஹரியின் தாசனான துளசிதாசர் வேண்டுகிறார்: நாதா, என் இதயத்தில் வாசம் செய்வாயாக.",
+  {tip:"The poet signs his name in the last verse, as Indian poets do."}),
+ {id:"d3", n:"3", label:"Closing dohā", short:"Closing dohā", kind:"phala", part:"Closing", meter:"doha", meterNote:DOHA,
+  hook:"Son of the Wind, remover of troubles, form of all good — live in my heart with Rāma, Lakṣmaṇa and Sītā.",
+  lines:[W("पवन|of the Wind|pavana; तनय|son|tanaya; सङ्कट|of troubles|saṅkaṭa; हरण|remover|haraṇa; मङ्गल|of auspiciousness|maṅgala; मूरति|the image|mūrati; रूप|form|rūpa"),
+         W("राम|Rāma|rāma; लखन|Lakṣmaṇa|lakhana; सीता|Sītā|sītā; सहित|with|sahita; हृदय|in my heart|hṛdaya; बसहु|dwell|basahu; सुरभूप|O king of the gods|sura · bhūpa")],
+  en:"O son of the Wind, remover of troubles, the very image of auspiciousness — O king among the gods, dwell in my heart together with Rāma, Lakṣmaṇa and Sītā.",
+  ta:"வாயு மைந்தனே, துன்பம் போக்குபவனே, மங்கள வடிவமே, தேவர்களின் அரசனே — ராமன், லக்ஷ்மணன், சீதையுடன் என் இதயத்தில் வசிப்பாயாக."},
+ {id:"j1", n:"·", label:"Jaya", short:"Jaya", kind:"refrain", part:"Closing", meter:"prose", meterNote:"The closing calls of victory — said, not sung to the metre.",
+  hook:"Victory to Rāmacandra, Sītā's husband! Victory to Hanumān! Victory to all the saints!",
+  lines:[W("सियावर|Sītā's husband|siyā · vara; रामचन्द्रकी|to Rāmacandra|rāmacandra · kī; जय|victory|jaya; पवनसुत|son of the Wind|pavana · suta; हनुमानकी|to Hanumān|hanumāna · kī; जय|victory|jaya"),
+         W("बोलो|say|bolo; भाई|brothers|bhāī; सब|all|saba; सन्तनकी|to the saints|santana · kī; जय|victory|jaya")],
+  en:"Victory to Rāmacandra, Sītā's husband! Victory to Hanumān, son of the Wind! Say it, brothers — victory to all the saints!",
+  ta:"சீதாபதி ராமசந்திரனுக்கு ஜயம்! வாயு புத்திரன் ஹனுமானுக்கு ஜயம்! சொல்லுங்கள் — எல்லா சந்தர்களுக்கும் ஜயம்!"}
+];
+const S = 'fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"';
+const ICONS = [
+  {t:"Ocean of wisdom", w:"सागर", v:"c1", d:"jñāna guṇa sāgara", svg:`<path d="M3 14c4-3 7-3 10 0s6 3 10 0 6-3 8 0M3 21c4-3 7-3 10 0s6 3 10 0 6-3 8 0" ${S}/>`},
+  {t:"Rāma's messenger", w:"रामदूत", v:"c2", d:"rāmadūta", svg:`<path d="M5 9h24v16H5zM5 9l12 9 12-9" ${S}/>`},
+  {t:"Thunderbolt body", w:"बजरङ्गी", v:"c3", d:"bajaraṅgī", svg:`<path d="M19 3L8 19h8l-2 12 12-17h-8z" ${S}/>`},
+  {t:"Mace and flag", w:"ध्वजा", v:"c5", d:"hātha vajra au dhvajā", svg:`<path d="M9 30V5M9 5l14 4-14 5M23 30l-4-10M19 20a4 4 0 1 1 6-3" ${S}/>`},
+  {t:"Tiny before Sītā", w:"सूक्ष्म", v:"c9", d:"sūkṣma rūpa", svg:`<circle cx="17" cy="20" r="3" ${S}/><path d="M6 28h22M17 10v4" ${S}/>`},
+  {t:"Laṅkā burnt", w:"लङ्क", v:"c9", d:"laṅka jalāvā", svg:`<path d="M17 4c4 6 8 9 8 15a8 8 0 0 1-16 0c0-4 2-6 4-8 0 3 1 5 3 5 0-4 0-8 1-12z" ${S}/>`},
+  {t:"The sañjīvanī", w:"सञ्जीवन", v:"c11", d:"the mountain of herbs", svg:`<path d="M3 26l9-14 5 7 4-5 10 12zM12 12V7M10 9h4" ${S}/>`},
+  {t:"The sun as fruit", w:"भानू", v:"c18", d:"madhura phala jānū", svg:`<circle cx="17" cy="17" r="6" ${S}/><path d="M17 3v5M17 26v5M3 17h5M26 17h5M7 7l3.5 3.5M23.5 23.5L27 27M27 7l-3.5 3.5M10.5 23.5L7 27" ${S}/>`},
+  {t:"Rāma's ring", w:"मुद्रिका", v:"c19", d:"prabhu mudrikā", svg:`<circle cx="17" cy="20" r="8" ${S}/><path d="M13 8l4-4 4 4-4 4z" ${S}/>`},
+  {t:"Guard at the door", w:"रखवारे", v:"c21", d:"rāma duāre tuma rakhavāre", svg:`<path d="M8 30V8a9 9 0 0 1 18 0v22M5 30h24M17 12v8" ${S}/>`}
+];
+const BENEFITS = [["भूत पिशाच निकट नहि आवै","No ghost or evil spirit comes near"],["नासै रोग","Illness goes"],["सङ्कट से हनुमान छुडावै","Freedom from trouble"],["सब सुख लहै","Every happiness"],["छूटहि बन्दि","Freedom from bondage"],["होय सिद्धि","Success"],["अन्त काल रघुपति पुरजायी","Rāma's city at the end"]];
+return {
+  key:"hnc", titleDv:"श्रीहनुमानचालीसा", verses:VERSES, icons:ICONS, benefits:BENEFITS, unit:"caupāī",
+  meter:{name:"Dohā & caupāī", kind:"caupai", hook:CAU,
+    intro:"The Chalisa is Awadhi, and its metres count <b>beats</b> (mātrās): a short syllable is 1, a long one 2. A <b>caupāī</b> line has 16 beats; a <b>dohā</b> line 13 + 11. Because Awadhi keeps or drops the final short a as the tune needs, the page shows long and short syllables as the words are spelt, without checking the count. The two Sanskrit dhyāna verses are checked.",
+    quiz:{q:"In which caupāī does the poet sign his name?", opts:["40 — Tulasīdāsa sadā hari cerā","1 — Jaya hanumāna jñāna guṇa sāgara","39 — Jo yaha paḍai hanumāna cālīsā","21 — Rāma duāre tuma rakhavāre"],
+      why:"The last caupāī: “Tulasīdās, ever Hari's servant — Lord, make your home in my heart.”"}}
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

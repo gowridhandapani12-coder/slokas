@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Narasimha Stuti</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+<style>
+.refrain{font-family:var(--f-verse);font-size:1.45rem;color:var(--terra-ink);line-height:1.5}
+.houses{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.house{border-radius:14px;background:var(--surface-2);padding:12px;text-align:center}
+.house b{display:block;font-family:var(--f-display);font-size:1.6rem;color:var(--terra-ink)}
+.house span{font-size:.82rem;color:var(--muted)}
+.house .ta{font-family:"Noto Serif Tamil",serif;color:var(--ink);font-size:.9rem}
+</style>
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Śanaiścara (Śani) · Bhaviṣya Purāṇa · Sanskrit · 18 verses</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Narasimha Stuti</h1>
+          <p class="lead" style="margin-top:8px">The hymn Śani — Saturn himself — sang to Lord Nṛsiṃha. Eight verses each end with the same prayer, <i>sa tvaṃ nṛsiṃha mayi dehi kṛpāvalokam</i>, “O Nṛsiṃha, turn your merciful glance on me.” Pleased, Nṛsiṃha gives a boon to everyone who recites it.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+
+      <div class="facts">
+        <div class="fact"><span>Composed by</span><b>Śani</b><span>Śanaiścara, the planet Saturn</span></div>
+        <div class="fact"><span>Deity</span><b>Śrī Nṛsiṃha</b><span>the man-lion form of Viṣṇu</span></div>
+        <div class="fact"><span>Metres</span><b>Three</b><span>anuṣṭubh · upajāti · vasantatilakā</span></div>
+        <div class="fact"><span>Told by</span><b>Śrī Kṛṣṇa</b><span>in the closing verse</span></div>
+        <div class="fact"><span>Best day</span><b>Saturday</b><span>Śani's own day — verse 13</span></div>
+        <div class="fact"><span>On her plan</span><b>Tue · Thu</b><span>Narasimha days</span></div>
+      </div>
+
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h2>One prayer, eight times</h2>
+          <p class="muted" style="margin:6px 0 12px">Verses 3–10 all end with this line. Learn it first; then each verse has only three new lines.</p>
+          <div class="refrain" id="refrain"></div>
+          <p style="margin-top:6px">“O Nṛsiṃha, you who are all this — give me your merciful glance.”</p>
+        </div>
+        <div class="card">
+          <h2>A conversation</h2>
+          <p class="muted" style="margin:6px 0 12px">The hymn is a dialogue. Knowing who speaks makes the order easy:</p>
+          <div class="ladder" id="speakers"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>The boon about Śani</h2>
+        <p class="muted" style="margin:6px 0 12px">In verse 16 Nṛsiṃha tells Śani: whoever recites or hears this hymn need not fear you when you stand in the 12th, 8th or 1st house of their birth chart — the times known in Tamil as:</p>
+        <div class="houses">
+          <div class="house"><b>12</b><span>dvādaśa</span><div class="ta">ஏழரைச் சனி</div><span>the start of “seven and a half years”</span></div>
+          <div class="house"><b>8</b><span>aṣṭama</span><div class="ta">அஷ்டமச் சனி</div><span>Saturn in the 8th</span></div>
+          <div class="house"><b>1</b><span>janma</span><div class="ta">ஜென்மச் சனி</div><span>Saturn over the birth moon</span></div>
+        </div>
+        <div class="benefits" id="benefits" style="margin-top:14px"></div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+const REF = [["स","that one","saḥ = he"],["त्वं","you","tvam"],["नृसिंह","O Nṛsiṃha","nṛ = man · siṃha = lion"],["मयि","on me","mayi"],["देहि","give","dehi = grant"],["कृपावलोकम्","your merciful glance","kṛpā = mercy · avaloka = look"]];
+const VT = "vasantatilaka", VTP = "GGLGLLLGLLGLGx", VTN = "Vasantatilakā: 14 syllables a quarter, long–long–short–long–short–short–short–long–short–short–long–short–long–long. Graceful and flowing.";
+const v = (id, n, part, hook, lines, en, ta, extra) => Object.assign({id, n, label:"Verse " + n, part, hook, lines, en, ta}, extra || {});
+const VERSES = [
+ v("v1", "1", "Introduction", "The Lord is easy to reach for the devoted.", [
+   [["सुलभो","easy to reach","sulabha = easily attained"],["भक्तियुक्तानां","for those with devotion","bhakti = devotion · yukta = joined"],["दुर्दर्शो","hard to see","dur = hard · darśa = seeing"],["दुष्टचेतसाम्","for the evil-minded","duṣṭa = wicked · cetas = mind"]],
+   [["अनन्यगतिकानां","of those with no other refuge","an-anya = no other · gati = refuge"],["च","and","ca"],["प्रभुर्","the Lord","prabhu = master"],["भक्तैकवत्सलः","tender to devotees alone","bhakta = devotee · eka = only · vatsala = loving"]]],
+  "The Lord is easy to reach for the devoted and hard to see for the evil-minded. He is the master of those who have no other refuge, tender only to his devotees.",
+  "பக்தியுடையவர்களுக்கு எளிதில் கிடைப்பவர், தீய மனமுடையவர்களுக்குக் காண அரியவர்; வேறு புகலிடம் இல்லாதவர்களின் தலைவர், பக்தர்களிடம் மட்டுமே அன்பு கொண்டவர்.",
+  {tip:"Opposites: <b>sulabho</b> (easy to reach) for the <b>bhakti-yuktānām</b>, <b>durdarśo</b> (hard to see) for the <b>duṣṭa-cetasām</b>."}),
+ v("v2", "2", "Introduction", "Śani bowed at the Lord's lotus feet and sang this hymn.", [
+   [["शनैश्चरस्","Śanaiścara (Saturn)","śanaiḥ = slowly · cara = moving"],["तत्र","then, there","tatra"],["नृसिंहदेव","to Lord Nṛsiṃha","nṛsiṃha · deva = Lord (compound runs into the next line)"]],
+   [["स्तुतिं","a hymn of praise","stuti = praise"],["चकारामलचित्तवृत्तिः","made it, with a pure mind","cakāra = made · amala = spotless · citta = mind · vṛtti = state"]],
+   [["प्रणम्य","bowing","praṇamya"],["साष्टाङ्गम्","with all eight limbs","sa = with · aṣṭa = eight · aṅga = limb (full prostration)"],["अशेषलोक","of all the worlds","aśeṣa = all · loka = world"]],
+   [["किरीटनीराजितपादपद्मम्","whose lotus feet glow with the crowns of all","kirīṭa = crown · nīrājita = lit up, honoured with lights · pāda-padma = lotus feet"]]],
+  "Then Śanaiścara, with a pure mind, prostrated fully before Lord Nṛsiṃha — whose lotus feet glow with the crowns of all the worlds bowed before them — and composed this hymn of praise.",
+  "அப்போது சனைச்சரன், தூய மனதுடன், எல்லா உலகங்களின் கிரீடங்களால் ஒளிரும் தாமரைப் பாதங்களை உடைய நரசிம்மதேவனை சாஷ்டாங்கமாக வணங்கி இந்தத் துதியைச் செய்தார்.",
+  {meter:"upajati", pat:"xGLGGLLGLGx", padaLen:11, meterNote:"Upajāti: 11 syllables a quarter — short–long–short–long–long–short–short–long–short–long–long (the first syllable may be long)."}),
+ v("v3", "3", "Śani's hymn", "Śani: the dust of your feet destroys all sin.", [
+   [["यत्पादपङ्कजरजः","the dust of whose lotus feet","yat = whose · pāda = foot · paṅkaja = lotus · rajas = dust"],["परमादरेण","with great reverence","parama = highest · ādara = respect"]],
+   [["संसेवितं","when served","saṃsevita = worshipped"],["सकलकल्मषराशिनाशम्","destroys the whole heap of sins","sakala = all · kalmaṣa = sin · rāśi = heap · nāśa = destruction"]],
+   [["कल्याणकारकम्","brings blessings","kalyāṇa = good · kāraka = maker"],["अशेषनिजानुगानाम्","to all his own followers","aśeṣa = all · nija = own · anuga = follower"]],
+   REF],
+  "Śani said: The dust of your lotus feet, served with great reverence, destroys the whole heap of sins and brings blessings to all your followers — O Nṛsiṃha, turn your merciful glance on me.",
+  "சனி சொன்னார்: பெரும் பக்தியுடன் வணங்கப்படும் உமது தாமரைப் பாதத் தூசு எல்லாப் பாவக் குவியல்களையும் அழித்து, உமது அடியார்கள் அனைவருக்கும் நன்மை தருகிறது — நரசிம்மா, என்மீது உமது கருணைப் பார்வையைச் செலுத்துவீராக.",
+  {meter:VT, pat:VTP, meterNote:VTN, tip:"Verses 3–10 follow one pattern: three new lines, then the refrain <b>sa tvaṃ nṛsiṃha mayi dehi kṛpāvalokam</b>. Verse 3 is about the <b>dust</b> of his feet."}),
+ v("v4", "4", "Śani's hymn", "Lakṣmī, fickle elsewhere, stays steady at your feet.", [
+   [["सर्वत्र","everywhere else","sarvatra"],["चञ्चलतया","fickle","cañcala = restless"],["स्थितया","who stays","sthitā"],["हि","indeed","hi"],["लक्ष्म्या","by Lakṣmī","lakṣmī"]],
+   [["ब्रह्मादिवन्द्यपदया","whose feet Brahmā and others worship","brahma · ādi = and others · vandya = to be worshipped · pada = foot"],["स्थिरयान्यसेवि","steadily served, serving no other","sthirā = steady · ananya-sevin = serving no one else"]],
+   [["पादारविन्दयुगलं","the pair of lotus feet","pāda = foot · aravinda = lotus · yugala = pair"],["परमादरेण","with great reverence","parama · ādara"]],
+   REF],
+  "Your pair of lotus feet is served with great reverence and steadily by Lakṣmī — fickle everywhere else, whose own feet Brahmā and the gods worship — O Nṛsiṃha, turn your merciful glance on me.",
+  "மற்ற எங்கும் நிலையற்றவளும், பிரம்மா முதலியோரால் வணங்கப்படும் பாதங்களை உடையவளுமான லக்ஷ்மி, உமது இரு தாமரைப் பாதங்களை மட்டும் நிலையாக, பெரும் பக்தியுடன் சேவிக்கிறாள் — நரசிம்மா, என்மீது கருணைப் பார்வையைச் செலுத்துவீராக.",
+  {meter:VT, pat:VTP, meterNote:VTN, tip:"Verse 4 is about <b>Lakṣmī</b>: restless (cañcala) everywhere, steady (sthira) only at his feet."}),
+ v("v5", "5", "Śani's hymn", "The form the Upaniṣads teach, meditated on by yogis.", [
+   [["यद्रूपम्","whose form","yat = whose · rūpa = form"],["आगमशिरःप्रतिपाद्यम्","taught by the Upaniṣads","āgama = Veda · śiras = head (the Upaniṣads) · pratipādya = taught"],["आद्यम्","the first, the origin","ādya"]],
+   [["आध्यात्मिकादिपरितापहरं","removing the three kinds of suffering","ādhyātmika = of body and mind · ādi = and the others · paritāpa = affliction · hara = remover"],["विचिन्त्यम्","is meditated upon","vicintya"]],
+   [["योगीश्वरैर्","by the great yogis","yogin · īśvara = master"],["अपगताखिलदोषसङ्घैः","who are free of every fault","apagata = gone · akhila = all · doṣa = fault · saṅgha = mass"]],
+   REF],
+  "Your primal form, taught by the Upaniṣads, which removes every kind of suffering, is meditated upon by great yogis free of all faults — O Nṛsiṃha, turn your merciful glance on me.",
+  "உபநிஷத்துகளால் போதிக்கப்படுவதும், எல்லாத் துன்பங்களையும் போக்குவதுமான உமது ஆதி வடிவம், குற்றமற்ற யோகிகளால் தியானிக்கப்படுகிறது — நரசிம்மா, என்மீது கருணைப் பார்வையைச் செலுத்துவீராக.",
+  {meter:VT, pat:VTP, meterNote:VTN, tip:"Verse 5 is about his <b>form</b> (yad-rūpam) for <b>yogis</b>. Verses 9 also starts with yad-rūpam — 5 is the gentle form, 9 the fierce one."}),
+ v("v6", "6", "Śani's hymn", "At Prahlāda's word he burst from the pillar.", [
+   [["प्रह्लादभक्तवचसा","at the word of his devotee Prahlāda","prahlāda · bhakta = devotee · vacas = word"],["हरिर्","Hari","hari"],["आविरास","appeared","āvirāsa = became manifest"]],
+   [["स्तम्भे","in the pillar","stambha = pillar"],["हिरण्यकशिपुं","Hiraṇyakaśipu","the demon king"],["य","who","yaḥ"],["उदारभावः","the noble-hearted","udāra = noble · bhāva = nature"]],
+   [["ऊर्वो","on his thighs","ūru = thigh"],["निधाय","placing","nidhāya"],["उदरं","the belly","udara"],["नखरैर्","with his claws","nakhara = claw"],["ददार","tore open","dadāra"]],
+   REF],
+  "At the word of his devotee Prahlāda, Hari appeared in the pillar, and, noble-hearted, placed Hiraṇyakaśipu on his thighs and tore open his belly with his claws — O Nṛsiṃha, turn your merciful glance on me.",
+  "பக்தன் பிரஹ்லாதனின் சொல்லுக்காகத் தூணில் தோன்றிய ஹரி, ஹிரண்யகசிபுவைத் தம் தொடைகளில் வைத்து நகங்களால் அவன் வயிற்றைக் கிழித்தார் — நரசிம்மா, என்மீது கருணைப் பார்வையைச் செலுத்துவீராக.",
+  {meter:VT, pat:VTP, meterNote:VTN, tip:"Verse 6 is the <b>story</b>: Prahlāda's word → the pillar (stambhe) → the thighs (ūrvo) → the claws (nakharair)."}),
+ v("v7", "7", "Śani's hymn", "He saved his devotee from fire, sea, cliff, poison, elephant and snake.", [
+   [["यो","who","yaḥ"],["नैजभक्तम्","his own devotee","naija = own · bhakta = devotee"],["अनलाम्बुधिभूधराग्र","from fire, ocean and mountain-top","anala = fire · ambudhi = ocean · bhūdhara = mountain · agra = top"]],
+   [["शृङ्गप्रपातविषदन्तिसरीसृपेभ्यः","from being thrown off the peak, from poison, elephants and serpents","śṛṅga = peak · prapāta = fall · viṣa = poison · dantin = elephant · sarīsṛpa = serpent"]],
+   [["सर्वात्मकः","the self of all","sarva · ātmaka"],["परमकारुणिको","supremely compassionate","parama · kāruṇika = merciful"],["ररक्ष","protected","rarakṣa"]],
+   REF],
+  "You, the self of all, supremely compassionate, protected your own devotee from fire, the ocean, being thrown from the mountain peak, poison, elephants and serpents — O Nṛsiṃha, turn your merciful glance on me.",
+  "தம் பக்தனை நெருப்பு, கடல், மலை உச்சியிலிருந்து தள்ளப்படுதல், விஷம், யானை, பாம்பு ஆகியவற்றிலிருந்து காத்த, அனைவரின் ஆத்மாவான பெருங்கருணையாளரே — நரசிம்மா, என்மீது கருணைப் பார்வையைச் செலுத்துவீராக.",
+  {meter:VT, pat:VTP, meterNote:VTN, tip:"Verse 7 lists the six dangers Prahlāda survived: <b>fire · sea · cliff · poison · elephant · snake</b>."}),
+ v("v8", "8", "Śani's hymn", "Meditating on his changeless form, yogis find lasting peace.", [
+   [["यन्निर्विकारपररूपविचिन्तनेन","by meditating on whose changeless supreme form","yat · nirvikāra = changeless · para = supreme · rūpa = form · vicintana = meditation"]],
+   [["योगीश्वरा","great yogis","yogīśvarāḥ"],["विषयवीतसमस्तरागाः","free of all attachment to the senses","viṣaya = sense-object · vīta = gone · samasta = all · rāga = attachment"]],
+   [["विश्रान्तिम्","rest, peace","viśrānti"],["आपुर्","attained","āpuḥ"],["अविनाशवतीं","imperishable","avināśa = undying"],["पराख्याम्","called the supreme","para · ākhyā = name"]],
+   REF],
+  "By meditating on your changeless, supreme form, great yogis — free of all attachment to the senses — attained the imperishable peace called the Supreme — O Nṛsiṃha, turn your merciful glance on me.",
+  "உமது மாறாத பர வடிவத்தைத் தியானித்து, புலன் பற்றுகள் நீங்கிய யோகிகள் அழிவற்ற பரம அமைதியை அடைந்தனர் — நரசிம்மா, என்மீது கருணைப் பார்வையைச் செலுத்துவீராக.",
+  {meter:VT, pat:VTP, meterNote:VTN, tip:"Verse 8 is about <b>peace</b> (viśrānti) for yogis — almost one long compound in line 1."}),
+ v("v9", "9", "Śani's hymn", "His fierce form removes fear of spirits, fevers and planets.", [
+   [["यद्रूपम्","whose form","yat · rūpa"],["उग्रपरिमर्दनभावशालि","full of power to crush the fierce","ugra = fierce · parimardana = crushing · bhāva = nature · śālin = having"]],
+   [["संचिन्तनेन","when meditated on","saṃcintana"],["सकलाघविनाशकारि","destroys all sins","sakala = all · agha = sin · vināśa · kārin = doing"]],
+   [["भूतज्वरग्रहसमुद्भवभीतिनाशम्","removes fear from spirits, fevers and planets","bhūta = spirit · jvara = fever · graha = planet · samudbhava = arising · bhīti = fear · nāśa = removal"]],
+   REF],
+  "Your fierce form, able to crush all that is fierce, when meditated upon destroys every sin and removes the fear that comes from spirits, fevers and planets — O Nṛsiṃha, turn your merciful glance on me.",
+  "கொடியவற்றை நசுக்கும் வலிமையுடைய உமது உக்கிர வடிவம், தியானிக்கப்படும்போது எல்லாப் பாவங்களையும் அழித்து, பூதங்கள், ஜுரம், கிரகங்கள் இவற்றால் வரும் அச்சத்தைப் போக்குகிறது — நரசிம்மா, என்மீது கருணைப் பார்வையைச் செலுத்துவீராக.",
+  {meter:VT, pat:VTP, meterNote:VTN, tip:"Verse 9: the <b>fierce</b> (ugra) form, which removes fear of <b>bhūta · jvara · graha</b> — spirits, fever, planets. Śani, a planet, says this!"}),
+ v("v10", "10", "Śani's hymn", "His glory is sung by Śiva, Brahmā, Indra and all the gods.", [
+   [["यस्योत्तमं","whose supreme","yasya = whose · uttama = highest"],["यश","glory","yaśaḥ = fame"],["उमापतिपद्मजन्म","Śiva and lotus-born Brahmā","umā-pati = Śiva · padma-janman = Brahmā"]],
+   [["शक्रादिदैवतसभासु","in the assemblies of Indra and the gods","śakra = Indra · ādi = and others · daivata = gods · sabhā = assembly"],["समस्तगीतम्","is sung by all","samasta = all · gīta = sung"]],
+   [["शक्त्यैव","by its own power","śaktyā = by power · eva = alone"],["सर्वशमलप्रशमैकदक्षम्","uniquely able to calm all impurity","sarva = all · śamala = impurity · praśama = calming · eka = alone · dakṣa = able"]],
+   REF],
+  "Your supreme glory, sung by Śiva, Brahmā, Indra and all the gods in their assemblies, by its power alone can calm all impurity — O Nṛsiṃha, turn your merciful glance on me.",
+  "சிவன், பிரம்மா, இந்திரன் முதலிய தேவர்களின் சபைகளில் அனைவராலும் பாடப்படும் உமது உயர்ந்த புகழ், தன் சக்தியாலேயே எல்லா மாசுகளையும் தணிக்க வல்லது — நரசிம்மா, என்மீது கருணைப் பார்வையைச் செலுத்துவீராக.",
+  {meter:VT, pat:VTP, meterNote:VTN, tip:"Verse 10 is about his <b>glory</b> (yaśaḥ), sung by the gods — the last of the eight refrain verses."}),
+ v("v11", "11", "The boon", "Hearing Śani's hymn, Hari spoke to him.", [
+   [["इत्थं","thus","ittham"],["श्रुत्वा","hearing","śrutvā"],["स्तुतिं","the hymn","stuti"],["देवः","the Lord","deva"],["शनिना","by Śani","śani"],["कल्पितां","composed","kalpita"],["हरिः","Hari","hari"]],
+   [["उवाच","said","uvāca"],["ब्रह्मवृन्दस्थं","standing among Brahmā's assembly","brahma · vṛnda = group · stha = standing"],["शनिं","to Śani","śani"],["तं","him","tam"],["भक्तवत्सलः","who loves his devotees","bhakta · vatsala"]]],
+  "Hearing the hymn composed by Śani, Lord Hari, who loves his devotees, spoke to Śani, who stood among Brahmā's assembly:",
+  "சனியால் இயற்றப்பட்ட இந்தத் துதியைக் கேட்ட பக்தவத்ஸலனான ஹரி, பிரம்ம சபையில் நின்ற சனியிடம் சொன்னார்:"),
+ v("v12", "12", "The boon", "Nṛsiṃha: “I am pleased — ask for a boon.”", [
+   [["प्रसन्नोऽहं","I am pleased","prasannaḥ = pleased · aham = I"],["शने","O Śani","śane"],["तुभ्यं","with you","tubhyam"],["वरं","a boon","vara"],["वरय","choose","varaya"],["शोभनम्","a good one","śobhana"]],
+   [["यं","whatever","yam"],["वाञ्छसि","you wish","vāñchasi"],["तमेव","that very one","tam · eva"],["त्वं","you","tvam"],["सर्वलोकहितावहम्","for the good of all the worlds","sarva · loka · hita = good · āvaha = bringing"]]],
+  "Nṛsiṃha said: “I am pleased with you, Śani. Choose a good boon — whatever you wish, that brings good to all the worlds.”",
+  "நரசிம்மர் சொன்னார்: “சனியே, உன்னிடம் மகிழ்ந்தேன். உலகுக்கு நன்மை தரும் எந்த வரத்தை விரும்புகிறாயோ அதைக் கேள்.”"),
+ v("v13", "13", "The boon", "Śani: “Let my day, Saturday, be dear to you.”", [
+   [["नृसिंह","O Nṛsiṃha","nṛsiṃha"],["त्वं","you","tvam"],["मयि","on me","mayi"],["कृपां","mercy","kṛpā"],["कुरु","show","kuru"],["देव","O Lord","deva"],["दयानिधे","O treasure of compassion","dayā = compassion · nidhi = treasure"]],
+   [["मद्वासरस्","my day (Saturday)","mad = my · vāsara = day"],["तव","to you","tava"],["प्रीतिकरः","pleasing","prīti = joy · kara = making"],["स्याद्","may it be","syāt"],["देवतापते","O lord of gods","devatā · pati"]]],
+  "Śani said: “O Nṛsiṃha, Lord, treasure of compassion, show me your mercy. May my day, Saturday, be pleasing to you, O lord of the gods.",
+  "சனி சொன்னார்: “நரசிம்மா, கருணைக் கடலே, என்மீது கருணை காட்டுவீராக. தேவர்களின் தலைவரே, என் நாளான சனிக்கிழமை உமக்குப் பிரியமானதாக இருக்கட்டும்.",
+  {tip:"This is why Narasimha is worshipped on <b>Saturdays</b> — Śani asked for it."}),
+ v("v14", "14", "The boon", "“Fulfil the wishes of all who hear or recite my hymn.”", [
+   [["मत्कृतं","made by me","mat = my · kṛta = made"],["त्वत्परं","about you","tvat = you · para = devoted to"],["स्तोत्रं","the hymn","stotra"],["शृण्वन्ति","hear","śṛṇvanti"],["च","and","ca"],["पठन्ति","recite","paṭhanti"],["च","and","ca"]],
+   [["सर्वान्","all","sarva"],["कामान्","wishes","kāma"],["पूरयेथाः","may you fulfil","pūrayethāḥ"],["तेषां","their","teṣām"],["त्वं","you","tvam"],["लोकभावन","O sustainer of the worlds","loka · bhāvana"]]],
+  "Those who hear and recite this hymn, made by me about you — O sustainer of the worlds, please fulfil all their wishes.”",
+  "நான் இயற்றிய உம்மைப் பற்றிய இந்த ஸ்தோத்திரத்தைக் கேட்பவர்களுக்கும் படிப்பவர்களுக்கும், உலகைக் காப்பவரே, அவர்களின் எல்லா விருப்பங்களையும் நிறைவேற்றுவீராக.”"),
+ v("v15", "15", "The boon", "Nṛsiṃha: “So be it. Now hear one word of mine.”", [
+   [["तथैवास्तु","so be it","tathā = so · eva · astu = let it be"],["शने","O Śani","śane"],["ऽहं","I","aham"],["वै","indeed","vai"],["रक्षोभुवनसंस्थितः","established as protector of the world","rakṣaḥ = protection · bhuvana = world · saṃsthita = established"]],
+   [["भक्तकामान्","the wishes of devotees","bhakta · kāma"],["पूरयिष्ये","I will fulfil","pūrayiṣye"],["त्वं","you","tvam"],["ममैकं","one of mine","mama = my · ekam = one"],["वचः","word","vacas"],["शृणु","hear","śṛṇu"]]],
+  "Nṛsiṃha said: “So be it, Śani. I, who stand as the protector of the world, will fulfil my devotees' wishes. Now hear one word of mine:",
+  "நரசிம்மர் சொன்னார்: “சனியே, அப்படியே ஆகட்டும். உலகைக் காக்கும் நான் பக்தர்களின் விருப்பங்களை நிறைவேற்றுவேன். நீ என் ஒரு சொல்லைக் கேள்:"),
+ v("v16", "16", "The boon", "“Whoever recites it need not fear you in the 12th, 8th or 1st house.”", [
+   [["त्वत्कृतं","made by you","tvat · kṛta"],["मत्परं","about me","mat · para"],["स्तोत्रं","this hymn","stotra"],["यः","whoever","yaḥ"],["पठेच्छृणुयाच्च","recites or hears","paṭhet · śṛṇuyāt · ca"],["यः","who","yaḥ"]],
+   [["द्वादशाष्टमजन्मस्थात्","from you standing in the 12th, 8th or 1st house","dvādaśa = twelfth · aṣṭama = eighth · janma = birth (first) · stha = standing"],["त्वद्भयं","fear of you","tvat · bhaya = fear"],["मास्तु","let there not be","mā = not · astu = be"],["तस्य","for him","tasya"],["वै","indeed","vai"]]],
+  "“Whoever recites or hears this hymn, made by you about me — let there be no fear of you for them, even when you stand in the twelfth, eighth or first house from their birth.”",
+  "“நீ இயற்றிய என்னைப் பற்றிய இந்த ஸ்தோத்திரத்தைப் படிப்பவர்க்கோ கேட்பவர்க்கோ, நீ பன்னிரண்டாம், எட்டாம், ஜென்ம ராசியில் இருக்கும்போதும் உன்னால் அச்சம் இல்லாமல் இருக்கட்டும்.”",
+  {tip:"The famous boon: <b>dvādaśa · aṣṭama · janma</b> — 12th, 8th, 1st. Remember “12-8-1”."}),
+ v("v17", "17", "The boon", "Śani agreed, and the sages cried “Victory!”", [
+   [["शनिर्","Śani","śaniḥ"],["नरहरिं","to Narahari","nara = man · hari = lion"],["देवं","the Lord","deva"],["तथेति","“so be it”","tathā · iti"],["प्रत्युवाच","replied","pratyuvāca"],["ह","indeed","ha"]],
+   [["ततः","then","tataḥ"],["परमसन्तुष्टाः","overjoyed","parama · santuṣṭa = satisfied"],["जयेति","“Victory!”","jaya · iti"],["मुनयो","the sages","muni"],["ऽवदन्","said","avadan"]]],
+  "Śani replied to Lord Narahari, “So be it.” Then the sages, overjoyed, cried out, “Victory!”",
+  "சனி நரஹரியிடம் “அப்படியே ஆகட்டும்” என்று பதில் சொன்னார். பிறகு மகிழ்ந்த முனிவர்கள் “ஜய!” என்று முழங்கினர்."),
+ v("v18", "18", "Phala-śruti", "Kṛṣṇa: whoever hears or shares this dialogue gains every wish.", [
+   [["इदं","this","idam"],["शनैश्चरस्याथ","of Śanaiścara and","śanaiścarasya · atha"],["नृसिंहदेव","Lord Nṛsiṃha","nṛsiṃha · deva"]],
+   [["संवादमेतत्","this dialogue","saṃvāda = conversation · etat = this"],["स्तवनं","and hymn","stavana = praise"],["च","and","ca"],["मानवः","a person","mānava"]],
+   [["शृणोति","hears","śṛṇoti"],["यः","who","yaḥ"],["श्रावयते","makes others hear","śrāvayate"],["च","and","ca"],["भक्त्या","with devotion","bhakti"]],
+   [["सर्वाण्यभीष्टानि","all desires","sarvāṇi · abhīṣṭa = wished for"],["च","and","ca"],["विन्दते","obtains","vindate"],["ध्रुवम्","surely","dhruvam"]]],
+  "Śrī Kṛṣṇa said: Whoever hears this dialogue and hymn of Śanaiścara and Lord Nṛsiṃha, or devoutly makes others hear it, surely obtains all their desires.",
+  "ஸ்ரீ கிருஷ்ணர் சொன்னார்: சனைச்சரனுக்கும் நரசிம்மதேவனுக்கும் இடையிலான இந்த உரையாடலையும் துதியையும் பக்தியுடன் கேட்பவரும், பிறருக்குக் கேட்கச் செய்பவரும் நிச்சயமாக எல்லா விருப்பங்களையும் அடைவார்.",
+  {kind:"phala", short:"Phala-śruti", meter:"mixed", meterNote:"A mixed closing verse: quarters of 11–13 syllables in a loose upajāti style, not one fixed pattern."})
+];
+const BENEFITS = [["सकलकल्मषराशिनाशम्","All sins removed"],["भूतज्वरग्रहसमुद्भवभीतिनाशम्","No fear of spirits, fever or planets"],["त्वद्भयं","No fear of Śani"],["सर्वान्","All wishes fulfilled"],["विश्रान्तिम्","Lasting peace"]];
+return {
+  key:"nss", titleDv:"श्रीनृसिंहस्तुतिः", verses:VERSES, benefits:BENEFITS,
+  meter:{name:"Three metres", kind:"anushtubh",
+    intro:"The story verses are <b>anuṣṭubh</b> (four quarters of 8). Śani's eight-verse hymn is in the flowing <b>vasantatilakā</b> (14 a quarter), and verse 2 is <b>upajāti</b> (11). Pick a verse to see its pattern.",
+    quiz:{q:"Which metre are Śani's eight refrain verses (3–10) in?", opts:["Vasantatilakā: 14 syllables a quarter","Anuṣṭubh: 8 syllables a quarter","Pañcacāmara: short–long × 8","Puṣpitāgrā"],
+      why:"Vasantatilakā — long–long–short–long… 14 syllables. The story verses around it are anuṣṭubh."}},
+  overview({R, esc}){
+    document.getElementById("refrain").innerHTML = REF.map(w => R(w[0])).join(" ");
+    document.getElementById("speakers").innerHTML = [["1–2","The narrator","introduces Śani"],["3–10","Śani","sings the hymn"],["11","The narrator","Hari speaks"],["12","Nṛsiṃha","“ask for a boon”"],["13–14","Śani","asks for Saturday and for devotees"],["15–16","Nṛsiṃha","grants it: no fear of Śani"],["17","Śani & the sages","“so be it” · “jaya!”"],["18","Śrī Kṛṣṇa","the fruit of hearing it"]].map(([n, who, what]) => `<div class="step"><span class="n" style="font-size:.95rem">${n}</span><div><span class="vb" style="font-family:var(--f-display)">${esc(who)}</span> <span class="en">— ${esc(what)}</span></div><span></span></div>`).join("");
+  }
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

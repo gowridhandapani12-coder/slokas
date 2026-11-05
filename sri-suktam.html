@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sri Suktam</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+<style>
+.svaras{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.sv{border-radius:14px;background:var(--surface-2);padding:12px;text-align:center}
+.sv b{display:block;font-family:"Noto Serif Tamil",serif;font-size:2rem;color:var(--terra-ink);line-height:1.4}
+.sv span{font-size:.82rem;color:var(--muted)}
+.sv i{font-style:normal;font-weight:800;display:block}
+.refrain{font-family:var(--f-verse);font-size:1.2rem;color:var(--terra-ink);line-height:1.7;overflow-wrap:anywhere}
+@media (max-width:620px){.svaras{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Ṛg Veda (khila) · Vedic Sanskrit with svaras · 15 ṛks + phala + Lakṣmī ślokas</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Sri Suktam</h1>
+          <p class="lead" style="margin-top:8px">The Vedic hymn to Śrī, the goddess of all good fortune. The singer asks Agni — <i>Jātavedas</i>, “who knows all that is born” — to bring Lakṣmī, golden, lotus-seated, who never leaves, and to drive away Alakṣmī: hunger, thirst and want.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><span>Source</span><b>Ṛg Veda khila</b><span>an appendix hymn to the 5th maṇḍala</span></div>
+        <div class="fact"><span>Goddess</span><b>Śrī · Lakṣmī</b><span>golden, lotus-born, never leaving</span></div>
+        <div class="fact"><span>Called on</span><b>Agni (Jātavedas)</b><span>to bring her — ṛks 1, 2, 13–15</span></div>
+        <div class="fact"><span>Seers</span><b>Ānanda · Kardama · Ciklīta</b><span>Śrī's own sons — verse 17</span></div>
+        <div class="fact"><span>Chanting</span><b>With svaras</b><span>the Vedic pitch marks</span></div>
+        <div class="fact"><span>On her plan</span><b>6 days a week</b><span>every day except Saturday</span></div>
+      </div>
+      <div class="card">
+        <h2>Reading the svara marks</h2>
+        <p class="muted" style="margin:6px 0 12px">Vedic hymns are chanted on three pitches. In her text the small lines tell you which. Turn on Tamil or देवनागरी to see them; they are hidden in the English scripts.</p>
+        <div class="svaras">
+          <div class="sv"><b>க<span class="svr lo">ˍ</span></b><i>anudātta · ॒</i><span>a line <b>below</b> — say it on a <b>lower</b> note</span></div>
+          <div class="sv"><b>க</b><i>udātta</i><span><b>no mark</b> — the middle, normal note</span></div>
+          <div class="sv"><b>க<span class="svr">ˈ</span></b><i>svarita · ॑</i><span>a line <b>above</b> — <b>rise</b> on it, then fall (ˈˈ / ᳚ = held longer)</span></div>
+        </div>
+        <div class="tip" style="margin-top:12px"><b>Tip.</b> The svaras are best learned by ear from a teacher. Use the page to see <i>where</i> the marks fall, and record yourself (Memorise tab) to compare with your class.</div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h2>Lines that come back</h2>
+          <p class="muted" style="margin:6px 0 12px">Spot these and much of the hymn is already learnt:</p>
+          <div class="refrain" id="refrains"></div>
+        </div>
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each verse, in order.</p>
+          <div class="mn" id="openings"></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>What it gives</h2>
+        <p class="muted" style="margin:6px 0 12px">The hymn asks for these, and the phala verses promise them to whoever chants it:</p>
+        <div class="benefits" id="benefits"></div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+const VED = "Vedic metres (anuṣṭubh, triṣṭubh and others) bend freely, and the svaras matter more than the syllable count — so this page shows the long and short syllables without checking them.";
+const R1 = [["च॒न्द्राम्","moon-like, delightful","candra = moon, gladdening"],["हि॒रण्म॑यीम्","made of gold","hiraṇmaya = golden"],["ल॒क्ष्मीम्","Lakṣmī","lakṣmī"],["जात॑वेदो","O Jātavedas (Agni)","jāta = born · vedas = knowing — Agni, who knows all beings"],["म॒माव॑ह","bring to me","mama = to me · āvaha = bring"]];
+const R2 = [["ताम्","her","tām"],["म॒","to me","me"],["आव॑ह॒","bring","āvaha"],["जात॑वेदो","O Jātavedas","Agni"],["ल॒क्ष्मीमन॑पगा॒मिनी᳚म्","Lakṣmī, who never goes away","lakṣmīm · an-apagāminī = not departing"]];
+const IHO = [["तामि॒होप॑ह्वये॒","her I call here","tām = her · iha = here · upahvaye = I invoke"],["श्रियम्","Śrī","śrī = fortune, the goddess"]];
+const r = (id, n, hook, lines, en, ta, extra) => Object.assign({id, n, label:"Ṛk " + n, part:"The fifteen ṛks", hook, lines, en, ta, meter:"vedic", meterNote:VED}, extra || {});
+const s = (id, n, part, hook, lines, en, ta, extra) => Object.assign({id, n, label:"Verse " + n, part, hook, lines, en, ta}, extra || {});
+const VERSES = [
+ r("r1", "1", "O Agni, bring me Lakṣmī — golden, with garlands of gold and silver.", [
+   [["ओम्","Om","the sacred syllable"],["हिर॑ण्यवर्णाम्॒","golden-coloured","hiraṇya = gold · varṇa = colour"],["हरि॑णीम्","fair as a doe","hariṇī = doe; also golden-green"],["सु॒वर्ण॑रज॒तस्र॑जाम्","wearing garlands of gold and silver","suvarṇa = gold · rajata = silver · sraj = garland"]],
+   R1],
+  "Om. O Jātavedas, bring to me Lakṣmī — golden-coloured, fair as a doe, wearing garlands of gold and silver, delightful as the moon, made of gold.",
+  "ஓம். ஜாதவேதஸே (அக்னியே), பொன்னிறமுடையவளும், மான் போன்றவளும், பொன், வெள்ளி மாலைகள் அணிந்தவளும், சந்திரன் போல் மகிழ்விப்பவளும், பொன்மயமானவளுமான லக்ஷ்மியை என்னிடம் கொண்டு வருவாயாக.",
+  {tip:"Its second line <b>candrāṃ hiraṇmayīṃ lakṣmīṃ jātavedo mamāvaha</b> comes back word for word in ṛk 13, and almost exactly in ṛk 14."}),
+ r("r2", "2", "Bring me the Lakṣmī who never leaves — by whom I gain gold, cattle, horses and people.", [
+   R2,
+   [["यस्याम्॒","by whose grace","yasyām = in whom"],["हिर॑ण्यम्","gold","hiraṇya"],["वि॒न्देयम्॒","may I gain","vindeyam"],["गामश्वम्॒","cows and horses","gām = cow · aśvam = horse"],["पुरु॑षान॒हम्","and people (helpers), I","puruṣān = people · aham = I"]]],
+  "O Jātavedas, bring to me that Lakṣmī who never goes away, by whose grace I may gain gold, cows, horses and people.",
+  "ஜாதவேதஸே, என்னை விட்டு நீங்காத அந்த லக்ஷ்மியை என்னிடம் கொண்டு வருவாயாக; அவள் அருளால் நான் பொன், பசு, குதிரை, மக்கள் ஆகியோரைப் பெறுவேனாக.",
+  {tip:"This whole first line returns as ṛk 15 — the hymn begins and ends with the same prayer."}),
+ r("r3", "3", "Horses before her, chariots around her, elephants trumpeting her arrival.", [
+   [["अ॒श्व॒पू॒र्वाम्","with horses going before her","aśva = horse · pūrva = in front"],["र॑थम॒ध्याम्","in the midst of chariots","ratha = chariot · madhya = middle"],["ह॒स्तिना॑दप्र॒बोधि॑नीम्","announced by the trumpeting of elephants","hastin = elephant · nāda = sound · prabodhinī = awakening, announcing"]],
+   [["श्रियम्॑","Śrī","śrī"],["दे॒वीमुप॑ह्वये॒","the goddess I invoke","devīm = goddess · upahvaye = I call"],["श्रीर्मा॑","may Śrī, me","śrīḥ · mā = me"],["दे॒वीर्जु॑षताम्","the goddess, favour","devī · juṣatām = may she be pleased with"]]],
+  "I call on Śrī, the goddess, who comes with horses before her, in the midst of chariots, announced by the trumpeting of elephants. May the goddess Śrī favour me.",
+  "முன்னே குதிரைகள், நடுவே தேர்கள், யானைகளின் பிளிறலால் அறிவிக்கப்படுபவளான ஸ்ரீதேவியை அழைக்கிறேன்; அந்த ஸ்ரீதேவி என்னிடம் அருள் புரியட்டும்."),
+ r("r4", "4", "Gently smiling, in golden walls, tender, shining, content — seated on the lotus.", [
+   [["कां॒सो᳚ऽस्मि॒ताम्","her, gently smiling","kām = whom (indescribable) · sā = she · smitā = smiling"],["हिर॑ण्यप्रा॒कारा॑म्","within golden walls","hiraṇya = gold · prākāra = enclosure"],["आ॒र्द्राम्","tender, moist with compassion","ārdrā = soft, wet"],["ज्वल॑न्तीम्","shining","jvalantī"],["तृ॒प्ताम्","content","tṛptā = satisfied"],["त॒र्पय॑न्तीम्","satisfying others","tarpayantī"]],
+   [["प॒द्मे॒","on the lotus","padma"],["स्थि॒ताम्","standing, seated","sthitā"],["प॒द्मव॑र्णाम्॒","lotus-coloured","padma · varṇa"], ...IHO]],
+  "I call here Śrī, gently smiling, within golden walls, tender with compassion, shining, content and contenting others, seated on the lotus, lotus-coloured.",
+  "புன்முறுவல் பூத்தவளும், பொன் மதில்களுக்குள் இருப்பவளும், கருணையால் நெகிழ்ந்தவளும், ஒளிர்பவளும், நிறைவுற்றவளும், பிறரை நிறைவிப்பவளும், தாமரையில் அமர்ந்தவளும், தாமரை நிறத்தவளுமான ஸ்ரீதேவியை இங்கே அழைக்கிறேன்.",
+  {tip:"Ends with <b>tām ihopahvaye śriyam</b> — “her I call here, Śrī”. So does ṛk 9."}),
+ r("r5", "5", "I take refuge in her — may my misfortune be destroyed. I choose you.", [
+   [["च॒न्द्राम्","moon-like","candrā"],["प्र॑भा॒साम्","radiant","prabhāsā = shining"],["य॒शसा॒","with glory","yaśas = fame"],["ज्वल॑न्तीम्॒","blazing","jvalantī"],["श्रियम्॑","Śrī","śrī"],["लो॒के","in the world","loka"],["दे॒वजु॑ष्टामुदा॒राम्","loved by the gods, generous","deva-juṣṭā = cherished by gods · udārā = noble, generous"]],
+   [["ताम्","her","tām"],["प॒द्मिनी॑मीम्॒","the lotus-bearer, her","padminī = holding lotuses · īm = her"],["शर॑णम॒हम्","as refuge, I","śaraṇam · aham"],["प्रप॑द्येऽल॒क्ष्मीर्मे॑","I take — may my misfortune","prapadye = I approach · alakṣmīḥ = misfortune · me = my"],["नश्यताम्॒","be destroyed","naśyatām"],["त्वाम्","you","tvām"],["वृ॑णे","I choose","vṛṇe"]]],
+  "I take refuge in her — Śrī, moon-like, radiant, blazing with glory in the world, loved by the gods, generous, the bearer of lotuses. May my misfortune be destroyed; I choose you.",
+  "சந்திரன் போன்றவளும், ஒளிர்பவளும், புகழால் சுடர்பவளும், தேவர்களால் விரும்பப்படுபவளும், வள்ளலும், தாமரை ஏந்தியவளுமான ஸ்ரீயைச் சரணடைகிறேன். என் தரித்திரம் அழியட்டும்; உன்னையே தேர்ந்தெடுக்கிறேன்.",
+  {tip:"The heart of the prayer: <b>alakṣmīr me naśyatām</b> — “may my misfortune be destroyed”. Note the (அ) — it is a-lakṣmī, not lakṣmī."}),
+ r("r6", "6", "O sun-coloured one, the bilva tree was born of your tapas — may its fruits drive away misfortune.", [
+   [["आ॒दि॒त्यव॑र्णे॒","O you of the sun's colour","āditya = sun · varṇa = colour"],["तप॒सोऽधि॑जा॒तो","born of (your) tapas","tapas = austerity · adhijāta = born from"],["वन॒स्पति॒स्तव॑","the lord of trees, yours","vanaspati = tree · tava = your"],["वृ॒क्षोऽथ॑","the tree, then","vṛkṣaḥ · atha"],["बि॒ल्वः","the bilva","bilva = wood-apple tree"]],
+   [["तस्य॒","its","tasya"],["फला॑नि॒","fruits","phala"],["तप॒सानु॑दन्तु","by tapas may they drive away","tapasā · nudantu = push away"],["मा॒यान्त॑रा॒याश्च॑","illusions and inner obstacles","māyā = illusion · antarāya = obstacle · ca"],["बा॒ह्या","outer","bāhya = external"],["अ॑ल॒क्ष्मीः","misfortunes","alakṣmī"]]],
+  "O you of the sun's colour, the bilva, lord of trees, was born of your tapas. By that tapas may its fruits drive away illusion, inner obstacles and outer misfortune.",
+  "சூரிய நிறமுடையவளே, உன் தவத்திலிருந்து மரங்களின் அரசனான வில்வம் பிறந்தது. அதன் பழங்கள் தவ வலிமையால் மாயையையும், உள் தடைகளையும், வெளித் தரித்திரத்தையும் விரட்டட்டும்.",
+  {tip:"This is why <b>bilva</b> leaves are offered to Lakṣmī. Two kinds of trouble: <b>māyā-antarāya</b> (inner) and <b>bāhyā alakṣmīḥ</b> (outer)."}),
+ r("r7", "7", "May Kubera, friend of the gods, come to me with fame and the jewel.", [
+   [["उपै॑तु॒","may (he) come","upaitu"],["माम्","to me","mām"],["दे॑वस॒खः","the friend of the gods (Kubera)","deva-sakha = companion of the gods"],["की॒र्तिश्च॒","and fame","kīrti · ca"],["मणि॑ना","with the jewel","maṇi = gem"],["स॒ह","together","saha"]],
+   [["प्रा॒दु॒र्भू॒तोऽस्मि॑","I am born","prādurbhūtaḥ = born · asmi = I am"],["राष्ट्रे॒ऽस्मिन्","in this land","rāṣṭra = country · asmin = this"],["की॒र्ति॒मृ॑द्धिम्","fame and prosperity","kīrti · ṛddhi = abundance"],["द॒दातु॑","may (she) give","dadātu"],["मे","to me","me"]]],
+  "May Kubera, the friend of the gods, come to me with fame and the jewel. I am born in this land; may she give me fame and prosperity.",
+  "தேவர்களின் நண்பனான குபேரன் புகழுடனும் ரத்தினத்துடனும் என்னிடம் வரட்டும். இந்த நாட்டில் பிறந்துள்ள எனக்கு அவள் புகழையும் செழிப்பையும் தரட்டும்."),
+ r("r8", "8", "I destroy hunger, thirst and Alakṣmī — drive all want from my house.", [
+   [["क्षु॒त्पि॒पा॒साम॑लाम्","hunger, thirst and impurity","kṣut = hunger · pipāsā = thirst · mala = dirt"],["ज्ये॒ष्ठाम्","Jyeṣṭhā (the elder sister)","jyeṣṭhā = Lakṣmī's elder sister, misfortune"],["अ॒ल॒क्ष्मीम्","Alakṣmī","a-lakṣmī = misfortune"],["ना॑शया॒म्यहम्","I destroy","nāśayāmi · aham"]],
+   [["अभू॑ति॒म्","poverty","a-bhūti = lack of wealth"],["अस॑मृद्धिम्॒","want","a-samṛddhi = lack of prosperity"],["च","and","ca"],["स॒र्वाम्॒","all","sarvā"],["निर्णु॑द","drive out","nirṇuda = push out"],["मे॒","from my","me"],["गृहात्","house","gṛha"]]],
+  "I destroy hunger, thirst, impurity and Jyeṣṭhā, Alakṣmī. Drive out all poverty and want from my house.",
+  "பசி, தாகம், அழுக்கு, மூத்தவளான அலக்ஷ்மி இவற்றை அழிக்கிறேன். எல்லா வறுமையையும் குறைவையும் என் வீட்டிலிருந்து விரட்டுவாயாக."),
+ r("r9", "9", "Her gateway is fragrance, unassailable, ever-nourished — sovereign of all beings.", [
+   [["गं॒ध॒द्वा॒राम्","whose gateway is fragrance","gandha = fragrance · dvāra = door"],["दु॑राध॒र्षाम्॒","unassailable","durādharṣā = hard to overcome"],["नि॒त्यपु॑ष्टाम्","ever nourished","nitya = always · puṣṭā = nourished"],["करी॒षिणी᳚म्","rich in cattle","karīṣiṇī = abounding in (cattle) wealth"]],
+   [["ई॒श्वरीं॑","the sovereign","īśvarī = ruler"],["सर्व॑भूता॒नाम्॒","of all beings","sarva · bhūta"], ...IHO]],
+  "I call here Śrī, whose gateway is fragrance, unassailable, ever nourished, rich in cattle, the sovereign of all beings.",
+  "நறுமணமே வாயிலானவளும், வெல்ல முடியாதவளும், எப்போதும் செழித்தவளும், பசுச் செல்வம் நிறைந்தவளும், எல்லா உயிர்களுக்கும் அரசியுமான ஸ்ரீதேவியை இங்கே அழைக்கிறேன்."),
+ {id:"r9a", n:"·", label:"Śrīr me bhajatu", short:"Śrīr me bhajatu", kind:"refrain", part:"The fifteen ṛks", meter:"vedic", meterNote:VED, hook:"May Śrī come to me; may Alakṣmī leave me.",
+  tip:"A short prayer said after ṛk 9 in her text: <b>bhajatu</b> (may she come) / <b>naśyatu</b> (may it perish).",
+  lines:[[["श्री᳚र्मे","may Śrī, to me","śrīḥ · me"],["भ॒जतु","come","bhajatu = may she resort to"]],[["अल॒क्ष्मी᳚र्मे","may Alakṣmī, mine","alakṣmīḥ · me"],["न॒श्यतु","perish","naśyatu"]]],
+  en:"May Śrī come to me. May my misfortune perish.", ta:"ஸ்ரீ என்னை அடையட்டும். என் தரித்திரம் அழியட்டும்."},
+ r("r10", "10", "May we gain the mind's wish and true speech; may Śrī and fame dwell in me.", [
+   [["मन॑सः॒","of the mind","manas"],["काम॒माकू॑तिम्","the wish and intention","kāma = desire · ākūti = intention"],["वा॒चः","of speech","vāc"],["स॒त्यम॑शीमहि","the truth, may we attain","satya = truth · aśīmahi = may we obtain"]],
+   [["प॒शू॒नां","of cattle","paśu"],["रू॒पमन्न॑स्य॒","the beauty, of food","rūpa = form · anna = food"],["मयि॒","in me","mayi"],["श्रीः","Śrī","śrī"],["श्र॑यताम्॒","may (she) dwell","śrayatām"],["यशः॑","and fame","yaśas"]]],
+  "May we attain the wish and intention of the mind and the truth of speech; may the beauty of cattle and of food, and Śrī with fame, dwell in me.",
+  "மனதின் விருப்பமும் எண்ணமும், சொல்லின் உண்மையும் நமக்குக் கிட்டட்டும். பசுக்களின் அழகும், உணவின் வளமும், ஸ்ரீயும் புகழும் என்னிடம் தங்கட்டும்."),
+ r("r11", "11", "O Kardama, through you she has a child — dwell in me, settle her in my family.", [
+   [["क॒र्दमे॑न","through Kardama","kardama = Śrī's son, a seer"],["प्र॑जाभू॒ता॒","she has become a mother","prajā = offspring · bhūtā = become"],["म॒यि॒","in me","mayi"],["संभ॑व","be born, dwell","sambhava"],["क॒र्दम","O Kardama","kardama"]],
+   [["श्रियम्॑","Śrī","śrī"],["वा॒सय॑","make (her) dwell","vāsaya"],["मे","my","me"],["कु॒ले॒","in (my) family","kula"],["मा॒तरम्॑","the mother","mātṛ"],["पद्म॒मालि॑नीम्","wearing the lotus garland","padma · mālinī = garlanded"]]],
+  "Through Kardama, Śrī has offspring. O Kardama, dwell in me, and settle in my family Śrī, the mother, who wears the lotus garland.",
+  "கர்தமனால் ஸ்ரீ மக்கட்பேறு பெற்றாள். கர்தமா, என்னிடம் வசிப்பாயாக; தாமரை மாலை அணிந்த தாயான ஸ்ரீயை என் குலத்தில் வசிக்கச் செய்வாயாக.",
+  {tip:"Ṛks 11 and 12 call Śrī's sons: <b>Kardama</b> here, <b>Ciklīta</b> next. Both end with <b>vāsaya me kule</b>, “settle her in my family”."}),
+ r("r12", "12", "May the waters bring loving things; O Ciklīta, live in my house.", [
+   [["आपः॑","the waters","āpas"],["सृ॒जन्तु॑","may (they) create","sṛjantu"],["स्नि॒ग्धा॒नि॒","soft, loving things","snigdha = smooth, affectionate"],["चि॒क्ली॒त","O Ciklīta","ciklīta = Śrī's son"],["व॑स","dwell","vasa"],["मे॒","my","me"],["गृहे","in (my) house","gṛha"]],
+   [["नि","and","ni = (with vāsaya) settle down"],["च॑","also","ca"],["दे॒वीम्","the goddess","devī"],["मा॒तरम्॒","the mother","mātṛ"],["श्रियम्॑","Śrī","śrī"],["वा॒सय॑","make (her) dwell","vāsaya"],["मे","my","me"],["कु॒ले","in (my) family","kula"]]],
+  "May the waters bring forth gentle, loving things. O Ciklīta, dwell in my house, and settle the goddess, mother Śrī, in my family.",
+  "நீர்கள் மென்மையான நலன்களைத் தரட்டும். சிக்லீதா, என் வீட்டில் வசிப்பாயாக; தேவியான தாய் ஸ்ரீயையும் என் குலத்தில் வசிக்கச் செய்வாயாக."),
+ r("r13", "13", "Tender, like a lotus pond, nourishing, golden-tawny — O Agni, bring her.", [
+   [["आ॒र्द्राम्","tender","ārdrā"],["पु॒ष्करि॑णीम्","like a lotus pond","puṣkariṇī"],["पु॒ष्टिम्॒","nourishment itself","puṣṭi"],["पिं॒ग॒ळाम्","golden-tawny","piṅgalā"],["प॑द्ममा॒लिनीम्","lotus-garlanded","padma-mālinī"]],
+   R1],
+  "O Jātavedas, bring to me Lakṣmī — tender, like a lotus pond, nourishment itself, golden-tawny, wearing a lotus garland, moon-like, made of gold.",
+  "ஜாதவேதஸே, நெகிழ்ந்தவளும், தாமரைக் குளம் போன்றவளும், வளமே வடிவானவளும், பொன்னிறத்தவளும், தாமரை மாலை அணிந்தவளும், சந்திரன் போன்றவளும், பொன்மயமானவளுமான லக்ஷ்மியை என்னிடம் கொண்டு வருவாயாக."),
+ r("r14", "14", "Tender, holding the staff, golden, garlanded with gold, bright as the sun — bring her.", [
+   [["आ॒र्द्राम्","tender","ārdrā"],["यः॒","who","yaḥ"],["करि॑णीम्","acting, holding","kariṇī"],["य॒ष्टिम्॒","the staff (support)","yaṣṭi = staff, support"],["सु॒व॒र्णाम्","golden","suvarṇā"],["हे॑ममा॒लिनीम्","garlanded with gold","hema = gold · mālinī"]],
+   [["सू॒र्याम्","bright as the sun","sūryā"],["हि॒रण्म॑यीम्","made of gold","hiraṇmayī"],["ल॒क्ष्मीम्॒","Lakṣmī","lakṣmī"],["जात॑वेदो","O Jātavedas","Agni"],["म॒माव॑ह","bring to me","mama · āvaha"]]],
+  "O Jātavedas, bring to me Lakṣmī — tender, holding the staff of support, golden, garlanded with gold, bright as the sun, made of gold.",
+  "ஜாதவேதஸே, நெகிழ்ந்தவளும், ஆதாரக் கோலைத் தாங்கியவளும், பொன்னிறத்தவளும், பொன் மாலை அணிந்தவளும், சூரியன் போல் ஒளிர்பவளும், பொன்மயமானவளுமான லக்ஷ்மியை என்னிடம் கொண்டு வருவாயாக.",
+  {tip:"Ṛk 13 says <b>candrām</b> (moon-like), ṛk 14 <b>sūryām</b> (sun-like) — moon, then sun."}),
+ r("r15", "15", "Bring me the Lakṣmī who never leaves — abundant gold, cows, maids, horses and people.", [
+   R2,
+   [["यस्याम्॒","by whose grace","yasyām"],["हिर॑ण्यम्॒","gold","hiraṇya"],["प्रभू॑तम्॒","in abundance","prabhūta"],["गावो॑","cows","go"],["दा॒स्योऽश्वा᳚न्","maids and horses","dāsī = maid · aśva = horse"],["विं॒देयम्॒","may I gain","vindeyam"],["पुरु॑षान॒हम्","and people, I","puruṣān · aham"]]],
+  "O Jātavedas, bring to me that Lakṣmī who never goes away, by whose grace I may gain gold in abundance, cows, maids, horses and people.",
+  "ஜாதவேதஸே, நீங்காத அந்த லக்ஷ்மியை என்னிடம் கொண்டு வருவாயாக; அவள் அருளால் ஏராளமான பொன், பசுக்கள், பணியாளர், குதிரைகள், மக்கள் ஆகியோரைப் பெறுவேனாக."),
+ s("p16", "16", "Phala-śruti", "Whoever, pure, offers ghee daily and chants these fifteen verses gains Śrī.", [
+   [["यश्शुचिः॑","whoever, pure","yaḥ = who · śuci = pure"],["प्रयतो","attentive","prayata"],["भू॒त्वा॒","becoming","bhūtvā"],["जु॒हुया॑दाज्य॒मन्व॑हम्","offers ghee daily","juhuyāt = should offer · ājya = ghee · anvaham = daily"]],
+   [["श्रियः॑","of Śrī","śrī"],["प॒ञ्चद॑शर्चम्","the fifteen ṛks","pañcadaśa = fifteen · ṛc = verse"],["च","and","ca"],["श्री॒काम॑स्सत॒तम्॒","wishing for Śrī, always","śrī-kāma = desiring fortune · satatam = constantly"],["ज॑पेत्","should chant","japet"]]],
+  "Whoever wishes for Śrī should, pure and attentive, offer ghee daily and constantly chant these fifteen ṛks of Śrī.",
+  "ஸ்ரீயை விரும்புபவர் தூய்மையுடனும் கவனத்துடனும் தினமும் நெய்யால் ஹோமம் செய்து, ஸ்ரீயின் இந்தப் பதினைந்து ருக்குகளையும் எப்போதும் ஜபிக்க வேண்டும்.",
+  {kind:"phala", short:"Phala 16", meter:"vedic", meterNote:VED}),
+ s("p17", "17", "Phala-śruti", "The seers are her three sons — Ānanda, Kardama, Ciklīta; the deity is Śrī herself.", [
+   [["आनन्दः","Ānanda","ānanda = bliss"],["कर्द॑मश्चै॒व","Kardama too","kardama · ca · eva"],["चिक्ली॒त","Ciklīta","ciklīta"],["इ॑ति","thus","iti"],["वि॒श्रुताः","renowned","viśruta = famous"]],
+   [["ऋष॑य॒स्ते","those are the seers","ṛṣayaḥ = seers · te = they"],["त्र॑यः","three","traya"],["पुत्राः","sons","putra"],["स्व॒यम्॒","herself","svayam"],["श्रीरे॑व","Śrī alone","śrīḥ · eva"],["दे॒वता","is the deity","devatā"]]],
+  "Ānanda, Kardama and Ciklīta are renowned as its seers — her three sons. The deity is Śrī herself.",
+  "ஆனந்தர், கர்தமர், சிக்லீதர் என்று புகழ்பெற்ற அவளுடைய மூன்று புதல்வர்களே இதன் ரிஷிகள்; தேவதை ஸ்ரீயே.",
+  {kind:"phala", short:"Phala 17", meter:"vedic", meterNote:VED}),
+ s("u1", "18", "Lakṣmī ślokas", "Lotus-faced, lotus-eyed, lotus-born — love me, and let me find happiness.", [
+   [["पद्मानने","O lotus-faced one","padma · ānana = face"],["पद्म","lotus","padma"],["ऊरू","-thighed","ūru = thigh (lotus-like)"],["पद्माक्षी","lotus-eyed","padma · akṣī = eye"],["पद्मसंभवे","O lotus-born","padma · sambhavā = born"]],
+   [["त्वं","you","tvam"],["मां","me","mām"],["भजस्व","love, come to","bhajasva"],["पद्माक्षी","O lotus-eyed","padmākṣī"],["येन","by which","yena"],["सौख्यं","happiness","saukhya"],["लभाम्यहम्","I gain","labhāmi · aham"]]],
+  "O lotus-faced one, with lotus-like thighs, lotus-eyed, born of the lotus — O lotus-eyed one, come to me, so that I may find happiness.",
+  "தாமரை முகத்தவளே, தாமரைத் தொடையாளே, தாமரைக் கண்ணாளே, தாமரையில் பிறந்தவளே — நான் இன்பம் பெறும்படி என்னிடம் அருள் புரிவாயாக.",
+  {meter:"anushtubh", tip:"The <b>padma</b> verse: padmānane · padma ūrū · padmākṣī · padmasambhave · padmākṣī — five lotuses."}),
+ s("u2", "19", "Lakṣmī ślokas", "Giver of horses, cows and wealth — may she favour me with wealth for every aim.", [
+   [["अ॒श्वदा॑यी","giver of horses","aśva · dāyin = giver"],["च","and","ca"],["गोदा॒यी॒","giver of cows","go · dāyin"],["ध॒नदा॑यी","giver of wealth","dhana · dāyin"],["म॒हाध॑ने","O great wealth","mahā · dhanā"]],
+   [["धनम्॑","wealth","dhana"],["मे॒","to me","me"],["जुष॑ताम्","may (she) grant","juṣatām"],["दे॒वी","the goddess","devī"],["स॒र्वका॑मार्थ॒सिद्ध॑ये","to fulfil every wish and aim","sarva · kāma = wish · artha = aim · siddhi = fulfilment"]]],
+  "O you who give horses, cows and wealth, O great wealth — may the goddess grant me wealth to fulfil every wish and aim.",
+  "குதிரை, பசு, செல்வம் அருள்பவளே, பெருஞ்செல்வமே — எல்லா விருப்பங்களும் நிறைவேற தேவி எனக்குச் செல்வம் அருளட்டும்.", {meter:"anushtubh"}),
+ s("u3", "20", "Lakṣmī ślokas", "Children, grandchildren, wealth, grain, elephants, horses — make me long-lived.", [
+   [["पुत्रपौत्रधनं","sons, grandsons, wealth","putra · pautra = grandson · dhana"],["धान्यं","grain","dhānya"],["हस्त्यश्वाजाविगोरथम्","elephants, horses, goats, sheep, cows, chariots","hastin · aśva · aja = goat · avi = sheep · go · ratha"]],
+   [["प्रजानां","of all creatures","prajā"],["भवसि","you are","bhavasi"],["माता","the mother","mātṛ"],["आयुष्मन्तं","long-lived","āyuṣmat"],["करोतु","may (she) make","karotu"],["मां","me","mām"]]],
+  "Children and grandchildren, wealth, grain, elephants, horses, goats, sheep, cows and chariots — you are the mother of all creatures; may you make me long-lived.",
+  "மக்கள், பேரன்கள், செல்வம், தானியம், யானை, குதிரை, ஆடு, செம்மறி, பசு, தேர் — எல்லா உயிர்களுக்கும் நீயே தாய்; என்னை நீண்ட ஆயுள் உடையவனாக்குவாயாக.", {meter:"anushtubh"}),
+ s("u4", "21", "Lakṣmī ślokas", "Shining like the moon, the sun and fire — we worship Śrī Mahālakṣmī.", [
+   [["चन्द्राभां","shining like the moon","candra · ābhā = lustre"],["लक्ष्मीमीशानां","Lakṣmī, the ruler","lakṣmīm · īśānā = ruling"],["सूर्याभां᳚","shining like the sun","sūrya · ābhā"],["श्रियमीश्वरीम्","Śrī, the sovereign","śriyam · īśvarī"]],
+   [["चन्द्रसूर्याग्निसर्वाभां","shining like moon, sun and fire together","candra · sūrya · agni · sarva · ābhā"],["श्रीमहालक्ष्मीमुपास्महे","we worship Śrī Mahālakṣmī","śrī · mahālakṣmī · upāsmahe = we worship"]]],
+  "We worship Śrī Mahālakṣmī — Lakṣmī the ruler, shining like the moon; Śrī the sovereign, shining like the sun; shining with the light of moon, sun and fire together.",
+  "சந்திர ஒளியுடைய லக்ஷ்மியை, சூரிய ஒளியுடைய ஸ்ரீ ஈஸ்வரியை, சந்திர, சூரிய, அக்னி ஒளிகள் அனைத்தும் கொண்ட ஸ்ரீ மஹாலக்ஷ்மியை உபாசிக்கிறோம்.", {meter:"anushtubh", irreg:true}),
+ s("u5", "22", "Lakṣmī ślokas", "Fire is wealth, wind is wealth, the sun is wealth…", [
+   [["धनमग्निर्","wealth is fire","dhanam · agniḥ"],["धनं","wealth","dhana"],["वायुर्","is wind","vāyuḥ"],["धनं","wealth","dhana"],["सूर्यो॑","is the sun","sūryaḥ"],["धनं","wealth","dhana"],["वसुः","is Vasu","vasu"]],
+   [["धनमिन्द्रो","wealth is Indra","dhanam · indraḥ"],["बृहस्पतिर्","Bṛhaspati","bṛhaspatiḥ"],["वरु॑णं","Varuṇa","varuṇa"],["धनम॑श्नुते","attains wealth","dhanam · aśnute = gains"]]],
+  "Fire is wealth, wind is wealth, the sun is wealth, the Vasus are wealth; Indra, Bṛhaspati and Varuṇa are wealth — (through them) one attains wealth.",
+  "அக்னியே செல்வம், வாயுவே செல்வம், சூரியனே செல்வம், வசுக்களே செல்வம்; இந்திரன், பிருஹஸ்பதி, வருணன் ஆகியோரே செல்வம் — (அவர்களால்) செல்வம் அடையப்படுகிறது.",
+  {meter:"anushtubh", tip:"Count the <b>dhanam</b>s: six in two lines."}),
+ s("u6", "23", "Lakṣmī ślokas", "O Garuḍa, drink the soma; may Indra drink; may the soma-giver give me wealth.", [
+   [["वैनतेय","O Vainateya (Garuḍa)","vinatā's son"],["सोमं","the soma","soma"],["पिब","drink","piba"],["सोमं॑","the soma","soma"],["पिबतु","may (he) drink","pibatu"],["वृत्रहा","the slayer of Vṛtra (Indra)","vṛtra · han"]],
+   [["सोमं॒","soma","soma"],["धनस्य","of wealth","dhana"],["सोमिनो॒","of the soma-offerer","somin"],["मह्यं॑","to me","mahyam"],["ददातु","may (she) give","dadātu"],["सोमिनी॑","she who has the soma","sominī"]]],
+  "O Garuḍa, drink the soma; may Indra, slayer of Vṛtra, drink the soma. May she who holds the soma give me the soma of wealth.",
+  "கருடா, சோமத்தைப் பருகுவாயாக; விருத்திரனைக் கொன்ற இந்திரனும் சோமத்தைப் பருகட்டும். சோமம் உடையவள் எனக்குச் செல்வச் சோமத்தைத் தரட்டும்.", {meter:"anushtubh"}),
+ s("u7", "24", "Lakṣmī ślokas", "No anger, no jealousy, no greed, no bad thoughts — for those who always chant the Śrī Sūkta.", [
+   [["न","no","na"],["क्रोधो","anger","krodha"],["न","nor","na"],["च","and","ca"],["मात्स॒र्यं","jealousy","mātsarya"],["न","no","na"],["लोभो॑","greed","lobha"],["नाशुभा","nor evil","na · aśubhā = inauspicious"],["मतिः","thought","mati"]],
+   [["भवन्ति","arise","bhavanti"],["कृतपुण्यानां","in the virtuous","kṛta-puṇya = who have done good"],["भ॒क्तानां","in devotees","bhakta"],["श्रीसू᳚क्तं","the Śrī Sūkta","śrī · sūkta = hymn"],["जपेत्सदा","who chant always","japet · sadā"]]],
+  "No anger, no jealousy, no greed and no evil thought arise in the virtuous devotees who always chant the Śrī Sūkta.",
+  "எப்போதும் ஸ்ரீ ஸூக்தம் ஜபிக்கும் புண்ணியம் செய்த பக்தர்களிடம் கோபம், பொறாமை, பேராசை, தீய எண்ணம் எதுவும் உண்டாவதில்லை.", {meter:"anushtubh", irreg:true}),
+ s("u8", "25", "Lakṣmī ślokas", "O radiant one, may your rains fall and seeds sprout; destroy those who hate the sacred.", [
+   [["वर्ष᳚न्तु॒","may (they) rain","varṣantu"],["ते","your","te"],["वि॑भाव॒रि॒","O radiant one","vibhāvarī"],["दि॒वो","from the sky","div"],["अभ्रस्य","of the cloud","abhra"],["विद्यु॑तः","lightnings","vidyut"]],
+   [["रोह᳚न्तु","may (they) sprout","rohantu"],["सर्व॑बीजान्यव","all seeds; protect","sarva · bīja = seed · ava = protect"],["ब्रह्म","the sacred","brahman"],["द्वि॒षो᳚","the haters","dviṣ"],["ज॑हि","destroy","jahi"]]],
+  "O radiant one, may your clouds and lightnings rain from the sky; may all seeds sprout. Protect the sacred, and destroy those who hate it.",
+  "ஒளிமிக்கவளே, உன் மேகங்களும் மின்னல்களும் வானிலிருந்து மழை பொழியட்டும்; எல்லா விதைகளும் முளைக்கட்டும். வேதத்தைக் காப்பாயாக; அதை வெறுப்பவர்களை அழிப்பாயாக.", {meter:"vedic", meterNote:VED}),
+ s("u9", "26", "Lakṣmī ślokas", "Lover of lotuses, lotus in hand, lotus-eyed — place your lotus feet in me.", [
+   [["पद्मप्रिये","O lover of lotuses","padma · priyā"],["पद्मिनि","O lotus-bearer","padminī"],["पद्महस्ते","O you with a lotus in hand","padma · hasta"],["पद्मालये","O you who dwell in the lotus","padma · ālayā"],["पद्मदलायताक्षि","O you with eyes long as lotus petals","padma-dala = petal · āyata = long · akṣī = eye"]],
+   [["विश्वप्रिये","O beloved of the world","viśva · priyā"],["विष्णुमनोऽनुकूले","O you dear to Viṣṇu's heart","viṣṇu · manas · anukūlā = agreeable"],["त्वत्पादपद्मं","your lotus feet","tvat · pāda · padma"],["मयि","in me","mayi"],["सन्निधत्स्व","place","sannidhatsva = set down"]]],
+  "O lover of lotuses, lotus-bearer, lotus in hand, dwelling in the lotus, with eyes long as lotus petals; beloved of the world, dear to Viṣṇu's heart — place your lotus feet in me.",
+  "தாமரையை விரும்புபவளே, தாமரை ஏந்தியவளே, கையில் தாமரை உடையவளே, தாமரையில் வசிப்பவளே, தாமரை இதழ் போன்ற நீண்ட கண்களுடையவளே, உலகுக்குப் பிரியமானவளே, விஷ்ணுவின் மனதுக்கு உகந்தவளே — உன் தாமரைப் பாதங்களை என்னிடம் வைப்பாயாக.",
+  {meter:"upajati", pat:"xGLGGLLGLGx".repeat(2), padaLen:11, meterNote:"Upajāti: 11 syllables a quarter, two quarters to a line."}),
+ s("u10", "27", "Lakṣmī ślokas", "Seated on the lotus, bathed by elephants with golden pots — may she live in my house.", [
+   [["या","she who","yā"],["सा","she","sā"],["पद्मासनस्था","seated on a lotus","padma · āsana · sthā"],["विपुलकटितटी","broad-hipped","vipula = broad · kaṭi-taṭī = hips"],["पद्मपत्रायताक्षी","with eyes long as lotus leaves","padma-patra · āyata · akṣī"]],
+   [["गंभीरावर्तनाभिः","with a deep, whirl-like navel","gambhīra = deep · āvarta = whirl · nābhi = navel"],["स्तनभरनमिता","bent by the weight of her breasts","stana · bhara = weight · namitā = bent"],["शुभ्रवस्त्रोत्तरीया","with a white upper garment","śubhra = white · vastra · uttarīya = upper cloth"]],
+   [["लक्ष्मीर्दिव्यैर्गजेन्द्रैर्","Lakṣmī, by divine royal elephants","lakṣmīḥ · divya · gaja-indra = great elephants"],["मणिगणखचितैस्स्नापिता","bathed with jewel-studded","maṇi-gaṇa = jewels · khacita = set with · snāpitā = bathed"],["हेमकुंभैः","golden pots","hema = gold · kumbha = pot"]],
+   [["नित्यं","always","nityam"],["सा","she","sā"],["पद्महस्ता","lotus in hand","padma · hastā"],["मम","my","mama"],["वसतु","may (she) live","vasatu"],["गृहे","in (my) house","gṛha"],["सर्वमाङ्गल्ययुक्ता","full of every blessing","sarva · māṅgalya = auspiciousness · yuktā = joined"]]],
+  "May Lakṣmī — seated on a lotus, broad-hipped, with eyes long as lotus leaves, deep-naveled, wearing a white upper cloth, bathed by divine elephants from jewel-studded golden pots, lotus in hand, full of every blessing — always live in my house.",
+  "தாமரை ஆசனத்தில் அமர்ந்தவளும், தாமரை இலை போன்ற நீண்ட கண்களுடையவளும், வெண்ணிற மேலாடை அணிந்தவளும், தெய்வீக யானைகளால் ரத்தினம் பதித்த பொற்குடங்களால் நீராட்டப்படுபவளும், கையில் தாமரை ஏந்தியவளும், எல்லா மங்களமும் நிறைந்தவளுமான லக்ஷ்மி என் வீட்டில் எப்போதும் வசிக்கட்டும்.",
+  {meter:"sragdhara", pat:"GGGGLGGLLLLLLGGLGGLGx", meterNote:"Sragdharā, “wearing a garland”: 21 syllables a quarter — the longest, most stately metre here. This is the Gaja-Lakṣmī picture.", tip:"The <b>Gaja-Lakṣmī</b> verse: picture her on the lotus with elephants pouring water from golden pots (line 3)."}),
+ s("u11", "28", "Lakṣmī ślokas", "Daughter of the milk ocean, queen of Śrīraṅgam, lamp of the worlds — I bow to Mukunda's beloved.", [
+   [["लक्ष्मीं","Lakṣmī","lakṣmī"],["क्षीरसमुद्रराजतनयां","daughter of the king of the milk ocean","kṣīra = milk · samudra-rāja = king of oceans · tanayā = daughter"],["श्रीरङ्गधामेश्वरीम्","queen of the abode of Śrīraṅgam","śrīraṅga · dhāman = abode · īśvarī"]],
+   [["दासीभूतसमस्तदेववनितां","whom all the gods' wives serve","dāsī-bhūta = become servants · samasta · deva-vanitā = goddesses"],["लोकैकदीपाङ्कुराम्","the one lamp-flame of the worlds","loka · eka · dīpa = lamp · aṅkura = sprout (of flame)"]],
+   [["श्रीमन्मन्दकटाक्षलब्धविभवब्रह्मेन्द्रगङ्गाधराम्","by whose gentle glance Brahmā, Indra and Śiva gained their glory","śrīmat · manda = gentle · kaṭākṣa = glance · labdha = gained · vibhava = glory · brahma · indra · gaṅgādhara = Śiva"]],
+   [["त्वां","you","tvām"],["त्रैलोक्यकुटुंबिनीं","mother of the three worlds' family","trailokya · kuṭumbinī = mistress of the household"],["सरसिजां","the lotus-born","sarasija = lotus"],["वन्दे","I bow to","vande"],["मुकुन्दप्रियाम्","the beloved of Mukunda","mukunda · priyā"]]],
+  "I bow to you, Lakṣmī — daughter of the king of the milk ocean, queen of Śrīraṅgam, served by all the goddesses, the one lamp of the worlds, by whose gentle glance Brahmā, Indra and Śiva gained their glory; mother of the three worlds, lotus-born, beloved of Mukunda.",
+  "பாற்கடல் அரசனின் மகளும், ஸ்ரீரங்கத்தின் அரசியும், எல்லாத் தேவ மங்கையரும் பணிவிடை செய்பவளும், உலகங்களின் ஒரே விளக்குச் சுடரும், தன் மென்மையான கடைக்கண் பார்வையால் பிரம்மா, இந்திரன், சிவன் ஆகியோருக்குப் பெருமை தந்தவளும், மூவுலகக் குடும்பத்தின் தலைவியும், தாமரையில் பிறந்தவளும், முகுந்தனின் பிரியையுமான உன்னை வணங்குகிறேன்.",
+  {meter:"sardula", pat:"GGGLLGLGLLLGGGLGGLx", meterNote:"Śārdūlavikrīḍita: 19 syllables a quarter."}),
+ s("u12", "29", "Lakṣmī ślokas", "Siddhi-, Mokṣa-, Jaya-, Śrī-, Vara-Lakṣmī and Sarasvatī — be gracious to me always.", [
+   [["सिद्धलक्ष्मीर्","Siddhi-Lakṣmī","siddhi = success"],["मोक्षलक्ष्मीर्","Mokṣa-Lakṣmī","mokṣa = liberation"],["जयलक्ष्मीस्","Jaya-Lakṣmī","jaya = victory"],["सरस्वती","Sarasvatī","goddess of learning"]],
+   [["श्रीलक्ष्मीर्","Śrī-Lakṣmī","śrī"],["वरलक्ष्मीश्च","and Vara-Lakṣmī","vara = boon"],["प्रसन्ना","be gracious","prasannā"],["मम","to me","mama"],["सर्वदा","always","sarvadā"]]],
+  "May Siddhi-Lakṣmī, Mokṣa-Lakṣmī, Jaya-Lakṣmī, Sarasvatī, Śrī-Lakṣmī and Vara-Lakṣmī always be gracious to me.",
+  "சித்தி லக்ஷ்மி, மோக்ஷ லக்ஷ்மி, ஜய லக்ஷ்மி, சரஸ்வதி, ஸ்ரீ லக்ஷ்மி, வர லக்ஷ்மி ஆகியோர் எப்போதும் எனக்கு அருள் புரியட்டும்.", {meter:"anushtubh"}),
+ s("u13", "30", "Lakṣmī ślokas", "Holding boon, goad, noose and the fearless gesture, three-eyed — I worship the Mother.", [
+   [["वराङ्कुशौ","the boon-gesture and the goad","vara = boon · aṅkuśa = goad"],["पाशमभीतिमुद्रां","the noose and the fear-not gesture","pāśa = noose · abhīti-mudrā = gesture of fearlessness"]],
+   [["करैर्वहन्तीं","holding in her hands","karaiḥ = with hands · vahantī = carrying"],["कमलासनस्थाम्","seated on a lotus","kamala · āsana · sthā"]],
+   [["बालार्ककोटिप्रतिभां","bright as ten million rising suns","bāla-arka = rising sun · koṭi · pratibhā = radiance"],["त्रिनेत्राम्","three-eyed","tri · netra"]],
+   [["भजेऽहमंबां","I worship the Mother","bhaje · aham · ambā"],["जगदीश्वरीं","the ruler of the world","jagat · īśvarī"],["ताम्","her","tām"]]],
+  "I worship that Mother, ruler of the world, who holds in her hands the boon-gesture, the goad, the noose and the gesture of fearlessness, seated on a lotus, bright as ten million rising suns, three-eyed.",
+  "வரம், அங்குசம், பாசம், அபயம் ஆகியவற்றைக் கைகளில் தாங்கியவளும், தாமரையில் அமர்ந்தவளும், கோடி உதய சூரியன்கள் போல் ஒளிர்பவளும், முக்கண்ணுடையவளுமான உலக நாயகியான அம்பிகையை வணங்குகிறேன்.",
+  {meter:"upajati", pat:"xGLGGLLGLGx", meterNote:"Upajāti: 11 syllables a quarter."}),
+ s("u14", "31", "Lakṣmī ślokas", "Most auspicious of all, Śivā, fulfiller of every aim — salutations, Nārāyaṇī.", [
+   [["सर्वमङ्गलमाङ्गल्ये","O auspiciousness of all that is auspicious","sarva · maṅgala · māṅgalyā"],["शिवे","O Śivā","śivā = the gracious"],["सर्वार्थसाधिके","O fulfiller of every aim","sarva · artha · sādhikā"]],
+   [["शरण्ये","O refuge","śaraṇyā"],["त्र्यंबके","O three-eyed","tri · ambaka = eye"],["देवि","O Goddess","devī"],["नारायणि","O Nārāyaṇī","nārāyaṇī"],["नमोऽस्तु","salutations","namaḥ · astu"],["ते","to you","te"]]],
+  "O auspiciousness of all that is auspicious, O gracious Śivā, fulfiller of every aim, O refuge, three-eyed Goddess Nārāyaṇī — salutations to you.",
+  "மங்களங்களுக்கெல்லாம் மங்களமானவளே, சிவையே, எல்லா நோக்கங்களையும் நிறைவேற்றுபவளே, புகலிடமே, முக்கண்ணுடைய தேவியே, நாராயணியே — உனக்கு நமஸ்காரம்.", {meter:"anushtubh"}),
+ s("u15", "32", "Closing", "Lakṣmī Gāyatrī.", [
+   [["ओम्","Om","om"],["म॒हा॒दे॒व्यै","the great goddess","mahādevī"],["च॑","and","ca"],["वि॒द्महे॑","we know","vidmahe"],["विष्णुप॒त्नी","Viṣṇu's consort","viṣṇu · patnī = wife"],["च॑","and","ca"],["धीमहि","we meditate on","dhīmahi"]],
+   [["तन्नो॑","may she, us","tat · naḥ = us"],["लक्ष्मीः","Lakṣmī","lakṣmī"],["प्रचो॒दया᳚त्","inspire","pracodayāt"]]],
+  "Om. We know the great goddess; we meditate on Viṣṇu's consort. May that Lakṣmī inspire us.",
+  "ஓம். மஹாதேவியை அறிவோம்; விஷ்ணு பத்னியைத் தியானிப்போம். அந்த லக்ஷ்மி நம்மை வழிநடத்தட்டும்.",
+  {meter:"vedic", meterNote:"Gāyatrī: three quarters of 8 syllables.", tip:"The Gāyatrī pattern: <b>vidmahe</b> (we know) · <b>dhīmahi</b> (we meditate) · <b>pracodayāt</b> (may she inspire)."}),
+ s("u16", "33", "Closing", "Splendour, long life, health, grain, wealth, cattle, children — a hundred years.", [
+   [["श्रीर्वर्च॑स्व॒मायु॑ष्य॒मारो᳚ग्य॒मावी॑धा॒त्","may Śrī bring splendour, long life and health","śrīḥ · varcasva = splendour · āyuṣya = long life · ārogya = health · āvīdhāt = may she bestow"],["शोभ॑मानं","shining","śobhamāna"],["मही॒यते᳚","is glorified","mahīyate"]],
+   [["धा॒न्यं","grain","dhānya"],["ध॒नं","wealth","dhana"],["प॒शुं","cattle","paśu"],["ब॒हुपु॑त्रला॒भं","many children","bahu · putra · lābha = gaining"],["श॒तसं᳚वत्स॒रं","a hundred years","śata · saṃvatsara = year"],["दी॒र्घमायुः॑","a long life","dīrgha · āyus"]]],
+  "May Śrī bestow splendour, long life and health; shining, she is glorified. Grain, wealth, cattle, many children, and a long life of a hundred years.",
+  "ஸ்ரீ ஒளியையும், ஆயுளையும், ஆரோக்கியத்தையும் அருளட்டும்; ஒளிர்ந்து போற்றப்படுகிறாள். தானியம், செல்வம், பசுக்கள், பல மக்கள், நூறாண்டு நீண்ட ஆயுள் ஆகியவற்றை அருளட்டும்.", {meter:"vedic", meterNote:VED}),
+ s("u17", "·", "Closing", "Om, peace, peace, peace.", [
+   [["ओम्","Om","om"],["शान्तिः॒","peace","śānti"],["शान्तिः॒","peace","śānti"],["शान्तिः॑","peace","śānti"]]],
+  "Om. Peace, peace, peace.", "ஓம் சாந்தி சாந்தி சாந்தி.", {kind:"refrain", short:"Śānti", label:"Śānti", meter:"vedic", meterNote:"The closing peace chant."})
+];
+const BENEFITS = [["हिर॑ण्यम्","Gold and wealth"],["गामश्वम्॒","Cattle and horses"],["की॒र्ति॒मृ॑द्धिम्","Fame and prosperity"],["अ॒ल॒क्ष्मीम्","Misfortune removed"],["पुत्रपौत्रधनं","Children and grandchildren"],["आयुष्मन्तं","Long life"],["नाशुभा","No anger, greed or bad thoughts"]];
+return {
+  key:"ssk", titleDv:"श्रीसूक्तम्", verses:VERSES, benefits:BENEFITS,
+  meter:{name:"Vedic & later metres", kind:"vedic", hook:VED,
+    intro:"The fifteen ṛks are Vedic: their rhythm is guided by the svaras rather than a strict syllable count, so they are shown without checks. The later Lakṣmī ślokas are classical — anuṣṭubh, upajāti, śārdūlavikrīḍita and sragdharā — and each is checked.",
+    quiz:{q:"In her text, what does a small line BELOW a syllable (॒) mean?", opts:["Anudātta — say it on a lower note","Svarita — rise on it","Hold it twice as long","It is silent"],
+      why:"Anudātta, the low pitch. A line above (॑) is svarita, the rising one; no mark is udātta."}},
+  overview({R}){
+    document.getElementById("refrains").innerHTML = [["जात॑वेदो म॒माव॑ह","ṛks 1, 13, 14 — “O Agni, bring her to me”"],["ताम् म॒ आव॑ह॒ जात॑वेदो","ṛks 2, 15 — the hymn opens and closes with it"],["तामि॒होप॑ह्वये॒ श्रियम्","ṛks 4, 9 — “her I call here, Śrī”"],["श्रियम्॑ वा॒सय॑ मे कु॒ले","ṛks 11, 12 — “settle Śrī in my family”"]].map(([dv, en]) => `${R(dv)}<br><span class="muted" style="font-family:var(--f-body);font-size:.85rem">${en}</span>`).join("<br>");
+  }
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

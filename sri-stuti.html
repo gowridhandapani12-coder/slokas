@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sri Stuti</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Vedānta Deśika · Sanskrit · taniyan + 25 verses</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Sri Stuti</h1>
+          <p class="lead" style="margin-top:8px">“Praise of Śrī.” A poor brahmacārī came to Deśika at Kāñcī, needing money to marry. Deśika, who owned nothing, took him to Perundevi Tāyār and sang these verses — and, the story goes, gold coins rained down. Verse 16 is the one sung for wealth; verse 1 is a full prapatti to the Mother.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><span>Composed by</span><b>Vedānta Deśika</b><span>at Kāñcī, before Perundevi Tāyār</span></div>
+        <div class="fact"><span>Goddess</span><b>Mahālakṣmī</b><span>Śrī, the Lord's inseparable consort</span></div>
+        <div class="fact"><span>Opens with</span><b>Prapatti</b><span>“aśaraṇas tvāṃ śaraṇyāṃ prapadye”</span></div>
+        <div class="fact"><span>Metre</span><b>Mandākrāntā</b><span>17 syllables; phala in mālinī</span></div>
+        <div class="fact"><span>Source</span><b>Her PDF</b><span>Sri V. Sadagopan's commentary</span></div>
+        <div class="fact"><span>On her plan</span><b>Mon · Wed · Fri</b><span>after Sri Suktam</span></div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h2>Six movements</h2>
+          <div class="ladder" style="margin-top:10px">
+            <div class="step"><span class="n">1–3</span><div><span class="vb" style="font-family:var(--f-display)">Refuge</span> <span class="en">— I surrender to you; who can praise you?</span></div><span></span></div>
+            <div class="step"><span class="n">4–12</span><div><span class="vb" style="font-family:var(--f-display)">You and the Lord</span> <span class="en">— one couple, one goal of all the Vedas</span></div><span></span></div>
+            <div class="step"><span class="n">13–14</span><div><span class="vb" style="font-family:var(--f-display)">Coronation</span> <span class="en">— elephants bathe her; the gods take refuge</span></div><span></span></div>
+            <div class="step"><span class="n">15–19</span><div><span class="vb" style="font-family:var(--f-display)">Her glance</span> <span class="en">— wherever it falls, wealth races in</span></div><span></span></div>
+            <div class="step"><span class="n">20–24</span><div><span class="vb" style="font-family:var(--f-display)">Prayer</span> <span class="en">— “you are my mother, Vāsudeva my father”</span></div><span></span></div>
+            <div class="step"><span class="n">25</span><div><span class="vb" style="font-family:var(--f-display)">Fruit</span> <span class="en">— readers reach the limit of every good</span></div><span></span></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each verse, in order.</p>
+          <div class="mn" id="openings"></div>
+          <div class="tip" style="margin-top:14px"><b>Verse 8</b> opens <i>asyeśānā</i> — the same Vedic words as the last verse of Bhū Stuti. <b>Verse 15</b> repeats: <i>yasyāṃ yasyāṃ … tasyāṃ tasyām</i>, “in whichever direction… in that one”. <b>Verse 23</b>: <i>mātā devi tvam asi, bhagavān vāsudevaḥ pitā me</i>.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>Śrī, as the hymn describes her</h2><span class="muted" style="font-size:.85rem">Tap one to see the word in its verse</span></div>
+        <div class="icons" id="icons" style="margin-top:14px"></div>
+      </div>
+      <div class="card">
+        <h2>What it gives</h2>
+        <p class="muted" style="margin:6px 0 12px">Verses 15–17 and the phala-śruti (25) —</p>
+        <div class="benefits" id="benefits"></div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+// Each line = one quarter of 17 syllables (mandākrāntā). Text: her PDF (transliteration checked against the standard text).
+const MK = {meter:"mandakranta", pat:"GGGGLLLLLGGLGGLGx"};
+const v = (id, n, part, hook, lines, en, ta, extra) => Object.assign({id, n, label:"Verse " + n, part, hook, lines, en, ta}, MK, extra || {});
+const VERSES = [
+ {id:"t0", n:"ॐ", label:"Taniyan", short:"Taniyan", kind:"dhyana", part:"Taniyan", meter:"anushtubh", hook:"May Veṅkaṭanātha, lion among poets, best of Vedānta teachers, dwell in my heart.",
+  lines:[
+   [["श्रीमान्","the glorious","śrīmān"],["वेङ्कटनाथार्यः","teacher Veṅkaṭanātha","veṅkaṭa-nātha · ārya = teacher"],["कवितार्किककेसरी","lion among poets and logicians","kavi · tārkika · kesarī = lion"]],
+   [["वेदान्ताचार्यवर्यो","the best of Vedānta teachers","vedānta · ācārya · varya = best"],["मे","my","me"],["सन्निधत्तां","may (he) dwell","sannidhattām"],["सदा","always","sadā"],["हृदि","in the heart","hṛd"]]],
+  en:"May the glorious teacher Veṅkaṭanātha, lion among poets and logicians, best of the teachers of Vedānta, always dwell in my heart.",
+  ta:"கவிதார்க்கிக சிம்மமும், வேதாந்த ஆசாரியர்களில் சிறந்தவருமான ஸ்ரீமான் வேங்கடநாத ஆசாரியர் எப்போதும் என் இதயத்தில் வீற்றிருக்கட்டும்.",
+  tip:"The Deśika taniyan — the same as before Bhū Stuti."},
+ v("v1", "1", "Refuge", "I, without refuge, surrender to Śrī — the blessing of blessings, adorning Viṣṇu's chest.", [
+   [["मानातीतप्रथितविभवां","whose famed glory is beyond measure","māna = measure · atīta = beyond · prathita = famed · vibhavā"],["मङ्गलं","the blessing","maṅgala"],["मङ्गलानां","of all blessings","maṅgala"]],
+   [["वक्षःपीठीं","the seat that is the chest","vakṣaḥ · pīṭhī = seat"],["मधुविजयिनो","of Madhu's conqueror","madhu · vijayin"],["भूषयन्तीं","adorning","bhūṣayantī"],["स्वकान्त्या","with her own radiance","sva · kānti"]]
+   ,[["प्रत्यक्षानुश्रविकमहिमप्रार्थिनीनां","for those who seek glory here or in the hereafter","pratyakṣa = seen (this world) · ānuśravika = heard of in the Veda (heaven) · mahima · prārthin = seeker"],["प्रजानां","for people","prajā"]],
+   [["श्रेयोमूर्तिं","goodness in person","śreyas · mūrti"],["श्रियमशरणस्त्वां","Śrī — I, without refuge — you","śriyam · aśaraṇaḥ · tvām"],["शरण्यां","the refuge","śaraṇyā"],["प्रपद्ये","I surrender to","prapadye"]]],
+  "I, who have no refuge, surrender to you, Śrī — whose famed glory is beyond measure, the blessing of all blessings, who adorns with your radiance the chest of Madhu's conqueror, goodness itself for those who seek glory in this world or the next, the refuge of all.",
+  "அளவுகடந்த புகழ்பெற்ற மகிமை உடையவளும், மங்களங்களுக்கெல்லாம் மங்களமும், மதுவை வென்றவனின் மார்பை தன் ஒளியால் அலங்கரிப்பவளும், இம்மை மறுமைப் பெருமைகளை விரும்பும் மக்களுக்கு நன்மையின் வடிவமும், சரணடையத் தக்கவளுமான ஸ்ரீயே, புகலற்ற நான் உன்னைச் சரணடைகிறேன்.",
+  {tip:"The prapatti line: <b>śriyam aśaraṇas tvāṃ śaraṇyāṃ prapadye</b>. Like Rāmānuja's Śaraṇāgati Gadya, refuge is sought first with the Mother. Recited for a flood of <b>maṅgala</b>."}),
+ v("v2", "2", "Refuge", "Born from the milk ocean, dwelling in lotuses and on Viṣṇu's chest — how can small minds praise you?", [
+   [["आविर्भावः","appearance","āvirbhāva"],["कलशजलधावध्वरे","in the milk ocean, or in the sacrifice","kalaśa-jaladhi = milk ocean · adhvara = sacrifice"],["वापि","or","vā · api"],["यस्याः","whose","yasyāḥ"]],
+   [["स्थानं","place","sthāna"],["यस्याः","whose","yasyāḥ"],["सरसिजवनं","a lotus grove","sarasija · vana"],["विष्णुवक्षःस्थलं","Viṣṇu's chest","viṣṇu · vakṣaḥ-sthala"],["वा","or","vā"]],
+   [["भूमा","the greatness","bhūman"],["यस्या","whose","yasyāḥ"],["भुवनमखिलं","the whole world","bhuvanam · akhilam"],["देवि","O Goddess","devī"],["दिव्यं","divine","divya"],["पदं","abode (Vaikuṇṭha)","pada"],["वा","or","vā"]],
+   [["स्तोकप्रज्ञैरनवधिगुणा","(you) of endless virtues — by those of little wisdom","stoka = small · prajña · anavadhi · guṇā"],["स्तूयसे","are praised","stūyase"],["सा","that one","sā"],["कथं","how","katham"],["त्वम्","you","tvam"]]],
+  "You appeared from the milk ocean or from the sacrifice; your home is a lotus grove or Viṣṇu's chest; your greatness is the whole world or the divine abode. O Goddess of endless virtues — how can you be praised by people of little wisdom?",
+  "பாற்கடலிலோ யாகத்திலோ தோன்றியவளும், தாமரைக் காட்டையோ விஷ்ணுவின் மார்பையோ இருப்பிடமாகக் கொண்டவளும், உலகம் முழுவதையோ திவ்ய பதத்தையோ பெருமையாகக் கொண்டவளுமான, அளவற்ற குணங்களுடைய தேவியே, சிற்றறிவுடையோரால் நீ எப்படித் துதிக்கப்படுவாய்?",
+  {tip:"Three pairs joined by <b>vā</b> (“or”): ocean / sacrifice · lotus / Viṣṇu's chest · world / Vaikuṇṭha. Recited for the gift of speech."}),
+ v("v3", "3", "Refuge", "You make praised whoever praises you — so I, with no other way, will praise you.", [
+   [["स्तोतव्यत्वं","the state of being praised","stotavya-tva"],["दिशति","grants","diśati"],["भवती","you","bhavatī"],["देहिभिः","by beings","dehin"],["स्तूयमाना","being praised","stūyamānā"]],
+   [["तामेव","that very","tām · eva"],["त्वामनितरगतिः","you — I, with no other way","tvām · anitara-gatiḥ"],["स्तोतुमाशंसमानः","wishing to praise","stotum · āśaṃsamāna"]],
+   [["सिद्धारम्भः","with my effort fulfilled","siddha · ārambha"],["सकलभुवनश्लाघनीयो","praised by the whole world","sakala · bhuvana · ślāghanīya"],["भवेयं","may I become","bhaveyam"]],
+   [["सेवापेक्षा","the wish to serve","sevā · apekṣā"],["तव","your","tava"],["चरणयोः","at the feet","caraṇa"],["श्रेयसे","for good","śreyas"],["कस्य","whose","kasya"],["न","not","na"],["स्यात्","would be","syāt"]]],
+  "Praised by beings, you make them worthy of praise. Wishing to praise you, having no other way, may my effort succeed and may I be praised by the whole world. Whose good would the wish to serve your feet not bring about?",
+  "உயிர்களால் துதிக்கப்படும் நீ அவர்களையே துதிக்கத் தக்கவர்களாக்குகிறாய். வேறு கதியற்ற நான் உன்னைத் துதிக்க விரும்புகிறேன்; என் முயற்சி நிறைவேறி உலகம் போற்றுபவனாவேனாக. உன் திருவடி சேவையில் ஆசை யாருக்குத்தான் நன்மை தராது?",
+  {tip:"A loop: praise her → <b>become praised</b>. <b>anitara-gatiḥ</b> — “I have no other way”, like aśaraṇaḥ in verse 1."}),
+ v("v4", "4", "You and the Lord", "The Light by whose will all worlds rise and end shines red with the lac of your feet.", [
+   [["यत्सङ्कल्पाद्भवति","by whose will there arise","yat · saṅkalpāt · bhavati"],["कमले","O Kamalā","kamalā"],["यत्र","in whom","yatra"],["देहिन्यमीषां","the soul — of these","dehini = in the indweller · amīṣām"]],
+   [["जन्मस्थेमप्रलयरचना","creation, preservation and dissolution","janma · stheman = staying · pralaya · racanā"],["जङ्गमाजङ्गमानाम्","of moving and unmoving beings","jaṅgama · ajaṅgama"]],
+   [["तत्कल्याणं","that auspicious","tat · kalyāṇa"],["किमपि","indescribable","kim api"],["यमिनामेकलक्ष्यं","the one goal of yogis","yamin = self-controlled · eka · lakṣya"],["समाधौ","in meditation","samādhi"]],
+   [["पूर्णं","full","pūrṇa"],["तेजः","light","tejas"],["स्फुरति","shines","sphurati"],["भवतीपादलाक्षारसाङ्कम्","marked with the red lac of your feet","bhavatī · pāda · lākṣā-rasa = red lac dye · aṅka = mark"]]],
+  "O Kamalā, that indescribable, auspicious, full Light — by whose will the creation, preservation and dissolution of all beings take place, who dwells within them, the one goal of yogis in meditation — shines marked with the red lac of your feet.",
+  "கமலையே, எவனுடைய சங்கல்பத்தால் அசைவன அசையாதனவற்றின் படைப்பு, காப்பு, அழிவு நிகழ்கிறதோ, யோகிகள் சமாதியில் ஒரே இலக்காகக் கொள்ளும் அந்த மங்களமான, சொல்லற்கரிய பூரண ஒளி, உன் திருவடிச் செம்பஞ்சுக் குழம்பின் அடையாளத்துடன் ஒளிர்கிறது.",
+  {tip:"The Lord is known as <b>Śrī's husband</b> — he bears the <b>red lac</b> of her feet. She reveals him as the Supreme."}),
+ v("v5", "5", "You and the Lord", "You and Viṣṇu — one inseparable couple; Śeṣa, pure hearts and the Upaniṣads are your couch.", [
+   [["निष्प्रत्यूहप्रणयघटितं","joined by unbroken love","niṣpratyūha = unobstructed · praṇaya · ghaṭita"],["देवि","O Goddess","devī"],["नित्यानपायं","eternally inseparable","nitya · anapāya"]],
+   [["विष्णुस्त्वं","Viṣṇu and you","viṣṇuḥ · tvam"],["चेत्यनवधिगुणं","— thus, with endless virtues","ca · iti · anavadhi · guṇa"],["द्वन्द्वमन्योन्यलक्ष्यम्","a pair, each the goal of the other","dvandva = pair · anyonya · lakṣya"]],
+   [["शेषश्चित्तं","Śeṣa, the mind","śeṣaḥ · cittam"],["विमलमनसां","of the pure-minded","vimala · manas"],["मौलयश्च","and the crests","mauli · ca"],["श्रुतीनां","of the Vedas","śruti"]],
+   [["सम्पद्यन्ते","become","sampadyante"],["विहरणविधौ","in the play","viharaṇa · vidhi"],["यस्य","of which","yasya"],["शय्याविशेषाः","special couches","śayyā · viśeṣa"]]],
+  "O Goddess, Viṣṇu and you are one pair — joined by unbroken love, eternally inseparable, of endless virtues, each the goal of the other. For your play, Ādiśeṣa, the minds of the pure, and the crests of the Vedas become your couches.",
+  "தேவியே, தடையற்ற அன்பால் இணைந்து, என்றும் பிரியாமல், அளவற்ற குணங்களுடன், ஒருவருக்கொருவர் இலக்காக விஷ்ணுவும் நீயும் ஒரே ஜோடி. உங்கள் விளையாட்டுக்கு ஆதிசேஷனும், தூய மனத்தோர் உள்ளமும், வேதங்களின் முடியான உபநிஷத்துகளும் படுக்கைகளாகின்றன.",
+  {tip:"Three couches: <b>Śeṣa · cittam · śruti-mauli</b> — serpent, heart, Upaniṣad. The key word: <b>dvandvam</b>, the divine couple."}),
+ v("v6", "6", "You and the Lord", "You two are the one goal of every offering; the Vedas search for your greatness and never reach its end.", [
+   [["उद्देश्यत्वं","being the goal","uddeśya-tva"],["जननि","O mother","jananī"],["भजतोरुज्झितोपाधिगन्धं","of you two, free of any trace of limitation","bhajatoḥ = of the two who hold · ujjhita = abandoned · upādhi · gandha = trace"]],
+   [["प्रत्यग्रूपे","the inner self","pratyak-rūpa"],["हविषि","in the offering","havis"],["युवयोरेकशेषित्वयोगात्","because you two are the one master","yuvayoḥ · eka · śeṣitva = being the owner"]],
+   [["पद्मे","O Padmā","padmā"],["पत्युस्तव","of your Lord, and your","patyuḥ · tava"],["च","and","ca"],["निगमैर्नित्यमन्विष्यमाणो","ever sought by the Vedas","nigama · nityam · anviṣyamāṇa"]],
+   [["नावच्छेदं","no limit","na · avaccheda"],["भजति","reaches","bhajati"],["महिमा","the greatness","mahiman"],["नर्तयन्मानसं","making the mind dance","nartayan · mānasa"],["नः","our","naḥ"]]],
+  "O mother, you two are the goal of the offering of the self, free of any trace of limitation, because together you are its one master. O Padmā, the greatness of your Lord and yours, ever searched for by the Vedas, finds no limit — and makes our minds dance.",
+  "தாயே, நீங்கள் இருவரும் ஒரே சேஷியாக இருப்பதால், ஆத்மா எனும் அவிசுக்கு எந்த நிபந்தனையுமின்றி இலக்காகிறீர்கள். பத்மையே, வேதங்கள் என்றும் தேடும் உன் நாதனுடையதும் உன்னுடையதுமான மகிமை எல்லை காணாமல் எங்கள் மனத்தை ஆட வைக்கிறது.",
+  {tip:"A Śrīvaiṣṇava teaching: the self is offered to <b>both</b> together — <b>eka-śeṣitva</b>. <b>nartayan mānasaṃ naḥ</b>: “our mind dances.”"}),
+ v("v7", "7", "You and the Lord", "The worlds are your dice-board; Brahmā and Śiva are only the dice in your game.", [
+   [["पश्यन्तीषु","as (they) watch","paśyantīṣu"],["श्रुतिषु","the Vedas","śruti"],["परितः","all around","paritaḥ"],["सूरिबृन्देन","with the host of eternal ones","sūri = nitya-sūris · bṛnda = host"],["सार्धं","together","sārdham"]],
+   [["मध्येकृत्य","placing in the middle","madhye · kṛtya"],["त्रिगुणफलकं","the board of the three guṇas (the world)","tri-guṇa · phalaka = board"],["निर्मितस्थानभेदम्","with its squares marked out","nirmita · sthāna · bheda"]],
+   [["विश्वाधीशप्रणयिनि","O beloved of the lord of all","viśva · adhīśa · praṇayinī"],["सदा","always","sadā"],["विभ्रमद्यूतवृत्तौ","in the playful game of dice","vibhrama = play · dyūta = dice · vṛtti"]],
+   [["ब्रह्मेशाद्या","Brahmā, Śiva and the rest","brahmā · īśa · ādya"],["दधति","take on","dadhati"],["युवयोरक्षसारप्रचारम्","the moving of dice for you two","yuvayoḥ · akṣa = dice · sāra = piece · pracāra = moving"]]],
+  "O beloved of the lord of all — while the Vedas and the eternal ones watch all around, you two place the world of three guṇas in the middle as a board with its squares, and in your playful game of dice, Brahmā, Śiva and the others are only the moving pieces.",
+  "உலகநாதனின் பிரியையே, வேதங்களும் நித்யசூரிகளும் சுற்றிலும் பார்த்திருக்க, முக்குணமான உலகை கட்டங்களுடைய பலகையாக நடுவில் வைத்து நீங்கள் இருவரும் ஆடும் சொக்கட்டான் விளையாட்டில், பிரம்மன், சிவன் முதலியோர் நகர்த்தப்படும் காய்களே.",
+  {tip:"The <b>dice game</b> verse: the world is the board (<b>phalaka</b>), gods are the pieces (<b>akṣa-sāra</b>). Recited for high positions."}),
+ v("v8", "8", "You and the Lord", "Lakṣmī, Padmā, Jaladhi-tanayā, Viṣṇupatnī, Indirā — those who repeat your names never return to rebirth.", [
+   [["अस्येशाना","the ruler of this","asya · īśānā"],["त्वमसि","you are","tvam · asi"],["जगतः","world","jagat"],["संश्रयन्ती","resting in","saṃśrayantī"],["मुकुन्दं","Mukunda","mukunda"]],
+   [["लक्ष्मीः","Lakṣmī","lakṣmī"],["पद्मा","Padmā","padmā"],["जलधितनया","daughter of the ocean","jaladhi · tanayā"],["विष्णुपत्नीन्दिरेति","Viṣṇupatnī, Indirā — thus","viṣṇu-patnī · indirā · iti"]],
+   [["यन्नामानि","whose names","yat · nāmāni"],["श्रुतिपरिपणान्येवमावर्तयन्तो","the treasure of the Vedas — repeating them thus","śruti · paripaṇa = capital, treasure · evam · āvartayantaḥ"]],
+   [["नावर्तन्ते","do not return","na · āvartante"],["दुरितपवनप्रेरिते","driven by the wind of sin","durita · pavana · prerita"],["जन्मचक्रे","to the wheel of birth","janma · cakra"]]],
+  "Resting in Mukunda, you are the ruler of this world. Those who repeat your names — Lakṣmī, Padmā, Jaladhi-tanayā, Viṣṇupatnī, Indirā — the treasure of the Vedas, do not return to the wheel of birth driven by the wind of sin.",
+  "முகுந்தனைச் சார்ந்து நீயே இந்த உலகின் ஈஸ்வரி. லக்ஷ்மி, பத்மா, ஜலதிதனயா, விஷ்ணுபத்னி, இந்திரா என்ற வேதச் செல்வமான உன் பெயர்களை இப்படி மீண்டும் மீண்டும் சொல்பவர்கள், பாவக் காற்றால் சுழலும் பிறவிச் சக்கரத்துக்குத் திரும்புவதில்லை.",
+  {tip:"Five names: <b>lakṣmī · padmā · jaladhi-tanayā · viṣṇu-patnī · indirā</b>. <b>āvartayantaḥ … na āvartante</b> — repeat (her names) and you don't repeat (births)."}),
+ v("v9", "9", "You and the Lord", "Some say only you, some only him — for us, you two together, the divine couple, are our God.", [
+   [["त्वामेवाहुः","say only you","tvām · eva · āhuḥ"],["कतिचिदपरे","some; others","katicit · apare"],["त्वत्प्रियं","your beloved","tvat · priya"],["लोकनाथं","the lord of the world","loka · nātha"]],
+   [["किं","what (use)","kim"],["तैरन्तःकलहमलिनैः","with those soiled by inner quarrels","taiḥ · antaḥ · kalaha = quarrel · malina"],["किञ्चिदुत्तीर्य","having crossed a little","kiñcit · uttīrya"],["मग्नैः","then sunk","magna"]],
+   [["त्वत्सम्प्रीत्यै","for your delight","tvat · samprīti"],["विहरति","sports","viharati"],["हरौ","when Hari","hari"],["सम्मुखीनां","facing (you both)","sammukhīna"],["श्रुतीनां","of the Vedas","śruti"]],
+   [["भावारूढौ","enthroned in the meaning","bhāva · ārūḍha"],["भगवति","O Bhagavatī","bhagavatī"],["युवां","you two","yuvām"],["दम्पती","the couple","dampatī"],["दैवतं","the deity","daivata"],["नः","our","naḥ"]]],
+  "Some say you alone are supreme; others say your beloved, the lord of the world. What use are they, soiled by quarrels, who cross a little and then sink? O Bhagavatī, while Hari sports for your delight, you two — the divine couple, enthroned in the meaning of the Vedas — are our God.",
+  "சிலர் நீ மட்டுமே என்கிறார்கள்; வேறு சிலர் உன் பிரியனான உலகநாதன் மட்டுமே என்கிறார்கள். உள்சண்டையால் களங்கப்பட்டு, சிறிது கரையேறி மீண்டும் மூழ்குபவர்களால் என்ன பயன்? பகவதியே, வேதங்களின் பொருளில் அமர்ந்த திவ்ய தம்பதிகளான நீங்கள் இருவருமே எங்கள் தெய்வம்.",
+  {tip:"The answer to every argument: <b>yuvāṃ dampatī daivataṃ naḥ</b> — “you two, the couple, are our God”. Recited for good name (kīrti)."}),
+ v("v10", "10", "You and the Lord", "In every avatāra you come with him in matching form, like sweetness with the waves of the milk ocean.", [
+   [["आपन्नार्तिप्रशमनविधौ","in the work of ending the distress of the afflicted","āpanna · ārti = distress · praśamana · vidhi"],["बद्धदीक्षस्य","sworn to","baddha · dīkṣā = vow"],["विष्णोः","of Viṣṇu","viṣṇu"]],
+   [["आचख्युस्त्वां","they call you","ācakhyuḥ · tvām"],["प्रियसहचरीमैकमत्योपपन्नाम्","his dear companion, of one mind with him","priya · sahacarī · aikamatya = one-mindedness · upapannā"]],
+   [["प्रादुर्भावैरपि","in his incarnations too","prādurbhāva · api"],["समतनुः","with a matching body","sama · tanu"],["प्राध्वमन्वीयसे","you follow faithfully","prādhvam · anvīyase"],["त्वं","you","tvam"]],
+   [["दूरोत्क्षिप्तैरिव","as (with waves) tossed far","dūra · utkṣipta · iva"],["मधुरता","sweetness","madhuratā"],["दुग्धराशेस्तरङ्गैः","with the waves of the milk ocean","dugdha-rāśi · taraṅga"]]],
+  "They call you the dear companion, of one mind with Viṣṇu, who is sworn to end the distress of the afflicted. In his incarnations too you follow him faithfully in a matching form — as sweetness follows even the far-flung waves of the milk ocean.",
+  "துன்பப்பட்டவர்களின் துயரைத் தீர்க்க விரதம் பூண்ட விஷ்ணுவுக்கு ஒத்த மனமுடைய பிரிய துணைவி நீ என்கிறார்கள். அவனுடைய அவதாரங்களிலும் தகுந்த வடிவில் அவனைப் பின்தொடர்கிறாய் — பாற்கடலின் தொலைவில் வீசப்பட்ட அலைகளிலும் இனிமை தொடர்வது போல.",
+  {tip:"Sītā with Rāma, Rukmiṇī with Kṛṣṇa: <b>sama-tanu</b>, a matching body. The picture: <b>milk-ocean waves</b> are sweet wherever they go."}),
+ v("v11", "11", "You and the Lord", "Your golden form shines on the emerald Hari; your powers rise and fall like waves in a sea of bliss.", [
+   [["धत्ते","takes on","dhatte"],["शोभां","beauty","śobhā"],["हरिमरकते","on the emerald, Hari","hari · marakata = emerald"],["तावकी","your","tāvakī"],["मूर्तिराद्या","first form","mūrtiḥ · ādyā"]],
+   [["तन्वी","slender","tanvī"],["तुङ्गस्तनभरनता","bent by the weight of high breasts","tuṅga · stana · bhara · natā"],["तप्तजाम्बूनदाभा","shining like molten gold","tapta · jāmbūnada = gold · ābhā"]],
+   [["यस्यां","in which","yasyām"],["गच्छन्त्युदयविलयैर्नित्यमानन्दसिन्धौ","go by rising and setting, ever, in the ocean of bliss","gacchanti · udaya · vilaya · nityam · ānanda · sindhu"]],
+   [["इच्छावेगोल्लसितलहरीविभ्रमं","the play of waves stirred by the force of your will","icchā · vega · ullasita · laharī · vibhrama"],["व्यक्तयस्ते","your manifestations","vyakti · te"]]],
+  "Your first form — slender, bowed by the weight of high breasts, shining like molten gold — glows on Hari, the emerald. In you, the ocean of bliss, your many manifestations rise and set like waves stirred by the force of your will.",
+  "மெல்லியதும், உயர்ந்த ஸ்தனபாரத்தால் சற்று வளைந்ததும், உருக்கிய பொன் போல் ஒளிர்வதுமான உன் முதல் வடிவம், மரகதம் போன்ற ஹரியின் மீது அழகு பெறுகிறது. ஆனந்தக் கடலான உன்னில், உன் பல தோற்றங்கள் உன் விருப்பத்தின் வேகத்தால் எழும் அலைகள் போல் தோன்றி மறைகின்றன.",
+  {tip:"<b>Gold on emerald</b>: Śrī's golden form against Hari's green-dark body. Her avatāras are <b>waves</b> in a sea of bliss."}),
+ v("v12", "12", "You and the Lord", "Sarasvatī, Kāma, Indra — all their glory is only a drop of your love.", [
+   [["आसंसारं","as long as the world lasts","ā-saṃsāram"],["विततमखिलं","spread out, all","vitatam · akhilam"],["वाङ्मयं","literature","vāṅmaya"],["यद्विभूतिः","whose glory","yat · vibhūti"]],
+   [["यद्भ्रूभङ्गात्कुसुमधनुषः","by whose frown, the flower-bowed (Kāma)'s","yat · bhrū-bhaṅga = knitting of brows · kusuma-dhanus"],["किङ्करो","servant","kiṅkara"],["मेरुधन्वा","the Meru-bowed (Śiva)","meru · dhanvan"]],
+   [["यस्यां","on whom","yasyām"],["नित्यं","always","nityam"],["नयनशतकैरेकलक्ष्यो","the one target of a thousand eyes","nayana · śataka · eka · lakṣya"],["महेन्द्रः","Indra","mahendra"]],
+   [["पद्मे","O Padmā","padmā"],["तासां","of those (goddesses)","tāsām"],["परिणतिरसौ","this ripening","pariṇatiḥ · asau"],["भावलेशैस्त्वदीयैः","by drops of your feeling","bhāva · leśa · tvadīya"]]],
+  "She whose glory is all the literature spread through time (Sarasvatī); she by whose frown the Meru-bowed Śiva became the servant of the flower-bowed Kāma (Rati); she on whom Indra fixes his thousand eyes (Śacī) — O Padmā, their greatness is only the ripening of drops of your favour.",
+  "உலகம் உள்ளவரை பரந்த இலக்கியமெல்லாம் யாருடைய மகிமையோ (சரஸ்வதி), யாருடைய புருவ நெரிப்பால் மேருவை வில்லாக்கிய சிவனும் மலர்வில்லோனின் ஏவலாளானானோ (ரதி), யார்மீது இந்திரன் ஆயிரம் கண்களையும் வைக்கிறானோ (சசி) — பத்மையே, அவர்கள் பெருமையெல்லாம் உன் அருளின் சிறு துளிகளின் பலனே.",
+  {tip:"Three goddesses hidden in three lines: <b>Sarasvatī · Rati · Śacī</b>. All of them are only <b>bhāva-leśa</b> — a drop of her grace. Recited for the highest knowledge."}),
+ v("v13", "13", "Coronation", "Seated on a lotus throne before your Lord, you were bathed by elephants with golden pots.", [
+   [["अग्रे","before","agre"],["भर्तुः","your husband","bhartṛ"],["सरसिजमये","made of lotus","sarasija · maya"],["भद्रपीठे","on the auspicious throne","bhadra · pīṭha"],["निषण्णाम्","seated","niṣaṇṇā"]],
+   [["अम्भोराशेरधिगतसुधासम्प्लवादुत्थितां","risen from the ocean in the flood of nectar","ambho-rāśi = ocean · adhigata · sudhā · samplava = flood · utthitā"],["त्वाम्","you","tvām"]],
+   [["पुष्पासारस्थगितभुवनैः","covering the worlds with showers of flowers","puṣpa · āsāra = shower · sthagita = covered · bhuvana"],["पुष्कलावर्तकाद्यैः","with Puṣkala, Āvartaka and other (clouds)","puṣkala · āvartaka = names of great clouds · ādya"]],
+   [["क्लृप्तारम्भाः","having begun","klṛpta · ārambha"],["कनककलशैरभ्यषिञ्चन्","bathed with golden pots","kanaka · kalaśa · abhyaṣiñcan"],["गजेन्द्राः","the great elephants","gaja · indra"]]],
+  "When you rose from the ocean in the flood of nectar and sat on an auspicious lotus throne before your Lord, the great elephants — the clouds Puṣkala, Āvartaka and others having begun by covering the worlds with flower showers — bathed you with golden pots.",
+  "அமுதப் பெருக்குடன் பாற்கடலிலிருந்து எழுந்து, நாதனின் முன் தாமரை மங்கல ஆசனத்தில் நீ அமர்ந்தபோது, புஷ்கலம், ஆவர்த்தகம் முதலிய மேகங்கள் உலகங்களை மலர் மழையால் மூடத் தொடங்க, திக்கு யானைகள் பொற்குடங்களால் உனக்கு அபிஷேகம் செய்தன.",
+  {tip:"The <b>Gaja-Lakṣmī</b> picture, again — as in Sri Suktam and Kanakadhārā. Recited for auspicious events at home."}),
+ v("v14", "14", "Coronation", "Cursed and fallen, the gods took refuge in you — your glance gave them back their wealth for good.", [
+   [["आलोक्य","seeing","ālokya"],["त्वाममृतसहजे","you, O sister of nectar","tvām · amṛta · sahajā"],["विष्णुवक्षःस्थलस्थां","seated on Viṣṇu's chest","viṣṇu · vakṣaḥ-sthala · sthā"]],
+   [["शापाक्रान्ताः","struck by the curse","śāpa · ākrānta"],["शरणमगमन्","took refuge","śaraṇam · agaman"],["सावरोधाः","with their wives","sa · avarodha"],["सुरेन्द्राः","the chiefs of the gods","sura · indra"]],
+   [["लब्ध्वा","having gained","labdhvā"],["भूयस्त्रिभुवनमिदं","again these three worlds","bhūyaḥ · tri-bhuvanam · idam"],["लक्षितं","marked","lakṣita"],["त्वत्कटाक्षैः","by your glances","tvat · kaṭākṣa"]],
+   [["सर्वाकारस्थिरसमुदयां","firm and full in every way","sarva · ākāra · sthira · samudayā"],["सम्पदं","prosperity","sampad"],["निर्विशन्ति","enjoy","nirviśanti"]]],
+  "O sister of nectar, seeing you seated on Viṣṇu's chest, the chiefs of the gods, struck by (Durvāsa's) curse, took refuge in you with their wives. Gaining again these three worlds touched by your glances, they enjoy prosperity firm and full in every way.",
+  "அமுதத்தின் சகோதரியே, (துர்வாசரின்) சாபத்தால் வீழ்ந்த தேவேந்திரர்கள் தம் மனைவியருடன் விஷ்ணுவின் மார்பில் வீற்றிருக்கும் உன்னைக் கண்டு சரணடைந்தனர். உன் கடைக்கண்களால் குறிக்கப்பட்ட மூவுலகங்களையும் மீண்டும் பெற்று, எல்லா வகையிலும் நிலையான செல்வத்தை அனுபவிக்கின்றனர்.",
+  {tip:"The story behind the churning: Durvāsa's curse made Lakṣmī leave the gods; they got her back by <b>śaraṇāgati</b>. Recited to remove curses."}),
+ v("v15", "15", "Her glance", "Wherever your glance wanders, floods of wealth race each other to get there first.", [
+   [["आर्तत्राणव्रतिभिरमृतासारनीलाम्बुवाहैः","sworn to save the suffering — dark rain clouds pouring nectar","ārta · trāṇa · vratin · amṛta · āsāra · nīla · ambu-vāha = cloud"]],
+   [["अम्भोजानामुषसि","of lotuses at dawn","ambhoja · uṣas"],["मिषतामन्तरङ्गैरपाङ्गैः","by side-glances, intimate friends of the opening (lotuses)","miṣatām = opening · antaraṅga = close · apāṅga"]],
+   [["यस्यां","in whichever","yasyām"],["यस्यां","in whichever","yasyām"],["दिशि","direction","diś"],["विहरते","roams","viharate"],["देवि","O Goddess","devī"],["दृष्टिस्त्वदीया","your glance","dṛṣṭiḥ · tvadīyā"]],
+   [["तस्यां","in that","tasyām"],["तस्यामहमहमिकां","in that, the rivalry of “me first, me first”","tasyām · aham-ahamikā"],["तन्वते","show","tanvate"],["सम्पदोघाः","floods of wealth","sampad · ogha"]]],
+  "O Goddess, in whichever direction your glance roams — with side-glances sworn to save the suffering, like dark clouds pouring nectar, close friends of lotuses opening at dawn — in that very direction floods of wealth jostle, “me first, me first!”",
+  "தேவியே, துன்பப்படுவோரைக் காக்க விரதம் பூண்டவையும், அமுதம் பொழியும் கருமேகங்கள் போன்றவையும், விடியலில் மலரும் தாமரைகளுக்கு நெருங்கிய தோழமையுமான உன் கடைக்கண் பார்வை எந்தெந்தத் திசையில் உலவுகிறதோ, அந்தந்தத் திசையில் செல்வப் பெருக்குகள் ‘நான் முந்தி, நான் முந்தி’ என்று போட்டியிடுகின்றன.",
+  {tip:"The famous <b>aham-ahamikā</b> verse: “me first!” Four repeats: <b>yasyāṃ yasyāṃ … tasyāṃ tasyām</b>. Recited for lasting wealth."}),
+ v("v16", "16", "Her glance", "Those who seek wealth only for dharma — streams of riches pour on them from earth, Kubera's house, sky and sea.", [
+   [["योगारम्भत्वरितमनसो","whose minds hasten to begin yoga","yoga · ārambha · tvarita · manas"],["युष्मदैकान्त्ययुक्तं","joined with single devotion to you two","yuṣmat · aikāntya · yukta"]],
+   [["धर्मं","dharma","dharma"],["प्राप्तुं","to attain","prāptum"],["प्रथममिह","first, here","prathamam · iha"],["ये","those who","ye"],["धारयन्ते","hold","dhārayante"],["धनायाम्","the wish for wealth","dhanāyā"]],
+   [["तेषां","for them","teṣām"],["भूमेर्धनपतिगृहादम्बरादम्बुधेर्वा","from the earth, Kubera's house, the sky or the sea","bhūmeḥ · dhana-pati-gṛhāt · ambarāt · ambudheḥ · vā"]],
+   [["धारा","streams","dhārā"],["निर्यान्त्यधिकमधिकं","pour out, more and more","niryānti · adhikam adhikam"],["वाञ्छितानां","of desired","vāñchita"],["वसूनाम्","riches","vasu"]]],
+  "Those here whose minds hasten to begin yoga, and who first wish for wealth only to perform dharma with single devotion to you two — for them streams of the riches they desire pour out, more and more, from the earth, from Kubera's house, from the sky or the sea.",
+  "யோகத்தைத் தொடங்க விரையும் மனமுடையவர்களாய், உங்கள் இருவரிடமும் ஒருமுகப் பக்தியுடன் தர்மத்தைச் செய்வதற்காக முதலில் செல்வத்தை விரும்புபவர்களுக்கு, பூமியிலிருந்தும், குபேரன் வீட்டிலிருந்தும், வானத்திலிருந்தும், கடலிலிருந்தும் விரும்பிய செல்வத்தின் தாரைகள் மேலும் மேலும் பெருகி வருகின்றன.",
+  {tip:"<b>The golden-rain verse</b> — sung for the brahmacārī. Four sources: <b>bhūmi · dhanapati-gṛha · ambara · ambudhi</b>. The condition: wealth for <b>dharma</b>."}),
+ v("v17", "17", "Her glance", "Those who hold your feet in their hearts go about with royal umbrellas, chowries and garlands.", [
+   [["श्रेयस्कामाः","those who seek the good","śreyas · kāma"],["कमलनिलये","O dweller in the lotus","kamala · nilayā"],["चित्रमाम्नायवाचां","wonderful — of the Vedic words","citram · āmnāya = Veda · vāc"]],
+   [["चूडापीडं","the crest-jewel","cūḍā · āpīḍa"],["तव","your","tava"],["पदयुगं","pair of feet","pada · yuga"],["चेतसा","in the mind","cetas"],["धारयन्तः","holding","dhārayantaḥ"]],
+   [["छत्रच्छायासुभगशिरसश्चामरस्मेरपार्श्वाः","heads lovely in the shade of umbrellas, sides bright with chowries","chatra · chāyā · subhaga · śiras · cāmara = yak-tail fan · smera · pārśva"]],
+   [["श्लाघाशब्दश्रवणमुदिताः","delighted to hear words of praise","ślāghā · śabda · śravaṇa · mudita"],["स्रग्विणः","garlanded","sragvin"],["सञ्चरन्ति","go about","sañcaranti"]]],
+  "O dweller in the lotus — wonderful! — those who seek the good and hold in their hearts your pair of feet, the crest-jewel of the Vedas, go about garlanded, their heads shaded by royal umbrellas, chowries waving at their sides, delighted by words of praise.",
+  "தாமரையில் வசிப்பவளே, என்ன ஆச்சரியம்! வேதங்களின் முடிமணியான உன் திருவடியிணையை மனத்தில் தாங்கும் நன்மை விரும்பிகள், குடை நிழலில் அழகிய தலையுடன், இருபுறமும் சாமரம் வீச, புகழுரைகள் கேட்டு மகிழ்ந்து, மாலை அணிந்து உலவுகிறார்கள்.",
+  {tip:"The signs of royalty: <b>chatra</b> (umbrella), <b>cāmara</b> (chowrie), <b>ślāghā</b> (praise), <b>srak</b> (garland). Recited for high positions."}),
+ v("v18", "18", "Her glance", "To win every good and cross ignorance, the pure-hearted lean on your mercy, O Viṣṇukāntā.", [
+   [["ऊरीकर्तुं","to gain","ūrī-kartum"],["कुशलमखिलं","all good","kuśalam · akhilam"],["जेतुमादीनरातीन्","to conquer the enemies (desire and the rest)","jetum · ādīn · arātīn"]],
+   [["दूरीकर्तुं","to drive far","dūrī-kartum"],["दुरितनिवहं","the mass of sin","durita · nivaha"],["त्यक्तुमाद्यामविद्याम्","to cast off beginningless ignorance","tyaktum · ādyām · avidyām"]],
+   [["अम्ब","O mother","ambā"],["स्तम्बावधिकजननग्रामसीमान्तरेखाम्","the boundary line of the villages of birth, down to a blade of grass","stamba = grass clump · avadhika · janana · grāma · sīmānta-rekhā"]],
+   [["आलम्बन्ते","hold on to","ālambante"],["विमलमनसो","the pure-minded","vimala · manas"],["विष्णुकान्ते","O beloved of Viṣṇu","viṣṇu · kāntā"],["दयां","mercy","dayā"],["ते","your","te"]]],
+  "O mother, beloved of Viṣṇu — to gain every good, conquer the inner enemies, drive away the mass of sin and cast off beginningless ignorance, the pure-minded hold on to your mercy, the boundary line beyond the villages of birth that reach down to a blade of grass.",
+  "தாயே, விஷ்ணுகாந்தையே — எல்லா நன்மைகளையும் பெறவும், உட்பகைவர்களை வெல்லவும், பாவக் குவியலை விரட்டவும், ஆதியான அவித்யையை விடவும், புல் வரையிலான பிறவிகளின் எல்லைக்கோடான உன் கருணையைத் தூய மனத்தோர் பற்றிக்கொள்கிறார்கள்.",
+  {tip:"Four aims in four <b>-tum</b> words: <b>ūrīkartum · jetum · dūrīkartum · tyaktum</b> (to gain, conquer, drive away, cast off)."}),
+ v("v19", "19", "Her glance", "Thinking all wealth mere straw, the wise guard the dam of Vedic dharma, to please you both.", [
+   [["जाताकाङ्क्षा","having the longing","jāta · ākāṅkṣā"],["जननि","O mother","jananī"],["युवयोरेकसेवाधिकारे","for the privilege of serving you two alone","yuvayoḥ · eka · sevā · adhikāra"]],
+   [["मायालीढं","touched by māyā","māyā · līḍha"],["विभवमखिलं","all wealth","vibhavam · akhilam"],["मन्यमानास्तृणाय","considering as straw","manyamānāḥ · tṛṇāya"]],
+   [["प्रीत्यै","for the pleasure","prīti"],["विष्णोस्तव","of Viṣṇu and your","viṣṇoḥ · tava"],["च","and","ca"],["कृतिनः","the wise","kṛtin"],["प्रीतिमन्तो","gladly","prītimat"],["भजन्ते","keep","bhajante"]],
+   [["वेलाभङ्गप्रशमनफलं","whose fruit is preventing the breach of bounds","velā = boundary · bhaṅga = breaking · praśamana · phala"],["वैदिकं","Vedic","vaidika"],["धर्मसेतुम्","the dam of dharma","dharma · setu"]]],
+  "O mother, longing only for the privilege of serving you two, and considering all wealth touched by māyā as mere straw, the wise gladly keep the dam of Vedic dharma — which stops the world breaking its bounds — for the pleasure of Viṣṇu and you.",
+  "தாயே, உங்கள் இருவருக்கும் மட்டுமே சேவை செய்யும் பேற்றை விரும்பி, மாயை தொட்ட எல்லாச் செல்வத்தையும் புல்லாக மதித்து, அறிவுடையோர் விஷ்ணுவுக்கும் உனக்கும் மகிழ்ச்சி தருவதற்காக, எல்லை மீறலைத் தடுக்கும் வைதிக தர்மம் எனும் அணையை மகிழ்வுடன் காக்கிறார்கள்.",
+  {tip:"Dharma is a <b>setu</b> — a dam holding back the sea. Wealth is <b>tṛṇa</b>, straw, next to serving the divine couple."}),
+ v("v20", "20", "Prayer", "I serve your lotus feet, worshipped by the crowns of goddesses — bowing there, the blessed reach Vāsudeva's realm.", [
+   [["सेवे","I serve","seve"],["देवि","O Goddess","devī"],["त्रिदशमहिलामौलिमालार्चितं","worshipped by the garlands on the heads of goddesses","tridaśa = gods · mahilā = woman · mauli · mālā · arcita"],["ते","your","te"]],
+   [["सिद्धिक्षेत्रं","the field of success","siddhi · kṣetra"],["शमितविपदां","of those whose troubles are ended","śamita · vipad"],["सम्पदां","of riches","sampad"],["पादपद्मम्","lotus feet","pāda · padma"]],
+   [["यस्मिन्नीषन्नमितशिरसो","bowing their heads a little to which","yasmin · īṣat · namita · śiras"],["यापयित्वा","having lived out","yāpayitvā"],["शरीरं","the body","śarīra"]],
+   [["वर्तिष्यन्ते","will dwell","vartiṣyante"],["वितमसि","beyond darkness","vi-tamas"],["पदे","in the realm","pada"],["वासुदेवस्य","of Vāsudeva","vāsudeva"],["धन्याः","the blessed","dhanya"]]],
+  "O Goddess, I serve your lotus feet, worshipped by the garlands on goddesses' heads, the field where troubles end and riches grow. The blessed who bow their heads to them even a little, living out this body, will dwell in Vāsudeva's realm beyond darkness.",
+  "தேவியே, தேவமகளிர் தலைமாலைகளால் அர்ச்சிக்கப்பட்டதும், துன்பங்களைத் தீர்த்துச் செல்வங்கள் விளையும் நிலமுமான உன் திருவடித் தாமரையைச் சேவிக்கிறேன். அதில் சிறிதே தலை வணங்கிய பாக்கியசாலிகள், இவ்வுடலைக் கழித்தபின், இருளற்ற வாசுதேவனின் பதத்தில் வாழ்வார்கள்.",
+  {tip:"<b>īṣan-namita-śirasaḥ</b> — bowing <b>just a little</b> is enough. The goal: <b>vitamasi pade</b>, Vaikuṇṭha, beyond darkness."}),
+ v("v21", "21", "Prayer", "Burnt by the three sufferings, I wilt — cool me with your nectar-wet glances.", [
+   [["सानुप्रासप्रकटितदयैः","showing mercy in rhythm","sa · anuprāsa = alliteration, rhythm · prakaṭita · dayā"],["सान्द्रवात्सल्यदिग्धैः","smeared with deep motherly love","sāndra · vātsalya · digdha"]],
+   [["अम्ब","O mother","ambā"],["स्निग्धैरमृतलहरीलब्धसब्रह्मचर्यैः","gentle, kin to waves of nectar","snigdha · amṛta · laharī · labdha · sabrahmacarya = fellowship"]],
+   [["घर्मे","in the heat","gharma"],["तापत्रयविरचिते","made of the three sufferings","tāpa · traya · viracita"],["गाढतप्तं","badly scorched","gāḍha · tapta"],["क्षणं","for a moment","kṣaṇa"],["माम्","me","mām"]],
+   [["आकिञ्चन्यग्लपितमनघैरार्द्रयेथाः","wilted by having nothing — with pure (glances), please moisten","ākiñcanya = destitution · glapita = wilted · anagha · ārdrayethāḥ"],["कटाक्षैः","with your glances","kaṭākṣa"]]],
+  "O mother, with your pure glances — showing mercy over and over, smeared with deep love, gentle, kin to waves of nectar — please moisten me for a moment: I am badly scorched in the heat of the three sufferings and wilted by having nothing.",
+  "தாயே, மீண்டும் மீண்டும் கருணை காட்டுவதும், ஆழ்ந்த வாத்ஸல்யம் பூசியதும், மென்மையானதும், அமுத அலைகளின் தோழமை பெற்றதுமான உன் களங்கமற்ற கடைக்கண்களால், மூவகைத் துன்ப வெப்பத்தில் வாடி, ஏழ்மையால் சோர்ந்த என்னை ஒரு கணம் நனைப்பாயாக.",
+  {tip:"<b>sānuprāsa</b> means “with alliteration” — and the verse is full of it: <b>sāndra · snigdha · sabrahmacarya</b>. Recited for healing."}),
+ v("v22", "22", "Prayer", "What should I ask of you? Your cool, generous glances give great blessings again and again.", [
+   [["सम्पद्यन्ते","become","sampadyante"],["भवभयतमीभानवस्त्वत्प्रसादात्","suns for the night of saṃsāra's fear, by your grace","bhava · bhaya · tamī = night · bhānu = sun · tvat · prasāda"]],
+   [["भावाः","feelings","bhāva"],["सर्वे","all","sarva"],["भगवति","O Bhagavatī","bhagavatī"],["हरौ","for Hari","hari"],["भक्तिमुद्वेलयन्तः","making devotion overflow","bhaktim · udvelayantaḥ"]],
+   [["याचे","I ask","yāce"],["किं","what","kim"],["त्वामहमिह","you, I, here","tvām · aham · iha"],["यतः","since","yataḥ"],["शीतलोदारशीला","by nature cool and generous","śītala · udāra · śīlā"]],
+   [["भूयो","again","bhūyaḥ"],["भूयो","and again","bhūyaḥ"],["दिशसि","you give","diśasi"],["महतां","great","mahat"],["मङ्गलानां","blessings","maṅgala"],["प्रबन्धान्","streams","prabandha"]]],
+  "By your grace, O Bhagavatī, all our feelings overflow with devotion to Hari and become suns for the night of saṃsāra's fear. What should I ask of you here? Cool and generous by nature, you give streams of great blessings again and again.",
+  "பகவதியே, உன் அருளால் எல்லா உணர்வுகளும் ஹரியிடம் பக்தியைப் பொங்கச் செய்து, பிறவி பயம் எனும் இரவுக்குச் சூரியன்களாகின்றன. குளிர்ந்த, வள்ளல் இயல்புடைய நீ மீண்டும் மீண்டும் பெரும் மங்களங்களின் பெருக்கை அருள்வதால், நான் இங்கு உன்னிடம் என்ன கேட்பேன்?",
+  {tip:"<b>yāce kiṃ tvām?</b> — “what should I ask?” She gives before we ask. <b>bhūyo bhūyaḥ</b> — again and again."}),
+ v("v23", "23", "Prayer", "You are my mother, Vāsudeva my father — I am the one target of your mercy. What more could please you?", [
+   [["माता","mother","mātā"],["देवि","O Goddess","devī"],["त्वमसि","you are","tvam · asi"],["भगवान्","the Lord","bhagavān"],["वासुदेवः","Vāsudeva","vāsudeva"],["पिता","father","pitā"],["मे","my","me"]],
+   [["जातः","have become","jāta"],["सोऽहं","such a one, I","saḥ · aham"],["जननि","O mother","jananī"],["युवयोरेकलक्ष्यं","the one target of you two","yuvayoḥ · eka · lakṣya"],["दयायाः","of mercy","dayā"]],
+   [["दत्तो","given","datta"],["युष्मत्परिजनतया","as your servant","yuṣmat · parijana-tayā"],["देशिकैरप्यतस्त्वं","by my teachers too; so you","deśikaiḥ · api · ataḥ · tvam"]],
+   [["किं","what","kim"],["ते","to you","te"],["भूयः","more","bhūyaḥ"],["प्रियमिति","dear — thus","priyam · iti"],["किल","indeed","kila"],["स्मेरवक्त्रा","with a smiling face","smera · vaktra"],["विभासि","you shine","vibhāsi"]]],
+  "O Goddess, you are my mother, and the Lord Vāsudeva is my father. I have become the one target of the mercy of you both, and my teachers have given me to you as your servant. So, thinking “what could be dearer to me?”, you shine with a smiling face.",
+  "தேவியே, நீ என் தாய்; பகவான் வாசுதேவன் என் தந்தை. தாயே, நான் உங்கள் இருவரின் கருணைக்கும் ஒரே இலக்காகியிருக்கிறேன்; என் ஆசாரியர்களும் என்னை உங்கள் அடியவனாக ஒப்படைத்துள்ளனர். ஆகவே, ‘இதைவிட எனக்கு வேறு என்ன பிரியம்?’ என்று புன்னகை முகத்துடன் ஒளிர்கிறாய்.",
+  {tip:"The best-loved line: <b>mātā devi tvam asi, bhagavān vāsudevaḥ pitā me</b>. The ācāryas hand us over — and she smiles."}),
+ v("v24", "24", "Prayer", "Treasure of all good, the limit of compassion, the wish-cow of the whole world — may she always be with me.", [
+   [["कल्याणानामविकलनिधिः","the complete treasure of all good things","kalyāṇa · avikala = whole · nidhi"],["कापि","indescribable","kā api"],["कारुण्यसीमा","the limit of compassion","kāruṇya · sīmā"]],
+   [["नित्यामोदा","ever fragrant","nitya · āmodā"],["निगमवचसां","of the Vedic words","nigama · vacas"],["मौलिमन्दारमाला","a garland of mandāra flowers on the crest","mauli · mandāra · mālā"]],
+   [["सम्पद्दिव्या","the divine wealth","sampad · divyā"],["मधुविजयिनः","of Madhu's conqueror","madhu · vijayin"],["सन्निधत्तां","may (she) be present","sannidhattām"],["सदा","always","sadā"],["मे","with me","me"]],
+   [["सैषा","this very","sā · eṣā"],["देवी","Goddess","devī"],["सकलभुवनप्रार्थनाकामधेनुः","the wish-cow for the prayers of the whole world","sakala · bhuvana · prārthanā · kāma-dhenu"]]],
+  "The complete treasure of all good things, the indescribable limit of compassion, an ever-fragrant mandāra garland on the crest of the Vedas, the divine wealth of Madhu's conqueror, the wish-cow for the prayers of the whole world — may this Goddess always be present with me.",
+  "எல்லா மங்களங்களின் முழுமையான நிதியும், சொல்லற்கரிய கருணையின் எல்லையும், வேதச் சொற்களின் முடியில் என்றும் மணக்கும் மந்தார மாலையும், மதுவை வென்றவனின் திவ்ய செல்வமும், உலகம் முழுவதன் வேண்டுதல்களுக்குக் காமதேனுவுமான இந்தத் தேவி எப்போதும் என்னுடன் இருக்கட்டும்.",
+  {tip:"The <b>dhyāna</b> verse, prayed for every wish. Compare the taniyan: <b>sannidhattāṃ sadā me</b> — “may she always be with me”."}),
+ v("v25", "25", "Phala-śruti", "Those who read this hymn by Veṅkaṭeśa reach the limit of every good and become emperors.", [
+   [["उपचितगुरुभक्तेरुत्थितं","risen from Veṅkaṭeśa, whose devotion to his teacher is great","upacita = grown · guru · bhakti · utthita"],["वेङ्कटेशात्","from Veṅkaṭeśa (Deśika)","veṅkaṭeśa"]],
+   [["कलिकलुषनिवृत्त्यै","for removing the stain of Kali","kali · kaluṣa · nivṛtti"],["कल्पमानं","able","kalpamāna"],["प्रजानाम्","for people","prajā"]],
+   [["सरसिजनिलयायाः","of the lotus-dweller","sarasija · nilayā"],["स्तोत्रमेतत्","this hymn","stotram · etat"],["पठन्तः","those who read","paṭhantaḥ"]],
+   [["सकलकुशलसीमाः","the limit of all good","sakala · kuśala · sīmā"],["सार्वभौमा","emperors","sārvabhauma"],["भवन्ति","become","bhavanti"]]],
+  "This hymn to the lotus-dweller came from Veṅkaṭeśa, rich in devotion to his teacher, and is able to remove the stain of Kali from people. Those who read it reach the limit of all good and become emperors.",
+  "குருபக்தி நிறைந்த வேங்கடேசனிடமிருந்து தோன்றியதும், மக்களின் கலிமாசைப் போக்க வல்லதுமான, தாமரையில் வசிப்பவளின் இந்த ஸ்தோத்திரத்தைப் படிப்பவர்கள் எல்லா நன்மைகளின் எல்லையை அடைந்து சக்கரவர்த்திகளாகிறார்கள்.",
+  {kind:"phala", short:"Phala-śruti", meter:"malini", pat:"LLLLLLGGGLGGLGx", meterNote:"Mālinī: 15 syllables a quarter — six short, then long–long–long–short–long–long–short–long–long. Pause after the 8th.", tip:"The metre changes to <b>mālinī</b> for the closing verse. Deśika signs his name: <b>veṅkaṭeśāt</b>."})
+];
+const S = 'fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"';
+const ICONS = [
+  {t:"Refuge", w:"शरण्यां", v:"v1", d:"śaraṇyā — she protects all who come", svg:`<path d="M17 4l11 5v8c0 7-5 11-11 13-6-2-11-6-11-13V9z" ${S}/><path d="M12 17l4 4 7-8" ${S}/>`},
+  {t:"On Viṣṇu's chest", w:"वक्षःपीठीं", v:"v1", d:"she adorns his chest with her light", svg:`<path d="M6 30c0-8 5-12 11-12s11 4 11 12M17 18v-4" ${S}/><path d="M17 6c-2 3-2 6 0 8 2-2 2-5 0-8z" ${S}/>`},
+  {t:"Lotus grove", w:"सरसिजवनं", v:"v2", d:"her home", svg:`<path d="M17 6c-4 5-4 12 0 18 4-6 4-13 0-18zM17 24c-6-1-10-6-11-12 5 1 9 5 11 12zM17 24c6-1 10-6 11-12-5 1-9 5-11 12zM6 27h22" ${S}/>`},
+  {t:"Red lac", w:"भवतीपादलाक्षारसाङ्कम्", v:"v4", d:"her footprints mark the Lord", svg:`<path d="M12 8c-3 0-5 4-5 9s2 9 5 9 4-3 4-9-1-9-4-9zM23 6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM26 10a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" ${S}/>`},
+  {t:"Dice game", w:"त्रिगुणफलकं", v:"v7", d:"the world as their board", svg:`<rect x="6" y="6" width="22" height="22" rx="3" ${S}/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="22" cy="22" r="1.5" fill="currentColor"/><circle cx="17" cy="17" r="1.5" fill="currentColor"/>`},
+  {t:"The divine couple", w:"दम्पती", v:"v9", d:"you two are our God", svg:`<circle cx="12" cy="11" r="4" ${S}/><circle cx="22" cy="11" r="4" ${S}/><path d="M4 29c0-6 4-10 8-10s5 2 5 2 1-2 5-2 8 4 8 10" ${S}/>`},
+  {t:"Gold on emerald", w:"हरिमरकते", v:"v11", d:"her golden form on dark Hari", svg:`<path d="M17 4l9 9-9 17-9-17z M8 13h18" ${S}/>`},
+  {t:"Gaja-Lakṣmī", w:"गजेन्द्राः", v:"v13", d:"bathed by elephants with golden pots", svg:`<path d="M6 24v-8c0-5 4-9 10-9h4c5 0 8 4 8 9v8M28 16c2 2 2 8 0 10M10 24v4M22 24v4" ${S}/><circle cx="22" cy="13" r="1.4" fill="currentColor"/>`},
+  {t:"“Me first!”", w:"तस्यामहमहमिकां", v:"v15", d:"wealth races to where she looks", svg:`<circle cx="17" cy="17" r="5" ${S}/><path d="M17 3v6M17 25v6M3 17h6M25 17h6M7 7l4 4M23 23l4 4M27 7l-4 4M11 23l-4 4" ${S}/>`},
+  {t:"Mother and father", w:"माता", v:"v23", d:"mātā devi tvam asi", svg:`<path d="M17 29s-11-7-11-15a6 6 0 0 1 11-3 6 6 0 0 1 11 3c0 8-11 15-11 15z" ${S}/>`}
+];
+const BENEFITS = [["सम्पदोघाः","Floods of wealth"],["वाञ्छितानां","What one wishes for"],["सञ्चरन्ति","Honour and position"],["कुशलमखिलं","Every good"],["सकलकुशलसीमाः","The limit of all good"],["सार्वभौमा","Sovereignty"]];
+return {
+  key:"sst", titleDv:"श्रीस्तुतिः", verses:VERSES, icons:ICONS, benefits:BENEFITS,
+  meter:{name:"Mandākrāntā", kind:"mandakranta",
+    hook:"Mandākrāntā: 17 syllables a quarter — four long, five short, then long–long–short–long–long–short–long–long. Pause after the 4th and the 10th.",
+    intro:"Verses 1–24 are in <b>mandākrāntā</b> (“slow-stepping”), 17 syllables a quarter: <b>long–long–long–long · short–short–short–short–short–long · long–short–long–long–short–long–long</b> — the metre of Kālidāsa's Meghadūta. The phala-śruti (25) is in <b>mālinī</b>, and the taniyan in anuṣṭubh. Each line is checked against its pattern.",
+    quiz:{q:"Which verse is sung for the golden rain of wealth?", opts:["Verse 16 — yogārambha…","Verse 1 — mānātīta…","Verse 23 — mātā devi…","Verse 7 — paśyantīṣu…"],
+      why:"Verse 16: streams of wealth pour from the earth, Kubera's house, the sky and the sea — for those who seek wealth for dharma."}}
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

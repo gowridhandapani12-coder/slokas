@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Shodashayudha Stotram</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Vedānta Deśika · Sanskrit · taniyan + 19 verses</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Shodashayudha Stotram</h1>
+          <p class="lead" style="margin-top:8px">“Hymn to the sixteen weapons.” Sudarśana, the Lord's discus, is shown with sixteen arms, each holding a weapon. Deśika gives one verse to each weapon — discus, axe, spear, rod, goad, fire, sword, śakti, conch, bow, noose, plough, thunderbolt, mace, pestle and trident — and asks each to protect us, often from an inner enemy.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><span>Composed by</span><b>Vedānta Deśika</b><span>13th–14th c.</span></div>
+        <div class="fact"><span>Deity</span><b>Sudarśana</b><span>the sixteen-armed discus</span></div>
+        <div class="fact"><span>Pattern</span><b>One weapon a verse</b><span>verses 2–17</span></div>
+        <div class="fact"><span>Metre</span><b>Anuṣṭubh</b><span>4 quarters of 8 syllables</span></div>
+        <div class="fact"><span>Source</span><b>Her PDF</b><span>Sunder Kidāmbi, prapatti.com</span></div>
+        <div class="fact"><span>On her plan</span><b>Saturday</b><span>with Sudarśana Kavacham</span></div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h2>The sixteen weapons, in order</h2>
+          <div class="ladder" style="margin-top:10px">
+            <div class="step"><span class="n">2–5</span><div><span class="vb" style="font-family:var(--f-display)">cakra · paraśu · kunta · daṇḍa</span> <span class="en">— discus, axe, spear, rod</span></div><span></span></div>
+            <div class="step"><span class="n">6–9</span><div><span class="vb" style="font-family:var(--f-display)">aṅkuśa · agni · khaḍga · śakti</span> <span class="en">— goad, fire, sword, lance</span></div><span></span></div>
+            <div class="step"><span class="n">10–13</span><div><span class="vb" style="font-family:var(--f-display)">śaṅkha · śārṅga · pāśa · sīra</span> <span class="en">— conch, bow, noose, plough</span></div><span></span></div>
+            <div class="step"><span class="n">14–17</span><div><span class="vb" style="font-family:var(--f-display)">vajra · gadā · musala · triśūla</span> <span class="en">— thunderbolt, mace, pestle, trident</span></div><span></span></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each verse, in order.</p>
+          <div class="mn" id="openings"></div>
+          <div class="tip" style="margin-top:14px"><b>Each verse names its weapon near the end</b> and ends with <i>vaḥ</i> — “(may it protect) you”. Many verses pun on the weapon: the <b>daṇḍa</b> (rod) punishes (<i>daṇḍayet</i>), the <b>śūla</b> (trident) removes pain (<i>viśūlatā</i>), the <b>pāśa</b> (noose) frees from bonds (<i>pāśa-vimocanam</i>).</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>The weapons</h2><span class="muted" style="font-size:.85rem">Tap one to see the word in its verse</span></div>
+        <div class="icons" id="icons" style="margin-top:14px"></div>
+      </div>
+      <div class="card">
+        <h2>What it gives</h2>
+        <p class="muted" style="margin:6px 0 12px">Each weapon guards against something —</p>
+        <div class="benefits" id="benefits"></div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+const W = s => s.split(";").map(x => { const [dv, g, b] = x.split("|").map(y => y.trim()); return [dv, g, b || g]; });
+const v = (n, part, hook, l1, l2, en, ta, extra) => Object.assign({id:"v" + n, n:String(n), label:"Verse " + n, part, hook, lines:[W(l1), W(l2)], en, ta}, extra || {});
+const VERSES = [
+ {id:"t0", n:"ॐ", label:"Taniyan", short:"Taniyan", kind:"dhyana", part:"Taniyan", hook:"May Veṅkaṭanātha, lion among poets, best of Vedānta teachers, dwell in my heart.",
+  lines:[W("श्रीमान्|the glorious|śrīmān; वेङ्कटनाथार्यः|teacher Veṅkaṭanātha|veṅkaṭa-nātha · ārya; कवितार्किककेसरी|lion among poets and logicians|kavi · tārkika · kesarī"),
+         W("वेदान्ताचार्यवर्यो|the best of Vedānta teachers|vedānta · ācārya · varya; मे|my; सन्निधत्तां|may (he) dwell; सदा|always; हृदि|in the heart")],
+  en:"May the glorious teacher Veṅkaṭanātha, lion among poets and logicians, best of the teachers of Vedānta, always dwell in my heart.",
+  ta:"கவிதார்க்கிக சிம்மமும், வேதாந்த ஆசாரியர்களில் சிறந்தவருமான ஸ்ரீமான் வேங்கடநாத ஆசாரியர் எப்போதும் என் இதயத்தில் வீற்றிருக்கட்டும்.",
+  tip:"The Deśika taniyan, as in Bhū Stuti and Śrī Stuti."},
+ v(1, "Invocation", "May the Supreme Person, lord of weapons, served by sixteen divine weapons made from a spark of his will, bless you.",
+  "स्वसङ्कल्पकलाकल्पैरायुधैरायुधेश्वरः|the lord of weapons, with weapons formed from a fraction of his own will|sva · saṅkalpa · kalā · kalpaiḥ · āyudhaiḥ · āyudha · īśvaraḥ",
+  "जुष्टः|served; षोडशभिर्दिव्यैर्|by sixteen divine|ṣoḍaśabhiḥ · divyaiḥ; जुषतां|may (he) favour; वः|you; परः|the Supreme; पुमान्|Person",
+  "May the Supreme Person — the lord of weapons, served by sixteen divine weapons formed from a mere fraction of his own will — favour you.",
+  "தன் சங்கல்பத்தின் ஒரு துளியால் உருவான பதினாறு திவ்ய ஆயுதங்களால் சேவிக்கப்படும் ஆயுதேஸ்வரனான பரம புருஷன் உங்களுக்கு அருள்புரியட்டும்.",
+  {tip:"The weapons are not tools he needs — they are made from a <b>kalā</b> (spark) of his <b>saṅkalpa</b> (will)."}),
+ v(2, "The weapons", "The Discus, on which the wheel of the world and of time depends — may it protect you.",
+  "यदायत्तं|on which depends|yat · āyattam; जगच्चक्रं|the wheel of the world|jagat · cakram; कालचक्रं|the wheel of time; च|and; शाश्वतम्|eternal",
+  "पातु|may (it) protect; वस्तत्परं|you, that supreme|vaḥ · tat · param; चक्रं|discus; चक्ररूपस्य|of him whose form is the discus; चक्रिणः|of the discus-bearer",
+  "May that supreme discus of the discus-bearer, whose very form is the discus — on which the wheel of the world and the eternal wheel of time depend — protect you.",
+  "உலகச் சக்கரமும் நித்ய காலச் சக்கரமும் எதைச் சார்ந்துள்ளனவோ, சக்கர வடிவான சக்ரதாரியின் அந்தப் பரம சக்கரம் உங்களைக் காக்கட்டும்.",
+  {tip:"<b>cakra</b> four times: jagac-cakram, kāla-cakram, cakram, cakra-rūpasya, cakriṇaḥ."}),
+ v(3, "The weapons", "The divine Axe, from a hundred sparks of which the axe-bearing Rudras arose — may it protect you.",
+  "यत्प्रसूतिशतैरासन्|from a hundred offspring of which arose|yat · prasūti · śataiḥ · āsan; रुद्राः|the Rudras; परशुलाञ्छनाः|marked with the axe",
+  "स|that; दिव्यो|divine; हेतिराजस्य|of the king of weapons; परशुः|axe; परिपातु|may (it) protect well; वः|you",
+  "May that divine axe of the king of weapons — from a hundred offspring of which arose the Rudras who bear the axe — protect you well.",
+  "எதன் நூற்றுக்கணக்கான தோற்றங்களிலிருந்து பரசு ஏந்திய ருத்ரர்கள் உண்டானார்களோ, ஆயுதராஜனின் அந்தத் திவ்ய பரசு உங்களை நன்கு காக்கட்டும்."),
+ v(4, "The weapons", "The Spear — when the king of weapons raises it in play, demons scatter like birds.",
+  "हेलया|in play; हेतिराजेन|by the king of weapons; यस्मिन्|when which; दैत्याः|demons; समुद्धृते|is raised",
+  "शकुन्ता|birds; इव|like; धावन्ति|run; स|that; कुन्तः|spear; पालयेत|may (it) guard; वः|you",
+  "May that spear — when the king of weapons playfully raises it, the demons run like birds — guard you.",
+  "ஆயுதராஜன் விளையாட்டாக எதை உயர்த்தியதும் அசுரர்கள் பறவைகள் போல் ஓடுகிறார்களோ, அந்தக் குந்தம் (ஈட்டி) உங்களைக் காக்கட்டும்.",
+  {tip:"A pun: <b>śakunta</b> (bird) and <b>kunta</b> (spear) — the demons fly off like birds."}),
+ v(5, "The weapons", "The Rod, by which the demons who deserve punishment are punished — may it punish your enemies.",
+  "दैत्यदानवमुख्यानां|of the chief daityas and dānavas; दण्ड्यानां|who deserve punishment; येन|by which; दण्डनम्|punishment",
+  "हेतिदण्डेशदण्डोऽसौ|this rod of the lord of weapons|heti · daṇḍa · īśa · daṇḍaḥ · asau; भवतां|your; दण्डयेद्द्विषः|may punish the enemies|daṇḍayet · dviṣaḥ",
+  "May this rod of the lord of weapons — by which the chief demons who deserve punishment are punished — punish your enemies.",
+  "தண்டிக்கப்பட வேண்டிய அசுரத் தலைவர்களை எதனால் தண்டிக்கிறானோ, ஆயுதேசனின் அந்தத் தண்டம் உங்கள் பகைவர்களைத் தண்டிக்கட்டும்.",
+  {tip:"<b>daṇḍa</b> five times — the rod (daṇḍa) gives punishment (daṇḍana) to those who deserve it (daṇḍya)."}),
+ v(6, "The weapons", "The Goad, which checks the elephants of desire in devotees — may it guard you.",
+  "अनन्यान्वयभक्तानां|of devotees attached to none else|ananya · anvaya · bhakta; रुन्धन्नाशामतङ्गजान्|restraining the elephants of desire|rundhan · āśā · mataṅgajān",
+  "अनङ्कुशविहारो|whose movement nothing checks|anaṅkuśa · vihāraḥ; वः|you; पातु|may (it) protect; हेतीश्वराङ्कुशः|the goad of the lord of weapons",
+  "May the goad of the lord of weapons — itself unchecked in its movement — which restrains the elephants of desire in devotees devoted to none else, protect you.",
+  "வேறு எவரையும் சாராத பக்தர்களின் ஆசை எனும் யானைகளைக் கட்டுப்படுத்தும், தானோ தடையின்றிச் சஞ்சரிக்கும் ஆயுதேஸ்வரனின் அங்குசம் உங்களைக் காக்கட்டும்.",
+  {tip:"The goad tames <b>āśā-mataṅgaja</b> — desire as a wild elephant."}),
+ v(7, "The weapons", "The hundred-faced Fire, in which the sins of beings burn up like moths — may it protect you.",
+  "सम्भूय|gathering together; शलभायन्ते|become like moths; यत्र|in which; पापानि|sins; देहिनाम्|of beings",
+  "स|that; पातु|may (it) protect; शतवक्त्राग्निहेतिर्|the weapon of the hundred-faced fire|śata · vaktra · agni · hetiḥ; हेतीश्वरस्य|of the lord of weapons; वः|you",
+  "May that weapon of the lord of weapons, the hundred-faced fire — in which the sins of beings, gathering together, perish like moths — protect you.",
+  "எதில் உயிர்களின் பாவங்கள் ஒன்றுசேர்ந்து விட்டில் பூச்சிகள் போல் எரிகின்றனவோ, ஆயுதேஸ்வரனின் அந்த நூறு முகமுடைய அக்னி ஆயுதம் உங்களைக் காக்கட்டும்."),
+ v(8, "The weapons", "The Sword Sudarśana, which cuts ignorance by its own light — may it give you vision of the truth.",
+  "अविद्यां|ignorance; स्वप्रकाशेन|by its own light; विद्यारूपश्छिनत्ति|in the form of knowledge, cuts|vidyā · rūpaḥ · chinatti; यः|which",
+  "स|that; सुदर्शननिस्त्रिंशस्|sword of Sudarśana|sudarśana · nistriṃśaḥ; सौतु|may (it) give; वस्तत्त्वदर्शनम्|you, the vision of truth|vaḥ · tattva · darśanam",
+  "May that sword of Sudarśana — which, in the form of knowledge, cuts through ignorance by its own light — give you the vision of truth.",
+  "ஞான வடிவாகத் தன் ஒளியால் அவித்யையை வெட்டும் சுதர்சனனின் அந்த வாள் உங்களுக்குத் தத்துவ தரிசனத்தை அருளட்டும்.",
+  {tip:"The sword is <b>vidyā</b>, knowledge — it cuts <b>avidyā</b>, ignorance. Compare Gītā 4.42."}),
+ v(9, "The weapons", "The Śakti — Viṣṇu's power of action, whose force never dulls — may it ward off your weakness.",
+  "क्रियाशक्तिगुणो|the quality of the power of action; विष्णोर्यो|of Viṣṇu, which|viṣṇoḥ · yaḥ; भवत्यतिशक्तिमान्|becomes most powerful|bhavati · ati · śaktimān",
+  "अकुण्ठशक्तिः|of undulled force; सा|that; शक्तिरशक्तिं|śakti (lance), the weakness|śaktiḥ · aśaktim; वारयेत|may (it) ward off; वः|your",
+  "May that śakti (lance) — of undulled force, by which Viṣṇu's quality, the power of action, becomes most powerful — ward off your weakness (aśakti).",
+  "விஷ்ணுவின் கிரியா சக்தி எனும் குணம் எதனால் மிகுந்த ஆற்றல் பெறுகிறதோ, மழுங்காத ஆற்றலுடைய அந்தச் சக்தி ஆயுதம் உங்கள் பலவீனத்தைப் போக்கட்டும்.",
+  {tip:"A pun: <b>śakti</b> (lance, power) removes <b>aśakti</b> (powerlessness)."}),
+ v(10, "The weapons", "The conch Pāñcajanya, whose shape and sound are both ‘tāra’ (pure, loud) — may it protect you.",
+  "तारत्वं|being tāra (silvery / high-pitched); यस्य|whose; संस्थाने|in its form; शब्दे|in its sound; च|and; परिदृश्यते|is seen",
+  "प्रभोः|of the Lord; प्रहरणेन्द्रस्य|of the king of weapons; पाञ्चजन्यः|Pāñcajanya; स|that; पातु|may (it) protect; वः|you",
+  "May that Pāñcajanya, the conch of the Lord, the king of weapons — in whose form and in whose sound alike ‘tāra’ is seen (silvery white and high-pitched, and the Praṇava) — protect you.",
+  "எதன் வடிவிலும் ஒலியிலும் ‘தாரம்’ (வெண்மையும் உச்ச ஒலியும், பிரணவமும்) காணப்படுகிறதோ, ஆயுதராஜனான பிரபுவின் அந்தப் பாஞ்சஜன்யம் உங்களைக் காக்கட்டும்.",
+  {tip:"<b>tāra</b> means silvery-white, high-pitched, and also <b>Om</b> (tāraka mantra)."}),
+ v(11, "The weapons", "The bow Śārṅga, called the sāttvika ego, whose arrows are the senses — may it protect you.",
+  "यं|which; सात्त्विकमहङ्कारम्|the sāttvika ego|sāttvikam · ahaṅkāram; आमनन्त्यक्षसायकम्|they declare, having the senses as arrows|āmananti · akṣa · sāyakam",
+  "अव्याद्वश्चक्ररूपस्य|may protect you, of the discus-formed|avyāt · vaḥ · cakra · rūpasya; तद्धनुः|that bow; शार्ङ्गधन्वनः|of the bearer of Śārṅga",
+  "May that bow of the bearer of Śārṅga, whose form is the discus — which the wise declare to be the sāttvika ego, having the senses as its arrows — protect you.",
+  "எதைச் சாத்விக அகங்காரம் என்றும், புலன்களையே அம்புகளாக உடையது என்றும் சொல்கிறார்களோ, சக்கர வடிவான சார்ங்கதாரியின் அந்த வில் உங்களைக் காக்கட்டும்."),
+ v(12, "The weapons", "The Noose, by which the king of weapons arranges creation — may it free you from bonds.",
+  "आयुधेन्द्रेण|by the king of weapons; येनैव|by which alone|yena · eva; विश्वसर्गो|the creation of the universe; विरच्यते|is arranged",
+  "स|that; वः|for you; सौदर्शनः|of Sudarśana; कुर्यात्|may (it) do; पाशः|noose; पाशविमोचनम्|release from bonds",
+  "May that noose of Sudarśana — by which alone the king of weapons arranges the creation of the universe — bring you release from your bonds.",
+  "எதனால் மட்டுமே ஆயுதராஜன் உலகப் படைப்பை அமைக்கிறானோ, சுதர்சனனின் அந்தப் பாசம் உங்களைப் பந்தங்களிலிருந்து விடுவிக்கட்டும்.",
+  {tip:"The <b>pāśa</b> (noose) gives <b>pāśa-vimocana</b> (release from the noose)."}),
+ v(13, "The weapons", "The Plough, by which the Lord plays as the farmer of the world-field — may it give you victory in battle.",
+  "विहारो|the play; येन|by which; देवस्य|of the Lord; विश्वक्षेत्रकृषीवलः|as the ploughman of the field of the universe",
+  "व्यज्यते|is shown; तेन|by that; सीरेण|plough; नासीरविजयोऽस्तु|may there be victory in the front line|nāsīra · vijayaḥ · astu; वः|for you",
+  "By that plough, through which the Lord's play as the ploughman of the field of the universe is shown, may there be victory for you at the front of battle.",
+  "எதனால் பகவான் உலகம் எனும் வயலை உழும் விவசாயியாக விளையாடுவது வெளிப்படுகிறதோ, அந்தக் கலப்பையால் உங்களுக்குப் போர் முன்னணியில் வெற்றி கிடைக்கட்டும்.",
+  {tip:"A pun: <b>sīra</b> (plough) — <b>nāsīra</b> (vanguard of an army)."}),
+ v(14, "The weapons", "The Thunderbolt — “among weapons I am the vajra” — not born of Dadhīci's bones — may it protect you.",
+  "आयुधानामहं|among weapons I am|āyudhānām · aham; वज्रमित्यगीयत|the vajra — thus it was sung|vajram · iti · agīyata; यः|which; स|that; वः|you",
+  "अव्याद्धेतीशवज्रोऽसौ|may this thunderbolt of the lord of weapons protect|avyāt · hetīśa · vajraḥ · asau; अदधीच्यस्थिसम्भवः|not born of Dadhīci's bones",
+  "May this thunderbolt of the lord of weapons — of which (Kṛṣṇa) sang “Among weapons I am the vajra”, and which was not born of Dadhīci's bones (like Indra's) — protect you.",
+  "‘ஆயுதங்களில் நான் வஜ்ரம்’ என்று (கீதையில்) பாடப்பட்ட, ததீசியின் எலும்பில் பிறவாத, ஆயுதேசனின் அந்த வஜ்ரம் உங்களைக் காக்கட்டும்.",
+  {tip:"Quoting the Gītā 10.28: <b>āyudhānām ahaṃ vajram</b>."}),
+ v(15, "The weapons", "The Mace, the power of dissolution, famed as intellect — may it calm your diseases.",
+  "विश्वसंहृतिशक्तिर्या|which is the power of dissolving the universe|viśva · saṃhṛti · śaktiḥ · yā; विश्रुता|famed; बुद्धिरूपिणी|in the form of intellect",
+  "सा|that; वः|for you; सौदर्शनी|of Sudarśana; भूयाद्|may (it) be; गदप्रशमनी|calmer of disease; गदा|mace",
+  "May that mace of Sudarśana — the power of dissolving the universe, famed as being in the form of intellect — be for you the calmer of disease.",
+  "உலகை லயிக்கச் செய்யும் சக்தியும், புத்தி வடிவினதாகப் புகழ்பெற்றதுமான சுதர்சனனின் கதை உங்களுக்கு நோயைத் தணிப்பதாகட்டும்.",
+  {tip:"A pun: <b>gadā</b> (mace) — <b>gada</b> (disease)."}),
+ v(16, "The weapons", "The Pestle, by which even the pestle-weapon is ground to dust — may it shatter your pestle of delusion.",
+  "यात्यतिक्षोदशालित्वं|attains the state of being ground to fine dust|yāti · ati · kṣoda · śālitvam; मुसलो|the (enemy's) pestle; येन|by which; तेन|by that; वः|your",
+  "हेतीशमुसलेनाशु|by the pestle of the lord of weapons, quickly|hetīśa · musalena · āśu; भिद्यतां|may be shattered; मोहमौसलम्|the pestle-like delusion",
+  "By that pestle of the lord of weapons, by which even (an enemy's) pestle is ground to fine dust — may the pestle-like club of your delusion be quickly shattered.",
+  "எதனால் (பகைவரின்) உலக்கையும் நுண்ணிய தூளாகிறதோ, ஆயுதேசனின் அந்த முசலத்தால் உங்கள் மோகம் எனும் உலக்கை விரைவில் உடைபடட்டும்."),
+ v(17, "The weapons", "The Trident, by whose mantra seen by Śiva enemies are speared — may it free you from pain.",
+  "शूलिदृष्टमनोर्वाच्यो|named in the mantra seen by the trident-bearer (Śiva)|śūli · dṛṣṭa · manoḥ · vācyaḥ; येन|by which; शूलयति|spears; द्विषः|enemies",
+  "भवतां|for you; तेन|by that; भवतात्|may there be; त्रिशूलेन|by the trident; विशूलता|freedom from pain (śūla)",
+  "By that trident — named in the mantra seen by Śiva, with which (the Lord) spears his enemies — may there be for you freedom from pain.",
+  "சூலி (சிவன்) கண்ட மந்திரத்தால் குறிக்கப்படும், பகைவர்களைக் குத்தும் அந்தத் திரிசூலத்தால் உங்களுக்கு வலியின்மை உண்டாகட்டும்.",
+  {tip:"A pun: <b>śūla</b> means trident and also sharp pain — the triśūla gives <b>viśūlatā</b>, freedom from pain."}),
+ v(18, "Closing", "Sudarśana, the source of all weapons, with his sixteen weapons — may he protect the universe.",
+  "अस्त्रग्रामस्य|of the whole host of weapons; कृत्स्नस्य|entire; प्रसूतिं|the source; यं|whom; प्रचक्षते|they call",
+  "सोऽव्यात्|may he protect|saḥ · avyāt; सुदर्शनो|Sudarśana; विश्वमायुधैः|the universe, with his weapons|viśvam · āyudhaiḥ; षोडशायुधः|the sixteen-weaponed",
+  "May Sudarśana, whom they call the source of the entire host of weapons, the sixteen-weaponed one, protect the universe with his weapons.",
+  "எல்லா அஸ்திரக் கூட்டத்துக்கும் மூலம் என்று சொல்லப்படும், பதினாறு ஆயுதங்களுடைய சுதர்சனன் தன் ஆயுதங்களால் உலகைக் காக்கட்டும்."),
+ v(19, "Closing", "This hymn of the sixteen weapons was made by Veṅkaṭanātha for the great good of the virtuous.",
+  "श्रीमद्वेङ्कटनाथेन|by the glorious Veṅkaṭanātha; श्रेयसे|for the good; भूयसे|great; सताम्|of the virtuous",
+  "कृतेयमायुधेन्द्रस्य|this was made, of the king of weapons|kṛtā · iyam · āyudha · indrasya; षोडशायुधसंस्तुतिः|the praise of the sixteen weapons",
+  "This praise of the sixteen weapons of the king of weapons was composed by the glorious Veṅkaṭanātha for the great good of the virtuous.",
+  "ஆயுதராஜனின் பதினாறு ஆயுதங்களின் இந்தத் துதி, நல்லோரின் பெரும் நன்மைக்காக ஸ்ரீமத் வேங்கடநாதனால் இயற்றப்பட்டது.",
+  {kind:"phala", short:"Signature", tip:"Deśika signs: <b>śrīmad-veṅkaṭanāthena</b>."})
+];
+const S = 'fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"';
+const ICONS = [
+  {t:"Discus", w:"चक्रं", v:"v2", d:"cakra — the wheel of time", svg:`<circle cx="17" cy="17" r="11" ${S}/><circle cx="17" cy="17" r="3" ${S}/><path d="M17 6v8M17 20v8M6 17h8M20 17h8" ${S}/>`},
+  {t:"Axe", w:"परशुः", v:"v3", d:"paraśu", svg:`<path d="M8 28L22 10M18 6c6 0 10 4 10 10-4-1-8-3-10-10z" ${S}/>`},
+  {t:"Spear", w:"कुन्तः", v:"v4", d:"kunta", svg:`<path d="M6 28L26 8M26 8l-6 1 5 5zM10 20l4 4" ${S}/>`},
+  {t:"Goad", w:"हेतीश्वराङ्कुशः", v:"v6", d:"aṅkuśa — tames desire", svg:`<path d="M10 28V8M10 8c6 0 10 3 10 7s-4 6-7 4" ${S}/>`},
+  {t:"Sword", w:"सुदर्शननिस्त्रिंशस्", v:"v8", d:"cuts ignorance", svg:`<path d="M24 4L12 22M9 19l6 6M10 26l-4 4" ${S}/>`},
+  {t:"Conch", w:"पाञ्चजन्यः", v:"v10", d:"Pāñcajanya", svg:`<path d="M8 22c0-8 6-14 14-14 2 4 2 10-2 14-4 4-8 4-12 0zM8 22l-3 4M14 14c2 2 4 2 6 0" ${S}/>`},
+  {t:"Bow", w:"तद्धनुः", v:"v11", d:"Śārṅga", svg:`<path d="M10 4c10 6 10 20 0 26M10 4v26" ${S}/>`},
+  {t:"Noose", w:"पाशः", v:"v12", d:"frees from bonds", svg:`<circle cx="15" cy="13" r="7" ${S}/><path d="M19 19l7 10" ${S}/>`},
+  {t:"Mace", w:"गदा", v:"v15", d:"calms disease", svg:`<circle cx="22" cy="10" r="5" ${S}/><path d="M18 14L7 27" ${S}/>`},
+  {t:"Trident", w:"त्रिशूलेन", v:"v17", d:"frees from pain", svg:`<path d="M17 30V8M10 6v6c0 3 3 5 7 5s7-2 7-5V6M17 4v4" ${S}/>`}
+];
+const BENEFITS = [["दण्डयेद्द्विषः","Enemies subdued"],["पाशविमोचनम्","Freedom from bonds"],["वस्तत्त्वदर्शनम्","Vision of truth"],["गदप्रशमनी","Healing"],["मोहमौसलम्","Delusion broken"],["विशूलता","Freedom from pain"]];
+return {
+  key:"sdy", titleDv:"श्रीषोडशायुधस्तोत्रम्", verses:VERSES, icons:ICONS, benefits:BENEFITS,
+  meter:{name:"Anuṣṭubh", kind:"anushtubh",
+    intro:"Each verse has four quarters of 8 syllables — shown here as two lines of 16. The beat is free at the start of each quarter, but syllables 5–6–7 keep a fixed swing: <b>short–long–long</b> in the first quarter, <b>short–long–short</b> in the second (outlined).",
+    quiz:{q:"How many weapons does Sudarśana hold in this hymn?", opts:["Sixteen","Eight","Ten","Twelve"],
+      why:"Ṣoḍaśa = sixteen: discus, axe, spear, rod, goad, fire, sword, śakti, conch, bow, noose, plough, thunderbolt, mace, pestle and trident."}}
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

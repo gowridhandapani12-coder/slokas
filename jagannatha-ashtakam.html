@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Jagannatha Ashtakam</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+<style>.refrain{font-family:var(--f-verse);font-size:1.4rem;color:var(--terra-ink);line-height:1.5;overflow-wrap:anywhere}</style>
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Adi Shankaracharya · Sanskrit · 8 verses + 1</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Jagannatha Ashtakam</h1>
+          <p class="lead" style="margin-top:8px">Eight verses to Lord Jagannātha of Puri, who sits on the Blue Mountain by the great ocean with Balabhadra and Subhadrā. Every verse ends with one prayer: <i>jagannāthaḥ svāmī nayanapathagāmī bhavatu me</i> — “may Lord Jagannātha come within the path of my eyes.”</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><span>Composed by</span><b>Ādi Śaṅkara</b><span>as in her PDF</span></div>
+        <div class="fact"><span>Deity</span><b>Jagannātha</b><span>“Lord of the universe”, Puri</span></div>
+        <div class="fact"><span>Metre</span><b>Śikhariṇī</b><span>17 syllables a quarter</span></div>
+        <div class="fact"><span>With him</span><b>Balabhadra · Subhadrā</b><span>verse 3</span></div>
+        <div class="fact"><span>Festival</span><b>Ratha Yātrā</b><span>the chariot, verse 5</span></div>
+        <div class="fact"><span>On her plan</span><b>Wednesday</b><span>first of the day</span></div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h2>One refrain, eight times</h2>
+          <p class="muted" style="margin:6px 0 12px">The fourth line of every verse. Learn it first — then each verse has only three new lines.</p>
+          <div class="refrain" id="refrain"></div>
+          <p style="margin-top:6px">“May Jagannātha, my Lord, come within the path of my eyes.”</p>
+        </div>
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each verse, in order.</p>
+          <div class="mn" id="openings"></div>
+          <div class="tip" style="margin-top:14px"><b>The story in order.</b> 1–2 Kṛṣṇa of Vṛndāvana · 3 the temple at Puri · 4 his beauty · 5 the chariot festival · 6 the Supreme on the Blue Hill · 7 I ask for nothing else · 8 take away my saṃsāra.</div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>What it gives</h2>
+        <p class="muted" style="margin:6px 0 12px">Verse 9: whoever recites this holy aṣṭakam, pure and attentive —</p>
+        <div class="benefits" id="benefits"></div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+const PAT = "LGGGGGLLLLLGGLLLx", NOTE = "Śikhariṇī: 17 syllables a quarter — one short then five long, five short, then long–long–short–short–short and an ending. Slow and grand.";
+const REF = [["जगन्नाथः","Jagannātha","jagat = universe · nātha = lord"],["स्वामी","my Lord","svāmin = master"],["नयनपथगामी","coming within the path of my eyes","nayana = eye · patha = path · gāmin = going"],["भवतु","may he be","bhavatu"],["मे","for me","me"]];
+const v = (id, n, hook, tip, lines, en, ta) => ({id, n, label:"Verse " + n, hook, tip, lines: [...lines, REF], en, ta, meter:"sikharini", pat:PAT, meterNote:NOTE});
+const VERSES = [
+ v("v1", "1", "Sometimes he plays music in the groves of the Yamunā, a bee at the cowherd girls' lotus faces.",
+  "Vṛndāvana: the <b>Kālindī</b> (Yamunā) bank, music (<b>saṅgīta</b>), the bee (<b>madhupa</b>) at lotus faces, and gods who worship his feet (Ramā, Śambhu, Brahmā, Indra, Gaṇeśa).", [
+   [["कदाचित्","sometimes","kadācit"],["कालिन्दीतटविपिनसङ्गीतकरवो","making music in the groves on the Yamunā's bank","kālindī = Yamunā · taṭa = bank · vipina = grove · saṅgīta = music · kara = making · rava = sound"]],
+   [["मुदाभीरीनारीवदनकमलास्वादमधुपः","a bee joyfully tasting the lotus faces of the cowherd women","mudā = with joy · ābhīrī-nārī = cowherd women · vadana-kamala = lotus face · āsvāda = tasting · madhupa = bee"]],
+   [["रमाशम्भुब्रह्मामरपतिगणेशार्चितपदो","whose feet are worshipped by Ramā, Śiva, Brahmā, Indra and Gaṇeśa","ramā · śambhu · brahmā · amara-pati = Indra · gaṇeśa · arcita = worshipped · pada = foot"]]
+  ],
+  "He who sometimes makes music in the groves on the Yamunā's bank, who joyfully tastes the lotus faces of the cowherd women like a bee, whose feet are worshipped by Lakṣmī, Śiva, Brahmā, Indra and Gaṇeśa — may Jagannātha, my Lord, come within the path of my eyes.",
+  "சில சமயம் யமுனைக் கரைச் சோலைகளில் இசை எழுப்புபவரும், ஆயர் பெண்களின் தாமரை முகங்களைச் சுவைக்கும் வண்டு போன்றவரும், லக்ஷ்மி, சிவன், பிரம்மா, இந்திரன், கணேசன் ஆகியோரால் வணங்கப்படும் பாதங்களை உடையவருமான ஜகந்நாத ஸ்வாமி என் கண்களுக்குத் தென்படட்டும்."),
+ v("v2", "2", "Flute in his left hand, peacock feather on his head, silk at his waist.",
+  "Head-to-toe picture: <b>veṇu</b> (flute) in the left hand · <b>śikhi-piñcha</b> (peacock feather) on the head · <b>dukūla</b> (silk) at the waist · a sidelong glance (<b>kaṭākṣa</b>) at his companions.", [
+   [["भुजे","in his arm","bhuja = arm"],["सव्ये","left","savya = left"],["वेणुं","the flute","veṇu"],["शिरसि","on his head","śiras"],["शिखिपिञ्छं","a peacock feather","śikhin = peacock · piñcha = feather"],["कटितटे","at his waist","kaṭi-taṭa = waist"]],
+   [["दुकूलं","fine silk","dukūla"],["नेत्रान्ते","from the corner of his eyes","netra = eye · anta = corner"],["सहचरकटाक्षं","a sidelong glance at his companions","sahacara = companion · kaṭākṣa = side glance"],["विदधते","who bears","vidadhate"]],
+   [["सदा","always","sadā"],["श्रीमद्वृन्दावनवसतिलीलापरिचयो","at home in his play in lovely Vṛndāvana","śrīmat = lovely · vṛndāvana · vasati = dwelling · līlā = play · paricaya = familiarity"]]
+  ],
+  "He who holds the flute in his left hand, wears a peacock feather on his head and fine silk at his waist, who casts sidelong glances at his companions, and is ever at home in his play in lovely Vṛndāvana — may Jagannātha, my Lord, come within the path of my eyes.",
+  "இடக் கையில் புல்லாங்குழல், தலையில் மயிற்பீலி, இடுப்பில் பட்டாடை அணிந்து, தோழர்களைக் கடைக்கண்ணால் நோக்குபவரும், அழகிய பிருந்தாவனத்தில் எப்போதும் லீலை புரிபவருமான ஜகந்நாத ஸ்வாமி என் கண்களுக்குத் தென்படட்டும்."),
+ v("v3", "3", "By the great ocean, on the golden Blue Mountain, with Balabhadra and Subhadrā.",
+  "The <b>Puri</b> verse: ocean shore (<b>mahāmbhodhes tīre</b>) · the Blue Hill (<b>nīla-śikhare</b>) · inside the temple (<b>prāsāda</b>) · with brother <b>Balabhadra</b> and sister <b>Subhadrā</b> in the middle.", [
+   [["महाम्भोधेस्तीरे","on the shore of the great ocean","mahā = great · ambhodhi = ocean · tīra = shore"],["कनकरुचिरे","golden, beautiful","kanaka = gold · rucira = lovely"],["नीलशिखरे","on the Blue Mountain","nīla = blue · śikhara = peak (Nīlācala)"]],
+   [["वसन्","dwelling","vasat"],["प्रासादान्तः","inside the temple","prāsāda = palace, temple · antaḥ = inside"],["सहजबलभद्रेण","with his brother Balabhadra","sahaja = brother · balabhadra"],["बलिना","the mighty","balin = strong"]],
+   [["सुभद्रामध्यस्थः","with Subhadrā in the middle","subhadrā · madhya = middle · stha = standing"],["सकलसुरसेवावसरदो","who gives all the gods a chance to serve him","sakala = all · sura = god · sevā = service · avasara = opportunity · da = giver"]]
+  ],
+  "He who dwells inside the temple on the golden Blue Mountain on the shore of the great ocean, with his mighty brother Balabhadra and Subhadrā between them, giving all the gods a chance to serve him — may Jagannātha, my Lord, come within the path of my eyes.",
+  "பெருங்கடலின் கரையில், பொன்னொளிரும் நீல மலையில், கோயிலுக்குள் வலிய சகோதரன் பலபத்ரனுடனும், நடுவில் சுபத்திரையுடனும் வசித்து, எல்லாத் தேவர்களுக்கும் சேவை செய்ய வாய்ப்பளிப்பவரான ஜகந்நாத ஸ்வாமி என் கண்களுக்குத் தென்படட்டும்."),
+ v("v4", "4", "An ocean of stories, beautiful as a rain cloud, worshipped by the gods.",
+  "Two water pictures: an <b>ocean</b> (pārāvāra) of stories, and dark like a row of <b>rain clouds</b> (sajala-jalada). Line 3: the Upaniṣads (<b>śruti-śikhā</b>) sing his deeds.", [
+   [["कथापारावारः","an ocean of sacred stories","kathā = story · pārāvāra = ocean"],["सजलजलदश्रेणिरुचिरो","beautiful as a row of rain clouds","sa-jala = full of water · jalada = cloud · śreṇi = row · rucira = lovely"]],
+   [["रमावाणीरामस्फुरदमलपद्मेक्षणमुखैः","(worshipped) by Ramā, Vāṇī, Rāma and others with shining lotus eyes","ramā = Lakṣmī · vāṇī = Sarasvatī · rāma · sphurat = shining · amala = pure · padma-īkṣaṇa = lotus-eyed · mukha = and others"]],
+   [["सुरेन्द्रैराराध्यः","to be worshipped by the lords of the gods","sura-indra = lords of the gods · ārādhya = to be worshipped"],["श्रुतिगणशिखागीतचरितो","whose deeds are sung by the Upaniṣads","śruti-gaṇa = the Vedas · śikhā = crest (Upaniṣads) · gīta = sung · carita = deeds"]]
+  ],
+  "He who is an ocean of sacred stories, beautiful as a row of rain clouds, worshipped by Lakṣmī, Sarasvatī, Rāma and the other lotus-eyed ones and by the lords of the gods, whose deeds are sung by the crest of the Vedas — may Jagannātha, my Lord, come within the path of my eyes.",
+  "புனிதக் கதைகளின் கடலானவரும், மழைமேகக் கூட்டம் போல் அழகியவரும், லக்ஷ்மி, சரஸ்வதி, ராமன் முதலிய தாமரைக் கண்ணினராலும் தேவேந்திரர்களாலும் வணங்கப்படுபவரும், உபநிஷத்துகளால் பாடப்படும் சரிதம் உடையவருமான ஜகந்நாத ஸ்வாமி என் கண்களுக்குத் தென்படட்டும்."),
+ v("v5", "5", "Riding his chariot, he hears the hymns of the crowds at every step.",
+  "The <b>Ratha Yātrā</b>: he rides the chariot (<b>rathārūḍhaḥ</b>), the brahmins crowd the road, he hears their praise at every step (<b>prati-padam</b>), with Lakṣmī, daughter of the ocean (<b>sindhu-sutā</b>).", [
+   [["रथारूढो","riding his chariot","ratha = chariot · ārūḍha = mounted"],["गच्छन्","going","gacchat"],["पथि","on the road","pathin = road"],["मिलितभूदेवपटलैः","with crowds of brahmins gathered","milita = gathered · bhūdeva = brahmin · paṭala = crowd"]],
+   [["स्तुतिप्रादुर्भावं","the rising of their hymns","stuti = praise · prādurbhāva = appearing"],["प्रतिपदम्","at every step","prati = each · pada = step"],["उपाकर्ण्य","hearing","upākarṇya"],["सदयः","kindly","sadaya = merciful"]],
+   [["दयासिन्धुर्","ocean of compassion","dayā · sindhu = ocean"],["बन्धुः","the friend","bandhu = kinsman"],["सकलजगतां","of all the worlds","sakala · jagat"],["सिन्धुसुतया","with the ocean's daughter (Lakṣmī)","sindhu = ocean · sutā = daughter"]]
+  ],
+  "Riding his chariot along the road among crowds of brahmins, kindly hearing their hymns rise at every step — the ocean of compassion, friend of all the worlds, with Lakṣmī, the ocean's daughter — may Jagannātha, my Lord, come within the path of my eyes.",
+  "தேரில் ஏறி வீதியில் செல்லும்போது, கூடியிருக்கும் அந்தணர்களின் துதிகளை ஒவ்வொரு அடியிலும் கருணையுடன் கேட்பவரும், கருணைக் கடலும், எல்லா உலகங்களின் உறவினருமான, கடல் மகளான லக்ஷ்மியுடன் கூடிய ஜகந்நாத ஸ்வாமி என் கண்களுக்குத் தென்படட்டும்."),
+ v("v6", "6", "The crown of Brahman, eyes like blooming lilies, resting on Ananta.",
+  "He is the Supreme (<b>para-brahma</b>), with eyes like opened lilies, living on the <b>Blue Hill</b>, his feet on <b>Ananta</b>'s head, delighting in Rādhā's embrace.", [
+   [["परब्रह्मापीडः","the crown of the Supreme Brahman","para-brahma · āpīḍa = crest, crown"],["कुवलयदलोत्फुल्लनयनो","with eyes like opened water-lily petals","kuvalaya = blue lily · dala = petal · utphulla = blooming · nayana = eye"]],
+   [["निवासी","who lives","nivāsin"],["नीलाद्रौ","on the Blue Hill","nīla = blue · adri = hill"],["निहितचरणो","whose feet rest","nihita = placed · caraṇa = foot"],["ऽनन्तशिरसि","on the head of Ananta","ananta = the serpent Śeṣa · śiras = head"]],
+   [["रसानन्दो","bliss itself","rasa = essence · ānanda = joy"],["राधासरसवपुरालिङ्गनसुखो","happy in the embrace of Rādhā's loving form","rādhā · sarasa = loving · vapus = body · āliṅgana = embrace · sukha = joy"]]
+  ],
+  "The crown of the Supreme Brahman, with eyes like blooming lily petals, who lives on the Blue Hill with his feet resting on Ananta's head, bliss itself, happy in the embrace of Rādhā's loving form — may Jagannātha, my Lord, come within the path of my eyes.",
+  "பரப்பிரம்மத்தின் முடிமணியும், மலர்ந்த நீலோத்பல இதழ் போன்ற கண்களை உடையவரும், நீல மலையில் வசிப்பவரும், ஆதிசேஷனின் சிரசில் பாதம் வைத்தவரும், ஆனந்த வடிவினரும், ராதையின் அணைப்பில் மகிழ்பவருமான ஜகந்நாத ஸ்வாமி என் கண்களுக்குத் தென்படட்டும்."),
+ v("v7", "7", "I ask for no kingdom, no gold, no pleasures — only him.",
+  "The <b>“na”</b> verse: na rājyam (no kingdom) · na kanakatām (no gold) · na yāce (I don't ask for) a lovely bride. Only that he come before my eyes.", [
+   [["न","not","na"],["वै","indeed","vai"],["प्रार्थ्यं","to be asked for","prārthya"],["राज्यं","a kingdom","rājya"],["न","nor","na"],["च","and","ca"],["कनकतां","gold, riches","kanaka = gold · -tā = -ness"],["भोगविभवम्","luxury and pleasure","bhoga = enjoyment · vibhava = wealth"]],
+   [["न","not","na"],["याचेऽहं","do I ask","yāce = I beg · aham = I"],["रम्यां","a beautiful","ramyā"],["निखिलजनकाम्यां","desired by all","nikhila = all · jana = people · kāmya = desirable"],["वरवधूम्","excellent bride","vara = fine · vadhū = bride"]],
+   [["सदा","always","sadā"],["काले","in time","kāla"],["काले","after time","kāla"],["प्रमथपतिना","by the lord of the Pramathas (Śiva)","pramatha = Śiva's attendants · pati = lord"],["गीतचरितो","whose deeds are sung","gīta = sung · carita = deeds"]]
+  ],
+  "I do not ask for a kingdom, nor gold, nor luxury, nor a beautiful bride desired by all. He whose deeds are sung by Śiva, time after time — may Jagannātha, my Lord, come within the path of my eyes.",
+  "நான் அரசையோ, பொன்னையோ, இன்பச் செல்வத்தையோ, எல்லோரும் விரும்பும் அழகிய மணமகளையோ கேட்கவில்லை. சிவனால் எப்போதும் பாடப்படும் சரிதம் உடைய ஜகந்நாத ஸ்வாமி என் கண்களுக்குத் தென்படட்டும்."),
+ v("v8", "8", "Take away my worthless saṃsāra and my sins — I am helpless, my refuge is fixed in you.",
+  "Two lines start with <b>hara tvam</b> — “take away”: hara tvaṃ saṃsāram (worldly life) · hara tvaṃ pāpānām (sins). Two names: <b>surapate</b>, <b>yādavapate</b>.", [
+   [["हर","take away","hara"],["त्वं","you","tvam"],["संसारं","this worldly life","saṃsāra"],["द्रुततरम्","very quickly","drutatara = quicker"],["असारं","worthless","asāra = without essence"],["सुरपते","O lord of the gods","sura · pati"]],
+   [["हर","take away","hara"],["त्वं","you","tvam"],["पापानां","of sins","pāpa"],["विततिम्","the spread","vitati = expanse"],["अपरां","endless","aparā = boundless"],["यादवपते","O lord of the Yādavas","yādava · pati"]],
+   [["अहो","alas","aho"],["दीनानाथं","(me,) helpless and without a protector","dīna = wretched · anātha = without a guardian"],["निहितमचलं","placed firmly","nihita = placed · acala = unmoving"],["निश्चितपदम्","whose refuge is settled (in you)","niścita = fixed · pada = refuge"]]
+  ],
+  "O lord of the gods, quickly take away this worthless worldly life; O lord of the Yādavas, take away the endless spread of my sins. Alas, I am helpless and unprotected, and my refuge is fixed firmly in you — may Jagannātha, my Lord, come within the path of my eyes.",
+  "தேவர் தலைவரே, பயனற்ற இந்தச் சம்சாரத்தை விரைவில் போக்குவீராக; யாதவர் தலைவரே, முடிவற்ற என் பாவங்களைப் போக்குவீராக. அந்தோ, நான் ஏழை, ஆதரவற்றவன்; என் புகலிடம் உம்மிடமே உறுதியாக உள்ளது — ஜகந்நாத ஸ்வாமி என் கண்களுக்குத் தென்படட்டும்.")
+];
+VERSES.push({id:"p9", n:"9", label:"Phala 9", short:"Phala-śruti", kind:"phala", hook:"Whoever recites it, pure and attentive, reaches Viṣṇu's world.",
+  lines:[
+   [["जगन्नाथाष्टकं","this Jagannāthāṣṭakam","jagannātha · aṣṭaka = group of eight"],["पुण्यं","holy","puṇya"],["यः","whoever","yaḥ"],["पठेत्प्रयतः","recites with care","paṭhet = recites · prayata = attentive"],["शुचिः","and pure","śuci"]],
+   [["सर्वपापविशुद्धात्मा","cleansed of all sin","sarva · pāpa · viśuddha = cleansed · ātman = self"],["विष्णुलोकं","to Viṣṇu's world","viṣṇu · loka"],["स","he","saḥ"],["गच्छति","goes","gacchati"]]
+  ],
+  en:"Whoever recites this holy Jagannāthāṣṭakam, pure and attentive, is cleansed of all sin and goes to Viṣṇu's world.",
+  ta:"இந்தப் புனித ஜகந்நாதாஷ்டகத்தைத் தூய்மையுடனும் கவனத்துடனும் படிப்பவர் எல்லாப் பாவங்களும் நீங்கி விஷ்ணு லோகத்தை அடைவார்."});
+const BENEFITS = [["सर्वपापविशुद्धात्मा","Cleansed of all sin"],["विष्णुलोकं","Reaches Viṣṇu's world"]];
+return {
+  key:"jga", titleDv:"श्रीजगन्नाथाष्टकम्", verses:VERSES, benefits:BENEFITS,
+  meter:{name:"Śikhariṇī", kind:"anushtubh",
+    intro:"Verses 1–8 are in <b>Śikhariṇī</b>: 17 syllables a quarter, one short then five long, then a run of five short — the grand sweep you hear in <i>jagannāthaḥ svāmī…</i>. Verse 9 is an ordinary anuṣṭubh.",
+    quiz:{q:"What metre are verses 1–8 of the Jagannāthāṣṭakam in?", opts:["Śikhariṇī: 17 syllables a quarter","Anuṣṭubh: 8 syllables a quarter","Bhujaṅgaprayāta: short–long–long × 4","Vasantatilakā: 14 syllables"],
+      why:"Śikhariṇī — the same metre as Śaṅkara's Bhavānyaṣṭakam-style lyrics and much of the Saundarya Laharī."}},
+  overview({R}){ document.getElementById("refrain").innerHTML = REF.map(w => R(w[0])).join(" "); }
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

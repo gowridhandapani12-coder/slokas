@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gopala Vimshati</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Vedānta Deśika · Sanskrit · taniyan + 21 verses</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Gopala Vimshati</h1>
+          <p class="lead" style="margin-top:8px">“Twenty verses on Gopāla.” Deśika paints the child Kṛṣṇa of Vṛndāvana — dancing for butter in Nanda's house, caught stealing, tied to the mortar, playing the flute, sporting with the gopīs — and asks that this form be before him at his last journey.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><span>Composed by</span><b>Vedānta Deśika</b><span>13th–14th c.</span></div>
+        <div class="fact"><span>Deity</span><b>Gopāla Kṛṣṇa</b><span>the cowherd child of Vṛndāvana</span></div>
+        <div class="fact"><span>Mood</span><b>Vātsalya &amp; śṛṅgāra</b><span>child, then youth</span></div>
+        <div class="fact"><span>Metres</span><b>Six</b><span>vasantatilakā, mandākrāntā…</span></div>
+        <div class="fact"><span>Source</span><b>Her PDF</b><span>Sunder Kidāmbi, prapatti.com</span></div>
+        <div class="fact"><span>On her plan</span><b>Wednesday</b><span>with the Kṛṣṇa hymns</span></div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h2>Four stretches</h2>
+          <div class="ladder" style="margin-top:10px">
+            <div class="step"><span class="n">1–5</span><div><span class="vb" style="font-family:var(--f-display)">The child</span> <span class="en">— in Vṛndāvana, crying, dancing for butter, caught</span></div><span></span></div>
+            <div class="step"><span class="n">6–13</span><div><span class="vb" style="font-family:var(--f-display)">Meditation</span> <span class="en">— dragging the mortar; may this form be with me at the end</span></div><span></span></div>
+            <div class="step"><span class="n">14–20</span><div><span class="vb" style="font-family:var(--f-display)">The youth</span> <span class="en">— flute, peacock feather, the gopīs, the river games</span></div><span></span></div>
+            <div class="step"><span class="n">21</span><div><span class="vb" style="font-family:var(--f-display)">Fruit</span> <span class="en">— the reader sees the flute-loving Lord</span></div><span></span></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each verse, in order.</p>
+          <div class="mn" id="openings"></div>
+          <div class="tip" style="margin-top:14px"><b>Verses 8–13 begin with matching sounds:</b> <i>nikaṭeṣu… nigamāntaiḥ</i>, <i>padavīm… aṭavīm… aruṇā… karuṇām</i>, <i>animeṣa… ajahat</i>, <i>anuyāyi… avatu… anagha… anukampā</i> — Deśika loves rhyme at the start of each quarter.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>Gopāla, as the hymn paints him</h2><span class="muted" style="font-size:.85rem">Tap one to see the word in its verse</span></div>
+        <div class="icons" id="icons" style="margin-top:14px"></div>
+      </div>
+      <div class="card">
+        <h2>What it gives</h2>
+        <p class="muted" style="margin:6px 0 12px">Verse 21: one who reads this hymn with an undivided mind —</p>
+        <div class="benefits" id="benefits"></div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+const W = s => s.split(";").map(x => { const [dv, g, b] = x.split("|").map(y => y.trim()); return [dv, g, b || g]; });
+const M = {
+  vt:{meter:"vasantatilaka", pat:"GGLGLLLGLLGLGx", padaLen:0, meterNote:"Vasantatilakā: 14 syllables a quarter."},
+  mk:{meter:"mandakranta", pat:"GGGGLLLLLGGLGGLGx", padaLen:0, meterNote:"Mandākrāntā: 17 syllables a quarter."},
+  au:{meter:"aupacchandasika", pat:"LLGLLGLGLGx" + "LLGGLLGLGLGx", padaLen:11, meterNote:"Aupacchandasika: quarters of 11 and 12 syllables — a gentle, swaying rhythm."},
+  vl:{meter:"vaitaliya", pat:"LLGLLGLGLx" + "LLGGLLGLGLx", padaLen:10, meterNote:"Vaitālīya: quarters of 10 and 11 syllables."},
+  ml:{meter:"malini", pat:"LLLLLLGGGLGGLGx", padaLen:0, meterNote:"Mālinī: 15 syllables a quarter."},
+  ro:{meter:"rathoddhata", pat:"GLGLLLGLGLx", padaLen:0, meterNote:"Rathoddhatā: 11 syllables a quarter."}
+};
+const v = (n, m, part, hook, lines, en, ta, extra) => Object.assign({id:"v" + n, n:String(n), label:"Verse " + n, part, hook, lines:lines.map(W), en, ta}, M[m] || {}, extra || {});
+const VERSES = [
+ {id:"t0", n:"ॐ", label:"Taniyan", short:"Taniyan", kind:"dhyana", part:"Taniyan", meter:"anushtubh", hook:"May Veṅkaṭanātha, lion among poets, best of Vedānta teachers, dwell in my heart.",
+  lines:[W("श्रीमान्|the glorious; वेङ्कटनाथार्यः|teacher Veṅkaṭanātha; कवितार्किककेसरी|lion among poets and logicians"),
+         W("वेदान्ताचार्यवर्यो|the best of Vedānta teachers; मे|my; सन्निधत्तां|may (he) dwell; सदा|always; हृदि|in the heart")],
+  en:"May the glorious teacher Veṅkaṭanātha, lion among poets and logicians, best of the teachers of Vedānta, always dwell in my heart.",
+  ta:"கவிதார்க்கிக சிம்மமும், வேதாந்த ஆசாரியர்களில் சிறந்தவருமான ஸ்ரீமான் வேங்கடநாத ஆசாரியர் எப்போதும் என் இதயத்தில் வீற்றிருக்கட்டும்."},
+ v(1, "", "The child", "I bow to the Light born on Jayantī, who roams Vṛndāvana, beloved of the gopīs, wearing the Vaijayantī garland.",
+  ["वन्दे|I bow to; बृन्दावनचरं|who roams Vṛndāvana; वल्लवीजनवल्लभम्|beloved of the cowherd women",
+   "जयन्तीसम्भवं|born on Jayantī (Kṛṣṇa's birthday); धाम|the Light; वैजयन्तीविभूषणम्|adorned with the Vaijayantī garland"],
+  "I bow to the Light born on Jayantī — who roams Vṛndāvana, beloved of the cowherd women, adorned with the Vaijayantī garland.",
+  "ஜயந்தியில் பிறந்த, பிருந்தாவனத்தில் சஞ்சரிக்கும், இடைச்சியரின் பிரியனான, வைஜயந்தி மாலை அணிந்த அந்த ஒளியை வணங்குகிறேன்.",
+  {meter:"anushtubh", tip:"A pun: <b>Jayantī</b> (his birth-night) and <b>Vaijayantī</b> (his garland)."}),
+ v(2, "vt", "The child", "Seated on a lotus in a triangle of letters, the conch at his lips — the emperor of cowherds triumphs.",
+  ["वाचं|speech; निजाङ्करसिकां|delighting on his lap (Sarasvatī); प्रसमीक्षमाणो|looking at",
+   "वक्त्रारविन्दविनिवेशितपाञ्चजन्यः|with the Pāñcajanya conch placed at his lotus mouth",
+   "वर्णत्रिकोणरुचिरे|lovely with a triangle of letters; वरपुण्डरीके|on a fine white lotus",
+   "बद्धासनो|seated firmly; जयति|triumphs; वल्लवचक्रवर्ती|the emperor of cowherds"],
+  "Looking at Speech (Sarasvatī) delighting on his lap, the conch placed at his lotus mouth, seated firmly on a fine lotus lovely with a triangle of mantra-letters — the emperor of cowherds triumphs.",
+  "தன் மடியில் மகிழும் வாக்தேவியை நோக்கி, தாமரை வாயில் பாஞ்சஜன்யத்தை வைத்து, அக்ஷர திரிகோணத்தால் அழகிய வெண்டாமரையில் உறுதியாக அமர்ந்த இடையர்களின் சக்கரவர்த்தி வெல்கிறான்.",
+  {tip:"The <b>Gopāla yantra</b> picture used for meditation — a lotus in a triangle of letters."}),
+ v(3, "vt", "The child", "His lips quivering with Vedic sound as he cries, tearful eyes, smiling every moment — the Supreme in a cowherd child, nursing at Pūtanā's breast.",
+  ["आम्नायगन्धिरुदितस्फुरिताधरोष्ठम्|lips quivering as he cries, fragrant with the Veda",
+   "आस्राविलेक्षणमनुक्षणमन्दहासम्|eyes wet with tears, smiling every moment",
+   "गोपालडिम्भवपुषं|in the body of a cowherd child; कुहनाजनन्याः|of the false mother (Pūtanā)",
+   "प्राणस्तनन्धयमवैमि|drinking her life with her milk, I know|prāṇa · stanandhayam · avaimi; परं|supreme; पुमांसम्|Person"],
+  "His lips quivering as he cries — even his crying smells of the Veda — his eyes wet with tears, yet smiling every moment, in the body of a cowherd child, drinking the life of the false mother Pūtanā with her milk — I know him to be the Supreme Person.",
+  "அழுகையிலும் வேத மணம் கமழ நடுங்கும் உதடுகள், கண்ணீர் நிறைந்த கண்கள், கணந்தோறும் புன்னகை — இடைக் குழந்தை வடிவில், கள்ளத் தாயான பூதனையின் உயிரைப் பாலுடன் குடித்தவனே பரம புருஷன் என்று அறிகிறேன்.",
+  {tip:"<b>āmnāya-gandhi-rudita</b> — even his baby cries smell of the Vedas!"}),
+ v(4, "vt", "The child", "May his butter-dance in Nanda's house appear before me — ornaments jingling, one foot raised, the churning keeping time.",
+  ["आविर्भवत्वनिभृताभरणं|may (it) appear, with ornaments jingling|āvirbhavatu · anibhṛta · ābharaṇam; पुरस्तात्|before me",
+   "आकुञ्चितैकचरणं|one foot bent up; निभृतान्यपादम्|the other foot still",
+   "दध्ना|by the curd; निमन्थमुखरेण|loud with churning; निबद्धतालम्|keeping the beat",
+   "नाथस्य|of the Lord; नन्दभवने|in Nanda's house; नवनीतनाट्यम्|the butter-dance"],
+  "May it appear before me — the Lord's butter-dance in Nanda's house: his ornaments jingling, one foot bent up and the other still, with the beat kept by the curd loud with churning.",
+  "நந்தகோபன் வீட்டில் பகவானின் வெண்ணெய் நடனம் என் முன் தோன்றட்டும் — ஒலிக்கும் ஆபரணங்கள், ஒரு கால் மடித்து மறுகால் ஊன்றி, கடையும் தயிரின் ஒலி தாளமிட.",
+  {tip:"A dance for butter, with the churning pot as the drum."}),
+ v(5, "mk", "The child", "Caught with his hand in the butter pot, seeing his angry mother with the rope, the protector of the world shuts his eyes — may he protect us.",
+  ["हर्तुं|to steal; कुम्भे|in the pot; विनिहितकरः|with his hand put in; स्वादु|tasty; हैयङ्गवीनं|fresh butter",
+   "दृष्ट्वा|seeing; दामग्रहणचटुलां|eager to seize the rope; मातरं|his mother; जातरोषाम्|grown angry",
+   "पायादीषत्प्रचलितपदो|may he protect, feet slightly moving|pāyāt · īṣat · pracalita · padaḥ; नापगच्छन्|not running away; न|nor; तिष्ठन्|standing",
+   "मिथ्यागोपः|the pretend cowherd; सपदि|suddenly; नयने|eyes; मीलयन्|closing; विश्वगोप्ता|the protector of the universe"],
+  "His hand in the pot to steal the tasty fresh butter, seeing his mother angry and eager to grab the rope, his feet moving slightly — neither running away nor standing still — the pretend cowherd, the protector of the universe, suddenly shuts his eyes. May he protect us.",
+  "சுவையான வெண்ணெயைத் திருடக் குடத்தில் கையை விட்டு, கயிற்றைப் பிடிக்க விரையும் கோபமான தாயைக் கண்டு, ஓடவும் இல்லை நிற்கவும் இல்லை என்று கால்கள் சற்று அசைய, திடீரெனக் கண்களை மூடும் போலி இடையனான உலகைக் காப்பவன் நம்மைக் காக்கட்டும்.",
+  {tip:"<b>mithyā-gopaḥ · viśva-goptā</b> — the “fake cowherd” is the real protector (gopa) of the world."}),
+ v(6, "au", "Meditation", "I praise Mathurā's good fortune, pierced by the glances of the gopīs — Brahman seen as a boy, nursing at Devakī's breast.",
+  ["रजयोषिदपाङ्गवेधनीयं|to be pierced by the glances of the cowherd women|raja · yoṣit · apāṅga · vedhanīyam; मधुराभाग्यमनन्यभोग्यमीडे|I praise the good fortune of Mathurā, enjoyed by none else",
+   "वसुदेववधूस्तनन्धयं|nursing at the breast of Vasudeva's wife; तत्|that; किमपि|indescribable; ब्रह्म|Brahman; किशोरभावदृश्यम्|seen as a boy"],
+  "I praise that indescribable Brahman — the good fortune of Mathurā, enjoyed by no one else, to be pierced by the glances of the cowherd women — the child nursing at the breast of Vasudeva's wife, seen in the form of a boy.",
+  "இடைச்சியரின் கடைக்கண்களால் துளைக்கப்படுபவனும், மதுரையின் தனிப் பாக்கியமும், வசுதேவர் மனைவியின் பால் குடிப்பவனும், சிறுவன் வடிவில் காணப்படுபவனுமான அந்தப் பரப்பிரம்மத்தைத் துதிக்கிறேன்."),
+ v(7, "au", "Meditation", "I remember the boy, neck turned in fear, a smile on his lips, dragging the mortar between two trees and freeing them.",
+  ["परिवर्तितकन्धरं|neck turned around; भयेन|in fear; स्मितफुल्लाधरपल्लवं|his sprout-lips blooming in a smile; स्मरामि|I remember",
+   "विटपित्वनिरासकं|ending the tree-state; कयोश्चिद्|of some two; विपुलोलूखलकर्षकं|dragging a great mortar; कुमारम्|the boy"],
+  "I remember the boy — his neck turned back in fear, his lips blooming in a smile — dragging the great mortar and ending the tree-state of the two (Yamalārjuna trees).",
+  "பயத்தால் கழுத்தைத் திருப்பி, புன்னகையால் மலர்ந்த தளிர் உதடுகளுடன், பெரிய உரலை இழுத்து இரு மரங்களின் மர நிலையைப் போக்கிய சிறுவனை நினைக்கிறேன்.",
+  {tip:"Tied to the mortar (Dāmodara), he dragged it between the twin <b>arjuna</b> trees and freed the two cursed sons of Kubera."}),
+ v(8, "au", "Meditation", "I see him near — the youth still sought by the Upaniṣads, whose child-play the twin trees saw, whose youth the Yamunā witnessed.",
+  ["निकटेषु|nearby; निशामयामि|I see; नित्यं|always; निगमान्तैरधुनाऽपि|even now by the Upaniṣads; मृग्यमाणम्|being sought",
+   "यमलार्जुनदृष्टबालकेलिं|whose child-play the twin arjuna trees saw; यमुनासाक्षिकयौवनं|whose youth the Yamunā witnessed; युवानम्|the youth"],
+  "I always see near me the youth whom the Upaniṣads are still seeking — whose child-play the twin arjuna trees saw, and whose youth the Yamunā witnessed.",
+  "உபநிஷத்துகள் இன்னும் தேடிக்கொண்டிருப்பவனும், இரட்டை மருத மரங்கள் கண்ட குழந்தை விளையாட்டுடையவனும், யமுனை சாட்சியான இளமையுடையவனுமான அந்த இளைஞனை எப்போதும் அருகில் காண்கிறேன்."),
+ v(9, "au", "Meditation", "I worship Compassion in human form — the near path to liberation, a rain cloud over the forest, the flute longing for his lips.",
+  ["पदवीमदवीयसीं|the path, not far|padavīm · adavīyasīm; विमुक्तेः|to liberation; अटवीसम्पदमम्बुवाहयन्तीम्|making the forest's wealth into a rain cloud",
+   "अरुणाधरसाभिलाषवंशां|whose flute longs for his red lips; करुणां|Compassion; कारणमानुषीं|human by choice; भजामि|I worship"],
+  "I worship Compassion that took human form by choice — the near path to liberation, which turns the wealth of the forest into a rain cloud, whose flute longs for his red lips.",
+  "முக்திக்கு அருகிலுள்ள வழியும், காட்டின் செல்வத்தை மழைமேகமாக்குவதும், சிவந்த உதட்டுக்கு ஏங்கும் புல்லாங்குழலுடையதுமான, காரணத்தால் மனித வடிவெடுத்த கருணையை வணங்குகிறேன்.",
+  {tip:"Each quarter rhymes on <b>-avī / -aruṇā</b>: padavīm · aṭavī · aruṇā · karuṇām."}),
+ v(10, "au", "Meditation", "May that ever-young Light, to be drunk by unblinking eyes, curls rivalling peacock feathers, appear in my heart.",
+  ["अनिमेषनिषेवणीयमक्ष्णोः|to be enjoyed by eyes without blinking; अजहद्यौवनमाविरस्तु|never leaving youth, may it appear|ajahat · yauvanam · āvir · astu; चित्ते|in the heart",
+   "कलहायितकुन्तलं|whose curls quarrel; कलापैः|with peacock tails; करणोन्मादकविभ्रमं|whose play maddens the senses; महो|Light; मे|my"],
+  "May that Light appear in my heart — to be enjoyed by unblinking eyes, never leaving its youth, whose curls quarrel with peacock tails, whose play maddens the senses.",
+  "இமைக்காத கண்களால் அனுபவிக்கத் தக்கதும், இளமை நீங்காததும், மயில் தோகைகளுடன் போட்டியிடும் கூந்தலுடையதும், புலன்களை மயக்கும் விளையாட்டுடையதுமான அந்த ஒளி என் மனத்தில் தோன்றட்டும்."),
+ v(11, "au", "Meditation", "May he protect me with his flute, enchanting the gopīs, and with glances cool with a sinless smile — lotuses on the river of mercy.",
+  ["अनुयायिमनोज्ञवंशनालैः|with lovely flutes that follow (him); अवतु|may (he) protect; स्पर्शितवल्लवीविमोहैः|that bring bliss to the gopīs",
+   "अनघस्मितशीतलैरसौ|he, cool with a sinless smile|anagha · smita · śītalaiḥ · asau; माम्|me; अनुकम्पासरिदम्बुजैरपाङ्गैः|with side-glances, lotuses on the river of mercy"],
+  "May he protect me with his lovely flute that follows him and enchants the cowherd women, and with his side-glances — cool with a sinless smile, lotuses on the river of compassion.",
+  "இடைச்சியரை மயக்கும் இனிய புல்லாங்குழலாலும், களங்கமற்ற புன்னகையால் குளிர்ந்த, கருணை நதியின் தாமரைகளான கடைக்கண்களாலும் அவன் என்னைக் காக்கட்டும்."),
+ v(12, "au", "Meditation", "Flute at his lips, peacock feathers on his crown, dark as sapphire — may such forms be before me on my last journey.",
+  ["अधराहितचारुवंशनालाः|with the lovely flute at their lips; मकुटालम्बिमयूरपिञ्छमालाः|with peacock feathers hanging from the crown",
+   "हरिनीलशिलाविभङ्गनीलाः|dark as pieces of sapphire; प्रतिभाः|visions; सन्तु|may there be; ममान्तिमप्रयाणे|at my last journey"],
+  "May there be visions of him at my last journey — the lovely flute at his lips, strings of peacock feathers hanging from his crown, dark as pieces of sapphire.",
+  "உதட்டில் அழகிய புல்லாங்குழல், மகுடத்தில் தொங்கும் மயில்பீலி மாலை, இந்திர நீலக்கல் துண்டு போன்ற கருநிறம் — இத்தகைய காட்சிகள் என் இறுதிப் பயணத்தில் தோன்றட்டும்.",
+  {tip:"A prayer for the <b>last hour</b> (antima-prayāṇa) — like Subrahmaṇya Bhujaṅgam 20."}),
+ v(13, "au", "Meditation", "I spend all my time gazing at that youth's beauty — longed for by the gopīs, beyond the reach of words.",
+  ["अखिलानवलोकयामि|all — I watch|akhilān · avalokayāmi; कालान्|times; महिलाधीनभुजान्तरस्य|whose chest belongs to the Lady; यूनः|of the youth",
+   "अभिलाषपदं|the object of longing; व्रजाङ्गनानाम्|of the women of Vraja; अभिलापक्रमदूरमाभिरूप्यम्|beauty far beyond words"],
+  "All my days I gaze at the beauty of that youth, whose chest belongs to the Lady (Lakṣmī) — the object of the Vraja women's longing, far beyond the reach of words.",
+  "திருமகளுக்கு உரிய மார்புடைய அந்த இளைஞனின், விரஜப் பெண்களின் ஏக்கத்துக்குரிய, சொல்லுக்கு எட்டாத அழகை எல்லாக் காலங்களிலும் காண்கிறேன்."),
+ v(14, "vl", "The youth", "What artist painted this youth in my heart — peacock-feathered, the sun to the lotus faces of the gopīs?",
+  ["हृदि|in the heart; मुग्धशिखण्डमण्डनो|adorned with a lovely peacock feather; लिखितः|painted; केन|by what; ममैष|my, this|mama · eṣaḥ; शिल्पिना|artist",
+   "मदनातुरवल्लवाङ्गनावदनाम्भोजदिवाकरो|the sun to the lotus faces of the love-sick gopīs; युवा|the youth"],
+  "What artist painted in my heart this youth — adorned with a lovely peacock feather, the sun that opens the lotus faces of the love-sick cowherd women?",
+  "அழகிய மயில்பீலி அணிந்தவனும், காதலால் வாடும் இடைச்சியரின் முகத்தாமரைகளுக்குச் சூரியனுமான இந்த இளைஞனை என் இதயத்தில் எந்தச் சிற்பி வரைந்தான்?"),
+ v(15, "vl", "The youth", "With bowed head and folded hands I honour that Light, dark as collyrium, whose flute is answered by the gopīs' bangles.",
+  ["महसे|to the Light; महिताय|honoured; मौलिना|with my head; विनतेनाञ्जलिमञ्जनत्विषे|bowed, folded hands, to him dark as collyrium",
+   "कलयामि|I offer; विमुग्धवल्लवीवलयाभाषितमञ्जुवेणवे|to him whose sweet flute is answered by the bangles of the charmed gopīs"],
+  "With bowed head I offer folded hands to that honoured Light, dark as collyrium — whose sweet flute is answered by the jingling bangles of the charmed cowherd women.",
+  "மயங்கிய இடைச்சியரின் வளையல் ஒலி பதில் சொல்லும் இனிய புல்லாங்குழலுடைய, மை போல் கருத்த, போற்றத்தக்க அந்த ஒளிக்குத் தலை வணங்கி அஞ்சலி செய்கிறேன்."),
+ v(16, "ml", "The youth", "Victorious is Viṣṇu's flute — taught by the gopīs' hand-claps, sharing the nectar of his jewel lips.",
+  ["जयति|triumphs; ललितवृत्तिं|graceful play; शिक्षितो|taught; वल्लवीनां|of the cowherd women",
+   "शिथिलवलयशिञ्जाशीतलैर्हस्ततालैः|by hand-claps cool with the jingle of loose bangles",
+   "अखिलभुवनरक्षागोपवेषस्य|of him in cowherd's dress to protect all the worlds; विष्णोः|of Viṣṇu",
+   "अधरमणिसुधायामंशवान्|sharing in the nectar of his jewel lips; वंशनालः|the flute"],
+  "Triumphant is the flute of Viṣṇu — who wears a cowherd's dress to protect all the worlds — taught its graceful music by the cowherd women's hand-claps, cool with the jingle of their loose bangles, and sharing in the nectar of his jewel lips.",
+  "எல்லா உலகங்களையும் காக்க இடையன் வேடம் பூண்ட விஷ்ணுவின் புல்லாங்குழல் வெல்கிறது — இடைச்சியரின் வளையல் ஒலியுடன் கூடிய கைத்தாளங்களால் இனிய நடை கற்று, அவன் மணி உதட்டின் அமுதத்தில் பங்கு பெற்றது."),
+ v(17, "mk", "The youth", "With flowers at his ear, peacock feather in his hair, a gunja necklace — the rogue who steals the gopīs' hearts triumphs.",
+  ["चित्राकल्पः|wonderfully adorned; श्रवसि|on his ear; कलयन्|wearing; लाङ्गलीकर्णपूरं|a lāṅgalī flower ear-ornament",
+   "बर्होत्तंसस्फुरितचिकुरो|his hair shining with a peacock-feather crest; बन्धुजीवं|a bandhujīva flower; दधानः|bearing",
+   "गुञ्जाबद्धामुरसि|strung with gunja berries, on his chest; ललितां|lovely; धारयन्|wearing; हारयष्टिं|a necklace",
+   "गोपस्त्रीणां|of the cowherd women; जयति|triumphs; कितवः|the rogue; कोऽपि|a certain; कौमारहारी|stealer of maidenhood"],
+  "Wonderfully adorned, wearing a lāṅgalī flower at his ear, his hair shining with a peacock-feather crest, holding a bandhujīva flower, wearing on his chest a lovely necklace strung with gunja berries — a certain rogue, stealer of the cowherd maidens' hearts, triumphs.",
+  "அதிசய அலங்காரத்துடன், காதில் லாங்கலீ மலர், மயில்பீலியால் ஒளிரும் கூந்தல், பந்துஜீவ மலர், மார்பில் குன்றிமணி மாலை அணிந்த, இடைச்சியரின் இதயம் கவரும் ஒரு கள்வன் வெல்கிறான்."),
+ v(18, "mk", "The youth", "Play-stick in his right hand, his other arm on his beloved's shoulder, flute at his waist — the cloud-dark lover of the gopīs triumphs.",
+  ["लीलायष्टिं|a play-stick; करकिसलये|in his sprout-like hand; दक्षिणे|right; न्यस्य|placing; धन्याम्|blessed",
+   "अंसे|on the shoulder; देव्याः|of the Goddess (his beloved); पुलकरुचिरे|lovely with thrill; सन्निविष्टान्यबाहुः|his other arm resting",
+   "मेघश्यामो|cloud-dark; जयति|triumphs; ललितो|graceful; मेखलादत्तवेणुः|his flute tucked in his girdle",
+   "गुञ्जापीडस्फुरितचिकुरो|his hair bright with a gunja crest; गोपकन्याभुजङ्गः|the lover of the cowherd maidens"],
+  "A blessed play-stick in his right hand, his other arm resting on his beloved's shoulder thrilled with joy, his flute tucked in his girdle, his hair bright with a crest of gunja berries — the graceful, cloud-dark lover of the cowherd maidens triumphs.",
+  "வலக்கையில் விளையாட்டுக் கோல், மறுகை மகிழ்ச்சியால் புல்லரித்த தேவியின் தோளில், ஒட்டியாணத்தில் புல்லாங்குழல், குன்றிமணிக் கொண்டை ஒளிரும் கூந்தல் — மேகவண்ணனான இடைக்கன்னியரின் காதலன் வெல்கிறான்."),
+ v(19, "mk", "The youth", "In the water games, squirting at his beloved with a syringe — may the gopīs' lover, life of devotees, protect us.",
+  ["प्रत्यालीढस्थितिमधिगतां|in a crouching archer's stance; प्राप्तगाढाङ्कपालिं|held close in his embrace",
+   "पश्चादीषन्मिलितनयनां|her eyes half-closed behind; प्रेयसीं|his beloved; प्रेक्षमाणः|looking at",
+   "भस्त्रायन्त्रप्रणिहितकरो|his hand on the water-squirter; भक्तजीवातुरव्याद्|life of devotees, may he protect|bhakta · jīvātuḥ · avyāt",
+   "वारिक्रीडानिबिडवसनो|his clothes clinging from water-play; वल्लवीवल्लभो|lover of the gopīs; नः|us"],
+  "Looking at his beloved — crouched in an archer's stance, held close, her eyes half-closed — his hand on the water-squirter, his clothes clinging from the water-play: may the lover of the cowherd women, the life of his devotees, protect us.",
+  "வில்லாளி நிலையில் குனிந்து, நெருக்கமாக அணைக்கப்பட்டு, கண்கள் பாதி மூடிய பிரியையை நோக்கி, நீர்த்துருத்தியில் கை வைத்து, நீர்விளையாட்டால் நனைந்த ஆடையுடன் இருக்கும் பக்தர்களின் உயிரான இடைச்சியர் மணாளன் நம்மைக் காக்கட்டும்."),
+ v(20, "mk", "The youth", "Having stolen the gopīs' clothes by the Yamunā, he sits smiling on a kunda branch, asking them to fold their hands.",
+  ["वासो|clothes; हृत्वा|having taken; दिनकरसुतासन्निधौ|by the sun's daughter (Yamunā); वल्लवीनां|of the cowherd women",
+   "लीलास्मेरो|smiling in play; जयति|triumphs; ललितामास्थितः|seated on a graceful|lalitām · āsthitaḥ; कुन्दशाखाम्|kunda branch",
+   "सव्रीडाभिस्तदनु|then, by the shy ones; वसने|for the clothes; ताभिरभ्यर्थ्यमाने|being begged by them",
+   "कामी|the lover; कश्चित्|a certain; करकमलयोरञ्जलिं|folded lotus hands|kara · kamalayoḥ · añjalim; याचमानः|asking for"],
+  "Having taken the cowherd women's clothes by the Yamunā, smiling in play, seated on a graceful kunda branch — when the shy women beg for their clothes, a certain lover triumphs, asking them for folded lotus hands.",
+  "யமுனைக் கரையில் இடைச்சியரின் ஆடைகளை எடுத்துக்கொண்டு, விளையாட்டாகப் புன்னகைத்து, அழகிய குருக்கத்திக் கிளையில் அமர்ந்து, நாணத்துடன் ஆடையைக் கேட்கும் அவர்களிடம் கைகூப்பும் அஞ்சலியைக் கேட்கும் ஒரு காதலன் வெல்கிறான்.",
+  {tip:"The <b>vastrāpaharaṇa</b> story — he asks for an <b>añjali</b>, surrender, before returning the clothes."}),
+ v(21, "ro", "Fruit", "Reading this hymn of Veṅkaṭeśa with an undivided mind, one sees the flute-loving Lord, dear to the young gopīs.",
+  ["इत्यनन्यमनसा|thus, with an undivided mind; विनिर्मितां|composed",
+   "वेङ्कटेशकविना|by the poet Veṅkaṭeśa; स्तुतिं|the hymn; पठन्|reading",
+   "दिव्यवेणुरसिकं|delighting in the divine flute; समीक्षते|sees",
+   "दैवतं|the deity; किमपि|indescribable; यौवतप्रियम्|dear to the young women"],
+  "One who reads this hymn, composed with an undivided mind by the poet Veṅkaṭeśa, sees that indescribable deity who delights in the divine flute and is dear to the young cowherd women.",
+  "வேங்கடேசக் கவி ஒருமுக மனத்துடன் இயற்றிய இந்தத் துதியைப் படிப்பவன், திவ்ய புல்லாங்குழலில் ரசிக்கும், இளம் இடைச்சியருக்குப் பிரியமான அந்தச் சொல்லற்கரிய தெய்வத்தைக் காண்கிறான்.",
+  {kind:"phala", short:"Phala-śruti", tip:"Deśika signs: <b>veṅkaṭeśa-kavinā</b>."})
+];
+const S = 'fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"';
+const ICONS = [
+  {t:"Vaijayantī garland", w:"वैजयन्तीविभूषणम्", v:"v1", d:"his victory garland", svg:`<path d="M6 8c2 12 20 12 22 0" ${S}/><circle cx="11" cy="15" r="1.6" fill="currentColor"/><circle cx="17" cy="17" r="1.6" fill="currentColor"/><circle cx="23" cy="15" r="1.6" fill="currentColor"/>`},
+  {t:"Butter-dance", w:"नवनीतनाट्यम्", v:"v4", d:"in Nanda's house", svg:`<path d="M10 14h14l-2 14H12zM10 14c0-3 3-5 7-5s7 2 7 5M17 9V4" ${S}/>`},
+  {t:"Caught stealing", w:"हैयङ्गवीनं", v:"v5", d:"hand in the butter pot", svg:`<path d="M8 16h18l-2 12H10zM8 16c0-3 4-5 9-5s9 2 9 5M20 11l4-6" ${S}/>`},
+  {t:"The mortar", w:"विपुलोलूखलकर्षकं", v:"v7", d:"dragged between two trees", svg:`<path d="M10 12h14l-3 16H13zM6 4v24M28 4v24" ${S}/>`},
+  {t:"The Yamunā", w:"यमुनासाक्षिकयौवनं", v:"v8", d:"witness of his youth", svg:`<path d="M3 12c4-3 7-3 10 0s6 3 10 0 6-3 8 0M3 19c4-3 7-3 10 0s6 3 10 0 6-3 8 0M3 26c4-3 7-3 10 0s6 3 10 0 6-3 8 0" ${S}/>`},
+  {t:"Flute", w:"अधराहितचारुवंशनालाः", v:"v12", d:"at his lips", svg:`<path d="M4 26L28 8" ${S}/><circle cx="12" cy="20" r="1.2" fill="currentColor"/><circle cx="16" cy="17" r="1.2" fill="currentColor"/><circle cx="20" cy="14" r="1.2" fill="currentColor"/>`},
+  {t:"Peacock feather", w:"मुग्धशिखण्डमण्डनो", v:"v14", d:"in his hair", svg:`<path d="M17 30C17 18 12 10 6 6M17 30c0-8 5-14 11-16" ${S}/><ellipse cx="22" cy="12" rx="4" ry="5" ${S}/><circle cx="22" cy="12" r="1.6" fill="currentColor"/>`},
+  {t:"Gunja necklace", w:"गुञ्जाबद्धामुरसि", v:"v17", d:"red and black berries", svg:`<path d="M6 8c2 12 20 12 22 0" ${S}/><circle cx="17" cy="17" r="2.2" ${S}/>`},
+  {t:"Cloud-dark", w:"मेघश्यामो", v:"v18", d:"megha-śyāma", svg:`<path d="M9 24a6 6 0 0 1 1-12 7 7 0 0 1 13 2 5 5 0 0 1 1 10z" ${S}/>`},
+  {t:"Kunda branch", w:"कुन्दशाखाम्", v:"v20", d:"by the river", svg:`<path d="M4 28L28 8M14 20c-3-1-4-4-3-6 3 0 5 3 3 6zM21 14c-3-1-4-4-3-6 3 0 5 3 3 6z" ${S}/>`}
+];
+const BENEFITS = [["समीक्षते","Seeing the Lord"],["ममान्तिमप्रयाणे","Peace at the last hour"],["विमुक्तेः","Nearness to liberation"]];
+return {
+  key:"gvm", titleDv:"श्रीगोपालविंशतिः", verses:VERSES, icons:ICONS, benefits:BENEFITS,
+  meter:{name:"Six metres", kind:"vasantatilaka",
+    intro:"Deśika uses six metres: <b>vasantatilakā</b> (2–4), <b>mandākrāntā</b> (5, 17–20), <b>aupacchandasika</b> (6–13, quarters of 11 and 12), <b>vaitālīya</b> (14–15, quarters of 10 and 11), <b>mālinī</b> (16) and <b>rathoddhatā</b> (21); verse 1 and the taniyan are anuṣṭubh. Every line is checked against its pattern.",
+    quiz:{q:"In verse 5, what does the child Kṛṣṇa do when caught stealing butter?", opts:["Shuts his eyes","Runs away","Cries loudly","Offers the butter"],
+      why:"Neither running nor standing, the “pretend cowherd” suddenly closes his eyes — nayane mīlayan."}}
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

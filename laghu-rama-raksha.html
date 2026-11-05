@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Laghu Rama Raksha</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+<style>
+/* Page-only: the armour map (body part → name of Rāma) */
+.armour{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.part{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:center;text-align:left;border-radius:12px;padding:8px 10px;background:var(--surface-2);border:1.5px solid transparent;font-weight:400}
+.part:hover{border-color:var(--terra)}
+.part i{font-style:normal;font-family:var(--f-mono);font-size:.7rem;color:var(--muted);text-align:center}
+.part b{font-family:var(--f-display);font-weight:600;display:block}
+.part span{font-family:var(--f-verse);color:var(--terra-ink)}
+</style>
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Padma Purāṇa · Śiva speaks · Sanskrit · 11 verses</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Laghu Rama Raksha</h1>
+          <p class="lead" style="margin-top:8px">“The short armour of Rāma.” Śiva tells how to wrap yourself in Rāma's names: one name guards the heart, another the throat, another the eyes — head to foot. Then he says who taught it to whom, and what it gives.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+
+      <div class="facts">
+        <div class="fact"><span>Spoken by</span><b>Mahādeva (Śiva)</b><span>to Pārvatī and Nārada</span></div>
+        <div class="fact"><span>Seer</span><b>Viśvāmitra</b><span>named in the viniyoga</span></div>
+        <div class="fact"><span>Deity</span><b>Śrī Rāma</b><span>as Viṣṇu</span></div>
+        <div class="fact"><span>Metre</span><b>Anuṣṭubh</b><span>4 quarters of 8 syllables</span></div>
+        <div class="fact"><span>Kind</span><b>Kavacam</b><span>a hymn of protection</span></div>
+        <div class="fact"><span>Note</span><b>Laghu = short</b><span>not Budha Kauśika's long Rāma Rakṣā</span></div>
+      </div>
+
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+
+      <div class="card">
+        <div class="sec-head"><h2>The armour, part by part</h2><span class="muted" style="font-size:.85rem">Verses 2–6 · tap one to see it in the verse</span></div>
+        <p class="muted" style="margin:6px 0 12px">Each part of the body is given to one name of Rāma. Touch each place as you say it — that is how a kavacam is often recited, and it makes the order easy to remember.</p>
+        <div class="armour" id="armour"></div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each verse, in order.</p>
+          <div class="mn" id="openings"></div>
+        </div>
+        <div class="card">
+          <h2>Who passed it on</h2>
+          <p class="muted" style="margin:6px 0 12px">Verses 9–10 give the line of teachers:</p>
+          <div class="ladder" id="lineage"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>What it gives</h2>
+        <p class="muted" style="margin:6px 0 12px">Verses 7–11: whoever recites it — at home, after sleep, even walking on the road — gains:</p>
+        <div class="benefits" id="benefits"></div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+const VERSES = [
+ {id:"vn", n:"ॐ", label:"Viniyoga", short:"Viniyoga", kind:"dhyana", meter:"prose", meterNote:"The viniyoga is spoken, not sung in a metre: it names the seer, deity, metre and purpose before you begin.",
+  hook:"Before beginning: the seer, the deity, the metre, the purpose.", tip:"Four facts in order: seer <b>Viśvāmitra</b> · deity <b>Śrī Rāma</b> · metre <b>anuṣṭubh</b> · purpose <b>to please Viṣṇu</b>.",
+  lines:[
+   [["ओम्","Om","the sacred syllable"],["रामरक्षास्तोत्रस्य","of this Rāma Rakṣā hymn","rāma · rakṣā = protection · stotra = hymn"],["श्रीमहर्षिर्विश्वामित्रऋषिः","the seer is the great sage Viśvāmitra","mahā-ṛṣi = great sage · viśvāmitra · ṛṣi = seer"],["श्रीरामो","Śrī Rāma","rāmaḥ"],["देवता","is the deity","devatā = deity"]],
+   [["अनुष्टुप्छन्दः","the metre is anuṣṭubh","anuṣṭubh · chandas = metre"],["विष्णुप्रीत्यर्थे","to please Viṣṇu","viṣṇu · prīti = pleasure · arthe = for the sake of"],["जपे","in chanting","japa = recitation"],["विनियोगः","is its use","viniyoga = application, purpose"]]
+  ],
+  en:"Om. Of this Rāma Rakṣā hymn, the seer is the great sage Viśvāmitra, the deity is Śrī Rāma, the metre is anuṣṭubh, and it is chanted to please Viṣṇu.",
+  ta:"ஓம். இந்த ராமரக்ஷா ஸ்தோத்திரத்திற்கு ரிஷி மஹர்ஷி விஶ்வாமித்திரர், தேவதை ஸ்ரீராமன், சந்தஸ் அனுஷ்டுப்; விஷ்ணுவின் ப்ரீதிக்காக ஜபத்தில் உபயோகிக்கப்படுகிறது."},
+ {id:"v1", n:"1", label:"Verse 1", hook:"Śiva says: first, picture Rāma — dark as the flax flower, in yellow silk.",
+  tip:"Picture first, then protect. <b>atasī-puṣpa</b> (flax flower, dark blue) · <b>pīta-vāsas</b> (yellow cloth) · <b>puṇḍarīkākṣa</b> (lotus-eyed).",
+  lines:[
+   [["अतसीपुष्पसङ्काशं","dark like the flax flower","atasī = flax · puṣpa = flower · saṅkāśa = like"],["पीतवाससम्","dressed in yellow silk","pīta = yellow · vāsas = garment"],["अच्युतम्","the unfailing one","acyuta = who never falls"]],
+   [["ध्यात्वा","having meditated on","dhyātvā"],["वै","indeed","vai"],["पुण्डरीकाक्षं","the lotus-eyed","puṇḍarīka = white lotus · akṣa = eye"],["श्रीरामं","Śrī Rāma","śrī · rāma"],["विष्णुम्","Viṣṇu","viṣṇu"],["अव्ययम्","the imperishable","avyaya = never decaying"]]
+  ],
+  en:"Having meditated on Śrī Rāma — dark like the flax flower, dressed in yellow silk, the unfailing, lotus-eyed, imperishable Viṣṇu —",
+  ta:"ஆளிப்பூ போன்ற நீல நிறமுடையவரும், மஞ்சள் பட்டு அணிந்தவரும், அச்யுதரும், தாமரைக் கண்ணரும், அழிவற்ற விஷ்ணுவுமான ஸ்ரீராமனைத் தியானித்து —"},
+ {id:"v2", n:"2", label:"Verse 2", hook:"Heart, throat, navel, waist.",
+  tip:"Top to middle: <b>hṛdayam</b> heart → <b>kaṇṭham</b> throat → <b>nābhim</b> navel → <b>kaṭim</b> waist. Every line starts or ends with <b>pātu</b>, “may he protect”.",
+  lines:[
+   [["पातु","may he protect","pātu = let him guard"],["मे","my","me = of me"],["हृदयं","heart","hṛdaya = heart"],["रामः","Rāma","rāma"],["श्रीकण्ठः","Śrīkaṇṭha","śrī = beautiful · kaṇṭha = throat"],["कण्ठमेव","the throat itself","kaṇṭha = throat · eva = itself"],["च","and","ca"]],
+   [["नाभिं","the navel","nābhi = navel"],["पातु","may he protect","pātu"],["मखत्राता","the protector of the sacrifice","makha = sacrifice · trātṛ = protector (he guarded Viśvāmitra's yajña)"],["कटिं","the waist","kaṭi = hip, waist"],["मे","my","me"],["विश्वरक्षकः","the protector of the universe","viśva = all · rakṣaka = guardian"]]
+  ],
+  en:"May Rāma protect my heart, Śrīkaṇṭha my throat; may the protector of the sacrifice guard my navel, and the protector of the universe my waist.",
+  ta:"ராமன் என் இதயத்தைக் காக்கட்டும்; ஸ்ரீகண்டன் கழுத்தைக் காக்கட்டும்; யாகத்தைக் காத்தவர் நாபியைக் காக்கட்டும்; உலகைக் காப்பவர் என் இடுப்பைக் காக்கட்டும்."},
+ {id:"v3", n:"3", label:"Verse 3", hook:"Hands, feet, eyes.",
+  tip:"Body parts in pairs, all ending <b>-au</b> or <b>-ī</b> (dual): <b>karau</b> two hands · <b>pādau</b> two feet · <b>cakṣuṣī</b> two eyes.",
+  lines:[
+   [["करौ","the two hands","kara = hand (dual)"],["पातु","may he protect","pātu"],["दाशरथिः","the son of Daśaratha","dāśarathi"],["पादौ","the two feet","pāda = foot (dual)"],["मे","my","me"],["विश्वरूपधृक्","he who holds the cosmic form","viśva-rūpa = universal form · dhṛk = holding"]],
+   [["चक्षुषी","the two eyes","cakṣus = eye (dual)"],["पातु","may he protect","pātu"],["वै","indeed","vai"],["देवस्","the Lord","devaḥ"],["सीतापतिर्","husband of Sītā","sītā · pati = husband"],["अनुत्तमः","the unsurpassed","an-uttama = none higher"]]
+  ],
+  en:"May the son of Daśaratha protect my hands, he of the cosmic form my feet; may the Lord, Sītā's unsurpassed husband, protect my eyes.",
+  ta:"தசரத மைந்தன் கைகளைக் காக்கட்டும்; விஶ்வரூபம் தாங்கியவர் என் பாதங்களைக் காக்கட்டும்; சீதையின் நிகரற்ற கணவனான தேவன் கண்களைக் காக்கட்டும்."},
+ {id:"v4", n:"4", label:"Verse 4", hook:"Crown, ears, both sides.",
+  lines:[
+   [["शिखां","the crown of the head","śikhā = tuft, top of the head"],["मे","my","me"],["पातु","may he protect","pātu"],["विश्वात्मा","the soul of the universe","viśva · ātman = self"],["कर्णौ","the two ears","karṇa = ear (dual)"],["मे","my","me"],["पातु","may he protect","pātu"],["कामदः","the granter of wishes","kāma = wish · da = giver"]],
+   [["पार्श्वयोस्तु","and on both sides","pārśva = side (dual) · tu = and"],["सुरत्राता","the protector of the gods","sura = god · trātṛ = protector"],["कालकोटिदुरासदः","whom even countless deaths cannot approach","kāla = death · koṭi = millions · durāsada = unapproachable"]]
+  ],
+  en:"May the soul of the universe protect the crown of my head, the granter of wishes my ears; and on both my sides, the protector of the gods, whom even countless deaths cannot approach.",
+  ta:"உலகின் ஆத்மாவானவர் என் சிரசின் உச்சியைக் காக்கட்டும்; விருப்பங்களை அருள்பவர் காதுகளைக் காக்கட்டும்; தேவர்களைக் காப்பவரும், கோடி மரணங்களாலும் அணுக முடியாதவருமானவர் இரு பக்கங்களையும் காக்கட்டும்."},
+ {id:"v5", n:"5", label:"Verse 5", hook:"The whole body, and the tongue.",
+  lines:[
+   [["अनन्तः","the endless one","ananta = without end"],["सर्वदा","always","sarvadā"],["पातु","may he protect","pātu"],["शरीरं","the body","śarīra = body"],["विश्वनायकः","the leader of the universe","viśva · nāyaka = leader"]],
+   [["जिह्वां","the tongue","jihvā = tongue"],["मे","my","me"],["पातु","may he protect","pātu"],["पापघ्नो","the destroyer of sin","pāpa = sin · ghna = destroyer"],["लोकशिक्षाप्रवर्तकः","who shows the world how to live","loka = world · śikṣā = teaching · pravartaka = who sets going"]]
+  ],
+  en:"May the endless one, leader of the universe, always protect my body; may the destroyer of sin, who teaches the world by his example, protect my tongue.",
+  ta:"முடிவற்றவரும் உலகத் தலைவருமானவர் எப்போதும் என் உடலைக் காக்கட்டும்; பாவங்களை அழிப்பவரும், உலகுக்கு வழிகாட்டுபவருமானவர் என் நாவைக் காக்கட்டும்."},
+ {id:"v6", n:"6", label:"Verse 6", hook:"Teeth, hair, thighs.",
+  tip:"Sound pairs: <b>keśān</b> (hair) – <b>keśavaḥ</b> (Keśava, “of beautiful hair”). Rāghava guards the teeth.",
+  lines:[
+   [["राघवः","Rāghava","descendant of Raghu"],["पातु","may he protect","pātu"],["मे","my","me"],["दन्तान्","teeth","danta = tooth"],["केशान्","the hair","keśa = hair"],["रक्षतु","may he guard","rakṣatu"],["केशवः","Keśava","keśava = he of beautiful hair"]],
+   [["सक्थिनी","the two thighs","sakthi = thigh (dual)"],["पातु","may he protect","pātu"],["मे","my","me"],["दत्तविजयो","the giver of victory","datta = given · vijaya = victory"],["नाम","indeed","nāma = by name, truly"],["विश्वसृक्","the creator of the world","viśva · sṛk = creator"]]
+  ],
+  en:"May Rāghava protect my teeth, Keśava guard my hair; may the giver of victory, the creator of the world, protect my thighs.",
+  ta:"ராகவன் என் பற்களைக் காக்கட்டும்; கேசவன் கூந்தலைக் காக்கட்டும்; வெற்றி அருள்பவரும் உலகைப் படைத்தவருமானவர் என் தொடைகளைக் காக்கட்டும்."},
+ {id:"v7", n:"7", label:"Verse 7", hook:"Whoever recites it: long life, happiness, learning, divine wealth.",
+  lines:[
+   [["एतां","this","etām"],["रामबलोपेतां","filled with Rāma's strength","rāma · bala = strength · upeta = endowed"],["रक्षां","armour of protection","rakṣā = protection"],["यो","whoever","yaḥ"],["वै","indeed","vai"],["पुमान्","a person","pumān"],["पठेत्","recites","paṭhet"]],
+   [["स","that person","saḥ"],["चिरायुः","long-lived","cira = long · āyus = life"],["सुखी","happy","sukhin"],["विद्वान्","learned","vidvān = wise"],["लभते","gains","labhate"],["दिव्यसम्पदम्","divine wealth","divya = divine · sampad = riches"]]
+  ],
+  en:"Whoever recites this armour, filled with Rāma's strength, becomes long-lived, happy and learned, and gains divine wealth.",
+  ta:"ராமனின் வலிமை நிறைந்த இந்தக் கவசத்தைப் படிப்பவர் நீண்ட ஆயுள், இன்பம், ஞானம் பெற்று, தெய்வீகச் செல்வத்தை அடைவார்."},
+ {id:"v8", n:"8", label:"Verse 8", hook:"Rāma, Rāmabhadra, Rāmacandra — whoever remembers these names.",
+  tip:"Three names with <b>-eti</b>: rāmeti · rāmabhadreti · rāmacandreti — say them slowly, they are the heart of the hymn.",
+  lines:[
+   [["रक्षां","protection","rakṣā"],["करोतु","may (it) give","karotu = let it make"],["भूतेभ्यः","from evil spirits","bhūta = spirit, ghost"],["सदा","always","sadā"],["रक्षा","the protection","rakṣā"],["तु","indeed","tu"],["वैष्णवी","of Viṣṇu","vaiṣṇavī = belonging to Viṣṇu"]],
+   [["रामेति","“Rāma”","rāma + iti = saying “Rāma”"],["रामभद्रेति","“Rāmabhadra”","rāma-bhadra = gracious Rāma"],["रामचन्द्रेति","“Rāmacandra”","rāma-candra = moon-like Rāma"],["यः","whoever","yaḥ"],["स्मरेत्","remembers","smaret"]]
+  ],
+  en:"May Viṣṇu's protection always guard against evil spirits. Whoever remembers him as “Rāma, Rāmabhadra, Rāmacandra” —",
+  ta:"விஷ்ணுவின் காப்பு எப்போதும் தீய ஆவிகளிடமிருந்து காக்கட்டும். “ராமா, ராமபத்ரா, ராமசந்திரா” என்று நினைப்பவர் —"},
+ {id:"v9", n:"9", label:"Verse 9", hook:"…is freed from sin and gains liberation. Vasiṣṭha first taught it.",
+  lines:[
+   [["विमुक्तः","is freed","vimukta"],["स","that","saḥ"],["नरः","person","nara"],["पापान्","from sin","pāpa"],["मुक्तिं","liberation","mukti"],["प्राप्नोति","attains","prāpnoti"],["शाश्वतीम्","eternal","śāśvatī = everlasting"]],
+   [["वसिष्ठेन","by Vasiṣṭha","vasiṣṭha = Rāma's family teacher"],["त्विदं","this","tu = and · idam = this"],["प्रोक्तं","was taught","prokta = spoken"],["गुरवे","to the teacher","guru"],["विष्णुरूपिणे","who has the form of Viṣṇu","viṣṇu · rūpin = in the form of"]]
+  ],
+  en:"— that person is freed from sin and attains eternal liberation. This was taught by Vasiṣṭha to the teacher who is Viṣṇu's own form.",
+  ta:"— அவர் பாவத்திலிருந்து விடுபட்டு நிலையான முக்தியை அடைவார். இது வசிஷ்டரால் விஷ்ணு வடிவான குருவுக்கு உபதேசிக்கப்பட்டது."},
+ {id:"v10", n:"10", label:"Verse 10", hook:"From Brahmā to Śiva, to Nārada, to good people on earth.",
+  lines:[
+   [["ततो","then","tataḥ"],["मे","by me","me"],["ब्रह्मणः","from Brahmā","brahman"],["प्राप्तं","it was received","prāpta"],["मयोक्तं","I told it","mayā = by me · ukta = told"],["नारदं","to Nārada","nārada"],["प्रति","towards","prati"]],
+   [["नारदेन","by Nārada","nārada"],["तु","and","tu"],["भूलोके","on earth","bhū = earth · loka = world"],["प्रापितं","it was spread","prāpita = made to reach"],["सुजनेष्विह","among good people here","su-jana = good people · iha = here"]]
+  ],
+  en:"Then I received it from Brahmā, and I told it to Nārada; and Nārada spread it among good people here on earth.",
+  ta:"பிறகு அதை நான் பிரம்மாவிடமிருந்து பெற்றேன்; நான் நாரதருக்குச் சொன்னேன்; நாரதர் அதை பூலோகத்தில் நல்லோர்களிடையே பரப்பினார்."},
+ {id:"v11", n:"11", label:"Verse 11", hook:"At home, after sleep, on the road — whoever recites it shares in merit.",
+  lines:[
+   [["सुप्त्वा","after sleeping","suptvā"],["वाथ","or","vā · atha"],["गृहे","at home","gṛha = house"],["वापि","or even","vā · api"],["मार्गे","on the road","mārga = path"],["गच्छन्त","while walking","gacchantaḥ"],["एव","even","eva"],["वा","or","vā"]],
+   [["ये","those who","ye"],["पठन्ति","recite","paṭhanti"],["नरश्रेष्ठास्","the best of people","nara = person · śreṣṭha = best"],["ते","they","te"],["नराः","those people","narāḥ"],["पुण्यभागिनः","share in merit","puṇya = merit · bhāgin = sharing"]]
+  ],
+  en:"Whether after sleep, at home, or even while walking on the road — the noble ones who recite it share in great merit.",
+  ta:"உறங்கி எழுந்த பின்னோ, வீட்டிலோ, வழியில் நடக்கும்போதோ — இதைப் படிக்கும் சிறந்தவர்கள் புண்ணியத்தைப் பெறுவார்கள்."}
+];
+const ARMOUR = [["heart","हृदयं","रामः","v2"],["throat","कण्ठमेव","श्रीकण्ठः","v2"],["navel","नाभिं","मखत्राता","v2"],["waist","कटिं","विश्वरक्षकः","v2"],["hands","करौ","दाशरथिः","v3"],["feet","पादौ","विश्वरूपधृक्","v3"],["eyes","चक्षुषी","सीतापतिर्","v3"],["crown of the head","शिखां","विश्वात्मा","v4"],["ears","कर्णौ","कामदः","v4"],["both sides","पार्श्वयोस्तु","सुरत्राता","v4"],["whole body","शरीरं","अनन्तः","v5"],["tongue","जिह्वां","पापघ्नो","v5"],["teeth","दन्तान्","राघवः","v6"],["hair","केशान्","केशवः","v6"],["thighs","सक्थिनी","दत्तविजयो","v6"]];
+const BENEFITS = [["चिरायुः","Long life"],["सुखी","Happiness"],["विद्वान्","Learning"],["दिव्यसम्पदम्","Divine wealth"],["भूतेभ्यः","Safety from evil spirits"],["मुक्तिं","Liberation"],["पुण्यभागिनः","Merit"]];
+return {
+  key:"lrr", titleDv:"लघुरामरक्षास्तोत्रम्", verses:VERSES, benefits:BENEFITS,
+  meter:{name:"Anuṣṭubh", kind:"anushtubh",
+    intro:"Each verse has four quarters of 8 syllables — shown as two lines of 16. Syllables 5–6–7 keep a fixed swing: <b>short–long–long</b> in the first quarter, <b>short–long–short</b> in the second (outlined; dashed where the verse bends it).",
+    quiz:{q:"What is the metre of the Laghu Rāma Rakṣā?", opts:["Anuṣṭubh — the viniyoga itself says so","Pañcacāmara: short–long × 8","Vasantatilakā: 14 syllables a quarter","Free verse with no fixed metre"],
+      why:"Anuṣṭubh. The viniyoga names it: “anuṣṭup chandaḥ”."}},
+  overview({R, esc, goVerse}){
+    document.getElementById("armour").innerHTML = ARMOUR.map(([en, part, name, v], i) => `<button class="part" data-go="${v}"><i>${v.slice(1)}</i><div><b>${esc(en)}</b><span>${R(part)} — ${R(name)}</span></div></button>`).join("");
+    document.querySelectorAll("#armour .part").forEach(b => b.onclick = () => goVerse(b.dataset.go));
+    document.getElementById("lineage").innerHTML = [["Vasiṣṭha","वसिष्ठेन"],["the teacher in Viṣṇu's form","गुरवे"],["Brahmā","ब्रह्मणः"],["Śiva (the speaker)","मयोक्तं"],["Nārada","नारदेन"],["good people on earth","सुजनेष्विह"]].map(([en, dv], i) => `<div class="step"><span class="n">${i + 1}</span><div><span class="vb">${R(dv)}</span> <span class="en">— ${esc(en)}</span></div><span class="bar" style="width:${14 + i * 10}px"></span></div>`).join("");
+  }
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

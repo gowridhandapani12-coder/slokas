@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dhanalakshmi Stotram</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Śiva to Pārvatī · Sanskrit · 21 verses</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Dhanalakshmi Stotram</h1>
+          <p class="lead" style="margin-top:8px">“The hymn to the Lakṣmī of wealth” — also called <i>Dhaneśvarī Stotram</i>. Kubera tells how Pārvatī asked Śiva for a quick way to lift good, poor householders out of want. Śiva answers with this prayer to the goddess who gives <i>dharmic</i> wealth — riches earned rightly and used rightly.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><span>Told by</span><b>Kubera</b><span>Śiva's friend, lord of riches</span></div>
+        <div class="fact"><span>Spoken by</span><b>Śiva</b><span>at Pārvatī's request</span></div>
+        <div class="fact"><span>Goddess</span><b>Dhanalakṣmī</b><span>Dhaneśvarī — queen of wealth</span></div>
+        <div class="fact"><span>Metre</span><b>Anuṣṭubh</b><span>4 quarters of 8 syllables</span></div>
+        <div class="fact"><span>Source</span><b>Her Word file</b><span>Tamil-script lyrics, with variants</span></div>
+        <div class="fact"><span>On her plan</span><b>Friday</b><span>with the other Lakṣmī hymns</span></div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h2>A story in five parts</h2>
+          <div class="ladder" style="margin-top:10px">
+            <div class="step"><span class="n">1</span><div><span class="vb" style="font-family:var(--f-display)">Kubera</span> <span class="en">— Pārvatī goes to Śiva</span></div><span></span></div>
+            <div class="step"><span class="n">2</span><div><span class="vb" style="font-family:var(--f-display)">Pārvatī</span> <span class="en">— “how can the good poor be helped?”</span></div><span></span></div>
+            <div class="step"><span class="n">3–7</span><div><span class="vb" style="font-family:var(--f-display)">Śiva</span> <span class="en">— praises her question, bows to Rāma, promises the hymn</span></div><span></span></div>
+            <div class="step"><span class="n">8–19</span><div><span class="vb" style="font-family:var(--f-display)">The prayer</span> <span class="en">— names of the goddess: “O giver of dharma, giver of wealth…”</span></div><span></span></div>
+            <div class="step"><span class="n">20–21</span><div><span class="vb" style="font-family:var(--f-display)">The fruit</span> <span class="en">— wealth by thousands, and a bow to Kubera</span></div><span></span></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each verse, in order.</p>
+          <div class="mn" id="openings"></div>
+          <div class="tip" style="margin-top:14px"><b>The prayer is made of names ending in -e</b> (“O you who…”): <i>dharmade · dhanade · dayākare · puṇye · dhanye · ramye</i>… Three words keep returning: <b>dhanade</b> (giver of wealth), <b>yajamānāya</b> (to the worshipper) and <b>prasīda</b> (be gracious).</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>The goddess, as the hymn describes her</h2><span class="muted" style="font-size:.85rem">Tap one to see the word in its verse</span></div>
+        <div class="icons" id="icons" style="margin-top:14px"></div>
+      </div>
+      <div class="card">
+        <h2>What it gives</h2>
+        <p class="muted" style="margin:6px 0 12px">Verses 5–6 and 19–21: whoever reads it with faith, or teaches it —</p>
+        <div class="benefits" id="benefits"></div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+// lines: words as [devanagari, meaning, breakdown]. Each line = half-verse (two quarters of 8). Text: her Word file; variants in tips.
+const v = (id, n, part, hook, lines, en, ta, extra) => Object.assign({id, n, label:"Verse " + n, part, hook, lines, en, ta}, extra || {});
+const VERSES = [
+ v("v1", "1", "Kubera tells", "Kubera: Pārvatī came to Nīlakaṇṭha, my dear friend, and spoke to the merciful Śaṅkara.", [
+   [["देवी","the Goddess","devī"],["देवमुपागम्य","approaching the Lord","devam = the god · upāgamya = having come near"],["नीलकण्ठं","Nīlakaṇṭha","nīla = blue · kaṇṭha = throat (Śiva)"],["मम","to me","mama"],["प्रियम्","dear","priya"]],
+   [["कृपया","out of compassion","kṛpā"],["पार्वती","Pārvatī","pārvatī = daughter of the mountain"],["प्राह","said","prāha"],["शङ्करं","to Śaṅkara","śaṅkara = maker of good"],["करुणाकरम्","the mine of mercy","karuṇā = mercy · ākara = mine, source"]]],
+  "Kubera said: The Goddess Pārvatī, out of compassion, approached the blue-throated Lord, dear to me, and spoke to Śaṅkara, the mine of mercy.",
+  "குபேரன் சொன்னது: தேவி பார்வதி கருணையால், எனக்குப் பிரியமான நீலகண்டனான தேவனை அணுகி, கருணைக்கு இருப்பிடமான சங்கரனிடம் பேசினாள்.",
+  {tip:"Her file heads this verse <b>śrī dhanada uvāca</b> — “Kubera said”. Kubera is Śiva's friend, so he says <b>mama priyam</b>, “my dear one”."}),
+ v("v2", "2", "Pārvatī asks", "Pārvatī: tell me, beloved, a quick way to end the poverty of good householders.", [
+   [["ब्रूहि","tell","brūhi"],["वल्लभ","O beloved","vallabha"],["साधूनां","of the good","sādhu"],["दरिद्राणां","the poor","daridra"],["कुटुम्बिनाम्","householders","kuṭumbin = one with a family"]],
+   [["दरिद्रदलनोपायमञ्जसैव","the means of crushing poverty — quickly","daridra = poverty · dalana = crushing · upāyam = means · añjasā = at once · eva = indeed"],["धनप्रदम्","that gives wealth","dhana · prada"]]],
+  "Pārvatī said: Tell me, beloved, a means that quickly crushes the poverty of good, poor householders and gives them wealth.",
+  "பார்வதி சொன்னது: பிரியமானவரே, நல்லவர்களான ஏழைக் குடும்பஸ்தர்களின் வறுமையை உடனே அழித்துச் செல்வம் தரும் வழியைச் சொல்லுங்கள்.",
+  {tip:"Her concern is for <b>sādhu</b> — good people — who are <b>daridra</b>, poor, and <b>kuṭumbin</b>, with families to feed."}),
+ v("v3", "3", "Śiva answers", "Śiva honours her words: “Rightly are you the Mother of the world, in your pity for all beings.”", [
+   [["पूजयन्","honouring","pūjayan"],["पार्वतीवाक्यमिदमाह","Pārvatī's words, said this","pārvatī-vākyam = Pārvatī's words · idam = this · āha = said"],["महेश्वरः","Maheśvara","mahā · īśvara = great lord"]],
+   [["उचितं","fitting it is","ucita"],["जगदम्बासि","you are the Mother of the world","jagat · ambā · asi = you are"],["तव","yours","tava"],["भूतानुकम्पया","by compassion for beings","bhūta = beings · anukampā = compassion"]]],
+  "Honouring Pārvatī's words, Maheśvara said: It is fitting — you are the Mother of the world, in your compassion for all beings.",
+  "பார்வதியின் சொற்களைப் போற்றி மகேஸ்வரன் சொன்னார்: உயிர்களிடம் நீ கொண்ட இரக்கத்தால் இது பொருத்தமே — நீயே உலகின் அன்னை.",
+  {tip:"Her file heads this verse <b>śrī śiva uvāca</b>. Śiva's first word to her: <b>ucitam</b>, “fitting!”."}),
+ v("v4", "4", "Śiva answers", "Bowing to Rāma with Sītā, Lakṣmaṇa and Hanumān, I shall tell the finest hymn.", [
+   [["ससीतं","with Sītā","sa = with · sītā"],["सानुजं","with his brother","sa · anuja = younger brother (Lakṣmaṇa)"],["रामं","Rāma","rāma"],["साञ्जनेयं","with Āñjaneya","sa · āñjaneya = Hanumān"],["सहानुगम्","with his followers","saha · anuga = follower"]],
+   [["प्रणम्य","bowing to","praṇamya"],["परमानन्दं","the highest bliss","parama · ānanda"],["वक्ष्येऽहं","I shall tell","vakṣye = will tell · aham = I"],["स्तोत्रमुत्तमम्","the finest hymn","stotram · uttamam = best"]]],
+  "Bowing to Rāma — the highest bliss — with Sītā, his brother, Āñjaneya and his followers, I shall tell the finest hymn.",
+  "சீதையுடனும், தம்பியுடனும், ஆஞ்சநேயருடனும், அடியார்களுடனும் கூடிய பேரானந்த வடிவான ராமனை வணங்கி, சிறந்த ஸ்தோத்திரத்தைச் சொல்கிறேன்.",
+  {tip:"Four <b>sa-</b> words, “with”: <b>sa-sītaṃ · sānujaṃ · sāñjaneyaṃ · sahānugam</b> — the whole Rāma family, like the picture in her pūjā room."}),
+ v("v5", "5", "Śiva answers", "It gives wealth to the faithful at once, and keeps what they have — true, true is my word.", [
+   [["धनदं","giving wealth","dhana · da"],["श्रद्दधानानां","to those with faith","śraddadhāna = faithful"],["सद्यः","at once","sadyaḥ"],["सुलभकारकम्","making (it) easy","sulabha = easy to get · kāraka = making"]],
+   [["योगक्षेमकरं","bringing gain and safety","yoga = getting what one lacks · kṣema = keeping what one has · kara"],["सत्यं","true","satya"],["सत्यमेव","truly true","satyam · eva"],["वचो","the word","vacas"],["मम","mine","mama"]]],
+  "It gives wealth to the faithful, making it easy to gain at once; it brings yoga-kṣema — getting what one lacks and keeping what one has. True, truly true is my word.",
+  "நம்பிக்கை உள்ளவர்களுக்கு உடனே எளிதாகச் செல்வம் தருவது; யோக க்ஷேமம் — இல்லாததைப் பெறுவதும், உள்ளதைக் காப்பதும் — அளிப்பது. என் சொல் சத்தியம், சத்தியமே.",
+  {tip:"<b>yoga-kṣema</b> — the same promise Kṛṣṇa makes in the Gītā (9.22). Then Śiva swears twice: <b>satyaṃ satyam eva</b>."}),
+ v("v6", "6", "Śiva answers", "Reading it, or teaching it through good brāhmaṇas, wealth comes quickly and poverty is destroyed.", [
+   [["पठन्तः","those who read","paṭhantaḥ"],["पाठयन्तोऽपि","and those who have it read","pāṭhayantaḥ · api = also"],["ब्राह्मणैरास्तिकोत्तमैः","through brāhmaṇas, the best of believers","brāhmaṇaiḥ · āstika = believer · uttamaiḥ = the best"]],
+   [["धनलाभो","gain of wealth","dhana · lābha"],["भवेदाशु","comes quickly","bhavet = will be · āśu = quickly"],["नाशमेति","is destroyed","nāśam = destruction · eti = goes to"],["दरिद्रता","poverty","daridratā"]]],
+  "For those who read it, and those who have it read by brāhmaṇas, the best of believers, wealth comes quickly and poverty is destroyed.",
+  "இதைப் படிப்பவர்களுக்கும், நம்பிக்கையுள்ள சிறந்த அந்தணர்களைக் கொண்டு படிக்கச் செய்பவர்களுக்கும், விரைவில் செல்வம் கிடைக்கும்; வறுமை அழியும்."),
+ v("v7", "7", "Śiva answers", "Pray to her as you wish — the wish-fulfilling creeper of devotion, the wish-cow herself.", [
+   [["भूभवांशभवां","born of earth, a portion of Bhava (Śiva)","bhū = earth · bhava = Śiva · aṃśa = portion · bhavā = arisen"],["भूत्यै","for prosperity","bhūti"],["भक्तिकल्पलतां","the wish-creeper of devotion","bhakti · kalpa-latā = wish-fulfilling creeper"],["शुभाम्","the auspicious","śubhā"]],
+   [["प्रार्थयेत्तां","one should pray to her","prārthayet = should pray · tām = her"],["यथाकामं","as one desires","yathā · kāma"],["कामधेनुस्वरूपिणीम्","whose form is the wish-cow","kāma-dhenu = wish-giving cow · svarūpiṇī"]]],
+  "For prosperity, one should pray as one wishes to her — the auspicious one, born of the earth as a portion of Śiva, the wish-fulfilling creeper of devotion, whose very form is the wish-cow.",
+  "செல்வத்திற்காக, சிவனின் அம்சமாகத் தோன்றியவளும், பக்தர்களுக்குக் கற்பகக் கொடியானவளும், மங்களமானவளும், காமதேனு வடிவினளுமான அவளிடம் விரும்பியபடி வேண்டிக்கொள்ள வேண்டும்.",
+  {tip:"Two wish-givers: <b>kalpa-latā</b> (the wish creeper) and <b>kāma-dhenu</b> (the wish cow). The meaning of <i>bhū-bhavāṃśa-bhavām</i> is uncertain — ask her book's commentary."}),
+ v("v8", "8", "The prayer", "The prayer begins: giver of dharma, giver of wealth — be gracious, for what I ask.", [
+   [["धर्मदे","O giver of dharma","dharma · dā"],["धनदे","O giver of wealth","dhana · dā"],["देवि","O Goddess","devī"],["दानशीले","O you whose nature is giving","dāna = gift · śīla = nature"],["दयाकरे","O mine of mercy","dayā · ākara"]],
+   [["त्वं","you","tvam"],["प्रसीद","be gracious","prasīda"],["महेशानि","O great Queen","mahā · īśānī"],["यदर्थं","for that which","yat · artham = for the sake of"],["प्रार्थयाम्यहम्","I pray","prārthayāmi · aham"]]],
+  "O Goddess, giver of dharma, giver of wealth, generous by nature, mine of mercy — be gracious, O great Queen, for what I pray for.",
+  "தர்மம் அருள்பவளே, செல்வம் அருள்பவளே, தேவியே, கொடுப்பதையே இயல்பாகக் கொண்டவளே, கருணைக்கு இருப்பிடமே, மகேசானியே — நான் எதற்காக வேண்டுகிறேனோ அதற்காக அருள் புரிவாயாக.",
+  {tip:"<b>dharmade dhanade</b> — dharma first, then wealth. That order is the heart of the hymn: wealth that follows right living."}),
+ v("v9", "9", "The prayer", "Beloved of the brāhmaṇas, worshipped by Kubera — give the worshipper good, righteous wealth, quickly.", [
+   [["धरामरप्रिये","O beloved of the gods on earth (brāhmaṇas)","dharā = earth · amara = god · priyā"],["पुण्ये","O holy one","puṇyā"],["धन्ये","O blessed one","dhanyā"],["धनदपूजिते","O you worshipped by Kubera","dhana-da = Kubera · pūjitā"]],
+   [["सुधनं","good wealth","su · dhana"],["धार्मिकं","righteous","dhārmika"],["देहि","give","dehi"],["यजमानाय","to the worshipper","yajamāna = one who offers worship"],["सत्वरम्","quickly","sa-tvara"]]],
+  "O beloved of the gods on earth, holy, blessed one, worshipped by Kubera — give good, righteous wealth quickly to this worshipper.",
+  "பூமியின் தேவர்களான அந்தணர்களுக்குப் பிரியமானவளே, புண்ணியவதியே, பாக்கியவதியே, குபேரனால் பூஜிக்கப்படுபவளே — இந்த யஜமானனுக்கு நல்ல, தர்மமான செல்வத்தை விரைவில் தருவாயாக.",
+  {tip:"The key request: <b>sudhanaṃ dhārmikaṃ dehi</b>, “give good, righteous wealth”. Her file notes a variant: <i>yajanāya susatvaram</i>."}),
+ v("v10", "10", "The prayer", "Lovely one, dear to Rudra, form of Rāma's grace, dear to Rati — be gracious to me who bow.", [
+   [["रम्ये","O lovely one","ramyā"],["रुद्रप्रिये","O beloved of Rudra","rudra · priyā"],["रूपे","O beautiful form","rūpa"],["रामरूपे","O you of charming form","rāma = delightful · rūpā"],["रतिप्रिये","O you dear to Rati","rati = delight, Kāma's wife · priyā"]],
+   [["शिखीसखमनोमूर्ते","O form dear to the heart of Agni's friend","śikhī = peacock, fire · sakha = friend · manas · mūrti"],["प्रसीद","be gracious","prasīda"],["प्रणते","to (me) who bow","praṇata"],["मयि","to me","mayi"]]],
+  "O lovely one, beloved of Rudra, beautiful form, charming form, dear to Rati; O form dear to the heart — be gracious to me, who bow to you.",
+  "அழகியே, ருத்ரனின் பிரியையே, எழில் வடிவே, இனிய வடிவினளே, ரதிக்குப் பிரியமானவளே, மனத்துக்கு இனிய வடிவே — வணங்கும் என்மீது அருள் புரிவாயாக.",
+  {tip:"The <b>r-</b> verse: <b>ramye · rudra · rūpe · rāma · rati</b>. Her file gives a variant for line 2: <i>śaśiprabha-manomūrte</i>, “form bright as the moon”. The meaning of <i>śikhīsakha</i> here is uncertain."}),
+ v("v11", "11", "The prayer", "Red lotus feet, giver of every success, in divine clothes and divine garlands.", [
+   [["आरक्तचरणाम्भोजे","O you whose lotus feet are reddish","ārakta = reddish · caraṇa = foot · ambhoja = lotus"],["सिद्धिसर्वार्थदायिके","O giver of success and every aim","siddhi · sarva · artha · dāyikā"]],
+   [["दिव्याम्बरधरे","O wearer of divine garments","divya · ambara = cloth · dharā"],["दिव्ये","O divine one","divyā"],["दिव्यमाल्योपशोभिते","O you shining with divine garlands","divya · mālya = garland · upaśobhitā"]]],
+  "O you whose lotus feet are reddish, giver of success and every aim; wearer of divine garments, divine one, shining with divine garlands.",
+  "சிவந்த தாமரைத் திருவடிகளை உடையவளே, சித்தியையும் எல்லா நோக்கங்களையும் அருள்பவளே; திவ்ய ஆடை அணிந்தவளே, திவ்யமானவளே, திவ்ய மாலைகளால் ஒளிர்பவளே.",
+  {tip:"<b>divya</b> three times in line 2: divyāmbara · divye · divyamālya. Variant in her file: <i>siddha-sarvāṅga-bhūṣite</i>."}),
+ v("v12", "12", "The prayer", "Full of every virtue, with every auspicious mark; face like the autumn moon, eyes like blue lotuses.", [
+   [["समस्तगुणसम्पन्ने","O you endowed with all virtues","samasta = all · guṇa · sampannā"],["सर्वलक्षणलक्षिते","O you marked with every auspicious sign","sarva · lakṣaṇa = mark · lakṣitā"]],
+   [["शरच्चन्द्रमुखे","O you with a face like the autumn moon","śarat = autumn · candra · mukha"],["नीले","O dark one","nīlā"],["नीलनीरजलोचने","O you with eyes like blue lotuses","nīla · nīraja = lotus · locana = eye"]]],
+  "O you endowed with all virtues, marked with every auspicious sign; with a face like the autumn moon, dark one, with eyes like blue lotuses.",
+  "எல்லா நற்குணங்களும் நிறைந்தவளே, எல்லா மங்கள லக்ஷணங்களும் உடையவளே; சரத்கால சந்திரன் போன்ற முகத்தவளே, நீல நிறத்தவளே, நீலத் தாமரைக் கண்ணாளே.",
+  {tip:"Her file adds an extra half-verse here (<i>adhika pāṭha</i>): <i>jātarūpa-maṇīndvādi-bhūṣite bhūmi-bhūṣite</i> — “adorned with gold, gems and moon-ornaments, the ornament of the earth”. <b>nīle nīla-</b> — the word repeats."}),
+ v("v13", "13", "The prayer", "Curls dark as a swarm of bees, the walk of a stately elephant, a voice sweet as the cuckoo's.", [
+   [["चञ्चरीकचमू","a swarm of bees","cañcarīka = bee · camū = army"],["चारु","lovely","cāru"],["श्रीहार","with a fine necklace","śrī · hāra = necklace"],["कुटिलालके","O you with curling locks","kuṭila = curling · alaka = lock of hair"]],
+   [["मत्तेभगमने","O you who walk like a stately elephant","matta = in rut, proud · ibha = elephant · gamana = gait"],["मातः","O mother","mātṛ"],["कलकण्ठरवामृते","O you whose voice is nectar like the cuckoo's","kala-kaṇṭha = cuckoo · rava = voice · amṛta"]]],
+  "O you whose curling locks are lovely as a swarm of bees, with a fine necklace; O mother, who walk like a stately elephant, whose voice is nectar like the cuckoo's.",
+  "வண்டுக் கூட்டம் போல் அழகிய சுருண்ட கூந்தலும் அழகிய மாலையும் உடையவளே; மதயானை நடையுடைய தாயே, குயிலின் குரல் போல் அமுதமான குரலுடையவளே.",
+  {tip:"Three pictures: <b>bees</b> (hair), <b>elephant</b> (walk), <b>cuckoo</b> (voice). Her file reads <i>mattebha-gavati</i> — taken here as the usual <i>mattebha-gamane</i>; variant <i>-mukhāmṛte</i>."}),
+ v("v14", "14", "The prayer", "Her smiling glances take away devotees' worries — home of beauty, youth and compassion.", [
+   [["हासावलोकनैर्दिव्यैर्","by divine smiling glances","hāsa = smile · avalokana = glance · divyaiḥ"],["भक्तचिन्तापहारिके","O remover of devotees' worries","bhakta · cintā = worry · apahārikā"]],
+   [["रूपलावण्यतारुण्यकारुण्यगुणभाजने","O vessel of beauty, grace, youth and compassion","rūpa = form · lāvaṇya = grace · tāruṇya = youth · kāruṇya = compassion · guṇa · bhājana = vessel"]]],
+  "O you who take away your devotees' worries with divine smiling glances; vessel of beauty, grace, youth and compassion.",
+  "திவ்யமான புன்னகைப் பார்வைகளால் பக்தர்களின் கவலைகளைப் போக்குபவளே; அழகு, எழில், இளமை, கருணை எனும் குணங்களின் இருப்பிடமே.",
+  {tip:"Line 2 rhymes: <b>rūpa · lāvaṇya · tāruṇya · kāruṇya</b>. Say it as one long word."}),
+ v("v15", "15", "The prayer", "Jingling bangles and anklets, playful lotus hands — the truth Rudra revealed, the support of dharma.", [
+   [["क्वणत्कङ्कणमञ्जीरे","O you with jingling bangles and anklets","kvaṇat = jingling · kaṅkaṇa = bangle · mañjīra = anklet"],["लसल्लीलाकराम्बुजे","O you with shining, playful lotus hands","lasat = shining · līlā = play · kara = hand · ambuja = lotus"]],
+   [["रुद्रप्रकाशिते","O you revealed by Rudra","rudra · prakāśitā"],["तत्त्वे","O Truth","tattva = reality"],["धर्माधारे","O support of dharma","dharma · ādhāra"],["धरालये","O you who dwell on earth","dharā · ālayā"]]],
+  "O you with jingling bangles and anklets, with shining, playful lotus hands; O Truth revealed by Rudra, support of dharma, dweller on earth.",
+  "ஒலிக்கும் வளையல்களும் சிலம்புகளும் அணிந்தவளே, ஒளிரும், விளையாடும் தாமரைக் கைகளை உடையவளே; ருத்ரனால் விளக்கப்பட்ட தத்துவமே, தர்மத்தின் ஆதாரமே, பூமியில் வசிப்பவளே.",
+  {tip:"Hear her: <b>kvaṇat</b> — the jingle of bangles and anklets. Line 2 ends with three <b>dh</b>/<b>dha</b> sounds: dharmādhāre dharālaye."}),
+ v("v16", "16", "The prayer", "Give the worshipper wealth, the one means of dharma — without delay, Mother of the world.", [
+   [["प्रयच्छ","give","prayaccha"],["यजमानाय","to the worshipper","yajamāna"],["धनं","wealth","dhana"],["धर्मैकसाधनम्","the one means of dharma","dharma · eka = one · sādhana = means"]],
+   [["मातस्त्वं","O mother, you","mātaḥ · tvam"],["मेऽविलम्बेन","to me, without delay","me · avilambena"],["दिशस्व","grant","diśasva"],["जगदम्बिके","O Mother of the world","jagat · ambikā"]]],
+  "Give the worshipper wealth, the one means of dharma. O mother, grant it to me without delay, O Mother of the world.",
+  "யஜமானனுக்குத் தர்மத்தின் ஒரே சாதனமான செல்வத்தைக் கொடு. தாயே, ஜகதம்பிகையே, தாமதமின்றி எனக்கு அருள்வாயாக.",
+  {tip:"Wealth as <b>dharmaika-sādhanam</b> — a tool for doing good. Her file's variant: <i>mātar me māvi…</i>"}),
+ v("v17", "17", "The prayer", "House of mercy, fulfil my prayer — O Vasudhā, Earth herself, praised by the Vasus and Indra.", [
+   [["कृपया","with compassion","kṛpā"],["करुणागारे","O house of mercy","karuṇā · āgāra = house"],["प्रार्थितं","what is prayed for","prārthita"],["कुरु","do, fulfil","kuru"],["मे","for me","me"],["शुभे","O auspicious one","śubhā"]],
+   [["वसुधे","O giver of riches","vasu = wealth · dhā = giver"],["वसुधारूपे","O you in the form of the Earth","vasudhā = earth · rūpā"],["वसुवासववन्दिते","O you praised by the Vasus and Indra","vasu = the Vasu gods · vāsava = Indra · vanditā"]]],
+  "O house of mercy, auspicious one, with compassion fulfil what I pray for. O giver of riches, in the form of the Earth, praised by the Vasus and Indra.",
+  "கருணையின் இருப்பிடமே, மங்களமானவளே, இரக்கத்துடன் என் வேண்டுதலை நிறைவேற்று. செல்வம் தருபவளே, பூமி வடிவினளே, வசுக்களாலும் இந்திரனாலும் வணங்கப்படுபவளே.",
+  {tip:"The <b>vasu</b> line: <b>vasudhe · vasudhā-rūpe · vasu-vāsava-vandite</b> — vasu means wealth, and also the eight Vasu gods."}),
+ v("v18", "18", "The prayer", "Giver of wealth, giver of boons — be boon-giving to the worshipper, O Pārvatī, Śiva's own.", [
+   [["धनदे","O giver of wealth","dhana · dā"],["यजमानाय","to the worshipper","yajamāna"],["वरदे","O giver of boons","vara · dā"],["वरदा","boon-giving","varadā"],["भव","be","bhava"]],
+   [["ब्रह्मण्यैर्ब्राह्मणैः","by devout brāhmaṇas","brahmaṇya = devoted to Brahman · brāhmaṇa"],["पूज्ये","O you to be worshipped","pūjyā"],["पार्वतीशिवशङ्करे","O Pārvatī, auspicious, Śiva's own","pārvatī · śivā · śaṅkarī"]]],
+  "O giver of wealth, giver of boons — be boon-giving to the worshipper. O you to be worshipped by devout brāhmaṇas, Pārvatī, auspicious, beloved of Śaṅkara.",
+  "செல்வம் தருபவளே, வரம் தருபவளே — யஜமானனுக்கு வரம் அருள்பவளாக இரு. பக்தியுள்ள அந்தணர்களால் பூஜிக்கப்படுபவளே, பார்வதியே, சிவையே, சங்கரியே.",
+  {tip:"<b>varade varadā bhava</b> — “boon-giver, be a boon-giver (to me)”. Variants in her file: <i>yajanāyaiva</i>, <i>brahmaṇye brāhmaṇe</i>."}),
+ v("v19", "19", "The prayer", "This hymn cures the illness of poverty and gives good wealth — be gracious to me, your servant.", [
+   [["स्तोत्रं","the hymn","stotra"],["दरिद्रताव्याधिशमनं","which calms the disease of poverty","daridratā = poverty · vyādhi = disease · śamana = calming"],["सुधनप्रदम्","giving good wealth","su · dhana · prada"]],
+   [["श्रीकरे","O maker of prosperity","śrī · karī"],["शङ्करे","O maker of good","śaṃ · karī"],["श्रीदे","O giver of Śrī","śrī · dā"],["प्रसीद","be gracious","prasīda"],["मयि","to me","mayi"],["किङ्करे","your servant","kiṅkara = servant"]]],
+  "This hymn calms the disease of poverty and gives good wealth. O maker of prosperity, maker of good, giver of Śrī — be gracious to me, your servant.",
+  "இந்த ஸ்தோத்திரம் வறுமை எனும் நோயைத் தணித்து நல்ல செல்வம் தருவது. செல்வம் ஆக்குபவளே, நன்மை செய்பவளே, ஸ்ரீ அருள்பவளே — உன் அடியவனான என்மீது அருள் புரிவாயாக.",
+  {tip:"The last prayer rhymes on <b>-kare</b>: <b>śrīkare · śaṅkare · kiṅkare</b>."}),
+ v("p20", "20", "Phala-śruti", "Those who read it with faith, or have it read with devotion —", [
+   [["पार्वतीशप्रसादेन","by the grace of Pārvatī's lord","pārvatī-īśa = Śiva · prasāda = grace"],["सुरेशकिङ्करेरितम्","spoken by the servant of the lord of gods","sura-īśa · kiṅkara = servant · īrita = spoken"]],
+   [["श्रद्धया","with faith","śraddhā"],["ये","those who","ye"],["पठिष्यन्ति","will read","paṭhiṣyanti"],["पाठयिष्यन्ति","will have it read","pāṭhayiṣyanti"],["भक्तितः","with devotion","bhakti"]]],
+  "This hymn, spoken by the grace of Pārvatī's lord, by the servant of the lord of gods — those who read it with faith, or have it read with devotion —",
+  "பார்வதீசனின் அருளால், தேவேந்திரனின் அடியவரால் சொல்லப்பட்ட இதை நம்பிக்கையுடன் படிப்பவர்களும், பக்தியுடன் படிக்கச் செய்பவர்களும் —",
+  {kind:"phala", short:"Phala 20", label:"Phala 20", tip:"The sentence runs on into verse 21: <b>paṭhiṣyanti · pāṭhayiṣyanti</b> — read, and have read."}),
+ v("p21", "21", "Phala-śruti", "— gain wealth by thousands, ten-thousands, lakhs. Salutations to Kubera, lord of the treasures.", [
+   [["सहस्रमयुतं","a thousand, ten thousand","sahasram = 1,000 · ayutam = 10,000"],["लक्षं","a lakh","lakṣa = 100,000"],["धनलाभो","gain of wealth","dhana · lābha"],["भवेद्ध्रुवम्","will surely come","bhavet · dhruvam = surely"]],
+   [["धनदाय","to the giver of wealth (Kubera)","dhana-da"],["नमस्तुभ्यं","salutations to you","namaḥ · tubhyam"],["निधिपद्माधिपाय","to the lord of the treasures like Padma","nidhi = treasure · padma = one of Kubera's nine treasures · adhipa = lord"],["च","and","ca"]],
+   [["भवन्तु","may there be","bhavantu"],["त्वत्प्रसादान्मे","by your grace, for me","tvat · prasādāt · me"],["धनधान्यादिसम्पदः","riches of wealth, grain and more","dhana · dhānya = grain · ādi · sampad = riches"]]],
+  "— gain wealth by the thousand, the ten thousand, the lakh, surely. Salutations to you, giver of wealth, lord of the treasures like Padma: by your grace may I have riches of wealth, grain and all else.",
+  "— ஆயிரம், பத்தாயிரம், லட்சம் எனச் செல்வம் நிச்சயம் பெறுவார்கள். செல்வம் தருபவனே, பத்மம் முதலான நிதிகளின் தலைவனே, உனக்கு நமஸ்காரம்; உன் அருளால் எனக்குச் செல்வம், தானியம் முதலான வளங்கள் உண்டாகட்டும்.",
+  {kind:"phala", short:"Phala 21", label:"Phala 21", tip:"Counting up: <b>sahasram · ayutam · lakṣam</b> — 1,000 · 10,000 · 1,00,000. Three lines here: the last is a bow to <b>Kubera</b> (dhanada), who told the story."})
+];
+const S = 'fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"';
+const ICONS = [
+  {t:"Giver of dharma", w:"धर्मदे", v:"v8", d:"wealth that follows right living", svg:`<path d="M17 5v24M8 10h18M8 10l-4 8h8zM26 10l-4 8h8zM11 29h12" ${S}/>`},
+  {t:"Giver of wealth", w:"धनदे", v:"v8", d:"dhanadā — her chief name here", svg:`<circle cx="12" cy="20" r="6" ${S}/><circle cx="22" cy="14" r="6" ${S}/><path d="M22 11v6M12 17v6" ${S}/>`},
+  {t:"Wish creeper", w:"भक्तिकल्पलतां", v:"v7", d:"kalpa-latā of devotion", svg:`<path d="M17 30c0-8-6-10-6-16 0-4 3-7 6-9 3 2 6 5 6 9 0 6-6 8-6 16zM11 18c-3 0-5-2-6-4M23 18c3 0 5-2 6-4" ${S}/>`},
+  {t:"Wish cow", w:"कामधेनुस्वरूपिणीम्", v:"v7", d:"kāma-dhenu", svg:`<path d="M6 14h18c3 0 5 2 5 5v5H6zM6 14l-2-4M9 24v5M24 24v5M24 14l3-4" ${S}/>`},
+  {t:"Red lotus feet", w:"आरक्तचरणाम्भोजे", v:"v11", d:"ārakta-caraṇa", svg:`<path d="M17 6c-4 5-4 12 0 18 4-6 4-13 0-18zM17 24c-6-1-10-6-11-12 5 1 9 5 11 12zM17 24c6-1 10-6 11-12-5 1-9 5-11 12zM6 27h22" ${S}/>`},
+  {t:"Autumn-moon face", w:"शरच्चन्द्रमुखे", v:"v12", d:"śarac-candra-mukhī", svg:`<circle cx="17" cy="17" r="10" ${S}/><circle cx="13" cy="14" r="1.4" fill="currentColor"/><circle cx="21" cy="14" r="1.4" fill="currentColor"/><path d="M13 21c2 2 6 2 8 0" ${S}/>`},
+  {t:"Hair like bees", w:"चञ्चरीकचमू", v:"v13", d:"a swarm of dark bees", svg:`<ellipse cx="17" cy="18" rx="5" ry="7" ${S}/><path d="M12 14c-4-4-8-3-8 0s4 4 8 2M22 14c4-4 8-3 8 0s-4 4-8 2M12 19h10M12 23h10" ${S}/>`},
+  {t:"Cuckoo's voice", w:"कलकण्ठरवामृते", v:"v13", d:"kala-kaṇṭha — the cuckoo", svg:`<path d="M6 18c0-6 5-10 11-10 4 0 7 2 9 5l4 1-4 2c-1 6-6 10-12 10-5 0-8-3-8-8zM20 12h.01" ${S}/>`},
+  {t:"Jingling bangles", w:"क्वणत्कङ्कणमञ्जीरे", v:"v15", d:"kaṅkaṇa and mañjīra", svg:`<circle cx="13" cy="17" r="7" ${S}/><circle cx="21" cy="17" r="7" ${S}/>`},
+  {t:"Mother Earth", w:"वसुधारूपे", v:"v17", d:"vasudhā — the earth that holds riches", svg:`<circle cx="17" cy="17" r="11" ${S}/><path d="M6 17h22M17 6c-4 4-4 18 0 22M17 6c4 4 4 18 0 22" ${S}/>`}
+];
+const BENEFITS = [["धनलाभो","Gain of wealth"],["योगक्षेमकरं","Gain and safety (yoga-kṣema)"],["दरिद्रताव्याधिशमनं","Poverty cured"],["सुधनं","Good, rightful wealth"],["सहस्रमयुतं","By thousands and more"],["धनधान्यादिसम्पदः","Wealth, grain, all riches"]];
+return {
+  key:"dhl", titleDv:"श्रीधनलक्ष्मीस्तोत्रम्", verses:VERSES, icons:ICONS, benefits:BENEFITS,
+  meter:{name:"Anuṣṭubh", kind:"anushtubh",
+    intro:"Each verse has four quarters of 8 syllables — shown here as two lines of 16 (verse 21 has an extra line). The beat is free at the start of each quarter, but syllables 5–6–7 keep a fixed swing: <b>short–long–long</b> in the first quarter, <b>short–long–short</b> in the second (outlined).",
+    quiz:{q:"Who tells the story of this hymn in verse 1?", opts:["Kubera, Śiva's friend","Indra, king of the gods","Sage Agastya","Lord Rāma"],
+      why:"Kubera (dhanada) — he calls Śiva “mama priyam”, my dear one. The last verse bows to him."}}
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

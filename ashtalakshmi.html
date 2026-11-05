@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ashtalakshmi Stotram</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+<style>
+.refrain{font-family:var(--f-verse);font-size:1.4rem;color:var(--terra-ink);line-height:1.5}
+</style>
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Mukkūr Śrīnivāsa Varadācārya · Sanskrit · 8 verses</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Ashtalakshmi Stotram</h1>
+          <p class="lead" style="margin-top:8px">“The hymn to the eight Lakṣmīs.” One verse for each of her eight forms — the first Lakṣmī, and the Lakṣmīs of grain, courage, elephants, children, victory, learning and wealth. Every verse ends with the same call: <i>jaya jaya he madhusūdana-kāmini</i> — “victory to you, beloved of Madhusūdana — protect me.”</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+
+      <div class="facts">
+        <div class="fact"><span>Composed by</span><b>Mukkūr Śrīnivāsa Varadācārya</b><span>20th-century Śrīvaiṣṇava scholar</span></div>
+        <div class="fact"><span>Goddess</span><b>Mahālakṣmī</b><span>in eight forms</span></div>
+        <div class="fact"><span>Title</span><b>Aṣṭa-lakṣmī</b><span>aṣṭa = eight</span></div>
+        <div class="fact"><span>Rhythm</span><b>A song metre</b><span>beats of four, sung, not counted</span></div>
+        <div class="fact"><span>Source</span><b>Her PDF</b><span>Sunder Kidāmbi, prapatti.com</span></div>
+        <div class="fact"><span>On her plan</span><b>Friday</b><span>with the other Lakṣmī hymns</span></div>
+      </div>
+
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h2>One refrain, eight times</h2>
+          <p class="muted" style="margin:6px 0 12px">Every verse ends with these two quarters. Only the name changes — and in verses 4, 5 and 8 the word before <i>pālaya</i>.</p>
+          <div class="refrain" id="refrain"></div>
+          <p style="margin-top:6px">“Victory, victory to you, O beloved of Madhusūdana! O ___-Lakṣmī, always protect me.”</p>
+          <div class="tip" style="margin-top:14px"><b>Three small changes</b> to watch for: <b>gajalakṣmi rūpeṇa</b> (v4), <b>santānalakṣmi tvaṃ</b> (v5), <b>dhanalakṣmi rūpeṇa</b> (v8). All the others say <b>sadā</b>.</div>
+        </div>
+        <div class="card">
+          <h2>Remember the order</h2>
+          <p class="muted" style="margin:6px 0 14px">The eight names, in order — say them as a little chant: <b>Ādi · Dhānya · Dhairya · Gaja · Santāna · Vijaya · Vidyā · Dhana</b>.</p>
+          <div class="mn" id="openings"></div>
+          <div class="tip" style="margin-top:14px"><b>A story to hold the order:</b> first she comes (<i>Ādi</i>), the fields fill with grain (<i>Dhānya</i>), we find courage (<i>Dhairya</i>), elephants arrive with the king's honour (<i>Gaja</i>), children are born (<i>Santāna</i>), we win (<i>Vijaya</i>), we learn (<i>Vidyā</i>), and the drums sound for wealth (<i>Dhana</i>).</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="sec-head"><h2>The eight Lakṣmīs</h2><span class="muted" style="font-size:.85rem">Tap one to see the word in its verse</span></div>
+        <div class="icons" id="icons" style="margin-top:14px"></div>
+      </div>
+
+      <div class="card">
+        <h2>What it gives</h2>
+        <p class="muted" style="margin:6px 0 12px">The hymn has no separate phala-śruti — each verse is itself the gift its Lakṣmī brings.</p>
+        <div class="benefits" id="benefits"></div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+// Each line = two quarters (a long one of four beats and a shorter one ending in -e). Song metre: no syllable check.
+const J = [["जय","victory (to you)","jaya = be victorious"],["जय","victory","jaya, said twice for joy"],["हे","O","he = O (calling)"],["मधुसूदनकामिनि","O beloved of Madhusūdana","madhu-sūdana = slayer of the demon Madhu, Viṣṇu · kāminī = beloved"]];
+const P = [["पालय","protect","pālaya = guard, look after"],["माम्","me","mām = me"]];
+const SADA = ["सदा","always","sadā = always"];
+const RUPENA = ["रूपेण","in (this) form","rūpa = form · -eṇa = by, in"];
+const refrain = (dv, name, mid) => [...J, [dv, "O " + name, name.toLowerCase().replace("lakṣmī", "") + " · lakṣmī = goddess of fortune"], mid, ...P];
+const v = (id, n, part, hook, lines, en, ta, extra) => Object.assign({id, n, label:"Verse " + n, part, hook, lines, en, ta}, extra || {});
+const VERSES = [
+ v("v1", "1", "Ādilakṣmī", "The first Lakṣmī — moon's sister, golden, giver of liberation.", [
+   [["सुमनसवन्दित","worshipped by the good-minded (and the gods)","sumanas = good-minded one, god · vandita = worshipped"],["सुन्दरि","O beautiful one","sundarī"],["माधवि","O consort of Mādhava","mādhavī = Viṣṇu's wife"],["चन्द्रसहोदरि","O sister of the moon","candra = moon · sahodarī = sister (both rose from the milk ocean)"],["हेममये","O golden one","hema = gold · mayī = made of"]],
+   [["मुनिगणमण्डित","adorned by hosts of sages","muni = sage · gaṇa = group · maṇḍita = adorned, surrounded"],["मोक्षप्रदायिनि","O giver of liberation","mokṣa = liberation · pradāyinī = giver"],["मञ्जुलभाषिणि","O sweet-spoken one","mañjula = sweet · bhāṣiṇī = speaker"],["वेदनुते","O you praised by the Vedas","veda · nutā = praised"]],
+   [["पङ्कजवासिनि","O dweller in the lotus","paṅka-ja = mud-born, lotus · vāsinī = dweller"],["देवसुपूजित","well worshipped by the gods","deva · su = well · pūjita = worshipped"],["सद्गुणवर्षिणि","O you who shower good qualities","sat = good · guṇa = quality · varṣiṇī = raining"],["शान्तियुते","O you who are full of peace","śānti = peace · yutā = joined with"]],
+   refrain("आदिलक्ष्मि", "Ādilakṣmī", SADA)],
+  "O beautiful one, worshipped by the good, consort of Mādhava, sister of the moon, golden one; adorned by hosts of sages, giver of liberation, sweet-spoken, praised by the Vedas; dweller in the lotus, worshipped by the gods, showering good qualities, full of peace — victory, victory to you, beloved of Madhusūdana! O Ādilakṣmī, always protect me.",
+  "நல்லோரால் வணங்கப்படும் அழகியே, மாதவனின் தேவியே, சந்திரனின் சகோதரியே, பொன்மயமானவளே; முனிவர் கூட்டம் சூழ்ந்தவளே, மோட்சம் அருள்பவளே, இனிமையாகப் பேசுபவளே, வேதங்களால் போற்றப்படுபவளே; தாமரையில் வசிப்பவளே, தேவர்களால் பூஜிக்கப்படுபவளே, நற்குணங்களைப் பொழிபவளே, அமைதி நிறைந்தவளே — மதுசூதனனின் பிரியையே, ஜயம் ஜயம்! ஆதிலக்ஷ்மியே, என்னை எப்போதும் காப்பாயாக.",
+  {tip:"Opens with <b>sumanasa</b> — “the good-minded”. Her family: <b>mādhavi</b> (Viṣṇu's wife) and <b>candra-sahodari</b> (the moon's sister). The first and the highest gift: <b>mokṣa</b>."}),
+ v("v2", "2", "Dhānyalakṣmī", "The Lakṣmī of grain — born of the milk ocean, dwelling in mantras.", [
+   [["अयि","O!","ayi = a loving call"],["कलिकल्मषनाशिनि","O destroyer of the sins of the Kali age","kali = this age · kalmaṣa = impurity · nāśinī = destroyer"],["कामिनि","O beloved","kāminī"],["वैदिकरूपिणि","O you whose form is Vedic","vaidika = of the Veda · rūpiṇī = having the form"],["वेदमये","O you made of the Vedas","veda · mayī"]],
+   [["क्षीरसमुद्भव","born of the milk ocean","kṣīra = milk · samudbhava = arising"],["मङ्गलरूपिणि","O auspicious form","maṅgala = auspicious · rūpiṇī"],["मन्त्रनिवासिनि","O you who dwell in mantras","mantra · nivāsinī = dweller"],["मन्त्रनुते","O you praised by mantras","mantra · nutā"]],
+   [["मङ्गलदायिनि","O giver of auspiciousness","maṅgala · dāyinī = giver"],["अम्बुजवासिनि","O dweller in the lotus","ambu-ja = water-born, lotus · vāsinī"],["देवगणाश्रित","sought by the hosts of gods","deva-gaṇa · āśrita = taken refuge in"],["पादयुते","O you whose feet (are so sought)","pāda = foot · yutā = having"]],
+   refrain("धान्यलक्ष्मि", "Dhānyalakṣmī", SADA)],
+  "O, destroyer of the sins of the Kali age, beloved one, whose form is Vedic, made of the Vedas; born of the milk ocean, auspicious in form, dwelling in mantras, praised by mantras; giver of blessings, dweller in the lotus, whose feet the gods take refuge in — victory, victory to you, beloved of Madhusūdana! O Dhānyalakṣmī, always protect me.",
+  "கலியுகப் பாவங்களை அழிப்பவளே, பிரியையே, வேத வடிவினளே, வேதமயமானவளே; பாற்கடலில் தோன்றியவளே, மங்கள வடிவினளே, மந்திரங்களில் வசிப்பவளே, மந்திரங்களால் போற்றப்படுபவளே; மங்களம் அருள்பவளே, தாமரையில் வசிப்பவளே, தேவர் கூட்டம் சரணடையும் திருவடிகளை உடையவளே — மதுசூதனனின் பிரியையே, ஜயம் ஜயம்! தான்யலக்ஷ்மியே, என்னை எப்போதும் காப்பாயாக.",
+  {tip:"Opens with <b>ayi</b>, “O!” (verse 5 does too). <b>mantra</b> comes twice in a row: <b>mantra-nivāsini · mantra-nute</b>. Line 3 ends <b>pāda-yute</b> — learn it here; it returns in verses 3, 4 and 5."}),
+ v("v3", "3", "Dhairyalakṣmī", "The Lakṣmī of courage — quick to give fruit, she takes away the fear of rebirth.", [
+   [["जय","victory","jaya"],["वरवर्णिनि","O fairest one","vara = best · varṇinī = of lovely colour"],["वैष्णवि","O Vaiṣṇavī","vaiṣṇavī = Viṣṇu's own"],["भार्गवि","O Bhārgavī","bhārgavī = daughter of the sage Bhṛgu"],["मन्त्रस्वरूपिणि","O you whose very form is mantra","mantra · svarūpiṇī = having as own form"],["मन्त्रमये","O you made of mantras","mantra · mayī"]],
+   [["सुरगणपूजित","worshipped by the hosts of gods","sura = god · gaṇa · pūjita"],["शीघ्रफलप्रद","O swift giver of fruit","śīghra = quick · phala = fruit · prada = giver"],["ज्ञानविकासिनि","O you who make wisdom blossom","jñāna = knowledge · vikāsinī = causing to bloom"],["शास्त्रनुते","O you praised by the scriptures","śāstra · nutā"]],
+   [["भवभयहारिणि","O remover of the fear of worldly life","bhava = birth and death · bhaya = fear · hāriṇī = remover"],["पापविमोचनि","O releaser from sin","pāpa · vimocanī = freeing"],["साधुजनाश्रित","sought by good people","sādhu-jana = good people · āśrita"],["पादयुते","O you whose feet (are so sought)","pāda · yutā"]],
+   refrain("धैर्यलक्ष्मि", "Dhairyalakṣmī", SADA)],
+  "Victory to you, fairest one, Vaiṣṇavī, Bhārgavī, whose form is mantra, made of mantras; worshipped by the gods, swift giver of fruit, who makes wisdom blossom, praised by the scriptures; remover of the fear of worldly life, releaser from sin, whose feet good people take refuge in — victory, victory to you, beloved of Madhusūdana! O Dhairyalakṣmī, always protect me.",
+  "ஜயம் உனக்கு! அழகிற் சிறந்தவளே, வைஷ்ணவியே, பார்கவியே, மந்திர வடிவினளே, மந்திரமயமானவளே; தேவர்களால் பூஜிக்கப்படுபவளே, விரைவில் பலன் தருபவளே, ஞானத்தை மலரச் செய்பவளே, சாஸ்திரங்களால் போற்றப்படுபவளே; பிறவி பயத்தைப் போக்குபவளே, பாவத்திலிருந்து விடுவிப்பவளே, நல்லோர் சரணடையும் திருவடிகளை உடையவளே — மதுசூதனனின் பிரியையே, ஜயம் ஜயம்! தைரியலக்ஷ்மியே, என்னை எப்போதும் காப்பாயாக.",
+  {tip:"Courage comes from losing fear: <b>bhava-bhaya-hāriṇi</b>, “she takes away the fear of rebirth”. <b>Vaiṣṇavi · bhārgavi</b> — two names ending in <b>-vi</b> side by side."}),
+ v("v4", "4", "Gajalakṣmī", "The Lakṣmī of elephants — surrounded by chariots, elephants, horses and foot-soldiers.", [
+   [["जय","victory","jaya"],["जय","victory","jaya"],["दुर्गतिनाशिनि","O destroyer of misfortune","durgati = bad state, misfortune · nāśinī"],["कामिनि","O beloved","kāminī"],["सर्वफलप्रद","O giver of every fruit","sarva = all · phala · prada"],["शास्त्रमये","O you made of the scriptures","śāstra · mayī"]],
+   [["रथगज","chariots, elephants","ratha = chariot · gaja = elephant"],["तुरगपदादि","horses, foot-soldiers and more","turaga = horse · padāti = foot-soldier · ādi = and so on"],["समावृत","surrounded by","samāvṛta"],["परिजनमण्डित","adorned with attendants","parijana = retinue · maṇḍita"],["लोकनुते","O you praised by the worlds","loka · nutā"]],
+   [["हरिहरब्रह्म","by Hari, Hara and Brahmā","hari = Viṣṇu · hara = Śiva · brahmā"],["सुपूजित","well worshipped","su · pūjita"],["सेवित","served","sevita"],["तापनिवारिणि","O remover of suffering","tāpa = heat, pain · nivāriṇī = warding off"],["पादयुते","O you whose feet (are so served)","pāda · yutā"]],
+   refrain("गजलक्ष्मि", "Gajalakṣmī", RUPENA)],
+  "Victory, victory to you, destroyer of misfortune, beloved one, giver of every fruit, made of the scriptures; surrounded by chariots, elephants, horses and foot-soldiers, adorned with attendants, praised by the worlds; whose feet are worshipped and served by Hari, Hara and Brahmā, remover of suffering — victory, victory to you, beloved of Madhusūdana! O Gajalakṣmī, in this form protect me.",
+  "ஜயம் ஜயம்! துர்க்கதியை அழிப்பவளே, பிரியையே, எல்லாப் பலன்களையும் தருபவளே, சாஸ்திரமயமானவளே; தேர், யானை, குதிரை, காலாட்படை சூழ்ந்தவளே, பரிவாரங்களால் அலங்கரிக்கப்பட்டவளே, உலகங்களால் போற்றப்படுபவளே; ஹரி, ஹரன், பிரம்மா பூஜித்து சேவிக்கும் திருவடிகளை உடையவளே, துன்பத்தைப் போக்குபவளே — மதுசூதனனின் பிரியையே, ஜயம் ஜயம்! கஜலக்ஷ்மியே, இந்த வடிவில் என்னைக் காப்பாயாக.",
+  {tip:"The <b>army</b> verse: <b>ratha · gaja · turaga · padāti</b> — chariot, elephant, horse, foot-soldier, the four parts of a royal army. The three gods: <b>hari · hara · brahma</b>. Refrain: <b>rūpeṇa</b>, not sadā."}),
+ v("v5", "5", "Santānalakṣmī", "The Lakṣmī of children — rider of Garuḍa, adorned with the seven notes of music.", [
+   [["अयि","O!","ayi"],["खगवाहिनि","O you who ride the bird (Garuḍa)","khaga = bird, sky-goer · vāhinī = riding"],["मोहिनि","O enchanting one","mohinī"],["चक्रिणि","O bearer of the discus","cakriṇī"],["रागविवर्धिनि","O you who increase love","rāga = love, attachment · vivardhinī = increasing"],["ज्ञानमये","O you made of wisdom","jñāna · mayī"]],
+   [["गुणगणवारिधि","an ocean of good qualities","guṇa-gaṇa = host of virtues · vāridhi = ocean"],["लोकहितैषिणि","O you who wish the world well","loka · hita = good · eṣiṇī = desiring"],["स्वरसप्त","the seven notes","svara = musical note · sapta = seven"],["भूषित","adorned with","bhūṣita"],["गाननुते","O you praised in song","gāna = song · nutā"]],
+   [["सकल","all","sakala"],["सुरासुर","gods and demons","sura · asura"],["देवमुनीश्वर","gods and the great sages","deva · muni-īśvara = lord of sages"],["मानववन्दित","and humans have bowed to","mānava = human · vandita"],["पादयुते","O you whose feet (they bow to)","pāda · yutā"]],
+   refrain("सन्तानलक्ष्मि", "Santānalakṣmī", ["त्वं","you","tvam = you"])],
+  "O rider of Garuḍa, enchanting one, bearer of the discus, who increases love, made of wisdom; ocean of virtues, well-wisher of the world, adorned with the seven notes, praised in song; whose feet all gods and demons, sages and humans bow to — victory, victory to you, beloved of Madhusūdana! O Santānalakṣmī, you protect me.",
+  "கருடனை வாகனமாகக் கொண்டவளே, மோகினியே, சக்கரம் ஏந்தியவளே, அன்பைப் பெருக்குபவளே, ஞானமயமானவளே; நற்குணங்களின் கடலே, உலக நலனை விரும்புபவளே, ஏழு ஸ்வரங்களால் அலங்கரிக்கப்பட்டு இசையால் போற்றப்படுபவளே; தேவர், அசுரர், முனிவர், மனிதர் அனைவரும் வணங்கும் திருவடிகளை உடையவளே — மதுசூதனனின் பிரியையே, ஜயம் ஜயம்! ஸந்தானலக்ஷ்மியே, நீ என்னைக் காப்பாயாக.",
+  {tip:"The <b>music</b> verse: <b>svara-sapta</b> (seven notes) and <b>gāna-nute</b> (praised in song). Line 3 lists everyone: <b>sura · asura · deva · muni · mānava</b>. Refrain: <b>tvaṃ</b>."}),
+ v("v6", "6", "Vijayalakṣmī", "The Lakṣmī of victory — seated on the lotus, praised by Śaṅkara's Kanakadhārā.", [
+   [["जय","victory","jaya"],["कमलासनि","O you seated on the lotus","kamala = lotus · āsanī = seated"],["सद्गतिदायिनि","O giver of the good destination","sat = good · gati = path, goal · dāyinī"],["ज्ञानविकासिनि","O you who make wisdom blossom","jñāna · vikāsinī"],["गानमये","O you made of song","gāna · mayī"]],
+   [["अनुदिनमर्चित","worshipped every day","anudinam = daily · arcita = worshipped"],["कुङ्कुमधूसर","dusted with kuṅkuma","kuṅkuma = saffron-red powder · dhūsara = dusted"],["भूषित","adorned","bhūṣita"],["वासित","perfumed","vāsita"],["वाद्यनुते","O you praised with instruments","vādya = musical instrument · nutā"]],
+   [["कनकधरास्तुति","by the Kanakadhārā hymn","kanakadhārā = the golden shower (Śaṅkara's hymn) · stuti = praise"],["वैभव","glorious","vaibhava = glory"],["वन्दित","praised","vandita"],["शङ्कर","of Śaṅkara","śaṅkara"],["देशिक","the teacher","deśika = ācārya"],["मान्य","honoured by","mānya"],["पदे","O you whose feet (are)","pada = foot, position"]],
+   refrain("विजयलक्ष्मि", "Vijayalakṣmī", SADA)],
+  "Victory to you, seated on the lotus, giver of the good destination, who makes wisdom blossom, made of song; worshipped every day, dusted with kuṅkuma, adorned and perfumed, praised with instruments; whose feet are honoured by the teacher Śaṅkara, who praised your glory in the Kanakadhārā hymn — victory, victory to you, beloved of Madhusūdana! O Vijayalakṣmī, always protect me.",
+  "ஜயம் உனக்கு! தாமரையில் அமர்ந்தவளே, நற்கதி அருள்பவளே, ஞானத்தை மலரச் செய்பவளே, இசைமயமானவளே; தினமும் அர்ச்சிக்கப்பட்டு, குங்குமம் பூசப்பட்டு, அலங்கரிக்கப்பட்டு, மணம் கமழ, வாத்தியங்களால் போற்றப்படுபவளே; கனகதாரா ஸ்தோத்திரத்தால் உன் மகிமையைப் போற்றிய சங்கர ஆசாரியர் மதிக்கும் திருவடிகளை உடையவளே — மதுசூதனனின் பிரியையே, ஜயம் ஜயம்! விஜயலக்ஷ்மியே, என்னை எப்போதும் காப்பாயாக.",
+  {tip:"A link to a hymn she already knows: <b>kanakadhārā-stuti</b> — Śaṅkara's golden-shower hymn. The only line that ends <b>pade</b> instead of pāda-yute."}),
+ v("v7", "7", "Vidyālakṣmī", "The Lakṣmī of learning — Bhāratī herself, with a smiling face, giver of the nine treasures.", [
+   [["प्रणत","bowed to","praṇata = bowed down to"],["सुरेश्वरि","O queen of the gods","sura · īśvarī"],["भारति","O Bhāratī (Sarasvatī)","bhāratī = goddess of speech"],["भार्गवि","O Bhārgavī","bhārgavī"],["शोकविनाशिनि","O destroyer of sorrow","śoka = grief · vināśinī"],["रत्नमये","O you made of gems","ratna · mayī"]],
+   [["मणिमयभूषित","adorned with jewels","maṇi = jewel · maya · bhūṣita"],["कर्णविभूषण","with ornaments in the ears","karṇa = ear · vibhūṣaṇa = ornament"],["शान्तिसमावृत","wrapped in peace","śānti · samāvṛta"],["हास्यमुखे","O smiling-faced one","hāsya = smile · mukha = face"]],
+   [["नवनिधिदायिनि","O giver of the nine treasures","nava = nine · nidhi = treasure · dāyinī"],["कलिमलहारिणि","O remover of the stain of Kali","kali · mala = dirt · hāriṇī"],["कामित","desired","kāmita"],["फलप्रद","giving the fruit","phala · prada"],["हस्तयुते","O you whose hands (give)","hasta = hand · yutā"]],
+   refrain("विद्यालक्ष्मि", "Vidyālakṣmī", SADA)],
+  "Queen of the gods, to whom all bow, Bhāratī, Bhārgavī, destroyer of sorrow, made of gems; adorned with jewels and ear-ornaments, wrapped in peace, smiling-faced; giver of the nine treasures, remover of the stain of Kali, whose hands give the fruit one desires — victory, victory to you, beloved of Madhusūdana! O Vidyālakṣmī, always protect me.",
+  "எல்லோரும் வணங்கும் தேவர்களின் ஈஸ்வரியே, பாரதியே, பார்கவியே, துயரத்தை அழிப்பவளே, ரத்தினமயமானவளே; மணி ஆபரணங்களும் காதணிகளும் அணிந்தவளே, அமைதி சூழ்ந்தவளே, புன்னகை முகத்தவளே; நவநிதிகளை அருள்பவளே, கலியின் மாசைப் போக்குபவளே, விரும்பிய பலனைத் தரும் கைகளை உடையவளே — மதுசூதனனின் பிரியையே, ஜயம் ஜயம்! வித்யாலக்ஷ்மியே, என்னை எப்போதும் காப்பாயாக.",
+  {tip:"Learning = <b>bhārati</b> (Sarasvatī). Picture her: jewels, earrings, a calm <b>smiling face</b> (hāsya-mukhe), and open hands — <b>hasta-yute</b>."}),
+ v("v8", "8", "Dhanalakṣmī", "The Lakṣmī of wealth — dhimi-dhimi go the drums, ghuma-ghuma the conches.", [
+   [["धिमिधिमि","dhimi dhimi","the sound of drums"],["धिन्धिमि","dhindhimi","drum sound"],["धिन्धिमि","dhindhimi","drum sound"],["धिन्धिमि","dhindhimi","drum sound"],["दुन्दुभिनाद","the sound of kettle-drums","dundubhi = kettle-drum · nāda = sound"],["सुपूर्णमये","O you filled with it","su · pūrṇa = full · mayī"]],
+   [["घुमघुम","ghuma ghuma","the sound of conches"],["घुङ्घुम","ghuṅghuma","conch sound"],["घुङ्घुम","ghuṅghuma","conch sound"],["घुङ्घुम","ghuṅghuma","conch sound"],["शङ्खनिनाद","the sound of conches","śaṅkha = conch · nināda = sound"],["सुवाद्यनुते","O you praised with fine music","su · vādya · nutā"]],
+   [["वेदपुराणेतिहास","by the Vedas, Purāṇas and epics","veda · purāṇa · itihāsa = epics (Rāmāyaṇa, Mahābhārata)"],["सुपूजित","well worshipped","su · pūjita"],["वैदिकमार्ग","the Vedic path","vaidika · mārga = path"],["प्रदर्शयुते","O you who show it","pradarśa = showing · yutā"]],
+   refrain("धनलक्ष्मि", "Dhanalakṣmī", RUPENA)],
+  "Filled with the sound of drums — dhimi dhimi, dhindhimi; praised with fine music — the conches sounding ghuma ghuma, ghuṅghuma; worshipped by the Vedas, Purāṇas and epics, showing the Vedic path — victory, victory to you, beloved of Madhusūdana! O Dhanalakṣmī, in this form protect me.",
+  "திமிதிமி திந்திமி என்று ஒலிக்கும் துந்துபி நாதத்தால் நிறைந்தவளே; குமகும குங்கும என்று முழங்கும் சங்கொலியுடன் இனிய வாத்தியங்களால் போற்றப்படுபவளே; வேதம், புராணம், இதிகாசங்களால் பூஜிக்கப்படுபவளே, வைதிக வழியைக் காட்டுபவளே — மதுசூதனனின் பிரியையே, ஜயம் ஜயம்! தனலக்ஷ்மியே, இந்த வடிவில் என்னைக் காப்பாயாக.",
+  {tip:"The <b>sound</b> verse: <b>dhimi</b> once, then <b>dhindhimi × 3</b> (drums); <b>ghuma</b> once, then <b>ghuṅghuma × 3</b> (conches). Same shape both times. Refrain: <b>rūpeṇa</b>, like verse 4."})
+];
+const S = 'fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"';
+const ICONS = [
+  {t:"Ādilakṣmī", w:"मोक्षप्रदायिनि", v:"v1", d:"the first — giver of liberation", svg:`<circle cx="17" cy="17" r="11" ${S}/><path d="M17 9v16M9 17h16" ${S}/>`},
+  {t:"Dhānyalakṣmī", w:"क्षीरसमुद्भव", v:"v2", d:"grain and nourishment", svg:`<path d="M17 30V8M17 12c-4-1-6-4-6-6 3 0 6 2 6 6zM17 12c4-1 6-4 6-6-3 0-6 2-6 6zM17 19c-4-1-6-4-6-6 3 0 6 2 6 6zM17 19c4-1 6-4 6-6-3 0-6 2-6 6z" ${S}/>`},
+  {t:"Dhairyalakṣmī", w:"भवभयहारिणि", v:"v3", d:"courage — fear removed", svg:`<path d="M17 4l10 4v8c0 7-5 11-10 14-5-3-10-7-10-14V8z" ${S}/>`},
+  {t:"Gajalakṣmī", w:"रथगज", v:"v4", d:"elephants, honour and power", svg:`<path d="M6 24v-8c0-5 4-9 10-9h4c5 0 8 4 8 9v8M28 16c2 2 2 8 0 10M10 24v4M22 24v4" ${S}/><circle cx="22" cy="13" r="1.4" fill="currentColor"/>`},
+  {t:"Santānalakṣmī", w:"खगवाहिनि", v:"v5", d:"children and family", svg:`<circle cx="12" cy="10" r="4" ${S}/><circle cx="23" cy="15" r="3" ${S}/><path d="M5 28c0-6 3-10 7-10s7 4 7 10M18 28c0-4 2-7 5-7s5 3 5 7" ${S}/>`},
+  {t:"Vijayalakṣmī", w:"कमलासनि", v:"v6", d:"victory in every effort", svg:`<path d="M10 6v24M10 6h14l-4 5 4 5H10" ${S}/>`},
+  {t:"Vidyālakṣmī", w:"भारति", v:"v7", d:"learning and the arts", svg:`<path d="M4 8c5-2 9-2 13 2 4-4 8-4 13-2v18c-5-2-9-2-13 2-4-4-8-4-13-2zM17 10v18" ${S}/>`},
+  {t:"Dhanalakṣmī", w:"दुन्दुभिनाद", v:"v8", d:"wealth, with drums and conches", svg:`<circle cx="12" cy="20" r="6" ${S}/><circle cx="22" cy="14" r="6" ${S}/><path d="M22 11v6M12 17v6" ${S}/>`},
+  {t:"Sister of the moon", w:"चन्द्रसहोदरि", v:"v1", d:"both rose from the milk ocean", svg:`<path d="M22 5a12 12 0 1 0 7 19A10 10 0 0 1 22 5z" ${S}/>`},
+  {t:"Seven notes", w:"स्वरसप्त", v:"v5", d:"adorned with music", svg:`<path d="M13 26V8l14-3v18M13 26a3 3 0 1 1-3-3 3 3 0 0 1 3 3zM27 23a3 3 0 1 1-3-3 3 3 0 0 1 3 3z" ${S}/>`}
+];
+const BENEFITS = [["मोक्षप्रदायिनि","Liberation"],["धान्यलक्ष्मि","Grain, food"],["धैर्यलक्ष्मि","Courage"],["गजलक्ष्मि","Honour, power"],["सन्तानलक्ष्मि","Children"],["विजयलक्ष्मि","Victory"],["विद्यालक्ष्मि","Learning"],["धनलक्ष्मि","Wealth"]];
+return {
+  key:"asl", titleDv:"अष्टलक्ष्मीस्तोत्रम्", verses:VERSES, icons:ICONS, benefits:BENEFITS,
+  meter:{name:"A song metre", kind:"geya",
+    hook:"Sung in beats of four: a long quarter (four little groups — su-ma-na-sa · van-di-ta · sun-da-ri · mā-dha-vi), then a shorter one ending in -e (candra-sahodari hemamaye).",
+    intro:"The Aṣṭalakṣmī Stotram is a song (<b>geya</b>), not a counted metre: each line is a long quarter of four beats — <i>su-ma-na-sa · van-di-ta · sun-da-ri · mā-dha-vi</i> — and a shorter one that ends on a held <b>-e</b> (<i>he-ma-ma-ye</i>, <i>ve-da-nu-te</i>, <i>pā-da-yu-te</i>). The singer stretches syllables to fit the beat, so there is no syllable check here.",
+    quiz:{q:"Which Lakṣmī is verse 8, with the drums and conches?", opts:["Dhanalakṣmī","Gajalakṣmī","Vidyālakṣmī","Ādilakṣmī"],
+      why:"Dhanalakṣmī: dhimi-dhimi dhindhimi (drums), ghuma-ghuma ghuṅghuma (conches)."}},
+  overview({R}){ document.getElementById("refrain").innerHTML = J.map(w => R(w[0])).join(" ") + "<br>" + ["आदिलक्ष्मि","सदा","पालय","माम्"].map(R).join(" "); }
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

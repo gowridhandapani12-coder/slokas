@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Damodarashtakam</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Padma Purāṇa · Satyavrata Muni · Sanskrit · 8 verses</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Damodarashtakam</h1>
+          <p class="lead" style="margin-top:8px">Baby Kṛṣṇa has broken the butter pot; Yaśodā chases him and ties him to a mortar with a rope (<i>dāma</i>) around his belly (<i>udara</i>) — so he is Dāmodara. The poet asks for no liberation, only that this little form of Kṛṣṇa always shine in his heart.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><span>From</span><b>Padma Purāṇa</b><span>as in her PDF</span></div>
+        <div class="fact"><span>Deity</span><b>Dāmodara</b><span>Kṛṣṇa tied by the belly</span></div>
+        <div class="fact"><span>Metre</span><b>Bhujaṅgaprayāta</b><span>short–long–long × 4</span></div>
+        <div class="fact"><span>Title</span><b>dāma + udara</b><span>rope + belly</span></div>
+        <div class="fact"><span>Season</span><b>Kārttika month</b><span>traditionally sung with a lamp</span></div>
+        <div class="fact"><span>On her plan</span><b>Wednesday</b><span>with Jagannāthāṣṭakam</span></div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h2>The story in the verses</h2>
+          <div class="tip"><b>1</b> he runs from Yaśodā · <b>2</b> he cries, rubbing his eyes, and is tied · <b>3</b> he is conquered only by love · <b>4–5</b> “I want no mokṣa — only this child in my heart” · <b>6</b> be gracious · <b>7</b> as you freed Kubera's sons, give me love · <b>8</b> salutations to the rope, the belly, Rādhā.</div>
+        </div>
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each verse, in order.</p>
+          <div class="mn" id="openings"></div>
+        </div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+const BP = {meter:"bhujangaprayata", pat:"LGGLGGLGGLGx", meterNote:"Bhujaṅgaprayāta, “the serpent's glide”: short–long–long four times, 12 syllables a quarter."};
+const v = (id, n, hook, tip, lines, en, ta) => Object.assign({id, n, label:"Verse " + n, hook, tip, lines, en, ta}, BP);
+const VERSES = [
+ v("v1", "1", "I bow to the Lord, running from Yaśodā, caught by the gopī.", "The chase: <b>yaśodā-bhiyā</b> (afraid of Yaśodā) he runs from the mortar (<b>ulūkhala</b>), and she catches him from behind.", [
+   [["नमामीश्वरं","I bow to the Lord","namāmi · īśvara"],["सच्चिदानन्दरूपं","whose form is being, awareness and bliss","sat · cit · ānanda · rūpa"]],
+   [["लसत्कुण्डलं","with shining earrings","lasat · kuṇḍala"],["गोकुले","in Gokula","gokula"],["भ्राजमानम्","shining","bhrājamāna"]],
+   [["यशोदाभियोलूखलाद्धावमानं","running from the mortar in fear of Yaśodā","yaśodā · bhiyā = in fear · ulūkhala = mortar · dhāvamāna = running"]],
+   [["परामृष्टमत्यन्ततो","caught from behind","parāmṛṣṭa · atyantataḥ = far behind"],["द्रुत्य","running fast","drutya"],["गोप्या","by the gopī","gopī"]]],
+  "I bow to the Lord whose form is being, awareness and bliss, with shining earrings, radiant in Gokula — running from the mortar in fear of Yaśodā, who ran fast after him and caught him from behind.",
+  "சச்சிதானந்த வடிவினனும், ஒளிரும் குண்டலங்கள் அணிந்தவனும், கோகுலத்தில் விளங்குபவனும், யசோதைக்குப் பயந்து உரலிலிருந்து ஓடியவனும், பின்தொடர்ந்து ஓடிய கோபியால் பிடிக்கப்பட்டவனுமான ஈசனை வணங்குகிறேன்."),
+ v("v2", "2", "Crying, rubbing his eyes, sobbing — the Dāmodara bound by love.", "A crying child: <b>rudantam</b> (crying) · <b>mṛjantam</b> (rubbing his eyes) · <b>śvāsa-kampa</b> (sobbing) · <b>sātaṅka-netram</b> (frightened eyes).", [
+   [["रुदन्तं","crying","rudat"],["मुहुर्नेत्रयुग्मं","again and again, his two eyes","muhuḥ · netra · yugma"],["मृजन्तं","rubbing","mṛjat"]],
+   [["कराम्भोजयुग्मेन","with his two lotus hands","kara · ambhoja · yugma"],["सातङ्कनेत्रम्","with frightened eyes","sa-ātaṅka = fearful · netra"]],
+   [["मुहुःश्वासकम्पत्रिरेखाङ्ककण्ठ","whose three-lined neck shakes with sobs","muhuḥ · śvāsa · kampa · tri-rekhā · aṅka · kaṇṭha"]],
+   [["स्थितग्रैवदामोदरं","wearing a necklace, Dāmodara","sthita · graiva = necklace · dāmodara"],["भक्तिबद्धम्","bound by love","bhakti · baddha"]]],
+  "(I bow to) Dāmodara, bound by love — crying, rubbing his frightened eyes again and again with his two lotus hands, his neck with its three lines and necklace shaking with sobs.",
+  "அழுதுகொண்டு, தாமரைக் கைகளால் பயந்த கண்களை மீண்டும் மீண்டும் துடைத்து, மூன்று ரேகையுடைய கழுத்து விம்மலால் நடுங்க, அன்பால் கட்டுண்ட தாமோதரனை (வணங்குகிறேன்)."),
+ v("v3", "3", "With such child's play he drowns Gokula in bliss — conquered only by love.", "The point of the story: he who rules the universe is <b>bhaktair jitatvam</b> — conquered by those who love him.", [
+   [["इतीदृक्स्वलीलाभिरानन्दकुण्डे","by such play of his, in a pool of bliss","iti · īdṛk · sva · līlā · ānanda · kuṇḍa"]],
+   [["स्वघोषं","his own village","sva · ghoṣa"],["निमज्जन्तमाख्यापयन्तम्","immersing, and showing","nimajjat · ākhyāpayat"]],
+   [["तदीयेशितज्ञेषु","to those who know him as Lord","tadīya · īśita · jña"],["भक्तैर्जितत्वं","that he is conquered by devotees","bhaktaiḥ · jitatva"]],
+   [["पुनः","again","punaḥ"],["प्रेमतस्तं","with love, him","premataḥ · tam"],["शतावृत्ति","a hundred times","śata · āvṛtti"],["वन्दे","I salute","vande"]]],
+  "With such child's play he immerses his village in a pool of bliss, and shows those who know him as the Lord that he is conquered by love alone. Again, with love, I salute him a hundred times.",
+  "இத்தகைய லீலைகளால் தன் ஆயர்பாடியை ஆனந்தக் குளத்தில் மூழ்கடித்து, தன்னை ஈசன் என அறிந்தவர்களுக்கு தான் பக்தியால் மட்டுமே வெல்லப்படுபவன் என்று காட்டுபவனை மீண்டும் அன்புடன் நூறு முறை வணங்குகிறேன்."),
+ v("v4", "4", "I ask for no mokṣa, no boon — only this child, Gopāla, in my heart.", "The famous refusal: <b>varaṃ deva mokṣaṃ na</b> — “O Lord, I don't choose liberation”. Only <b>gopāla-bālam</b>.", [
+   [["वरं","as a boon","vara"],["देव","O Lord","deva"],["मोक्षं","liberation","mokṣa"],["न","not","na"],["मोक्षावधिं","nor the highest end","mokṣa · avadhi"],["वा","or","vā"]],
+   [["न","nor","na"],["चान्यं","anything else","ca · anya"],["वृणेऽहं","do I choose","vṛṇe · aham"],["वरेशादपीह","even from you, lord of boons, here","vara-īśa · api · iha"]],
+   [["इदं","this","idam"],["ते","your","te"],["वपुर्नाथ","form, O Lord","vapuḥ · nātha"],["गोपालबालं","the cowherd child","gopāla · bāla"]],
+   [["सदा","always","sadā"],["मे","my","me"],["मनस्याविरास्तां","may it shine in my mind","manasi · āvirāstām"],["किमन्यैः","what use are others","kim · anyaiḥ"]]],
+  "O Lord, I do not choose liberation, nor its highest end, nor any other boon from you, lord of boons. May this form of yours, the cowherd child, always shine in my mind — what use is anything else?",
+  "இறைவா, மோக்ஷத்தையோ, அதன் எல்லையையோ, வேறு எந்த வரத்தையோ நான் வேண்டவில்லை. கோபால பாலனான உன் இந்த வடிவம் என் மனதில் எப்போதும் தோன்றட்டும் — மற்றவற்றால் என்ன பயன்?"),
+ v("v5", "5", "His lotus face, framed by dark curls, kissed by the gopī — may it shine in my mind.", "A close-up: <b>mukhāmbhoja</b> (lotus face) · <b>kuntalaiḥ</b> (curls) · <b>bimba-raktādharam</b> (lips red as bimba fruit). Ends like verse 4: <b>manasy āvirāstām</b>.", [
+   [["इदं","this","idam"],["ते","your","te"],["मुखाम्भोजमत्यन्तनीलैर्","lotus face, by very dark","mukha · ambhoja · atyanta · nīla"]],
+   [["वृतं","framed","vṛta"],["कुन्तलैः","by curls","kuntala"],["स्निग्धरक्तैश्च","soft and reddish","snigdha · rakta · ca"],["गोप्या","by the gopī","gopī"]],
+   [["मुहुश्चुम्बितं","kissed again and again","muhuḥ · cumbita"],["बिम्बरक्ताधरं","with lips red as bimba","bimba · rakta · adhara"],["मे","my","me"]],
+   [["मनस्याविरास्तामलं","may it shine in (my) mind; enough","manasi · āvirāstām · alam"],["लक्षलाभैः","of a hundred thousand gains","lakṣa · lābha"]]],
+  "May this lotus face of yours, framed by very dark, soft, reddish curls, with lips red as the bimba fruit, kissed again and again by the gopī, shine in my mind. Enough of a hundred thousand other gains!",
+  "மிகக் கரிய, மென்மையான செம்மை கலந்த சுருள்முடிகளால் சூழப்பட்டதும், கோவைப்பழம் போல் சிவந்த உதடுகளை உடையதும், கோபியால் மீண்டும் மீண்டும் முத்தமிடப்பட்டதுமான உன் தாமரை முகம் என் மனதில் தோன்றட்டும்; லட்சம் லாபங்களால் என்ன பயன்?"),
+ v("v6", "6", "O Dāmodara, endless Viṣṇu — be gracious; look on me, sunk in sorrow.", "A plea: <b>prasīda prabho</b> — “be gracious, Lord” — to one sunk in an ocean of sorrow (<b>duḥkha-jālābdhi-magnam</b>).", [
+   [["नमो","salutations","namaḥ"],["देव","O Lord","deva"],["दामोदरानन्त","O Dāmodara, endless one","dāmodara · ananta"],["विष्णो","O Viṣṇu","viṣṇu"]],
+   [["प्रसीद","be gracious","prasīda"],["प्रभो","O master","prabhu"],["दुःखजालाब्धिमग्नम्","(me,) sunk in an ocean of sorrows","duḥkha · jāla · abdhi · magna"]],
+   [["कृपादृष्टिवृष्ट्यातिदीनं","by the rain of your merciful glance, very wretched (me)","kṛpā · dṛṣṭi · vṛṣṭi · ati · dīna"],["बतानु","alas","bata · anu"]],
+   [["गृहाणेश","accept, O Lord","gṛhāṇa · īśa"],["मामज्ञमेध्यक्षिदृश्यः","me, ignorant; be visible to my eyes","mām · ajñam · edhi · akṣi · dṛśyaḥ"]]],
+  "Salutations, O Lord Dāmodara, endless Viṣṇu. Be gracious, O master, to me, sunk in an ocean of sorrows. Alas — with the rain of your merciful glance accept this wretched, ignorant one, O Lord, and become visible to my eyes.",
+  "தேவா, தாமோதரா, அனந்தா, விஷ்ணுவே, நமஸ்காரம். துன்பக் கடலில் மூழ்கியிருக்கும் என்மீது அருள்வாய். கருணைப் பார்வை மழையால் மிக எளியவனும் அறியாதவனுமான என்னை ஏற்று, என் கண்களுக்குக் காட்சி தருவாயாக."),
+ v("v7", "7", "As you freed Kubera's sons tied to the trees, give me love — not mokṣa.", "The Yamalārjuna story: tied to the mortar, he crawled between two trees and freed <b>Kubera's sons</b> (kuberātmajau) from a curse.", [
+   [["कुबेरात्मजौ","the two sons of Kubera","kubera · ātmaja"],["बद्धमूर्त्यैव","even while bound","baddha · mūrti · eva"],["यद्वत्","just as","yadvat"]],
+   [["त्वया","by you","tvayā"],["मोचितौ","were freed","mocita"],["भक्तिभाजौ","made devotees","bhakti · bhāj"],["कृतौ","were made","kṛta"],["च","and","ca"]],
+   [["तथा","so","tathā"],["प्रेमभक्तिं","loving devotion","prema · bhakti"],["स्वकां","your own","svakā"],["मे","to me","me"],["प्रयच्छ","give","prayaccha"]],
+   [["न","no","na"],["मोक्षे","for liberation","mokṣa"],["ग्रहो","eagerness","graha"],["मेऽस्ति","I have","me · asti"],["दामोदरेह","O Dāmodara, here","dāmodara · iha"]]],
+  "Just as you, even while tied, freed the two sons of Kubera and made them your devotees, so give me loving devotion to you. I have no eagerness for liberation, O Dāmodara.",
+  "கட்டுண்ட நிலையிலேயே குபேரனின் இரு மகன்களை விடுவித்து பக்தர்களாக்கியது போல், எனக்கும் உன் மீது அன்பு பக்தியைத் தருவாயாக. தாமோதரா, எனக்கு மோக்ஷத்தில் ஆசை இல்லை."),
+ v("v8", "8", "Salutations to the rope, to your belly that holds the universe, to Rādhā.", "Salutations to three things: the shining <b>rope</b> (dāmne) · the <b>belly</b> that holds the universe (udarāya) · <b>Rādhikā</b>, his beloved.", [
+   [["नमस्तेऽस्तु","salutations","namaḥ · te · astu"],["दाम्ने","to the rope","dāman"],["स्फुरद्दीप्तिधाम्ने","home of shining light","sphurat · dīpti · dhāman"]],
+   [["त्वदीयोदरायाथ","to your belly, and","tvadīya · udara · atha"],["विश्वस्य","of the universe","viśva"],["धाम्ने","to the home","dhāman"]],
+   [["नमो","salutations","namaḥ"],["राधिकायै","to Rādhikā","rādhikā"],["त्वदीयप्रियायै","your beloved","tvadīya · priyā"]],
+   [["नमोऽनन्तलीलाय","salutations to him of endless play","namaḥ · ananta · līlā"],["देवाय","to the Lord","deva"],["तुभ्यम्","to you","tubhyam"]]],
+  "Salutations to the rope, a home of shining light; to your belly, the home of the universe; salutations to Rādhikā, your beloved; salutations to you, the Lord of endless play.",
+  "ஒளி வீசும் கயிற்றுக்கு நமஸ்காரம்; உலகின் இருப்பிடமான உன் வயிற்றுக்கு நமஸ்காரம்; உன் பிரியையான ராதிகைக்கு நமஸ்காரம்; முடிவற்ற லீலைகள் புரியும் தேவனே, உனக்கு நமஸ்காரம்.")
+];
+return {
+  key:"dmd", titleDv:"श्रीदामोदराष्टकम्", verses:VERSES,
+  meter:{name:"Bhujaṅgaprayāta", kind:"bhujangaprayata", hook:BP.meterNote,
+    intro:"Every line is <b>short–long–long</b> four times — the gliding beat of the bhujaṅgaprayāta (“serpent's glide”), the same as the Subramanya Bhujangam.",
+    quiz:{q:"Why is Kṛṣṇa called Dāmodara?", opts:["Yaśodā tied a rope (dāma) round his belly (udara)","He holds the universe in his belly","He defeated the demon Dāma","He wears a golden belt"],
+      why:"dāma = rope, udara = belly: Yaśodā tied him to the mortar by his waist."}}
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

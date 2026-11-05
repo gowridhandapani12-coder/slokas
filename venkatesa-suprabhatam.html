@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Venkatesa Suprabhatam</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+<style>.refrain{font-family:var(--f-verse);font-size:1.2rem;color:var(--terra-ink);line-height:1.7;overflow-wrap:anywhere}</style>
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Prativādi Bhayaṅkaram Aṇṇan · Sanskrit · Suprabhātam · Stotram · Maṅgalāśāsanam</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Venkatesa Suprabhatam</h1>
+          <p class="lead" style="margin-top:8px">The dawn song of Tirumala. It begins with Viśvāmitra waking young Rāma — <i>kausalyā supraja rāma</i> — then wakes Lord Veṅkaṭeśa as sages, gods, birds and bees gather at dawn. The Stotram praises him; the Maṅgalāśāsanam wishes him every blessing.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><span>Composed by</span><b>P. B. Aṇṇan</b><span>Prativādi Bhayaṅkaram Aṇṇaṅgarācārya, 15th c.</span></div>
+        <div class="fact"><span>Deity</span><b>Śrī Veṅkaṭeśa</b><span>Lord of the Seven Hills, Tirumala</span></div>
+        <div class="fact"><span>When</span><b>At dawn</b><span>sung daily at Tirumala before the Lord wakes</span></div>
+        <div class="fact"><span>Parts on this page</span><b>3</b><span>Suprabhātam 29 · Stotram 11 · Maṅgalam 14</span></div>
+        <div class="fact"><span>Main metre</span><b>Vasantatilakā</b><span>14 syllables — the Suprabhātam verses</span></div>
+        <div class="fact"><span>On her plan</span><b>Thursday</b><span>first three items of the day</span></div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h2>Refrains to learn first</h2>
+          <p class="muted" style="margin:6px 0 12px">Learn these and a third of the Suprabhātam is already done:</p>
+          <div class="refrain" id="refrains"></div>
+        </div>
+        <div class="card">
+          <h2>The dawn, verse by verse</h2>
+          <div class="tip"><b>1–2</b> waking Rāma and Govinda · <b>3–4</b> to Lakṣmī · <b>5–12</b> the dawn: seven sages, gods, breeze, parrots, Nārada's vīṇā, bees, butter-churning, lotuses · <b>13–24</b> his glory: names, hills, gods, planets, the ten avatāras · <b>25–28</b> priests with sacred water, the sun rises · <b>29</b> the fruit.</div>
+        </div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+const VT = {meter:"vasantatilaka", pat:"GGLGLLLGLLGLGx", meterNote:"Vasantatilakā: 14 syllables a quarter."};
+const SA = [["शेषाद्रिशेखरविभो","O Lord, crown of the Śeṣa hill","śeṣādri = Śeṣa hill · śekhara = crest · vibhu = Lord"],["तव","to you","tava"],["सुप्रभातम्","a good morning","su = good · prabhāta = dawn"]];
+const VA = [["श्रीवेङ्कटाचलपते","O Lord of the Veṅkaṭa hill","śrī · veṅkaṭa-acala = hill · pati = lord"],["तव","to you","tava"],["सुप्रभातम्","a good morning","suprabhātam"]];
+const v = (id, n, hook, lines, en, ta, extra) => Object.assign({id, n, label:"Suprabhātam " + n, part:"Suprabhātam", hook, lines, en, ta}, VT, extra || {});
+const VERSES = [
+ v("s1", "1", "“Rāma, Kausalyā's good son — the eastern dawn is breaking. Rise!”", [
+   [["कौसल्यासुप्रजा","Kausalyā's good son","kausalyā · su-prajā = fine child"],["राम","O Rāma","rāma"],["पूर्वा","the eastern","pūrvā"],["सन्ध्या","dawn","sandhyā"],["प्रवर्तते","is beginning","pravartate"]],
+   [["उत्तिष्ठ","rise","uttiṣṭha"],["नरशार्दूल","O tiger among men","nara · śārdūla = tiger"],["कर्तव्यं","to be done","kartavya"],["दैवमाह्निकम्","the daily worship","daiva · āhnika = daily rite"]]],
+  "O Rāma, good son of Kausalyā, the eastern dawn is breaking. Rise, O tiger among men; the daily worship must be done.",
+  "கௌசல்யையின் நல்ல மகனே, ராமா, கிழக்கில் விடியல் தொடங்குகிறது. மனிதருள் சிங்கமே, எழுந்திரு; தினசரி தெய்வ வழிபாடு செய்ய வேண்டும்.",
+  {meter:"anushtubh", pat:null, tip:"Viśvāmitra's words to young Rāma, from the Rāmāyaṇa (Bāla Kāṇḍa). The Suprabhātam borrows them to begin."}),
+ v("s2", "2", "Rise, Govinda; rise, Garuḍa-bannered; rise, Lakṣmī's beloved — make the three worlds auspicious.", [
+   [["उत्तिष्ठोत्तिष्ठ","rise, rise","uttiṣṭha · uttiṣṭha"],["गोविन्द","O Govinda","govinda"],["उत्तिष्ठ","rise","uttiṣṭha"],["गरुडध्वज","O you with Garuḍa on your banner","garuḍa · dhvaja"]],
+   [["उत्तिष्ठ","rise","uttiṣṭha"],["कमलाकान्त","O beloved of Kamalā","kamalā · kānta"],["त्रैलोक्यं","the three worlds","trailokya"],["मङ्गलं","auspicious","maṅgala"],["कुरु","make","kuru"]]],
+  "Rise, rise, O Govinda; rise, O Garuḍa-bannered one; rise, O beloved of Lakṣmī, and make the three worlds auspicious.",
+  "எழுந்திரு, எழுந்திரு கோவிந்தா; எழுந்திரு கருடக் கொடியோனே; எழுந்திரு கமலையின் காதலனே; மூவுலகையும் மங்களமாக்குவாயாக.",
+  {meter:"anushtubh", pat:null, tip:"<b>uttiṣṭha</b> (rise) four times, each with a name: Govinda · Garuḍadhvaja · Kamalākānta."}),
+ v("s3", "3", "To Lakṣmī: mother of all worlds, dwelling on Viṣṇu's chest — good morning.", [
+   [["मातस्समस्तजगतां","O mother of all the worlds","mātaḥ · samasta · jagat"],["मधुकैटभारेः","of the enemy of Madhu and Kaiṭabha","madhu · kaiṭabha · ari"]],
+   [["वक्षोविहारिणि","O you who dwell on (his) chest","vakṣas · vihāriṇī"],["मनोहरदिव्यमूर्ते","O you of charming divine form","manohara · divya · mūrti"]],
+   [["श्रीस्वामिनि","O sovereign Śrī","śrī · svāminī"],["श्रितजनप्रियदानशीले","eager to give devotees what they love","śrita-jana = devotees · priya · dāna · śīlā"]],
+   [["श्रीवेङ्कटेशदयिते","O beloved of Śrī Veṅkaṭeśa","veṅkaṭeśa · dayitā"],["तव","to you","tava"],["सुप्रभातम्","a good morning","suprabhātam"]]],
+  "O mother of all the worlds, who dwell on the chest of Madhu and Kaiṭabha's foe, of charming divine form; O sovereign Śrī, eager to give your devotees what they love, beloved of Śrī Veṅkaṭeśa — good morning to you.",
+  "உலகங்கள் அனைத்துக்கும் தாயே, மது கைடபரை வென்றவனின் மார்பில் வசிப்பவளே, மனம் கவரும் திவ்ய வடிவினளே, அடியார்களுக்கு விரும்பியதை அளிப்பவளே, ஸ்ரீவேங்கடேசனின் பிரியையே — உனக்கு நல்ல காலை வணக்கம்."),
+ v("s4", "4", "Good morning, lotus-eyed Lakṣmī, worshipped by the wives of Brahmā, Śiva and Indra.", [
+   [["तव","to you","tava"],["सुप्रभातमरविन्दलोचने","a good morning, O lotus-eyed one","suprabhātam · aravinda · locanā"]],
+   [["भवतु","may it be","bhavatu"],["प्रसन्नमुखचन्द्रमण्डले","O you whose moon-like face is gracious","prasanna · mukha · candra-maṇḍala"]],
+   [["विधिशङ्करेन्द्रवनिताभिरर्चिते","worshipped by the wives of Brahmā, Śiva and Indra","vidhi = Brahmā · śaṅkara · indra · vanitā = wife · arcitā"]],
+   [["वृषशैलनाथदयिते","O beloved of the Lord of Vṛṣa hill","vṛṣa-śaila · nātha · dayitā"],["दयानिधे","O treasure of compassion","dayā · nidhi"]]],
+  "May it be a good morning for you, O lotus-eyed one, whose moon-like face is gracious, worshipped by the wives of Brahmā, Śiva and Indra, beloved of the Lord of the Vṛṣa hill, treasure of compassion.",
+  "தாமரைக் கண்ணாளே, மலர்ந்த சந்திர முகத்தவளே, பிரம்மா, சிவன், இந்திரனின் தேவியரால் வணங்கப்படுபவளே, விருஷமலை நாதனின் பிரியையே, கருணைக் கடலே — உனக்கு நல்ல காலையாகட்டும்.",
+  {meter:"manjubhashini", pat:"LLGLGLLLGLGLx", meterNote:"Mañjubhāṣiṇī, “sweet-voiced”: 13 syllables a quarter."}),
+ v("s5", "5", "The seven sages bring lotuses from the heavenly Gaṅgā to worship your feet.", [
+   [["अत्र्यादिसप्तऋषयस्समुपास्य","the seven sages, Atri and others, having worshipped","atri · ādi · sapta ṛṣayaḥ · samupāsya"],["सन्ध्याम्","the dawn rite","sandhyā"]],
+   [["आकाशसिन्धुकमलानि","lotuses of the heavenly river","ākāśa-sindhu = Gaṅgā of the sky · kamala"],["मनोहराणि","lovely","manohara"]],
+   [["आदाय","bringing","ādāya"],["पादयुगमर्चयितुं","to worship your two feet","pāda · yuga · arcayitum"],["प्रपन्नाः","have come","prapanna"]],
+   SA],
+  "Atri and the other seven sages, having done their dawn worship, have come bringing lovely lotuses from the heavenly Gaṅgā to worship your feet. O Lord, crown of the Śeṣa hill — good morning to you.",
+  "அத்ரி முதலிய சப்தரிஷிகள் சந்தியா வந்தனம் முடித்து, வான கங்கையின் அழகிய தாமரைகளை ஏந்தி உன் பாதங்களை அர்ச்சிக்க வந்துள்ளனர். சேஷாத்ரி சிகரத்தின் இறைவா, உனக்குச் சுப்ரபாதம்.",
+  {tip:"From here to verse 12 every verse ends <b>śeṣādri-śekhara-vibho tava suprabhātam</b>."}),
+ v("s6", "6", "Śiva, Brahmā, Murugan and Indra sing your deeds; Bṛhaspati reads the day's almanac.", [
+   [["पञ्चाननाब्जभवषण्मुखवासवाद्याः","five-faced Śiva, lotus-born Brahmā, six-faced Skanda, Indra and others","pañcānana · abja-bhava · ṣaṇmukha · vāsava · ādya"]],
+   [["त्रैविक्रमादिचरितं","your deeds as Trivikrama and others","traivikrama · ādi · carita"],["विबुधाः","the gods","vibudha"],["स्तुवन्ति","praise","stuvanti"]],
+   [["भाषापतिः","the lord of speech (Bṛhaspati)","bhāṣā · pati"],["पठति","reads","paṭhati"],["वासरशुद्धिमारात्","the day's auspiciousness, nearby","vāsara-śuddhi = the day's almanac · ārāt = near"]],
+   SA],
+  "Śiva, Brahmā, Skanda, Indra and the other gods praise your deeds as Trivikrama; nearby, Bṛhaspati reads out the day's almanac. Good morning to you, Lord of the Śeṣa hill.",
+  "சிவன், பிரம்மா, ஆறுமுகன், இந்திரன் முதலிய தேவர்கள் உன் திரிவிக்கிரம லீலைகளைப் போற்றுகின்றனர்; அருகே பிருகஸ்பதி அன்றைய பஞ்சாங்கத்தைப் படிக்கிறார். சேஷாத்ரி சிகரத்தின் இறைவா, உனக்குச் சுப்ரபாதம்."),
+ v("s7", "7", "A gentle breeze blows from the lotuses and coconut and areca groves.", [
+   [["ईषत्प्रफुल्लसरसीरुहनारिकेल","from half-opened lotuses and coconut palms","īṣat = slightly · praphulla = blooming · sarasīruha = lotus · nārikela = coconut"]],
+   [["पूगद्रुमादिसुमनोहरपालिकानाम्","areca trees and lovely rows of plants","pūga = areca · druma = tree · sumanohara · pālikā = row"]],
+   [["आवाति","blows","āvāti"],["मन्दमनिलः","gently, the breeze","mandam · anila"],["सह","with","saha"],["दिव्यगन्धैः","divine fragrances","divya · gandha"]],
+   SA],
+  "A gentle breeze, laden with divine fragrance, blows from the half-opened lotuses, coconut palms, areca trees and lovely rows of plants. Good morning to you, Lord of the Śeṣa hill.",
+  "சற்றே மலர்ந்த தாமரைகள், தென்னை, பாக்கு மரங்கள், அழகிய செடி வரிசைகள் ஆகியவற்றிலிருந்து தெய்வீக மணத்துடன் மெல்லிய தென்றல் வீசுகிறது. சேஷாத்ரி சிகரத்தின் இறைவா, உனக்குச் சுப்ரபாதம்."),
+ v("s8", "8", "The pet parrots wake, eat the leftover banana and pāyasam, and recite.", [
+   [["उन्मील्य","opening","unmīlya"],["नेत्रयुगमुत्तमपञ्जरस्थाः","their two eyes, in fine cages","netra-yuga · uttama · pañjara-stha"]],
+   [["पात्रावशिष्टकदलीफलपायसानि","the banana and sweet pāyasam left in their bowls","pātra = bowl · avaśiṣṭa = left · kadalī-phala = banana · pāyasa"]],
+   [["भुक्त्वा","having eaten","bhuktvā"],["सलीलमथ","playfully, then","salīlam · atha"],["केलिशुकाः","the pet parrots","keli · śuka = parrot"],["पठन्ति","recite","paṭhanti"]],
+   SA],
+  "The pet parrots in their fine cages open their eyes, eat the banana and pāyasam left in their bowls, and playfully recite. Good morning to you, Lord of the Śeṣa hill.",
+  "அழகிய கூண்டுகளில் இருக்கும் கிளிகள் கண் திறந்து, கிண்ணங்களில் மீதமிருக்கும் வாழைப்பழமும் பாயசமும் உண்டு, விளையாட்டாகப் பாடுகின்றன. சேஷாத்ரி சிகரத்தின் இறைவா, உனக்குச் சுப்ரபாதம்."),
+ v("s9", "9", "Nārada sings your endless story on his sweet-stringed vīṇā.", [
+   [["तन्त्रीप्रकर्षमधुरस्वनया","sweet with the sound of its strings","tantrī = string · prakarṣa · madhura · svana"],["विपञ्च्या","on the vīṇā","vipañcī"]],
+   [["गायत्यनन्तचरितं","sings your endless deeds","gāyati · ananta · carita"],["तव","your","tava"],["नारदोऽपि","Nārada too","nāradaḥ · api"]],
+   [["भाषासमग्रमसकृत्करचाररम्यं","in full words, again and again, lovely with his fingers' play","bhāṣā · samagram · asakṛt = repeatedly · kara-cāra = hand movement · ramya"]],
+   SA],
+  "Nārada too sings your endless deeds on his vīṇā, sweet with the sound of its strings, again and again, in full words, lovely with the play of his fingers. Good morning to you, Lord of the Śeṣa hill.",
+  "நாரதரும் இனிய நரம்பொலி கொண்ட வீணையில், விரல்களின் அழகிய அசைவுடன், உன் முடிவற்ற சரிதத்தை மீண்டும் மீண்டும் பாடுகிறார். சேஷாத்ரி சிகரத்தின் இறைவா, உனக்குச் சுப்ரபாதம்."),
+ v("s10", "10", "Bees, drunk on nectar, come humming out of the lotuses to serve you.", [
+   [["भृङ्गावली","the rows of bees","bhṛṅga · āvalī"],["च","and","ca"],["मकरन्दरसानुविद्ध","steeped in the juice of nectar","makaranda = nectar · rasa · anuviddha = soaked"]],
+   [["झङ्कारगीतनिनदैः","with humming songs","jhaṅkāra = humming · gīta · ninada"],["सह","together","saha"],["सेवनाय","to serve (you)","sevana"]],
+   [["निर्यात्युपान्तसरसीकमलोदरेभ्यः","come out from the lotuses of nearby ponds","niryāti · upānta = nearby · sarasī = pond · kamala-udara"]],
+   SA],
+  "Rows of bees, humming songs steeped in nectar, come out of the lotuses in the nearby ponds to serve you. Good morning to you, Lord of the Śeṣa hill.",
+  "தேனில் தோய்ந்த ரீங்காரப் பாடல்களுடன் வண்டுக் கூட்டங்கள் அருகிலுள்ள குளங்களின் தாமரைகளிலிருந்து உனக்குச் சேவை செய்ய வெளிவருகின்றன. சேஷாத்ரி சிகரத்தின் இறைவா, உனக்குச் சுப்ரபாதம்."),
+ v("s11", "11", "The cowherd women churn curd — the sound of the pots fills every direction.", [
+   [["योषागणेन","by the women","yoṣā-gaṇa"],["वरदध्नि","the fine curd","vara · dadhi"],["विमथ्यमाने","being churned","vimathyamāna"]],
+   [["घोषालयेषु","in the cowherd homes","ghoṣa · ālaya"],["दधिमन्थनतीव्रघोषाः","the loud sounds of churning","dadhi · manthana · tīvra · ghoṣa"]],
+   [["रोषात्कलिं","as if in anger, a quarrel","roṣāt · kali"],["विदधते","make","vidadhate"],["ककुभश्च","with the directions","kakubh = direction · ca"],["कुम्भाः","the pots","kumbha"]],
+   SA],
+  "As the women churn the fine curd in the cowherd homes, the loud churning pots seem to quarrel angrily with the directions, filling them with sound. Good morning to you, Lord of the Śeṣa hill.",
+  "ஆயர் இல்லங்களில் பெண்கள் தயிர் கடைய, அந்தப் பானைகளின் உரத்த ஒலி திசைகளுடன் கோபித்துச் சண்டையிடுவது போல் எங்கும் நிறைகிறது. சேஷாத்ரி சிகரத்தின் இறைவா, உனக்குச் சுப்ரபாதம்.",
+  {tip:"A sound picture: <b>yoṣā</b> · <b>ghoṣa</b> · <b>ghoṣāḥ</b> · <b>roṣāt</b> — the -oṣa rhyme is the churning."}),
+ v("s12", "12", "Bees on the lotuses hum loudly as if beating drums to outshine the blue lily.", [
+   [["पद्मेशमित्रशतपत्रगतालिवर्गाः","the bees on the hundred-petalled lotuses, friends of the sun","padmeśa = sun · mitra · śatapatra = lotus · gata · ali-varga = swarms of bees"]],
+   [["हर्तुं","to steal","hartum"],["श्रियं","the beauty","śrī"],["कुवलयस्य","of the blue lily","kuvalaya"],["निजाङ्गलक्ष्म्या","with their own bodies' beauty","nija · aṅga · lakṣmī"]],
+   [["भेरीनिनादमिव","like the sound of drums","bherī · nināda · iva"],["बिभ्रति","make","bibhrati"],["तीव्रनादं","a loud sound","tīvra · nāda"]],
+   SA],
+  "The swarms of bees on the lotuses, friends of the sun, hum loudly like beating drums, as if to steal the blue lily's beauty with the beauty of their own dark bodies. Good morning to you, Lord of the Śeṣa hill.",
+  "சூரியனின் நண்பனான தாமரைகளில் இருக்கும் வண்டுக் கூட்டங்கள், தம் கரிய உடல் அழகால் நீலோத்பலத்தின் அழகைக் கவரப் போவது போல் பேரிகை முழக்கம் போல் உரத்து ரீங்காரம் செய்கின்றன. சேஷாத்ரி சிகரத்தின் இறைவா, உனக்குச் சுப்ரபாதம்."),
+ v("s13", "13", "O Śrīnivāsa, granter of all wishes, friend of all worlds — good morning.", [
+   [["श्रीमन्नभीष्टवरदाखिललोकबन्धो","O glorious one, granter of wishes, friend of all the worlds","śrīman · abhīṣṭa · varada · akhila · loka · bandhu"]],
+   [["श्रीश्रीनिवास","O Śrī Śrīnivāsa","śrīnivāsa = abode of Śrī"],["जगदेकदयैकसिन्धो","O one ocean of compassion for the world","jagat · eka · dayā · sindhu"]],
+   [["श्रीदेवतागृहभुजान्तरदिव्यमूर्ते","O divine one whose chest is Lakṣmī's home","śrī-devatā · gṛha · bhuja-antara = chest · divya · mūrti"]],
+   VA],
+  "O glorious one, granter of every wish, friend of all the worlds; O Śrīnivāsa, the one ocean of compassion for the world; O divine one, whose chest is Lakṣmī's home — O Lord of the Veṅkaṭa hill, good morning to you.",
+  "விரும்பியதை அருள்பவனே, உலகனைத்தின் நண்பனே, ஸ்ரீநிவாசா, உலகின் ஒரே கருணைக் கடலே, லக்ஷ்மி வசிக்கும் மார்பை உடைய திவ்ய மூர்த்தியே — வேங்கடமலை நாதா, உனக்குச் சுப்ரபாதம்.",
+  {tip:"From here to verse 24 (and 27–28) every verse ends <b>śrī-veṅkaṭācalapate tava suprabhātam</b>."}),
+ v("s14", "14", "Śiva, Brahmā and Sanandana, purified in the temple tank, wait at your door.", [
+   [["श्रीस्वामिपुष्करिणिकाप्लवनिर्मलाङ्गाः","their bodies pure from bathing in the Svāmi Puṣkariṇī","svāmi-puṣkariṇī = the temple tank · plava = bathing · nirmala · aṅga"]],
+   [["श्रेयोऽर्थिनो","seeking the highest good","śreyas · arthin"],["हरविरिञ्चिसनन्दनाद्याः","Śiva, Brahmā, Sanandana and others","hara · viriñci · sanandana · ādya"]],
+   [["द्वारे","at your door","dvāra"],["वसन्ति","wait","vasanti"],["वरवेत्रहतोत्तमाङ्गाः","their heads struck by the guards' fine canes","vara · vetra = cane · hata · uttamāṅga = head"]],
+   VA],
+  "Śiva, Brahmā, Sanandana and others, seeking the highest good, their bodies pure from bathing in the Svāmi Puṣkariṇī, wait at your door, their heads tapped by the door-keepers' canes. O Lord of the Veṅkaṭa hill, good morning to you.",
+  "சுவாமி புஷ்கரிணியில் நீராடித் தூய்மையடைந்த சிவன், பிரம்மா, சனந்தனர் முதலியோர் நன்மையை நாடி உன் வாயிலில் காத்திருக்கின்றனர்; காவலர்களின் பிரம்புகளால் அவர்கள் தலைகள் தட்டப்படுகின்றன. வேங்கடமலை நாதா, உனக்குச் சுப்ரபாதம்."),
+ v("s15", "15", "People always speak the names of your hills — Śeṣa, Garuḍa, Veṅkaṭa, Nārāyaṇa, Vṛṣabha, Vṛṣa.", [
+   [["श्रीशेषशैलगरुडाचलवेङ्कटाद्रि","Śeṣa hill, Garuḍa hill, Veṅkaṭa hill","śeṣa-śaila · garuḍa-acala · veṅkaṭa-adri"]],
+   [["नारायणाद्रिवृषभाद्रिवृषाद्रिमुख्याम्","Nārāyaṇa hill, Vṛṣabha hill, Vṛṣa hill and the rest","nārāyaṇa · vṛṣabha · vṛṣa · adri · mukhya"]],
+   [["आख्यां","the names","ākhyā"],["त्वदीयवसतेरनिशं","of your dwelling, always","tvadīya · vasati · aniśam"],["वदन्ति","they speak","vadanti"]],
+   VA],
+  "People always speak the names of your dwelling: Śeṣa hill, Garuḍa hill, Veṅkaṭa hill, Nārāyaṇa hill, Vṛṣabha hill, Vṛṣa hill and others. O Lord of the Veṅkaṭa hill, good morning to you.",
+  "சேஷமலை, கருடமலை, வேங்கடமலை, நாராயணமலை, விருஷபமலை, விருஷமலை என்று உன் இருப்பிடத்தின் பெயர்களை மக்கள் எப்போதும் சொல்கிறார்கள். வேங்கடமலை நாதா, உனக்குச் சுப்ரபாதம்.",
+  {tip:"The <b>Seven Hills</b> (six named here): Śeṣa · Garuḍa · Veṅkaṭa · Nārāyaṇa · Vṛṣabha · Vṛṣa."}),
+ v("s16", "16", "Śiva, Indra, Agni, Yama, Nirṛti, Varuṇa, Vāyu, Kubera stand with folded hands.", [
+   [["सेवापराः","eager to serve","sevā · para"],["शिवसुरेशकृशानुधर्म","Śiva, Indra, Agni, Yama","śiva · sura-īśa · kṛśānu = fire · dharma = Yama"]],
+   [["रक्षोम्बुनाथपवमानधनाधिनाथाः","Nirṛti, Varuṇa, Vāyu and Kubera","rakṣas = Nirṛti · ambu-nātha = Varuṇa · pavamāna = Vāyu · dhana-adhinātha = Kubera"]],
+   [["बद्धाञ्जलिप्रविलसन्निजशीर्षदेशाः","their folded hands shining above their heads","baddha · añjali · pravilasat · nija · śīrṣa-deśa"]],
+   VA],
+  "Eager to serve, Śiva, Indra, Agni, Yama, Nirṛti, Varuṇa, Vāyu and Kubera stand with folded hands raised above their heads. O Lord of the Veṅkaṭa hill, good morning to you.",
+  "சேவை செய்ய ஆர்வமுடன் சிவன், இந்திரன், அக்னி, யமன், நிருதி, வருணன், வாயு, குபேரன் ஆகியோர் தலைக்கு மேல் கூப்பிய கைகளுடன் நிற்கின்றனர். வேங்கடமலை நாதா, உனக்குச் சுப்ரபாதம்.",
+  {tip:"The <b>guardians of the eight directions</b> (with Śiva for the northeast)."}),
+ v("s17", "17", "Garuḍa, the lion, Śeṣa, the elephant and the horse ask to carry you in procession.", [
+   [["धाटीषु","in your processions","dhāṭī = procession"],["ते","your","te"],["विहगराजमृगाधिराज","the king of birds (Garuḍa), the king of beasts (lion)","vihaga-rāja · mṛga-adhirāja"]],
+   [["नागाधिराजगजराजहयाधिराजाः","the king of serpents, of elephants and of horses","nāga · gaja · haya · adhirāja"]],
+   [["स्वस्वाधिकारमहिमाधिकमर्थयन्ते","each asks for a greater share of the honour","sva-sva · adhikāra = duty · mahimā · adhikam · arthayante"]],
+   VA],
+  "Garuḍa, the lion, Śeṣa, the royal elephant and the royal horse — the vāhanas of your processions — each ask to be given a greater share of the honour. O Lord of the Veṅkaṭa hill, good morning to you.",
+  "உன் ஊர்வலங்களில் உன்னைச் சுமக்கும் கருடன், சிங்கம், சேஷன், யானை, குதிரை ஆகிய வாகனங்கள் ஒவ்வொன்றும் தமக்குப் பெரிய பங்கை வேண்டுகின்றன. வேங்கடமலை நாதா, உனக்குச் சுப்ரபாதம்.",
+  {tip:"The <b>vāhanas</b>: Garuḍa · Siṃha · Śeṣa · Gaja · Aśva — the ones you see at Brahmotsavam."}),
+ v("s18", "18", "The nine planets are the servants of your servants' servants.", [
+   [["सूर्येन्दुभौमबुधवाक्पतिकाव्यसौरि","the Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn","sūrya · indu · bhauma · budha · vākpati = Jupiter · kāvya = Venus · sauri = Saturn"]],
+   [["स्वर्भानुकेतुदिविषत्परिषत्प्रधानाः","Rāhu and Ketu, chiefs of the heavenly assembly","svarbhānu = Rāhu · ketu · diviṣat = gods · pariṣat · pradhāna"]],
+   [["त्वद्दासदासचरमावधिदासदासाः","the servants of the last of your servants' servants","tvat · dāsa · dāsa · carama-avadhi = the very last · dāsa · dāsa"]],
+   VA],
+  "The Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rāhu and Ketu, chiefs of the heavenly assembly, are the servants of the very last of your servants' servants. O Lord of the Veṅkaṭa hill, good morning to you.",
+  "சூரியன், சந்திரன், செவ்வாய், புதன், குரு, சுக்கிரன், சனி, ராகு, கேது ஆகிய நவகிரகங்கள் உன் அடியார்களின் அடியார்களுக்கும் கடைசியான அடியார்களின் அடியார்கள். வேங்கடமலை நாதா, உனக்குச் சுப்ரபாதம்.",
+  {tip:"The <b>nine planets</b> in order: sūrya · indu · bhauma · budha · vākpati · kāvya · sauri · svarbhānu · ketu."}),
+ v("s19", "19", "Those whose heads carry the dust of your feet want neither heaven nor liberation.", [
+   [["त्वत्पादधूलिभरितस्फुरितोत्तमाङ्गाः","their heads shining, covered with the dust of your feet","tvat · pāda · dhūli · bharita · sphurita · uttamāṅga"]],
+   [["स्वर्गापवर्गनिरपेक्षनिजान्तरङ्गाः","their hearts not wanting heaven or liberation","svarga · apavarga = liberation · nirapekṣa · nija · antaraṅga"]],
+   [["कल्पागमाकलनयाकुलतां","worry at the thought of the aeon's end","kalpa · āgama · ākalana · ākulatā"],["लभन्ते","they feel","labhante"]],
+   VA],
+  "Those whose heads shine, covered in the dust of your feet, whose hearts want neither heaven nor liberation, feel anxious only at the thought of the end of the aeon (which would end their service). O Lord of the Veṅkaṭa hill, good morning to you.",
+  "உன் பாதத் தூசியால் தலை ஒளிர்பவர்கள், சுவர்க்கத்தையோ மோக்ஷத்தையோ விரும்பாதவர்கள், கல்பத்தின் முடிவை நினைத்து மட்டுமே கவலைப்படுகிறார்கள். வேங்கடமலை நாதா, உனக்குச் சுப்ரபாதம்."),
+ v("s20", "20", "Seeing your temple tower, people long for heaven and freedom — and also to stay on earth.", [
+   [["त्वद्गोपुराग्रशिखराणि","the tops of your temple towers","tvat · gopura · agra · śikhara"],["निरीक्षमाणाः","seeing","nirīkṣamāṇa"]],
+   [["स्वर्गापवर्गपदवीं","the path of heaven and liberation","svarga · apavarga · padavī"],["परमां","supreme","parama"],["श्रयन्तः","seeking","śrayanta"]],
+   [["मर्त्या","mortals","martya"],["मनुष्यभुवने","in the human world","manuṣya · bhuvana"],["मतिमाश्रयन्ते","set their minds","matim · āśrayante"]],
+   VA],
+  "Mortals who see the tops of your temple towers, though seeking the supreme path of heaven and liberation, set their minds on staying in the human world (to keep seeing you). O Lord of the Veṅkaṭa hill, good morning to you.",
+  "உன் கோபுர சிகரங்களைக் காணும் மனிதர்கள், சுவர்க்கமும் மோக்ஷமும் நாடினாலும், (உன்னைக் காண) மனித உலகிலேயே இருக்க மனம் வைக்கிறார்கள். வேங்கடமலை நாதா, உனக்குச் சுப்ரபாதம்."),
+ v("s21", "21", "Lord of Śrī and Bhū, ocean of compassion, worshipped by Ananta and Garuḍa.", [
+   [["श्रीभूमिनायक","O lord of Śrī and Bhū","śrī · bhūmi · nāyaka"],["दयादिगुणामृताब्धे","O nectar-ocean of compassion and every virtue","dayā · ādi · guṇa · amṛta · abdhi"]],
+   [["देवाधिदेव","O god of gods","deva · adhideva"],["जगदेकशरण्यमूर्ते","O the one refuge of the world","jagat · eka · śaraṇya · mūrti"]],
+   [["श्रीमन्ननन्तगरुडादिभिरर्चिताङ्घ्रे","O glorious one, whose feet are worshipped by Ananta, Garuḍa and others","śrīman · ananta · garuḍa · ādi · arcita · aṅghri"]],
+   VA],
+  "O lord of Śrī and Bhū, nectar-ocean of compassion and every virtue; O god of gods, the one refuge of the world; O glorious one, whose feet Ananta, Garuḍa and others worship — O Lord of the Veṅkaṭa hill, good morning to you.",
+  "ஸ்ரீதேவி, பூதேவியின் நாயகனே, கருணை முதலிய குணங்களின் அமுதக் கடலே, தேவாதி தேவனே, உலகின் ஒரே புகலிடமே, ஆதிசேஷன், கருடன் முதலியோர் வணங்கும் பாதங்களை உடையவனே — வேங்கடமலை நாதா, உனக்குச் சுப்ரபாதம்."),
+ v("s22", "22", "Padmanābha, Puruṣottama, Vāsudeva, Vaikuṇṭha, Mādhava, Janārdana, Cakrapāṇi…", [
+   [["श्रीपद्मनाभ","O Padmanābha","lotus-navelled"],["पुरुषोत्तम","O Puruṣottama","supreme person"],["वासुदेव","O Vāsudeva","son of Vasudeva"]],
+   [["वैकुण्ठ","O Vaikuṇṭha","vaikuṇṭha"],["माधव","O Mādhava","consort of Mā"],["जनार्दन","O Janārdana","janārdana"],["चक्रपाणे","O discus-bearer","cakra · pāṇi"]],
+   [["श्रीवत्सचिह्न","O you marked with Śrīvatsa","śrīvatsa · cihna"],["शरणागतपारिजात","O wish-tree to those who surrender","śaraṇāgata · pārijāta"]],
+   VA],
+  "O Padmanābha, Puruṣottama, Vāsudeva, Vaikuṇṭha, Mādhava, Janārdana, discus-bearer, marked with Śrīvatsa, wish-granting tree to all who surrender — O Lord of the Veṅkaṭa hill, good morning to you.",
+  "பத்மநாபா, புருஷோத்தமா, வாசுதேவா, வைகுண்டா, மாதவா, ஜனார்த்தனா, சக்கரபாணியே, ஸ்ரீவத்ஸ அடையாளம் உடையவனே, சரணடைந்தவர்களுக்கு கற்பக மரமே — வேங்கடமலை நாதா, உனக்குச் சுப்ரபாதம்.",
+  {tip:"A garland of <b>names</b>: Padmanābha · Puruṣottama · Vāsudeva · Vaikuṇṭha · Mādhava · Janārdana · Cakrapāṇi."}),
+ v("s23", "23", "More beautiful than Kāma, eyes playing on Lakṣmī, a mine of pure virtues.", [
+   [["कन्दर्पदर्पहरसुन्दरदिव्यमूर्ते","O divine form whose beauty humbles Kāma's pride","kandarpa = Kāma · darpa = pride · hara · sundara · divya · mūrti"]],
+   [["कान्ताकुचाम्बुरुहकुड्मललोलदृष्टे","whose eyes play on his beloved's bud-like bosom","kāntā · kuca · amburuha-kuḍmala = lotus bud · lola · dṛṣṭi"]],
+   [["कल्याणनिर्मलगुणाकरदिव्यकीर्ते","O mine of auspicious pure virtues, of divine fame","kalyāṇa · nirmala · guṇa · ākara · divya · kīrti"]],
+   VA],
+  "O divine one whose beauty humbles the pride of Kāma, whose eyes rest lovingly on his beloved, a mine of auspicious, pure virtues and of divine fame — O Lord of the Veṅkaṭa hill, good morning to you.",
+  "மன்மதனின் கர்வத்தை அடக்கும் அழகிய திவ்ய மூர்த்தியே, தேவியின் மீது கண் வைத்தவனே, மங்கள நற்குணங்களின் சுரங்கமே, திவ்யப் புகழுடையவனே — வேங்கடமலை நாதா, உனக்குச் சுப்ரபாதம்."),
+ v("s24", "24", "Fish, tortoise, boar, Narasiṃha, Vāmana, Paraśurāma, Rāma, Balarāma, Kṛṣṇa, Kalki.", [
+   [["मीनाकृते","O you in the form of a fish","mīna · ākṛti"],["कमठ","O tortoise","kamaṭha"],["कोल","O boar","kola"],["नृसिंह","O man-lion","nṛsiṃha"],["वर्णिन्","O young brahmin (Vāmana)","varṇin"]],
+   [["स्वामिन्","O Lord","svāmin"],["परश्वथतपोधन","O ascetic with the axe (Paraśurāma)","paraśvatha = axe · tapodhana = ascetic"],["रामचन्द्र","O Rāmacandra","rāmacandra"]],
+   [["शेषांशराम","O Balarāma, part of Śeṣa","śeṣa · aṃśa · rāma"],["यदुनन्दन","O joy of the Yadus (Kṛṣṇa)","yadu · nandana"],["कल्किरूप","O you in the form of Kalki","kalki · rūpa"]],
+   VA],
+  "O Lord in the form of the fish, the tortoise, the boar, Narasiṃha, the young brahmin Vāmana, the axe-bearing ascetic Paraśurāma, Rāmacandra, Balarāma (part of Śeṣa), Kṛṣṇa the joy of the Yadus, and Kalki — O Lord of the Veṅkaṭa hill, good morning to you.",
+  "மீன், ஆமை, பன்றி, நரசிம்மம், வாமனன், பரசுராமன், ராமசந்திரன், பலராமன், கிருஷ்ணன், கல்கி ஆகிய வடிவங்கள் கொண்ட இறைவா — வேங்கடமலை நாதா, உனக்குச் சுப்ரபாதம்.",
+  {tip:"The <b>ten avatāras</b> in order, all in three lines: matsya · kūrma · varāha · nṛsiṃha · vāmana · paraśurāma · rāma · balarāma · kṛṣṇa · kalki."}),
+ v("s25", "25", "Priests stand with golden pots of fragrant water from the heavenly river.", [
+   [["एलालवङ्गघनसारसुगन्धितीर्थं","holy water scented with cardamom, clove and camphor","elā · lavaṅga · ghanasāra = camphor · sugandhi · tīrtha"]],
+   [["दिव्यं","divine","divya"],["वियत्सरिति","from the heavenly river","viyat-sarit = Gaṅgā of the sky"],["हेमघटेषु","in golden pots","hema · ghaṭa"],["पूर्णम्","filled","pūrṇa"]],
+   [["धृत्वाद्य","holding, today","dhṛtvā · adya"],["वैदिकशिखामणयः","the crest-jewels of Vedic scholars","vaidika · śikhāmaṇi"],["प्रहृष्टाः","joyful","prahṛṣṭa"]],
+   [["तिष्ठन्ति","stand (waiting)","tiṣṭhanti"],["वेङ्कटपते","O Lord of Veṅkaṭa","veṅkaṭa · pati"],["तव","to you","tava"],["सुप्रभातम्","a good morning","suprabhātam"]]],
+  "The finest Vedic priests stand joyfully today, holding golden pots filled with divine water from the heavenly river, scented with cardamom, clove and camphor. O Lord of Veṅkaṭa, good morning to you.",
+  "ஏலம், கிராம்பு, பச்சைக் கற்பூரம் கலந்த மணமுள்ள வான கங்கை நீரை நிரப்பிய பொற்குடங்களை ஏந்தி, சிறந்த வேத விற்பன்னர்கள் மகிழ்ச்சியுடன் நிற்கின்றனர். வேங்கடபதியே, உனக்குச் சுப்ரபாதம்.",
+  {tip:"The <b>abhiṣeka</b> water: <b>elā</b> (cardamom) · <b>lavaṅga</b> (clove) · <b>ghanasāra</b> (camphor)."}),
+ v("s26", "26", "The sun rises, lotuses open, birds fill the air — devotees come to your temple.", [
+   [["भास्वानुदेति","the sun rises","bhāsvān · udeti"],["विकचानि","opening","vikaca"],["सरोरुहाणि","the lotuses","saroruha"]],
+   [["सम्पूरयन्ति","fill","sampūrayanti"],["निनदैः","with their calls","ninada"],["ककुभो","the directions","kakubh"],["विहङ्गाः","the birds","vihaṅga"]],
+   [["श्रीवैष्णवास्सततमर्थितमङ्गलास्ते","the Śrīvaiṣṇavas, always praying for your welfare","śrīvaiṣṇava · satatam · arthita · maṅgala · te"]],
+   [["धामाश्रयन्ति","come to your temple","dhāma · āśrayanti"],["तव","your","tava"],["वेङ्कट","O Veṅkaṭa","veṅkaṭa"],["सुप्रभातम्","a good morning","suprabhātam"]]],
+  "The sun rises; the lotuses open; birds fill the directions with their calls; the Śrīvaiṣṇavas, always praying for your welfare, come to your temple. O Veṅkaṭa, good morning to you.",
+  "சூரியன் உதிக்கிறான்; தாமரைகள் மலர்கின்றன; பறவைகள் தம் ஒலியால் திசைகளை நிரப்புகின்றன; உனக்கு மங்களம் வேண்டும் ஸ்ரீவைஷ்ணவர்கள் உன் கோயிலை அடைகின்றனர். வேங்கடா, உனக்குச் சுப்ரபாதம்."),
+ v("s27", "27", "Brahmā, the gods, the sages and yogis stand near with auspicious offerings.", [
+   [["ब्रह्मादयस्सुरवरास्समहर्षयस्ते","Brahmā and the great gods, with the great sages","brahma · ādayaḥ · sura-vara · sa-maharṣi · te"]],
+   [["सन्तस्सनन्दनमुखास्त्वथ","the saints, Sanandana and others, and","santaḥ · sanandana · mukha · tu · atha"],["योगिवर्याः","the best of yogis","yogi · varya"]],
+   [["धामान्तिके","near your abode","dhāma · antika"],["तव","your","tava"],["हि","indeed","hi"],["मङ्गलवस्तुहस्ताः","holding auspicious things in their hands","maṅgala · vastu · hasta"]],
+   VA],
+  "Brahmā and the great gods with the great sages, the saints led by Sanandana, and the best of yogis stand near your abode, holding auspicious offerings in their hands. O Lord of the Veṅkaṭa hill, good morning to you.",
+  "பிரம்மா முதலிய தேவர்களும், மகரிஷிகளும், சனந்தனர் முதலிய சான்றோரும், சிறந்த யோகிகளும் மங்களப் பொருள்களைக் கைகளில் ஏந்தி உன் இருப்பிடத்தின் அருகே நிற்கின்றனர். வேங்கடமலை நாதா, உனக்குச் சுப்ரபாதம்."),
+ v("s28", "28", "Lakṣmī's home, ocean of virtue, the bridge across saṃsāra, known through Vedānta.", [
+   [["लक्ष्मीनिवास","O home of Lakṣmī","lakṣmī · nivāsa"],["निरवद्यगुणैकसिन्धो","O one ocean of flawless virtues","niravadya · guṇa · eka · sindhu"]],
+   [["संसारसागरसमुत्तरणैकसेतो","O the one bridge to cross the ocean of saṃsāra","saṃsāra · sāgara · samuttaraṇa · eka · setu"]],
+   [["वेदान्तवेद्यनिजवैभव","O you whose glory is known through Vedānta","vedānta · vedya · nija · vaibhava"],["भक्तभोग्य","O delight of devotees","bhakta · bhogya"]],
+   VA],
+  "O home of Lakṣmī, one ocean of flawless virtues, the one bridge across the ocean of saṃsāra, whose glory is known through Vedānta, the delight of your devotees — O Lord of the Veṅkaṭa hill, good morning to you.",
+  "லக்ஷ்மியின் இருப்பிடமே, குற்றமற்ற குணங்களின் ஒரே கடலே, சம்சாரக் கடலைக் கடக்கும் ஒரே பாலமே, வேதாந்தத்தால் அறியப்படும் பெருமை உடையவனே, அடியார்களின் இன்பமே — வேங்கடமலை நாதா, உனக்குச் சுப்ரபாதம்."),
+ v("s29", "29", "Whoever recites this Suprabhātam each day gains, at dawn, supreme wisdom.", [
+   [["इत्थं","thus","ittham"],["वृषाचलपतेरिह","of the Lord of Vṛṣa hill, here","vṛṣācala · pati · iha"],["सुप्रभातं","this Suprabhātam","suprabhāta"]],
+   [["ये","those","ye"],["मानवाः","people","mānava"],["प्रतिदिनं","every day","pratidinam"],["पठितुं","to recite","paṭhitum"],["प्रवृत्ताः","who are devoted","pravṛtta"]],
+   [["तेषां","for them","teṣām"],["प्रभातसमये","at dawn","prabhāta · samaya"],["स्मृतिरङ्गभाजां","the remembrance, sharing in (his) form","smṛti · aṅga-bhāj"]],
+   [["प्रज्ञां","wisdom","prajñā"],["परार्थसुलभां","that easily serves the highest aim","para-artha · sulabha"],["परमां","supreme","parama"],["प्रसूते","brings forth","prasūte"]]],
+  "For those who devote themselves to reciting this Suprabhātam of the Lord of the Vṛṣa hill every day, the remembrance at dawn brings forth supreme wisdom that easily reaches the highest aim.",
+  "விருஷமலை நாதனின் இந்தச் சுப்ரபாதத்தைத் தினமும் படிப்பவர்களுக்கு, அதிகாலை நினைவு மேலான நோக்கத்தை எளிதில் அடையச் செய்யும் உயர்ந்த ஞானத்தைத் தருகிறது.",
+  {kind:"phala", short:"Phala 29"})
+];
+VERSES[0].pat = VERSES[1].pat = undefined;
+// ---- Śrī Veṅkaṭeśa Stotram ----
+const TK = {meter:"totaka", pat:"LLGLLGLLGLLx", meterNote:"Toṭaka: short–short–long four times, 12 syllables a quarter — a quick, dancing beat."};
+const BP = {meter:"bhujangaprayata", pat:"LGGLGGLGGLGx", meterNote:"Bhujaṅgaprayāta, “the serpent's glide”: short–long–long four times."};
+const st = (n, hook, lines, en, ta, m) => Object.assign({id:"t" + n, n:String(n), label:"Stotram " + n, part:"Veṅkaṭeśa Stotram", hook, lines, en, ta}, m || TK);
+VERSES.push(
+ st(1, "Dark body reddened by Lakṣmī's kuṅkuma — victory to you, Lord of Veṅkaṭa hill!", [
+   [["कमलाकुचचूचुककुङ्कमतो","from the kuṅkuma on Kamalā's bosom","kamalā · kuca · cūcuka · kuṅkama"]],
+   [["नियतारुणितातुलनीलतनो","O you whose matchless dark body is always reddened","niyata = always · aruṇita = reddened · atula = matchless · nīla · tanu"]],
+   [["कमलायतलोचन","O you with long lotus eyes","kamala · āyata · locana"],["लोकपते","O lord of the worlds","loka · pati"]],
+   [["विजयीभव","be victorious","vijayī bhava"],["वेङ्कटशैलपते","O Lord of the Veṅkaṭa hill","veṅkaṭa · śaila · pati"]]],
+  "O Lord whose matchless dark body is always reddened by the kuṅkuma from Lakṣmī's embrace, lotus-eyed lord of the worlds — be victorious, O Lord of the Veṅkaṭa hill!",
+  "கமலையின் அணைப்பால் குங்குமச் சிவப்பேறிய நிகரற்ற நீல மேனியனே, தாமரைக் கண்ணனே, உலக நாதனே — வேங்கடமலை நாதா, வெற்றியுடன் விளங்குவாயாக!"),
+ st(2, "Crown-jewel of all the gods, lover of those who surrender — protect me.", [
+   [["सचतुर्मुखषण्मुखपञ्चमुख","of Brahmā, Skanda, Śiva","catur-mukha · ṣaṇ-mukha · pañca-mukha"]],
+   [["प्रमुखाखिलदैवतमौलिमणे","O crest-jewel of all the gods led by them","pramukha · akhila · daivata · mauli · maṇi"]],
+   [["शरणागतवत्सल","O lover of those who surrender","śaraṇāgata · vatsala"],["सारनिधे","O treasure of the essence","sāra · nidhi"]],
+   [["परिपालय","protect","paripālaya"],["मां","me","mām"],["वृषशैलपते","O Lord of the Vṛṣa hill","vṛṣa · śaila · pati"]]],
+  "O crest-jewel of all the gods — four-faced Brahmā, six-faced Skanda, five-faced Śiva and the rest; O lover of those who surrender, treasure of the essence — protect me, O Lord of the Vṛṣa hill.",
+  "நான்முகன், ஆறுமுகன், ஐம்முகன் முதலிய தேவர்களின் முடிமணியே, சரணடைந்தவர்களிடம் அன்புடையவனே — விருஷமலை நாதா, என்னைக் காப்பாயாக."),
+ st(3, "I am full of countless faults — by your supreme mercy, save me quickly, Hari.", [
+   [["अतिवेलतया","beyond all limit","ativelatā"],["तव","to you","tava"],["दुर्विषहैर्","unbearable","durviṣaha"]],
+   [["अनुवेलकृतैरपराधशतैः","by hundreds of offences done every moment","anuvela = constantly · kṛta · aparādha · śata"]],
+   [["भरितं","(me) full of","bharita"],["त्वरितं","quickly","tvaritam"],["वृषशैलपते","O Lord of Vṛṣa hill","vṛṣaśailapate"]],
+   [["परया","with supreme","parā"],["कृपया","mercy","kṛpā"],["परिपाहि","protect","paripāhi"],["हरे","O Hari","hari"]]],
+  "O Lord of the Vṛṣa hill, I am full of hundreds of offences, committed every moment, unbearable to you beyond all limit — O Hari, quickly protect me with your supreme mercy.",
+  "வரம்பின்றி, ஒவ்வொரு கணமும் செய்த, உனக்குப் பொறுக்க முடியாத நூற்றுக்கணக்கான குற்றங்கள் நிறைந்த என்னை, விருஷமலை நாதா, ஹரியே, உன் பெருங்கருணையால் விரைவில் காப்பாயாக."),
+ st(4, "The generous Lord of Veṅkaṭa, Lakṣmī's beloved — I think of no one else.", [
+   [["अधिवेङ्कटशैलमुदारमतेर्","than the generous-minded one on the Veṅkaṭa hill","adhi-veṅkaṭa-śailam · udāra · mati"]],
+   [["जनताभिमताधिकदानरतात्","who delights in giving people more than they wish","janatā · abhimata · adhika · dāna · rata"]],
+   [["परदेवतया","as the supreme deity","para · devatā"],["गदितान्निगमैः","declared by the Vedas","gadita · nigama"]],
+   [["कमलादयितान्न","than Kamalā's beloved, not","kamalā · dayita · na"],["परं","another","param"],["कलये","do I think of","kalaye"]]],
+  "I think of no one higher than Lakṣmī's beloved — the generous-minded one on the Veṅkaṭa hill, who delights in giving people more than they wish, declared by the Vedas to be the supreme deity.",
+  "வேங்கடமலையில் இருக்கும் வள்ளல் மனத்தவனும், மக்கள் விரும்பியதைவிட அதிகம் தருவதில் மகிழ்பவனும், வேதங்களால் பரதேவதை எனப் போற்றப்படுபவனுமான கமலையின் காதலனைத் தவிர வேறு எவரையும் நான் எண்ணுவதில்லை.",
+  null),
+ st(5, "Kṛṣṇa among the gopīs, lovelier than countless Kāmas — I think of no one else.", [
+   [["कलवेणुरवावशगोपवधू","by the cowherd girls, helpless at the sweet flute","kala · veṇu · rava · avaśa · gopa-vadhū"]],
+   [["शतकोटिवृतात्स्मरकोटिसमात्","surrounded by hundreds of millions, equal to millions of Kāmas","śata-koṭi · vṛta · smara · koṭi · sama"]],
+   [["प्रतिवल्लविकाभिमतात्सुखदात्","dear to every gopī, the giver of joy","prati · vallavikā · abhimata · sukha-da"]],
+   [["वसुदेवसुतान्न","than Vasudeva's son, not","vasudeva · suta · na"],["परं","another","param"],["कलये","do I think of","kalaye"]]],
+  "I think of no one higher than Vasudeva's son — surrounded by millions of gopīs helpless at the sweet sound of his flute, as lovely as millions of Kāmas, dear to every gopī, the giver of joy.",
+  "இனிய குழலோசையால் மயங்கிய கோடிக்கணக்கான கோபியரால் சூழப்பட்டவனும், கோடி மன்மதர்களுக்கு நிகரானவனும், ஒவ்வொரு கோபியும் விரும்புபவனுமான வசுதேவன் மகனைத் தவிர வேறு எவரையும் நான் எண்ணுவதில்லை.",
+  null),
+ st(6, "O Rāma, son of Daśaratha, the one bowman of the world — grant boons, ocean of mercy.", [
+   [["अभिरामगुणाकर","O mine of lovely virtues","abhirāma · guṇa · ākara"],["दाशरथे","O son of Daśaratha","dāśarathi"]],
+   [["जगदेकधनुर्धर","O the one bowman of the world","jagat · eka · dhanurdhara"],["धीरमते","O steady-minded","dhīra · mati"]],
+   [["रघुनायक","O leader of the Raghus","raghu · nāyaka"],["राम","O Rāma","rāma"],["रमेश","O lord of Ramā","ramā · īśa"],["विभो","O mighty one","vibhu"]],
+   [["वरदो","boon-giving","varada"],["भव","be","bhava"],["देव","O Lord","deva"],["दयाजलधे","O ocean of compassion","dayā · jaladhi"]]],
+  "O mine of lovely virtues, son of Daśaratha, the one bowman of the world, steady-minded; O leader of the Raghus, Rāma, lord of Ramā, mighty one — O Lord, ocean of compassion, grant me boons.",
+  "நற்குணங்களின் சுரங்கமே, தசரத மைந்தா, உலகின் ஒரே வில்லாளியே, உறுதியான மனத்தவனே, ரகுநாயகா, ராமா, ரமாபதியே — கருணைக் கடலே, வரம் அருள்பவனாவாயாக."),
+ st(7, "Hand that held Sītā's, face like the moon, sun to Rāvaṇa's darkness — I take refuge in Rāma.", [
+   [["अवनीतनयाकमनीयकरं","whose lovely hand held earth's daughter (Sītā)","avanī-tanayā = Sītā · kamanīya · kara"]],
+   [["रजनीकरचारुमुखाम्बुरुहम्","whose lotus face is lovely as the moon","rajanīkara = moon · cāru · mukha · amburuha"]],
+   [["रजनीचरराजतमोमिहिरं","the sun to the darkness of the rākṣasa king","rajanīcara-rāja = Rāvaṇa · tamas · mihira = sun"]],
+   [["महनीयमहं","the worshipful, I","mahanīyam · aham"],["रघुराममये","seek Raghurāma","raghurāmam · aye = I approach"]]],
+  "I take refuge in the worshipful Raghurāma, whose lovely hand held Sītā's, whose lotus face is lovely as the moon, who is the sun to the darkness of the rākṣasa king.",
+  "சீதையின் கரம் பற்றிய அழகிய கையனும், சந்திரன் போன்ற தாமரை முகத்தவனும், இராவணன் எனும் இருளுக்குச் சூரியனுமான போற்றத்தக்க ரகுராமனைச் சரணடைகிறேன்."),
+ st(8, "Leaving Rāma — handsome, kind, easy to reach — I will never worship anyone else.", [
+   [["सुमुखं","fair-faced","sumukha"],["सुहृदं","kind-hearted","suhṛd"],["सुलभं","easy to reach","sulabha"],["सुखदं","giver of joy","sukha-da"]],
+   [["स्वनुजं","with a good brother","su-anuja"],["च","and","ca"],["सुकायममोघशरम्","handsome, whose arrows never miss","su-kāya · amogha · śara"]],
+   [["अपहाय","leaving aside","apahāya"],["रघूद्वहमन्यमहं","the Raghu hero, another, I","raghu-udvaha · anyam · aham"]],
+   [["न","not","na"],["कथञ्चन","in any way","kathañcana"],["कञ्चन","anyone","kañcana"],["जातु","ever","jātu"],["भजे","worship","bhaje"]]],
+  "Leaving aside the hero of the Raghus — fair-faced, kind-hearted, easy to reach, giver of joy, with a good brother, handsome, whose arrows never miss — I will never in any way worship anyone else.",
+  "அழகிய முகமுடையவனும், நல்லிதயனும், எளிதில் அடையத்தக்கவனும், இன்பம் தருபவனும், நல்ல தம்பியை உடையவனும், குறி தவறாத அம்பினனுமான ரகுவீரனை விட்டு வேறு எவரையும் நான் ஒருபோதும் வணங்கேன்.",
+  {meter:"totaka", pat:"LLGLLGLLGLLx", meterNote:TK.meterNote, tip:"Four <b>su-</b> words in a row: <b>sumukham · suhṛdam · sulabham · sukhadam</b> — then svanujam, sukāyam."}),
+ st(9, "Without Veṅkaṭeśa there is no protector — I remember him always. Be gracious!", [
+   [["विना","without","vinā"],["वेङ्कटेशं","Veṅkaṭeśa","veṅkaṭeśa"],["न","no","na"],["नाथो","protector","nātha"],["न","no","na"],["नाथः","protector","nātha"]],
+   [["सदा","always","sadā"],["वेङ्कटेशं","Veṅkaṭeśa","veṅkaṭeśa"],["स्मरामि","I remember","smarāmi"],["स्मरामि","I remember","smarāmi"]],
+   [["हरे","O Hari","hari"],["वेङ्कटेश","O Veṅkaṭeśa","veṅkaṭeśa"],["प्रसीद","be gracious","prasīda"],["प्रसीद","be gracious","prasīda"]],
+   [["प्रियं","what is dear","priya"],["वेङ्कटेश","O Veṅkaṭeśa","veṅkaṭeśa"],["प्रयच्छ","grant","prayaccha"],["प्रयच्छ","grant","prayaccha"]]],
+  "Without Veṅkaṭeśa there is no protector, no protector. I always remember Veṅkaṭeśa, remember him. O Hari, Veṅkaṭeśa, be gracious, be gracious; O Veṅkaṭeśa, grant what is dear, grant it.",
+  "வேங்கடேசனைத் தவிர வேறு நாதன் இல்லை, இல்லை. எப்போதும் வேங்கடேசனையே நினைக்கிறேன், நினைக்கிறேன். ஹரியே, வேங்கடேசா, அருள்வாய், அருள்வாய்; வேங்கடேசா, நன்மையைத் தருவாய், தருவாய்.",
+  Object.assign({tip:"Every line doubles its last word: <b>na nāthaḥ · smarāmi · prasīda · prayaccha</b>."}, BP)),
+ st(10, "I came from afar to serve your feet — grant me the fruit of lifelong service.", [
+   [["अहं","I","aham"],["दूरतस्ते","from afar, your","dūrataḥ · te"],["पदाम्भोजयुग्म","pair of lotus feet","pada · ambhoja · yugma"]],
+   [["प्रणामेच्छयागत्य","coming with the wish to bow","praṇāma · icchayā · āgatya"],["सेवां","service","sevā"],["करोमि","I do","karomi"]],
+   [["सकृत्सेवया","by serving once","sakṛt · sevā"],["नित्यसेवाफलं","the fruit of constant service","nitya · sevā · phala"],["त्वं","you","tvam"]],
+   [["प्रयच्छ","grant","prayaccha"],["प्रयच्छ","grant","prayaccha"],["प्रभो","O Lord","prabhu"],["वेङ्कटेश","O Veṅkaṭeśa","veṅkaṭeśa"]]],
+  "I have come from afar, wishing to bow at your lotus feet, and I serve you. For this one act of service, O Lord Veṅkaṭeśa, grant me — grant me — the fruit of constant service.",
+  "உன் தாமரைப் பாதங்களை வணங்கும் விருப்பத்துடன் தொலைவிலிருந்து வந்து சேவை செய்கிறேன். ஒருமுறை செய்த சேவைக்கு நித்திய சேவையின் பலனைத் தருவாய், தருவாய், வேங்கடேசப் பிரபுவே.", BP),
+ st(11, "Forgive all the faults I have done in ignorance, O crest-jewel of the Śeṣa hill.", [
+   [["अज्ञानिना","ignorant","ajñānin"],["मया","by me","mayā"],["दोषानशेषान्विहितान्","all the faults committed","doṣān · aśeṣān · vihitān"],["हरे","O Hari","hari"]],
+   [["क्षमस्व","forgive","kṣamasva"],["त्वं","you","tvam"],["क्षमस्व","forgive","kṣamasva"],["त्वं","you","tvam"],["शेषशैलशिखामणे","O crest-jewel of the Śeṣa hill","śeṣa · śaila · śikhāmaṇi"]]],
+  "O Hari, forgive — forgive — all the faults committed by me in my ignorance, O crest-jewel of the Śeṣa hill.",
+  "ஹரியே, அறியாமையால் நான் செய்த எல்லாக் குற்றங்களையும் பொறுத்தருள்வாய், பொறுத்தருள்வாய், சேஷமலையின் முடிமணியே.", {meter:"anushtubh"})
+);
+// ---- Maṅgalāśāsanam ----
+const mg = (n, hook, lines, en, ta, extra) => Object.assign({id:"m" + n, n:String(n), label:"Maṅgalam " + n, part:"Maṅgalāśāsanam", hook, lines, en, ta, meter:"anushtubh"}, extra || {});
+const VM = [["वेङ्कटेशाय","to Veṅkaṭeśa","veṅkaṭeśa"],["मङ्गलम्","may there be every blessing","maṅgala"]];
+const SM = [["श्रीनिवासाय","to Śrīnivāsa","śrī · nivāsa"],["मङ्गलम्","every blessing","maṅgala"]];
+VERSES.push(
+ mg(1, "To Śrī's beloved, treasure of the seekers, who dwells on Veṅkaṭa — maṅgalam.", [
+   [["श्रियः","of Śrī","śrī"],["कान्ताय","to the beloved","kānta"],["कल्याणनिधये","to the treasure of all good","kalyāṇa · nidhi"],["निधयेऽर्थिनाम्","the treasure of those who ask","nidhaye · arthin"]],
+   [["श्रीवेङ्कटनिवासाय","to him who dwells on Veṅkaṭa","śrī · veṅkaṭa · nivāsa"], ...SM]],
+  "Maṅgalam to Śrīnivāsa, beloved of Śrī, treasure of all good, treasure of all who ask, who dwells on the Veṅkaṭa hill.",
+  "ஸ்ரீயின் காதலனும், மங்களங்களின் புதையலும், வேண்டுவோரின் புதையலும், வேங்கடத்தில் வசிப்பவனுமான ஸ்ரீநிவாசனுக்கு மங்களம்.",
+  {tip:"Every verse ends <b>…āya maṅgalam</b> — “blessings to the one who…”. Most end <b>veṅkaṭeśāya maṅgalam</b> or <b>śrīnivāsāya maṅgalam</b>."}),
+ mg(2, "Whose eyes, with Lakṣmī's playful glance, are the eyes of all the worlds.", [
+   [["लक्ष्मीसविभ्रमालोकसुभ्रूविभ्रमचक्षुषे","whose eyes play with Lakṣmī's lovely glances","lakṣmī · savibhrama · āloka · subhrū · vibhrama · cakṣus"]],
+   [["चक्षुषे","to the eye","cakṣus"],["सर्वलोकानां","of all the worlds","sarva · loka"], ...VM]],
+  "Maṅgalam to Veṅkaṭeśa, whose eyes play with Lakṣmī's lovely glances, the eye of all the worlds.",
+  "லக்ஷ்மியின் அழகிய பார்வையுடன் விளையாடும் கண்களை உடையவனும், எல்லா உலகங்களின் கண்ணுமான வேங்கடேசனுக்கு மங்களம்."),
+ mg(3, "Whose feet adorn the peak of Veṅkaṭa — home of all blessings.", [
+   [["श्रीवेङ्कटाद्रिशृङ्गाग्रमङ्गलाभरणाङ्घ्रये","whose feet are the auspicious ornament of Veṅkaṭa's peak","veṅkaṭa-adri · śṛṅga · agra · maṅgala · ābharaṇa · aṅghri"]],
+   [["मङ्गलानां","of all blessings","maṅgala"],["निवासाय","to the home","nivāsa"], ...SM]],
+  "Maṅgalam to Śrīnivāsa, whose feet are the auspicious ornament of the Veṅkaṭa peak, the home of all blessings.",
+  "வேங்கடமலை உச்சியின் மங்கள அணிகலனான பாதங்களை உடையவனும், மங்களங்களின் இருப்பிடமுமான ஸ்ரீநிவாசனுக்கு மங்களம்."),
+ mg(4, "Whose perfect beauty enchants every heart.", [
+   [["सर्वावयवसौन्दर्यसम्पदा","by the beauty of every limb","sarva · avayava · saundarya · sampad"],["सर्वचेतसाम्","of all hearts","sarva · cetas"]],
+   [["सदा","always","sadā"],["सम्मोहनायास्तु","to the enchanter, may it be","sammohana · astu"], ...VM]],
+  "Maṅgalam to Veṅkaṭeśa, who always enchants every heart with the beauty of every limb.",
+  "எல்லா அங்கங்களின் அழகாலும் எல்லோர் மனத்தையும் எப்போதும் மயக்கும் வேங்கடேசனுக்கு மங்களம்."),
+ mg(5, "Eternal, flawless, truth-bliss-consciousness, the inner self of all.", [
+   [["नित्याय","to the eternal","nitya"],["निरवद्याय","to the flawless","niravadya"],["सत्यानन्दचिदात्मने","to him whose self is truth, bliss and consciousness","satya · ānanda · cit · ātman"]],
+   [["सर्वान्तरात्मने","to the inner self of all","sarva · antarātman"],["श्रीमद्वेङ्कटेशाय","to glorious Veṅkaṭeśa","śrīmat · veṅkaṭeśa"],["मङ्गलम्","maṅgalam","maṅgala"]]],
+  "Maṅgalam to glorious Veṅkaṭeśa — eternal, flawless, whose self is truth, bliss and consciousness, the inner self of all.",
+  "நித்தியனும், குற்றமற்றவனும், சத்தியம், ஆனந்தம், ஞானம் வடிவினனும், எல்லோருக்கும் உள்ளுறை ஆத்மாவுமான ஸ்ரீ வேங்கடேசனுக்கு மங்களம்."),
+ mg(6, "All-knowing, all-powerful, yet easy to reach and gentle.", [
+   [["स्वतस्सर्वविदे","to him who knows all by himself","svataḥ · sarva-vid"],["सर्वशक्तये","to the all-powerful","sarva · śakti"],["सर्वशेषिणे","to the master of all","sarva · śeṣin"]],
+   [["सुलभाय","to the easily reached","sulabha"],["सुशीलाय","to the gentle-natured","suśīla"], ...VM]],
+  "Maṅgalam to Veṅkaṭeśa, who knows all by himself, all-powerful, the master of all — and yet easy to reach and gentle.",
+  "இயல்பாகவே எல்லாம் அறிந்தவனும், எல்லாம் வல்லவனும், எல்லோருக்கும் தலைவனும், எளிதில் அடையத்தக்கவனும், நல்லியல்பினனுமான வேங்கடேசனுக்கு மங்களம்.",
+  {tip:"Big qualities (<b>sarva-vid · sarva-śakti · sarva-śeṣin</b>), then the sweet ones: <b>sulabha · suśīla</b>."}),
+ mg(7, "To the supreme Brahman, the fulfilled, the supreme self — I offer maṅgalam.", [
+   [["परस्मै","to the supreme","para"],["ब्रह्मणे","Brahman","brahman"],["पूर्णकामाय","to him whose desires are fulfilled","pūrṇa · kāma"],["परमात्मने","to the supreme self","paramātman"]],
+   [["प्रयुञ्जे","I offer","prayuñje"],["परतत्त्वाय","to the highest reality","para · tattva"], ...VM]],
+  "I offer maṅgalam to Veṅkaṭeśa — the supreme Brahman, whose every desire is fulfilled, the supreme self, the highest reality.",
+  "பரப்பிரம்மமும், நிறைவுற்ற விருப்பமுடையவனும், பரமாத்மாவும், மேலான தத்துவமுமான வேங்கடேசனுக்கு மங்களம் செலுத்துகிறேன்."),
+ mg(8, "Though seen for ever, he never satisfies — nectar itself.", [
+   [["आकालतत्त्वमश्रान्तमात्मनामनुपश्यताम्","for souls who gaze at him tirelessly for all time","ākāla = for all time · tattvam · aśrāntam = tirelessly · ātmanām · anupaśyatām = of those who keep seeing"]],
+   [["अतृप्त्यमृतरूपाय","to the nectar-form that never sates","atṛpti · amṛta · rūpa"], ...VM]],
+  "Maṅgalam to Veṅkaṭeśa, whose nectar-like form never leaves the soul satisfied, though it gaze at him tirelessly for all time.",
+  "எக்காலமும் இடைவிடாது தரிசிக்கும் ஆத்மாக்களுக்கும் தெவிட்டாத அமுத வடிவினனான வேங்கடேசனுக்கு மங்களம்."),
+ mg(9, "With his hand he points to his own feet as our refuge.", [
+   [["प्रायः","indeed","prāyaḥ"],["स्वचरणौ","his own feet","sva · caraṇa"],["पुंसां","to people","puṃs"],["शरण्यत्वेन","as the refuge","śaraṇyatva"],["पाणिना","with his hand","pāṇi"]],
+   [["कृपयाऽऽदिशते","who mercifully points","kṛpayā · ādiśate"],["श्रीमद्वेङ्कटेशाय","to glorious Veṅkaṭeśa","śrīmat · veṅkaṭeśa"],["मङ्गलम्","maṅgalam","maṅgala"]]],
+  "Maṅgalam to glorious Veṅkaṭeśa, who mercifully points with his hand to his own feet as the refuge for all.",
+  "தன் கையால் தன் பாதங்களையே எல்லோருக்கும் புகலிடமாகக் கருணையுடன் காட்டும் ஸ்ரீ வேங்கடேசனுக்கு மங்களம்.",
+  {tip:"This is the famous <b>varada-hasta</b> of the Tirumala mūrti: his right hand points down to his feet — “surrender here”."}),
+ mg(10, "His glances, cool waves of a river of mercy, bathe the whole world.", [
+   [["दयामृततरङ्गिण्यास्तरङ्गैरिव","like waves of a river of nectar-mercy","dayā · amṛta · taraṅgiṇī · taraṅga · iva"],["शीतलैः","cool","śītala"]],
+   [["अपाङ्गैः","with side-glances","apāṅga"],["सिञ्चते","to him who sprinkles","siñcate"],["विश्वं","the world","viśva"], ...VM]],
+  "Maṅgalam to Veṅkaṭeśa, who sprinkles the whole world with his side-glances, cool like the waves of a river of nectar-mercy.",
+  "கருணை அமுத ஆற்றின் குளிர்ந்த அலைகள் போன்ற கடைக்கண் பார்வைகளால் உலகம் முழுவதையும் நனைக்கும் வேங்கடேசனுக்கு மங்களம்."),
+ mg(11, "His garlands, ornaments, robes and weapons make him radiant — remover of all sorrow.", [
+   [["स्रग्भूषाम्बरहेतीनां","of garlands, ornaments, robes and weapons","srag · bhūṣā · ambara · heti = weapon"],["सुषमावहमूर्तये","whose form gives them beauty","suṣamā · āvaha · mūrti"]],
+   [["सर्वार्तिशमनायास्तु","to the remover of all sorrow, may it be","sarva · ārti · śamana · astu"], ...VM]],
+  "Maṅgalam to Veṅkaṭeśa, whose form lends beauty to his garlands, ornaments, robes and weapons, the remover of all sorrow.",
+  "மாலைகள், அணிகலன்கள், ஆடைகள், ஆயுதங்கள் இவற்றுக்கே அழகு தரும் திருமேனியனும், எல்லாத் துன்பங்களையும் தணிப்பவனுமான வேங்கடேசனுக்கு மங்களம்."),
+ mg(12, "Who left Vaikuṇṭha to delight with Ramā by the temple tank.", [
+   [["श्रीवैकुण्ठविरक्ताय","to him who lost interest in Vaikuṇṭha","vaikuṇṭha · virakta"],["स्वामिपुष्करिणीतटे","on the bank of the Svāmi Puṣkariṇī","svāmi-puṣkariṇī · taṭa"]],
+   [["रमया","with Ramā","ramā"],["रममाणाय","delighting","ramamāṇa"], ...VM]],
+  "Maṅgalam to Veṅkaṭeśa, who, no longer caring for Vaikuṇṭha, delights with Ramā on the bank of the Svāmi Puṣkariṇī.",
+  "வைகுண்டத்தையும் விட்டு, சுவாமி புஷ்கரிணிக் கரையில் ரமையுடன் மகிழும் வேங்கடேசனுக்கு மங்களம்."),
+ mg(13, "Who lives in the heart of Maṇavāḷa Māmunigaḷ, dwelling in all worlds.", [
+   [["श्रीमत्सुन्दरजामातृमुनिमानसवासिने","to him who dwells in the mind of the sage Sundara-jāmātṛ","śrīmat · sundara-jāmātṛ-muni = Maṇavāḷa Māmunigaḷ · mānasa · vāsin"]],
+   [["सर्वलोकनिवासाय","to him who dwells in all the worlds","sarva · loka · nivāsa"], ...SM]],
+  "Maṅgalam to Śrīnivāsa, who dwells in the heart of the sage Maṇavāḷa Māmunigaḷ and in all the worlds.",
+  "மணவாள மாமுனிகளின் மனதில் வசிப்பவனும், எல்லா உலகங்களிலும் வசிப்பவனுமான ஸ்ரீநிவாசனுக்கு மங்களம்.",
+  {tip:"<b>Sundara-jāmātṛ-muni</b> is Maṇavāḷa Māmunigaḷ — the author P. B. Aṇṇan's own ācārya."}),
+ mg(14, "Honoured with maṅgalam by my ācārya and all the ācāryas before.", [
+   [["मङ्गलाशासनपरैर्मदाचार्यपुरोगमैः","by those devoted to maṅgalāśāsana, led by my ācārya","maṅgala-āśāsana · para · mat-ācārya · purogama"]],
+   [["सर्वैश्च","and by all","sarva · ca"],["पूर्वैराचार्यैः","the earlier ācāryas","pūrva · ācārya"],["सत्कृतायास्तु","to the one honoured, may there be","satkṛta · astu"],["मङ्गलम्","every blessing","maṅgala"]]],
+  "Maṅgalam to him who is honoured by all who are devoted to wishing him well, led by my own ācārya, and by all the ācāryas before.",
+  "என் ஆசார்யரை முதலாகக் கொண்டு மங்களாசாசனம் செய்பவர்களாலும், முன்னோர்களான எல்லா ஆசார்யர்களாலும் போற்றப்படுபவனுக்கு மங்களம்.",
+  {kind:"phala", short:"Maṅgalam 14"})
+);
+return {
+  key:"vsp", titleDv:"श्रीवेङ्कटेशसुप्रभातम्", verses:VERSES,
+  meter:{name:"Vasantatilakā & others", kind:"anushtubh",
+    intro:"The Suprabhātam is mostly <b>vasantatilakā</b> (14 syllables a quarter); verses 1–2 are anuṣṭubh and verse 4 is mañjubhāṣiṇī. The Stotram is in toṭaka (short–short–long × 4) with a few others; the Maṅgalāśāsanam is anuṣṭubh. Each verse is checked against its pattern.",
+    quiz:{q:"Whose words open the Suprabhātam — “kausalyā supraja rāma”?", opts:["Viśvāmitra, waking young Rāma","Vasiṣṭha","Hanumān","Nārada"],
+      why:"Viśvāmitra, in the Rāmāyaṇa's Bāla Kāṇḍa, as he wakes Rāma and Lakṣmaṇa at dawn."}},
+  overview({R}){
+    document.getElementById("refrains").innerHTML = [["शेषाद्रिशेखरविभो तव सुप्रभातम्","verses 5–12"],["श्रीवेङ्कटाचलपते तव सुप्रभातम्","verses 13–24, 27–28"],["वेङ्कटेशाय मङ्गलम्","the Maṅgalāśāsanam"]].map(([dv, en]) => `${R(dv)} <span class="muted" style="font-family:var(--f-body);font-size:.82rem">— ${en}</span>`).join("<br>");
+  }
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

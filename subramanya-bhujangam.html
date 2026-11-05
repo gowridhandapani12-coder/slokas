@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Subramanya Bhujangam</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Ādi Śaṅkara · Sanskrit · 33 verses in bhujaṅgaprayāta</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Subramanya Bhujangam</h1>
+          <p class="lead" style="margin-top:8px">Śaṅkara, ill and in pain, came to Tiruchendūr on the sea-shore; seeing Murugan, words poured out of him in the “serpent's gait” metre — <i>bhujaṅga-prayāta</i>. “I know no words, no meanings, no verse — yet the six-faced Light shines in my heart and wonderful words flow from my mouth.” The hymn is chanted for healing and for courage at the last hour.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><span>Composed by</span><b>Ādi Śaṅkara</b><span>at Tiruchendūr</span></div>
+        <div class="fact"><span>Deity</span><b>Subrahmaṇya</b><span>Murugan, Skanda, Guha</span></div>
+        <div class="fact"><span>Metre</span><b>Bhujaṅgaprayāta</b><span>“the serpent's gait”</span></div>
+        <div class="fact"><span>Rhythm</span><b>da-DUM-DUM ×4</b><span>12 syllables a quarter</span></div>
+        <div class="fact"><span>Source</span><b>Her Word file</b><span>Tamil-script text</span></div>
+        <div class="fact"><span>On her plan</span><b>Mon · Tue</b><span>Murugan's days</span></div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h2>Six movements</h2>
+          <div class="ladder" style="margin-top:10px">
+            <div class="step"><span class="n">1–3</span><div><span class="vb" style="font-family:var(--f-display)">Invocation</span> <span class="en">— Gaṇeśa; “I know no words”; Murugan on the peacock</span></div><span></span></div>
+            <div class="step"><span class="n">4–8</span><div><span class="vb" style="font-family:var(--f-display)">At Tiruchendūr</span> <span class="en">— the shore, the waves, the cave, the golden shrine</span></div><span></span></div>
+            <div class="step"><span class="n">9–18</span><div><span class="vb" style="font-family:var(--f-display)">His form</span> <span class="en">— feet, waist, chest, arms, six faces, twelve eyes</span></div><span></span></div>
+            <div class="step"><span class="n">19–25</span><div><span class="vb" style="font-family:var(--f-display)">At the last hour</span> <span class="en">— come quickly on the peacock; cure my illness</span></div><span></span></div>
+            <div class="step"><span class="n">26–32</span><div><span class="vb" style="font-family:var(--f-display)">Surrender</span> <span class="en">— all my senses in Guha; forgive me; jaya!</span></div><span></span></div>
+            <div class="step"><span class="n">33</span><div><span class="vb" style="font-family:var(--f-display)">Fruit</span> <span class="en">— children, wealth, long life, union with Skanda</span></div><span></span></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each verse, in order.</p>
+          <div class="mn" id="openings"></div>
+          <div class="tip" style="margin-top:14px"><b>Rhyming verses:</b> 3 ends every quarter in <i>-am</i> (gūḍham, geham, bhāvam, pālam); 12 in <i>-daṇḍān</i>; 32 is all <i>jaya!</i>. Verse 2 repeats <i>na jānāmi</i> four times — “I do not know”.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>Murugan, as the hymn describes him</h2><span class="muted" style="font-size:.85rem">Tap one to see the word in its verse</span></div>
+        <div class="icons" id="icons" style="margin-top:14px"></div>
+      </div>
+      <div class="card">
+        <h2>What it gives</h2>
+        <p class="muted" style="margin:6px 0 12px">Verses 25 and 33: one who reads it with devotion —</p>
+        <div class="benefits" id="benefits"></div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+const W = s => s.split(";").map(x => { const [dv, g, b] = x.split("|").map(y => y.trim()); return [dv, g, b || g]; });
+const BP = {meter:"bhujangaprayata", pat:"LGGLGGLGGLGx", padaLen:0};
+const v = (n, part, hook, lines, en, ta, extra) => Object.assign({id:"v" + n, n:String(n), label:"Verse " + n, part, hook, lines:lines.map(W), en, ta}, BP, extra || {});
+const VERSES = [
+ v(1, "Invocation", "Ever a child, yet the destroyer of mountains of obstacles — elephant-faced Gaṇeśa, may he give me prosperity.",
+  ["सदा|always; बालरूपाऽपि|though in a child's form|bāla · rūpā · api; विघ्नाद्रिहन्त्री|destroyer of mountains of obstacles",
+   "महादन्तिवक्त्राऽपि|though with a great elephant's face; पञ्चास्यमान्या|honoured by the five-faced (Śiva)",
+   "विधीन्द्रादिमृग्या|sought by Brahmā, Indra and others; गणेशाभिधा|named Gaṇeśa; मे|to me",
+   "विधत्तां|may (it) give; श्रियं|prosperity; काऽपि|some; कल्याणमूर्तिः|auspicious form"],
+  "Ever in a child's form, yet the destroyer of mountains of obstacles; with a great elephant's face, yet honoured by the five-faced Śiva (or the lion); sought by Brahmā, Indra and others — may that auspicious form named Gaṇeśa give me prosperity.",
+  "எப்போதும் குழந்தை வடிவினனாயினும் விக்னமலைகளை அழிப்பவனும், யானை முகத்தவனாயினும் ஐம்முகனால் போற்றப்படுபவனும், பிரம்மா இந்திரன் முதலியோரால் தேடப்படுபவனுமான கணேசன் எனும் மங்கள மூர்த்தி எனக்குச் செல்வம் தரட்டும்.",
+  {tip:"Each line has a playful contrast: <b>bāla</b> (child) but <b>vighnādri-hantrī</b> (mountain-breaker); <b>dantin</b> (elephant) but <b>pañcāsya-mānyā</b> (honoured by the lion/Śiva)."}),
+ v(2, "Invocation", "I know no words, no meanings, no verse, no prose — yet the six-faced Light shines in my heart, and words flow.",
+  ["न|not; जानामि|I know; शब्दं|words; न|not; जानामि|I know; चार्थं|or meaning|ca · artham",
+   "न|not; जानामि|I know; पद्यं|verse; न|not; जानामि|I know; गद्यम्|prose",
+   "चिदेका|the one Consciousness; षडास्या|six-faced; हृदि|in the heart; द्योतते|shines; मे|my",
+   "मुखान्निःसरन्ते|from the mouth flow|mukhāt · niḥsaranti; गिरश्चापि|and words too|giraḥ · ca · api; चित्रम्|wonderful"],
+  "I do not know words, nor meanings; I do not know verse, nor prose. Yet the one six-faced Consciousness shines in my heart — and wonderful words flow from my mouth.",
+  "எனக்குச் சொல்லும் தெரியாது, பொருளும் தெரியாது; பாடலும் தெரியாது, உரைநடையும் தெரியாது. ஆனால் ஆறுமுக சைதன்யம் என் இதயத்தில் ஒளிர்கிறது — அற்புதச் சொற்கள் என் வாயிலிருந்து பெருகுகின்றன.",
+  {tip:"<b>na jānāmi</b> four times — “I do not know”. Then the turn: <b>cid ekā ṣaḍāsyā</b> — the six-faced Light."}),
+ v(3, "Invocation", "On the peacock, hidden in the great sayings, lovely, dwelling in great minds — I worship Mahādeva's son.",
+  ["मयूराधिरूढं|mounted on the peacock; महावाक्यगूढं|hidden in the great Upaniṣadic sayings",
+   "मनोहारिदेहं|of captivating form; महच्चित्तगेहम्|whose home is the minds of the great",
+   "महीदेवदेवं|god of the earthly gods (brāhmaṇas); महावेदभावं|the meaning of the great Vedas",
+   "महादेवबालं|Mahādeva's son; भजे|I worship; लोकपालम्|protector of the world"],
+  "I worship Mahādeva's son, protector of the world — mounted on the peacock, hidden in the great Upaniṣadic sayings, captivating in form, whose home is the minds of the great, the god of the gods on earth, the meaning of the great Vedas.",
+  "மயில் மேல் அமர்ந்தவனும், மகாவாக்கியங்களில் மறைந்தவனும், மனம் கவரும் உடலுடையவனும், மகான்களின் மனத்தில் வசிப்பவனும், பூதேவர்களின் தேவனும், மகாவேதங்களின் பொருளும், உலகைக் காப்பவனுமான மகாதேவன் மகனை வணங்குகிறேன்.",
+  {tip:"Every quarter rhymes in <b>-am</b> with <b>mahā-</b>: gūḍham · geham · bhāvam · pālam."}),
+ v(4, "At Tiruchendūr", "“Those who come to my presence have crossed the sea of saṃsāra” — showing this, he stands by the sea.",
+  ["यदा|when; सन्निधानं|my presence; गता|have come; मानवा|people; मे|my",
+   "भवाम्भोधिपारं|the far shore of the ocean of birth; गतास्ते|they have reached|gatāḥ · te; तदैव|at that very moment",
+   "इति|thus; व्यञ्जयन्|showing; सिन्धुतीरे|on the sea-shore; य|who; आस्ते|stays",
+   "तमीडे|I praise him|tam · īḍe; पवित्रं|the holy; पराशक्तिपुत्रम्|son of Parāśakti"],
+  "“When people come into my presence, at that very moment they have reached the far shore of the ocean of birth” — showing this, he stays on the sea-shore. I praise him, the holy son of Parāśakti.",
+  "‘என் சன்னிதிக்கு வந்த உடனேயே மனிதர்கள் பிறவிக் கடலின் மறுகரையை அடைந்துவிட்டார்கள்’ என்று காட்டுவது போல் கடற்கரையில் இருக்கும் பராசக்தியின் புனிதப் புதல்வனைத் துதிக்கிறேன்.",
+  {tip:"Why does Murugan live at <b>Tiruchendūr</b> on the shore? To show that coming to him is crossing the sea of saṃsāra."}),
+ v(5, "At Tiruchendūr", "As high waves break and vanish, so troubles vanish near me — showing this with the rows of waves, Guha dwells in my heart.",
+  ["यथाब्धेस्तरङ्गा|as the ocean's waves|yathā · abdheḥ · taraṅgāḥ; लयं|dissolution; यान्ति|go to; तुङ्गास्|high",
+   "तथैवापदः|just so, misfortunes|tathā · eva · āpadaḥ; सन्निधौ|in my presence; सेवतां|of those who serve; मे|me",
+   "इतीवोर्मिपङ्क्तीर्नृणां|as if thus, the rows of waves, to people|iti · iva · ūrmi · paṅktīḥ · nṛṇām; दर्शयन्तं|showing",
+   "सदा|always; भावये|I meditate; हृत्सरोजे|in the lotus of my heart; गुहं|Guha; तम्|him"],
+  "“As the high waves of the ocean break and vanish, so the troubles of those who serve me vanish in my presence” — as if showing this to people through the rows of waves, Guha stands there. I always meditate on him in the lotus of my heart.",
+  "‘கடலின் உயர்ந்த அலைகள் கரையில் அழிவது போல், என்னைச் சேவிப்பவர்களின் ஆபத்துகள் என் சன்னிதியில் அழிகின்றன’ என்று அலை வரிசைகளால் மக்களுக்குக் காட்டுவது போல் நிற்கும் குகனை என் இதயத் தாமரையில் எப்போதும் தியானிக்கிறேன்."),
+ v(6, "At Tiruchendūr", "“Those who climb my hill are already on Kailāsa” — saying this, he sits on the Gandha hill. May the six-faced god delight me.",
+  ["गिरौ|on the hill; मन्निवासे|my dwelling; नरा|people; येऽधिरूढास्|who have climbed|ye · adhirūḍhāḥ",
+   "तदा|then; पर्वते|on the mountain; राजते|on the silver (Kailāsa); तेऽधिरूढाः|they have climbed",
+   "इतीव|as if thus; ब्रुवन्|saying; गन्धशैलाधिरूढः|seated on the Gandha hill",
+   "स|that; देवो|god; मुदे|for joy; मे|my; सदा|always; षण्मुखोऽस्तु|may the six-faced one be"],
+  "“Those who have climbed the hill where I dwell have, at that moment, climbed the silver mountain Kailāsa” — as if saying this, he is seated on the Gandha hill. May that god, the six-faced one, always be for my joy.",
+  "‘நான் வசிக்கும் மலையில் ஏறியவர்கள் அப்போதே வெள்ளிமலையான கைலாசத்தில் ஏறியவர்கள்’ என்று சொல்வது போல் கந்தமாதன மலையில் வீற்றிருக்கும் ஆறுமுகத் தேவன் எனக்கு எப்போதும் மகிழ்ச்சி தரட்டும்."),
+ v(7, "At Tiruchendūr", "By the great ocean, that steals great sins, on the fragrant hill, in a cave shining with his own light — we take refuge in Guha.",
+  ["महाम्भोधितीरे|on the shore of the great ocean; महापापचोरे|which steals away great sins",
+   "मुनीन्द्रानुकूले|dear to the great sages; सुगन्धाख्यशैले|on the hill named Sugandha",
+   "गुहायां|in a cave; वसन्तं|dwelling; स्वभासा|with his own light; लसन्तं|shining",
+   "जनार्तिं|people's pain; हरन्तं|removing; श्रयामो|we take refuge; गुहं|Guha; तम्|him"],
+  "On the shore of the great ocean, which steals away great sins, on the hill called Sugandha, dear to the great sages, he dwells in a cave, shining with his own light, removing people's pain — we take refuge in that Guha.",
+  "பெரும் பாவங்களைப் போக்கும் மகா சமுத்திரக் கரையில், முனிவர்களுக்கு இனிய சுகந்த மலையில், குகையில் வசித்து, தன் ஒளியால் ஒளிர்ந்து, மக்களின் துயரைப் போக்கும் குகனைச் சரணடைகிறோம்.",
+  {tip:"<b>guhāyāṃ vasantam … guham</b> — he who lives in the <b>guhā</b> (cave) is <b>Guha</b>."}),
+ v(8, "At Tiruchendūr", "In the shining golden shrine, on a jewelled couch strewn with flowers, bright as a thousand rising suns — I meditate on Kārttikeya.",
+  ["लसत्स्वर्णगेहे|in the shining golden house; नृणां|for people; कामदोहे|which yields their wishes",
+   "सुमस्तोमसञ्छन्नमाणिक्यमञ्चे|on a ruby couch covered with heaps of flowers",
+   "समुद्यत्सहस्रार्कतुल्यप्रकाशं|bright as a thousand rising suns",
+   "सदा|always; भावये|I meditate on; कार्तिकेयं|Kārttikeya; सुरेशम्|lord of the gods"],
+  "In the shining golden shrine that yields people's wishes, on a ruby couch covered with heaps of flowers, bright as a thousand rising suns — I always meditate on Kārttikeya, lord of the gods.",
+  "மக்களின் விருப்பங்களைத் தரும் ஒளிரும் பொன் மாளிகையில், மலர்க்குவியல்கள் மூடிய மாணிக்க மஞ்சத்தில், உதிக்கும் ஆயிரம் சூரியர் போல் ஒளிரும் தேவேசனான கார்த்திகேயனை எப்போதும் தியானிக்கிறேன்."),
+ v(9, "His form", "May the bee of my mind, burned by saṃsāra, rest always on your lotus feet, red, with tinkling anklets, full of the nectar of beauty.",
+  ["रणद्धंसके|with tinkling anklets; मञ्जुलेऽत्यन्तशोणे|lovely, deeply red|mañjule · atyanta · śoṇe",
+   "मनोहारिलावण्यपीयूषपूर्णे|full of the nectar of captivating beauty",
+   "मनःषट्पदो|the bee of my mind; मे|my; भवक्लेशतप्तः|scorched by the troubles of saṃsāra",
+   "सदा|always; मोदतां|may (it) rejoice; स्कन्द|O Skanda; ते|your; पादपद्मे|in the lotus feet"],
+  "O Skanda, may the bee of my mind, scorched by the troubles of worldly life, always rejoice in your lotus feet — lovely, deep red, with tinkling anklets, full of the nectar of captivating beauty.",
+  "ஸ்கந்தா, பிறவித் துன்பத்தால் வாடிய என் மனம் எனும் வண்டு, ஒலிக்கும் சிலம்புகளுடைய, அழகிய, மிகச் சிவந்த, மனம் கவரும் அழகமுதம் நிறைந்த உன் திருவடித் தாமரைகளில் எப்போதும் மகிழட்டும்.",
+  {tip:"The form verses go <b>feet upward</b> (pādādi-keśa): feet (9), waist (10), chest (11), arms (12), faces (13–14), eyes (15), heads (16)."}),
+ v(10, "His form", "I meditate on your waist, Skanda — shining in golden silk, lovely with a tinkling girdle and a gleaming gold band.",
+  ["सुवर्णाभदिव्याम्बरैर्भासमानां|shining with divine garments of golden hue",
+   "क्वणत्किङ्किणीमेखलाशोभमानाम्|lovely with a girdle of tinkling bells",
+   "लसद्धेमपट्टेन|with a gleaming golden band; विद्योतमानां|shining",
+   "कटिं|waist; भावये|I meditate on; स्कन्द|O Skanda; ते|your; दीप्यमानाम्|radiant"],
+  "O Skanda, I meditate on your radiant waist — shining in divine garments of golden hue, lovely with a girdle of tinkling bells, gleaming with a band of gold.",
+  "ஸ்கந்தா, பொன்னிற திவ்ய ஆடைகளால் ஒளிர்வதும், ஒலிக்கும் கிண்கிணி ஒட்டியாணத்தால் அழகியதும், ஒளிரும் பொன் பட்டையால் மின்னுவதுமான உன் இடையைத் தியானிக்கிறேன்."),
+ v(11, "His form", "I bow to your chest, foe of Tāraka, red with saffron from embracing Vallī — ever loving to protect your devotees.",
+  ["पुलिन्देशकन्याघनाभोगतुङ्ग|of the hunter-chief's daughter (Vallī), full and high",
+   "स्तनालिङ्गनासक्तकाश्मीररागम्|red with saffron from the embrace of her breasts",
+   "नमस्याम्यहं|I bow; तारकारे|O foe of Tāraka; तवोरः|your chest|tava · uraḥ",
+   "स्वभक्तावने|in protecting your devotees; सर्वदा|always; सानुरागम्|full of love"],
+  "O foe of Tāraka, I bow to your chest — red with saffron from the embrace of Vallī, the hunter-chief's daughter — always full of love in protecting your devotees.",
+  "தாரகனின் பகைவனே, வேடர் தலைவன் மகளான வள்ளியின் தழுவலால் குங்குமம் படிந்து சிவந்த, தன் பக்தர்களைக் காப்பதில் எப்போதும் அன்பு நிறைந்த உன் மார்பை வணங்குகிறேன்.",
+  {tip:"<b>Pulinda-kanyā</b> — Vallī, daughter of the hunter chief, Murugan's bride."}),
+ v(12, "His form", "I take refuge in your mighty arms — rods of justice to Brahmā, holding universes in play, death to enemies, saviours of the world.",
+  ["विधौ|on Brahmā; क्लृप्तदण्डान्|who gave punishment; स्वलीलाधृताण्डान्|holding the universes in play",
+   "निरस्तेभशुण्डान्|that pushed aside elephants' trunks; द्विषत्कालदण्डान्|rods of death for enemies",
+   "हतेन्द्रारिषण्डाञ्जगत्त्राणशौण्डान्|slayers of Indra's foes, skilled in saving the world",
+   "सदा|always; ते|your; प्रचण्डान्|mighty; श्रये|I take refuge in; बाहुदण्डान्|rod-like arms"],
+  "I always take refuge in your mighty rod-like arms — which punished Brahmā, which hold the universes in play, which pushed aside elephants' trunks, which are rods of death to enemies, which slew Indra's foes and are skilled in saving the world.",
+  "பிரம்மனைத் தண்டித்தவையும், விளையாட்டாக அண்டங்களைத் தாங்குபவையும், யானைத் தும்பிக்கைகளை விலக்கியவையும், பகைவர்களுக்குக் காலதண்டமும், இந்திரனின் பகைவர்களைக் கொன்றவையும், உலகைக் காக்க வல்லவையுமான உன் வலிய தோள்களைச் சரணடைகிறேன்.",
+  {tip:"Every quarter rhymes in <b>-daṇḍān / -ṇḍān</b>. Murugan punished Brahmā for not knowing the meaning of Om."}),
+ v(13, "His form", "If six autumn moons rose together, always full, without spots — then, Skanda, I'd compare them to your faces.",
+  ["सदा|always; शारदाः|autumnal; षण्मृगाङ्का|six moons; यदि|if; स्युः|there were",
+   "समुद्यन्त|rising; एव|indeed; स्थिताश्चेत्|if they stood|sthitāḥ · cet; समन्तात्|all around",
+   "सदा|always; पूर्णबिम्बाः|full-orbed; कलङ्कैश्च|and of spots|kalaṅkaiḥ · ca; हीनास्|free",
+   "तदा|then; त्वन्मुखानां|of your faces; ब्रुवे|I would speak; स्कन्द|O Skanda; साम्यम्|likeness"],
+  "If there were six autumn moons, all rising together, always full and free of spots — then, O Skanda, I would speak of their likeness to your faces.",
+  "எப்போதும் உதிக்கும், எப்போதும் பூரணமான, களங்கமற்ற ஆறு சரத்காலச் சந்திரர்கள் சுற்றிலும் இருந்தால் — அப்போதுதான், ஸ்கந்தா, உன் முகங்களுக்கு ஒப்புமை சொல்வேன்."),
+ v(14, "His form", "I behold your six lotus faces — swans of smiles, bees of glances, lips flowing with nectar.",
+  ["स्फुरन्मन्दहासैः|with shining gentle smiles; सहंसानि|with swans; चञ्चत्|darting",
+   "कटाक्षावलीभृङ्गसङ्घोज्ज्वलानि|bright with swarms of bees — the rows of glances",
+   "सुधास्यन्दिबिम्बाधराणीशसूनो|with bimba lips flowing with nectar, O son of Īśa",
+   "तवालोकये|I behold your|tava · ālokaye; षण्मुखाम्भोरुहाणि|six lotus faces"],
+  "O son of Īśa, I behold your six lotus faces — with swans of shining gentle smiles, bright with swarms of bees, the rows of your darting glances, and bimba-red lips flowing with nectar.",
+  "ஈசனின் மைந்தா, மந்தஹாசமே அன்னங்களாகவும், அசையும் கடைக்கண் வரிசைகளே வண்டுக்கூட்டங்களாகவும், அமுதம் சுரக்கும் கோவை உதடுகளும் உடைய உன் ஆறு முகத் தாமரைகளைக் காண்கிறேன்."),
+ v(15, "His form", "Among your twelve long, merciful eyes, if just one side-glance falls on me once — what loss is that to you?",
+  ["विशालेषु|wide; कर्णान्तदीर्घेष्वजस्रं|long to the ears, always|karṇa · anta · dīrgheṣu · ajasram",
+   "दयास्यन्दिषु|flowing with mercy; द्वादशस्वीक्षणेषु|among the twelve eyes|dvādaśasu · īkṣaṇeṣu",
+   "मयीषत्कटाक्षः|on me, a slight side-glance|mayi · īṣat · kaṭākṣaḥ; सकृत्पातितश्चेद्|if cast once",
+   "भवेत्ते|would be to you|bhavet · te; दयाशील|O merciful one; का|what; नाम|indeed; हानिः|loss"],
+  "Among your twelve eyes — wide, long to the ears, ever flowing with mercy — if even one slight side-glance were cast on me just once, O merciful one, what loss would it be to you?",
+  "விசாலமான, காதுவரை நீண்ட, எப்போதும் கருணை சுரக்கும் உன் பன்னிரண்டு கண்களில், ஒரு சிறு கடைக்கண் ஒருமுறை என்மீது விழுந்தால், கருணையாளனே, உனக்கு என்ன இழப்பு?",
+  {tip:"Like Soundarya Laharī 57 — “what loss to you?”. Twelve eyes, and Śaṅkara asks for <b>one</b> glance."}),
+ v(16, "His form", "Śiva smelled your six heads with joy, chanting “live, son born of my body” — I bow to those crowned heads, lord of the world.",
+  ["सुताङ्गोद्भवो|son born of my limbs; मेऽसि|you are mine|me · asi; जीवेति|“live!” — thus|jīva · iti; षड्धा|six times",
+   "जपन्मन्त्रमीशो|Īśa, chanting the mantra|japan · mantram · īśaḥ; मुदा|with joy; जिघ्रते|smells; यान्|which",
+   "जगद्भारभृद्भ्यो|to those bearing the world's burden; जगन्नाथ|O lord of the world; तेभ्यः|to those",
+   "किरीटोज्ज्वलेभ्यो|shining with crowns; नमो|salutations; मस्तकेभ्यः|to the heads"],
+  "“You are my son, born of my limbs — live!”: chanting this mantra six times, Īśa smells your heads with joy. O lord of the world, salutations to those heads, shining with crowns, bearing the burden of the world.",
+  "‘என் அங்கத்தில் பிறந்த மகன் நீ, வாழ்வாயாக’ என்ற மந்திரத்தை ஆறுமுறை ஜபித்து ஈசன் மகிழ்வுடன் முகர்ந்த, உலக பாரத்தைத் தாங்கும், கிரீடங்களால் ஒளிரும் உன் சிரங்களுக்கு, ஜகந்நாதா, நமஸ்காரம்."),
+ v(17, "His form", "With jewelled armlets and necklaces, swinging earrings, yellow silk and the śakti in hand — may Śiva's son stand before me.",
+  ["स्फुरद्रत्नकेयूरहाराभिरामश्|lovely with shining jewelled armlets and necklaces",
+   "चलत्कुण्डलश्रीलसद्गण्डभागः|his cheeks shining with swinging earrings",
+   "कटौ|at the waist; पीतवासाः|yellow-robed; करे|in hand; चारुशक्तिः|the lovely lance",
+   "पुरस्तान्ममास्तां|may he stand before me|purastāt · mama · āstām; पुरारेस्तनूजः|son of the foe of the cities"],
+  "Lovely with shining jewelled armlets and necklaces, his cheeks bright with swinging earrings, yellow silk at his waist and the lovely lance in his hand — may the son of Śiva stand before me.",
+  "ஒளிரும் ரத்தினத் தோள்வளைகளும் மாலைகளும் அழகுபடுத்த, அசையும் குண்டலங்களால் கன்னங்கள் ஒளிர, இடையில் பீதாம்பரமும் கையில் அழகிய வேலும் கொண்ட திரிபுராரியின் மைந்தன் என் முன் நிற்கட்டும்.",
+  {tip:"<b>cāru-śakti</b> — the <b>vel</b>, his lance, given by Pārvatī."}),
+ v(18, "His form", "When Śiva calls “come here, child”, stretching his arms, he leaps from his mother's lap into his father's embrace — I worship that child.",
+  ["इहायाहि|come here|iha · āyāhi; वत्सेति|“child!” — thus|vatsa · iti; हस्तान्प्रसार्या|stretching out his hands",
+   "ह्वयत्यादराच्छङ्करे|when Śaṅkara lovingly calls|hvayati · ādarāt · śaṅkare; मातुरङ्कात्|from his mother's lap",
+   "समुत्पत्य|leaping up; तातं|his father; श्रयन्तं|going to; कुमारं|the boy",
+   "हराश्लिष्टगात्रं|his body embraced by Hara; भजे|I worship; बालमूर्तिम्|the child-form"],
+  "When Śaṅkara, stretching out his hands, lovingly calls “Come here, child!”, the boy leaps from his mother's lap and runs to his father — I worship that child-form, his body embraced by Hara.",
+  "‘இங்கே வா, குழந்தாய்’ என்று கைகளை நீட்டிச் சங்கரன் அன்புடன் அழைக்கும்போது, தாயின் மடியிலிருந்து பாய்ந்து தந்தையிடம் செல்லும், ஹரனால் தழுவப்பட்ட அந்தக் குழந்தை வடிவக் குமாரனை வணங்குகிறேன்.",
+  {tip:"A tender family picture — the best-loved child verse."}),
+ v(19, "At the last hour", "O Kumāra, Guha, Skanda, general, lance-bearer on the peacock, Vallī's beloved — protect me always.",
+  ["कुमारेशसूनो|O Kumāra, son of Īśa; गुह|O Guha; स्कन्द|O Skanda; सेना|of the army",
+   "पते|O lord; शक्तिपाणे|O lance-bearer; मयूराधिरूढ|O rider of the peacock",
+   "पुलिन्दात्मजाकान्त|O beloved of the hunter's daughter; भक्तार्तिहारिन्|O remover of devotees' pain",
+   "प्रभो|O Lord; तारकारे|O foe of Tāraka; सदा|always; रक्ष|protect; मां|me; त्वम्|you"],
+  "O Kumāra, son of Īśa; O Guha; O Skanda; O lord of the army; O lance-bearer; O rider of the peacock; O beloved of the hunter's daughter; O remover of devotees' pain; O Lord, foe of Tāraka — always protect me.",
+  "குமாரா, ஈசன் மைந்தா, குகா, ஸ்கந்தா, சேனாபதி, வேலாயுதா, மயில்வாகனா, வள்ளி மணாளா, பக்தர் துயர் தீர்ப்பவனே, பிரபோ, தாரகாரியே — என்னை எப்போதும் காப்பாயாக.",
+  {tip:"A string of his names — easy to chant: <b>kumāra · guha · skanda · senāpati · śaktipāṇi</b>."}),
+ v(20, "At the last hour", "When my senses fail and I am helpless, about to leave — come quickly before me, merciful Guha.",
+  ["प्रशान्तेन्द्रिये|when the senses are stilled; नष्टसंज्ञे|consciousness lost; विचेष्टे|motionless",
+   "कफोद्गारिवक्त्रे|phlegm in the mouth; भयोत्कम्पिगात्रे|body trembling with fear",
+   "प्रयाणोन्मुखे|about to depart; मय्यनाथे|when I am helpless|mayi · anāthe; तदानीं|then",
+   "द्रुतं|quickly; मे|before me; दयालो|O merciful one; भवाग्रे|be in front|bhava · agre; गुह|O Guha; त्वम्|you"],
+  "When my senses are stilled, my awareness gone, my body motionless, phlegm rising in my mouth, my limbs trembling with fear, and I am helpless, about to depart — then, O merciful Guha, come quickly and stand before me.",
+  "புலன்கள் அடங்கி, நினைவிழந்து, அசைவற்று, வாயில் கபம் பொங்கி, பயத்தால் உடல் நடுங்கி, புறப்படத் தயாராக ஆதரவற்று நான் இருக்கும் அந்த நேரத்தில், கருணையாளனே, குகனே, விரைவில் என் முன் தோன்றுவாயாக.",
+  {tip:"Verses 20–22: the prayer for the <b>last hour</b> — the heart of the hymn."}),
+ v(21, "At the last hour", "When Yama's fierce messengers shout “burn, cut, break!”, say “fear not” — come quickly on your peacock, lance in hand.",
+  ["कृतान्तस्य|of Yama; दूतेषु|when the messengers; चण्डेषु|fierce; कोपाद्|in anger",
+   "दहच्छिन्धि|“burn! cut!”|daha · chindhi; भिन्धीति|“break!” — thus|bhindhi · iti; मां|me; तर्जयत्सु|threaten",
+   "मयूरं|the peacock; समारुह्य|mounting; मा|do not; भैरिति|“fear” — thus|bhaiḥ · iti; त्वं|you",
+   "पुरः|before me; शक्तिपाणिर्ममायाहि|lance in hand, come to me|śaktipāṇiḥ · mama · āyāhi; शीघ्रम्|quickly"],
+  "When Yama's fierce messengers angrily threaten me, “Burn him! Cut him! Break him!”, mount your peacock and, lance in hand, saying “Fear not!”, come quickly before me.",
+  "யமனின் கொடிய தூதர்கள் கோபத்துடன் ‘எரி, வெட்டு, உடை’ என்று என்னை மிரட்டும்போது, மயில் மீதேறி, ‘அஞ்சாதே’ என்று சொல்லி, வேலேந்தி விரைவில் என் முன் வருவாயாக.",
+  {tip:"<b>mā bhaiḥ</b> — “fear not!” — Murugan's promise."}),
+ v(22, "At the last hour", "Bowing at your feet again and again, I pray now — I won't be able to speak then; at the end, don't neglect me even a little.",
+  ["प्रणम्यासकृत्पादयोस्ते|bowing again and again at your feet; पतित्वा|falling",
+   "प्रसाद्य|pleasing you; प्रभो|O Lord; प्रार्थयेऽनेकवारम्|I pray many times|prārthaye · anekavāram",
+   "न|not; वक्तुं|to speak; क्षमोऽहं|I am able|kṣamaḥ · aham; तदानीं|then; कृपाब्धे|O ocean of mercy",
+   "न|not; कार्यान्तकाले|at the final hour; मनागप्युपेक्षा|even slight neglect|manāk · api · upekṣā"],
+  "Falling at your feet again and again, seeking your grace, O Lord, I pray many times now: I will not be able to speak then, O ocean of mercy — so at the final hour, do not neglect me even slightly.",
+  "உன் திருவடிகளில் மீண்டும் மீண்டும் விழுந்து வணங்கி, உன்னை மகிழ்வித்து, பிரபோ, பலமுறை வேண்டுகிறேன் — அப்போது பேச என்னால் முடியாது, கருணைக் கடலே; இறுதி நேரத்தில் சிறிதும் என்னைப் புறக்கணிக்காதே."),
+ v(23, "At the last hour", "You slew Śūra, Tāraka and Siṃhavaktra — why not slay this one sorrow in my heart? What shall I do, where shall I go?",
+  ["सहस्राण्डभोक्ता|ruler of a thousand worlds; त्वया|by you; शूरनामा|named Śūra",
+   "हतस्तारकः|slain, Tāraka|hataḥ · tārakaḥ; सिंहवक्त्रश्च|and Siṃhavaktra; दैत्यः|the demon",
+   "ममान्तर्हृदिस्थं|dwelling in my heart; मनःक्लेशमेकं|one sorrow of the mind",
+   "न|not; हंसि|you slay; प्रभो|O Lord; किं|what; करोमि|shall I do; क्व|where; यामि|shall I go"],
+  "By you were slain Śūra, ruler of a thousand worlds, Tāraka and the demon Siṃhavaktra. Yet the one sorrow dwelling in my heart you do not slay, O Lord — what shall I do? Where shall I go?",
+  "ஆயிரம் அண்டங்களை ஆண்ட சூரனையும், தாரகனையும், சிம்மமுகனையும் நீ கொன்றாய். என் இதயத்தில் உள்ள ஒரு மனத்துயரை மட்டும் கொல்லவில்லையே, பிரபோ — நான் என்ன செய்வேன், எங்கே போவேன்?",
+  {tip:"<b>kiṃ karomi kva yāmi</b> — “what shall I do, where shall I go?” — a cry from the heart."}),
+ v(24, "At the last hour", "I sink under sorrow; you are friend of the poor — I ask no one else. Quickly destroy my anguish, son of Umā.",
+  ["अहं|I; सर्वदा|always; दुःखभारावसन्नो|sinking under the weight of sorrow",
+   "भवान्दीनबन्धुस्त्वदन्यं|you are friend of the poor — other than you|bhavān · dīnabandhuḥ · tvat · anyam; न|not; याचे|I ask",
+   "भवद्भक्तिरोधं|blocking devotion to you; सदा|always; क्लृप्तबाधं|causing harm",
+   "ममाधिं|my anguish; द्रुतं|quickly; नाशयोमासुत|destroy, O son of Umā|nāśaya · umāsuta; त्वम्|you"],
+  "I always sink under the weight of sorrow; you are the friend of the poor — I ask no one other than you. O son of Umā, quickly destroy my anguish, which always blocks my devotion to you and causes harm.",
+  "நான் எப்போதும் துயர பாரத்தால் சோர்ந்திருக்கிறேன்; நீ தீனபந்து — உன்னைத் தவிர யாரிடமும் கேட்க மாட்டேன். உமாசுதா, உன் பக்திக்குத் தடையாகித் துன்புறுத்தும் என் மனவேதனையை விரைவில் அழிப்பாயாக."),
+ v(25, "At the last hour", "Epilepsy, leprosy, consumption, fever, madness and ghosts flee the moment they see your sacred leaf-ash.",
+  ["अपस्मारकुष्ठक्षयार्शःप्रमेह|epilepsy, leprosy, consumption, piles, diabetes",
+   "ज्वरोन्मादगुल्मादिरोगा|fever, madness, tumours and other diseases; महान्तः|great",
+   "पिशाचाश्च|and ghosts; सर्वे|all; भवत्पत्रभूतिं|your leaf-ash (pannīr-ilai vibhūti)",
+   "विलोक्य|seeing; क्षणात्तारकारे|instantly, O foe of Tāraka|kṣaṇāt · tārakāre; द्रवन्ते|run away"],
+  "Epilepsy, leprosy, consumption, piles, diabetes, fever, madness, tumours and other great diseases, and all ghosts, O foe of Tāraka, run away the moment they see your sacred leaf-ash.",
+  "காக்காய் வலிப்பு, தொழுநோய், க்ஷயம், மூலம், நீரிழிவு, காய்ச்சல், பைத்தியம், குன்மம் முதலிய பெரும் நோய்களும் எல்லாப் பிசாசுகளும், தாரகாரியே, உன் பன்னீர் இலை விபூதியைக் கண்ட கணமே ஓடிவிடுகின்றன.",
+  {tip:"<b>patra-bhūti</b> — the vibhūti given at Tiruchendūr in a panneer leaf; Śaṅkara was healed by it."}),
+ v(26, "Surrender", "Skanda's form in my eyes, his fame in my ears, his story on my lips, his service in my hands — may all of me be lost in Guha.",
+  ["दृशि|in the eyes; स्कन्दमूर्तिः|Skanda's form; श्रुतौ|in the ears; स्कन्दकीर्तिर्|Skanda's fame",
+   "मुखे|in the mouth; मे|my; पवित्रं|holy; सदा|always; तच्चरित्रम्|his story",
+   "करे|in the hand; तस्य|his; कृत्यं|work; वपुस्तस्य|the body, his|vapuḥ · tasya; भृत्यं|servant",
+   "गुहे|in Guha; सन्तु|may (they) be; लीना|absorbed; ममाशेषभावाः|all my feelings"],
+  "In my eyes, Skanda's form; in my ears, Skanda's fame; on my lips always his holy story; in my hands his work; my body his servant — may all my feelings be absorbed in Guha.",
+  "என் கண்களில் ஸ்கந்த மூர்த்தி, காதுகளில் ஸ்கந்த கீர்த்தி, வாயில் எப்போதும் அவன் புனிதச் சரித்திரம், கைகளில் அவன் பணி, உடல் அவன் அடிமை — என் எல்லா உணர்வுகளும் குகனில் கரையட்டும்.",
+  {tip:"Each sense given to him — like Soundarya Laharī 27 (japo jalpaḥ)."}),
+ v(27, "Surrender", "Other gods grant wishes to sages and devotees — but one who gives even to the lowest, other than Guha I know none.",
+  ["मुनीनामुताहो|to sages, or else|munīnām · uta · aho; नृणां|to people; भक्तिभाजाम्|who have devotion",
+   "अभीष्टप्रदाः|givers of wishes; सन्ति|there are; सर्वत्र|everywhere; देवाः|gods",
+   "नृणामन्त्यजानामपि|even to the lowest-born|nṛṇām · antyajānām · api; स्वार्थदाने|in giving their aims",
+   "गुहाद्देवमन्यं|a god other than Guha|guhāt · devam · anyam; न|not; जाने|I know; न|not; जाने|I know"],
+  "Everywhere there are gods who grant the wishes of sages or devoted people; but one who gives their aims even to the lowest-born — other than Guha, I know no god, I know none.",
+  "முனிவர்களுக்கும் பக்தர்களுக்கும் விருப்பம் தரும் தெய்வங்கள் எங்கும் உள்ளன; ஆனால் தாழ்ந்தவர்களுக்கும் அவர்கள் விரும்பியதைத் தருவதில் குகனைத் தவிர வேறு தெய்வத்தை நான் அறியேன், அறியேன்.",
+  {tip:"<b>na jāne na jāne</b> — “I know none, I know none” — echoing verse 2's <i>na jānāmi</i>."}),
+ v(28, "Surrender", "Wife, children, relatives, cattle — all in my home — may they worship, bow to, praise and remember you, Kumāra.",
+  ["कलत्रं|wife; सुता|children; बन्धुवर्गः|relatives; पशुर्वा|or cattle",
+   "नरो|man; वाऽथ|or|vā · atha; नारी|woman; गृहे|in the house; ये|who; मदीयाः|are mine",
+   "यजन्तो|worshipping; नमन्तः|bowing; स्तुवन्तो|praising; भवन्तं|you",
+   "स्मरन्तश्च|and remembering; ते|they; सन्तु|may be; सर्वे|all; कुमार|O Kumāra"],
+  "O Kumāra, my wife, children, relatives, cattle — every man or woman in my house who is mine — may they all be worshipping you, bowing to you, praising you and remembering you.",
+  "குமாரா, என் மனைவி, மக்கள், உறவினர், பசுக்கள் — என் வீட்டிலுள்ள ஆணோ பெண்ணோ எல்லோரும் — உன்னை ஆராதித்து, வணங்கி, துதித்து, நினைப்பவர்களாக இருக்கட்டும்.",
+  {tip:"A prayer for the <b>whole family</b> — good to say at home."}),
+ v(29, "Surrender", "Wild beasts, birds, stinging insects and diseases in my body — may they be pierced by your lance and destroyed far away.",
+  ["मृगाः|beasts; पक्षिणो|birds; दंशका|stinging insects; ये|which; च|and; दुष्टास्|harmful",
+   "तथा|and so; व्याधयो|diseases; बाधका|troubling; ये|which; मदङ्गे|in my body",
+   "भवच्छक्तितीक्ष्णाग्रभिन्नाः|pierced by the sharp point of your lance; सुदूरे|far away",
+   "विनश्यन्तु|may (they) perish; ते|they; चूर्णितक्रौञ्चशैल|O crusher of Mount Krauñca"],
+  "O crusher of Mount Krauñca, may harmful beasts, birds and stinging insects, and the diseases that trouble my body, be pierced by the sharp point of your lance and perish far away.",
+  "கிரௌஞ்ச மலையைப் பொடியாக்கியவனே, தீய விலங்குகள், பறவைகள், கொட்டும் பூச்சிகள், என் உடலைத் துன்புறுத்தும் நோய்கள் ஆகியவை உன் வேலின் கூர்முனையால் பிளக்கப்பட்டுத் தொலைவில் அழியட்டும்."),
+ v(30, "Surrender", "Don't a mother and father forgive their child's faults? I am a little child, you the world's father — forgive all my faults.",
+  ["जनित्री|mother; पिता|father; च|and; स्वपुत्रापराधं|their own son's offence",
+   "सहेते|bear; न|not; किं|do (they); देवसेनाधिनाथ|O lord of Devasenā",
+   "अहं|I; चातिबालो|and a very small child|ca · ati · bālaḥ; भवांल्लोकतातः|you, the father of the world",
+   "क्षमस्वापराधं|forgive the offences|kṣamasva · aparādham; समस्तं|all; महेश|O great Lord"],
+  "Don't a mother and father bear with their own son's offences, O lord of Devasenā? I am a very small child, and you are the father of the world — O great Lord, forgive all my offences.",
+  "தேவசேனாபதியே, தாயும் தந்தையும் தம் மகனின் குற்றங்களைப் பொறுப்பதில்லையா? நான் சிறு குழந்தை, நீ உலகத் தந்தை — மகேசா, என் எல்லாக் குற்றங்களையும் மன்னிப்பாயாக.",
+  {tip:"<b>Devasenā</b> — his other consort, daughter of Indra."}),
+ v(31, "Surrender", "Salutations to your peacock, your lance, your goat, your rooster, to the sea and the sea-shore — salutations again to you, Skanda.",
+  ["नमः|salutations; केकिने|to the peacock; शक्तये|to the lance; चापि|and also; तुभ्यं|to you",
+   "नमश्छाग|salutations, O goat|namaḥ · chāga; तुभ्यं|to you; नमः|salutations; कुक्कुटाय|to the rooster",
+   "नमः|salutations; सिन्धवे|to the sea; सिन्धुदेशाय|to the sea-shore land; तुभ्यं|to you",
+   "पुनः|again; स्कन्दमूर्ते|O form of Skanda; नमस्ते|salutations to you; नमोऽस्तु|salutations be"],
+  "Salutations to your peacock and to your lance; salutations to you, O goat (his mount); salutations to the rooster (on his banner); salutations to the sea and to the sea-shore land — and again, O form of Skanda, salutations to you, salutations!",
+  "உன் மயிலுக்கு நமஸ்காரம், வேலுக்கு நமஸ்காரம்; ஆட்டுக்கு நமஸ்காரம், சேவலுக்கு நமஸ்காரம்; கடலுக்கும் கடற்கரைக்கும் நமஸ்காரம் — ஸ்கந்த மூர்த்தியே, மீண்டும் உனக்கு நமஸ்காரம், நமஸ்காரம்."),
+ v(32, "Surrender", "Jaya, abode of bliss; jaya, boundless light; jaya, unfailing fame — victory to you always, son of the Lord who gives liberation.",
+  ["जयानन्दभूमञ्जयापारधामञ्|victory, O vastness of bliss, victory, O boundless light",
+   "जयामोघकीर्ते|victory, O unfailing fame; जयानन्दमूर्ते|victory, O form of bliss",
+   "जयानन्दसिन्धो|victory, O ocean of bliss; जयाशेषबन्धो|victory, O friend of all",
+   "जय|victory; त्वं|you; सदा|always; मुक्तिदानेशसूनो|O son of the Lord who grants liberation"],
+  "Victory, O vastness of bliss! Victory, O boundless light! Victory, O unfailing fame! Victory, O form of bliss! Victory, O ocean of bliss! Victory, O friend of all! May you always be victorious, O son of the Lord who grants liberation.",
+  "ஜய, ஆனந்தப் பெருக்கே! ஜய, எல்லையற்ற ஒளியே! ஜய, வீணாகாப் புகழே! ஜய, ஆனந்த மூர்த்தியே! ஜய, ஆனந்தக் கடலே! ஜய, அனைவருக்கும் உறவே! முக்தி தரும் ஈசனின் மைந்தா, நீ என்றும் வெல்க!",
+  {tip:"<b>jaya</b> seven times — chant it with joy."}),
+ v(33, "Fruit", "Whoever reads this hymn in the bhujaṅga metre with devotion, bowing to Guha, gains children, wife, wealth, long life — and union with Skanda.",
+  ["भुजङ्गाख्यवृत्तेन|in the metre called bhujaṅga; क्लृप्तं|composed; स्तवं|hymn; यः|who",
+   "पठेद्भक्तियुक्तो|reads with devotion; गुहं|Guha; सम्प्रणम्य|bowing to",
+   "स|he; पुत्रान्कलत्रं|children, wife|putrān · kalatram; धनं|wealth; दीर्घमायुर्|long life",
+   "लभेत्स्कन्दसायुज्यमन्ते|gains, and union with Skanda at the end|labhet · skanda · sāyujyam · ante; नरः|man; सः|that"],
+  "The man who, bowing to Guha, reads with devotion this hymn composed in the metre called bhujaṅga, gains children, wife, wealth and long life — and, at the end, union with Skanda.",
+  "குகனை வணங்கி, புஜங்க வ்ருத்தத்தில் இயற்றப்பட்ட இந்தத் துதியைப் பக்தியுடன் படிப்பவன் மக்கள், மனைவி, செல்வம், நீண்ட ஆயுள் பெற்று, இறுதியில் ஸ்கந்த சாயுஜ்யத்தை அடைவான்.",
+  {kind:"phala", short:"Phala-śruti", pat:"LGGLGGxGGLGx", tip:"Line 1 treats “-na klṛ-” as short — a known licence in this verse."})
+];
+const S = 'fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"';
+const ICONS = [
+  {t:"On the peacock", w:"मयूराधिरूढं", v:"v3", d:"his mount", svg:`<path d="M10 28c0-8 4-14 10-16M20 12c2-4 6-6 8-4-2 1-3 3-3 5M20 12c-6-4-14 0-14 8s8 8 14 2" ${S}/>`},
+  {t:"Six faces", w:"षडास्या", v:"v2", d:"Ṣaṇmukha", svg:`<circle cx="17" cy="9" r="4" ${S}/><circle cx="9" cy="17" r="4" ${S}/><circle cx="25" cy="17" r="4" ${S}/><circle cx="17" cy="25" r="4" ${S}/>`},
+  {t:"By the sea", w:"सिन्धुतीरे", v:"v4", d:"Tiruchendūr", svg:`<path d="M3 20c3-3 6-3 9 0s6 3 9 0 6-3 9 0M3 27c3-3 6-3 9 0s6 3 9 0 6-3 9 0M10 14l7-8 7 8" ${S}/>`},
+  {t:"In the cave", w:"गुहायां", v:"v7", d:"Guha, the cave-dweller", svg:`<path d="M4 28c0-12 6-20 13-20s13 8 13 20zM12 28c0-6 2-10 5-10s5 4 5 10" ${S}/>`},
+  {t:"Lotus feet", w:"पादपद्मे", v:"v9", d:"with tinkling anklets", svg:`<path d="M17 6c-4 5-4 12 0 18 4-6 4-13 0-18zM17 24c-6-1-10-6-11-12 5 1 9 5 11 12zM17 24c6-1 10-6 11-12-5 1-9 5-11 12zM6 27h22" ${S}/>`},
+  {t:"Twelve eyes", w:"द्वादशस्वीक्षणेषु", v:"v15", d:"flowing with mercy", svg:`<path d="M3 17s5-8 14-8 14 8 14 8-5 8-14 8S3 17 3 17z" ${S}/><circle cx="17" cy="17" r="4" ${S}/>`},
+  {t:"The vel", w:"चारुशक्तिः", v:"v17", d:"his lovely lance", svg:`<path d="M17 30V12M17 4c-4 4-4 8 0 8 4 0 4-4 0-8z" ${S}/>`},
+  {t:"A child on Śiva's lap", w:"बालमूर्तिम्", v:"v18", d:"leaping to his father", svg:`<circle cx="17" cy="10" r="5" ${S}/><path d="M8 29c0-6 4-10 9-10s9 4 9 10" ${S}/>`},
+  {t:"“Fear not”", w:"भैरिति", v:"v21", d:"at the last hour", svg:`<path d="M12 28V14M12 14V7a2 2 0 0 1 4 0v7M16 14V5a2 2 0 0 1 4 0v9M20 14V7a2 2 0 0 1 4 0v11c0 6-4 10-9 10" ${S}/>`},
+  {t:"Leaf-ash", w:"भवत्पत्रभूतिं", v:"v25", d:"vibhūti in a panneer leaf", svg:`<path d="M17 30c-8-4-11-12-8-22 6 2 12 8 8 22zM17 30C16 22 13 15 9 8" ${S}/>`}
+];
+const BENEFITS = [["ज्वरोन्मादगुल्मादिरोगा","Diseases cured"],["पिशाचाश्च","Evil forces flee"],["पुत्रान्कलत्रं","Children and family"],["धनं","Wealth"],["दीर्घमायुर्","Long life"],["लभेत्स्कन्दसायुज्यमन्ते","Union with Skanda"]];
+return {
+  key:"sbj", titleDv:"श्रीसुब्रह्मण्यभुजङ्गम्", verses:VERSES, icons:ICONS, benefits:BENEFITS,
+  meter:{name:"Bhujaṅgaprayāta", kind:"bhujangaprayata",
+    hook:"Bhujaṅgaprayāta: short–long–long, four times — da-DUM-DUM da-DUM-DUM da-DUM-DUM da-DUM-DUM.",
+    intro:"The whole hymn is in <b>bhujaṅgaprayāta</b>, “the serpent's gait”: each quarter is <b>short–long–long</b> four times (12 syllables) — <i>sa-DĀ-BĀ · la-RŪ-PĀ · 'pi-VIGH-NĀ · dri-HAN-TRĪ</i>. Each line is one quarter and is checked against the pattern.",
+    quiz:{q:"Where does Murugan stand in this hymn, on the sea-shore?", opts:["Tiruchendūr","Palani","Swamimalai","Tiruttani"],
+      why:"Śaṅkara composed it at Tiruchendūr — sindhu-tīre (v4), mahāmbhodhi-tīre (v7), and the waves of v5."}}
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

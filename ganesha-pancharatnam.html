@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ganesha Pancharatnam</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+</head>
+<body>
+<template id="overview">
+<div class="hero">
+        <div>
+          <p class="eyebrow">Adi Shankaracharya · Sanskrit · 5 verses + dhyānam + phala-śruti</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Ganesha Pancharatnam</h1>
+          <p class="lead" style="margin-top:8px">“Five gems for Lord Ganesha.” Each verse is one gem: a string of names that paint his picture — the sweet in his hand, the moon on his head, the single tusk — and ends with a different way of reaching him.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+
+      <div class="facts">
+        <div class="fact"><span>Composed by</span><b>Adi Shankaracharya</b><span>c. 8th century CE</span></div>
+        <div class="fact"><span>Deity</span><b>Mahā Gaṇapati</b><span>Vināyaka, remover of obstacles</span></div>
+        <div class="fact"><span>Metre</span><b>Pañcacāmara</b><span>16 syllables a line, short–long × 8</span></div>
+        <div class="fact"><span>Title</span><b>Pañca + ratna</b><span>five + gems</span></div>
+        <div class="fact"><span>Best time</span><b>At dawn</b><span>“prabhātake” — verse 6</span></div>
+        <div class="fact"><span>Learning from</span><b>Arthaanubhavam</b><span>workshop notebook (GP)</span></div>
+      </div>
+
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h2>A ladder of devotion</h2>
+          <p class="muted" style="margin:6px 0 14px">Every gem ends with a different verb. Learn this order and you will never mix up the verse endings.</p>
+          <div class="ladder" id="ladder"></div>
+        </div>
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each gem, in order. Say it like a little chant.</p>
+          <div class="mn" id="openings"></div>
+          <div class="tip" style="margin-top:14px"><b>Two more patterns.</b> Verse 2, line 3 is four “-īśvaram” titles in a row (lord of gods, treasures, elephants, gaṇas). Verse 3, line 3 is four “-karam” words (maker of compassion, patience, joy, fame).</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="sec-head"><h2>Ganesha, as the hymn describes him</h2><span class="muted" style="font-size:.85rem">Tap one to see the word in its verse</span></div>
+        <div class="icons" id="icons" style="margin-top:14px"></div>
+      </div>
+
+      <div class="card">
+        <h2>What the last verse promises</h2>
+        <p class="muted" style="margin:6px 0 12px">Whoever recites the five gems every day at dawn, with Gaṇeśa in the heart, soon gains:</p>
+        <div class="benefits" id="benefits"></div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+/* ================= The sloka ================= */
+// lines: words as [devanagari, meaning, how-the-word-is-built]
+const VERSES = [
+ {id:"dh", n:"ॐ", label:"Dhyānam", short:"Dhyānam", kind:"dhyana", hook:"Picture him calm, bright and smiling — and the obstacles melt.",
+  lines:[
+   [["शुक्लाम्बरधरं","wearing white garments","śukla = white · ambara = cloth · dhara = wearing"],["विष्णुं","the all-pervading one","viṣṇu = one who pervades everything"],["शशिवर्णं","bright like the moon","śaśin = moon · varṇa = colour"],["चतुर्भुजम्","four-armed","catur = four · bhuja = arm"]],
+   [["प्रसन्नवदनं","with a gracious, smiling face","prasanna = pleased · vadana = face"],["ध्यायेत्","one should meditate on","dhyai = to meditate"],["सर्वविघ्नोपशान्तये","so that all obstacles are calmed","sarva = all · vighna = obstacle · upaśānti = calming"]]
+  ],
+  en:"One should meditate on the Lord dressed in white, all-pervading, bright as the moon, with four arms and a smiling face, so that every obstacle is removed.",
+  ta:"வெண்ணிற ஆடை அணிந்தவரும், எங்கும் நிறைந்தவரும், நிலவு போல் ஒளிர்பவரும், நான்கு கைகள் உடையவரும், மலர்ந்த முகம் கொண்டவருமான இறைவனை, எல்லாத் தடைகளும் நீங்கத் தியானிக்க வேண்டும்.",
+  note:"This opening verse is chanted before many hymns. Before the Pañcaratnam it is addressed to Gaṇeśa."},
+ {id:"v1", n:"1", label:"Verse 1", short:"Mudākarātta", verb:["नमामि","I bow"], hook:"The joyful one with the sweet in his hand.",
+  lines:[
+   [["मुदा","with joy","mudā = joyfully"],["करात्तमोदकं","who holds a modaka in his hand","kara = hand · ātta = held · modaka = sweet dumpling"],["सदा","always","sadā = always"],["विमुक्तिसाधकं","who brings about liberation","vimukti = liberation · sādhaka = one who achieves"]],
+   [["कलाधरावतंसकं","who wears the crescent moon as a crown jewel","kalādhara = the moon (bearer of digits) · avataṃsaka = crest ornament"],["विलासिलोकरक्षकम्","protector of the worlds, his playground","vilāsin = playful, delighting · loka = world · rakṣaka = protector"]],
+   [["अनायकैकनायकं","the one leader of those who have no leader","anāyaka = without a leader · eka = only · nāyaka = leader"],["विनाशितेभदैत्यकं","who destroyed the elephant-demon","vināśita = destroyed · ibha = elephant · daitya = demon (Gajāsura)"]],
+   [["नताशुभाशुनाशकं","who quickly removes the misfortune of those who bow","nata = those who bow · aśubha = misfortune · āśu = quickly · nāśaka = destroyer"],["नमामि","I bow to","namāmi = I bow"],["तं","that","tam = him, that"],["विनायकम्","Vināyaka","vi + nāyaka = the supreme leader"]]
+  ],
+  en:"I bow to that Vināyaka who joyfully holds the modaka in his hand, who always grants liberation, who wears the crescent moon as his crown jewel, who protects the worlds, the one leader of those who have no leader, who destroyed the elephant-demon, and who quickly removes the misfortune of all who bow to him.",
+  ta:"மகிழ்ச்சியுடன் கையில் மோதகம் ஏந்தியவரும், எப்போதும் முக்தி அருள்பவரும், பிறைச் சந்திரனை முடியில் அணிந்தவரும், உலகங்களைக் காப்பவரும், தலைவன் இல்லாதவர்களுக்கு ஒரே தலைவனும், கஜாசுரனை அழித்தவரும், வணங்குபவர்களின் துன்பங்களை விரைவில் போக்குபவருமான அந்த விநாயகரை வணங்குகிறேன்."},
+ {id:"v2", n:"2", label:"Verse 2", short:"Natetarāti", verb:["आश्रये","I take refuge"], hook:"Shining like the rising sun — I take refuge in him.",
+  lines:[
+   [["नतेतरातिभीकरं","very fearsome to those who do not bow","nata = who bow · itara = other than · ati = very · bhīkara = frightening"],["नवोदितार्कभास्वरं","shining like the newly risen sun","nava = new · udita = risen · arka = sun · bhāsvara = shining"]],
+   [["नमत्सुरारिनिर्जरं","bowed to by demons and gods alike","namat = bowing · surāri = demons (enemies of gods) · nirjara = gods (the ageless)"],["नताधिकापदुद्धरम्","who lifts those who bow out of great trouble","nata = who bow · adhika = great · āpad = calamity · uddhara = rescuer"]],
+   [["सुरेश्वरं","lord of the gods","sura = god · īśvara = lord"],["निधीश्वरं","lord of treasures","nidhi = treasure · īśvara = lord"],["गजेश्वरं","lord of elephants","gaja = elephant · īśvara = lord"],["गणेश्वरं","lord of the gaṇas","gaṇa = Śiva's host · īśvara = lord"]],
+   [["महेश्वरं","the great lord","mahā = great · īśvara = lord"],["तमाश्रये","in him I take refuge","tam = him · āśraye = I take refuge"],["परात्परं","higher than the highest","parāt = than the highest · param = higher"],["निरन्तरम्","always, without a break","nirantaram = without interval"]]
+  ],
+  en:"He is terrible to those who do not bow, and shines like the newly risen sun. Demons and gods both bow to him; he lifts those who bow out of great trouble. Lord of the gods, lord of treasures, lord of elephants, lord of the gaṇas, the great lord, higher than the highest — in him I always take refuge.",
+  ta:"வணங்காதவர்களுக்கு மிகுந்த அச்சம் தருபவரும், அப்போது உதித்த சூரியனைப் போல் ஒளிர்பவரும், தேவர்களாலும் அசுரர்களாலும் வணங்கப்படுபவரும், வணங்குபவர்களைப் பெரும் ஆபத்துகளிலிருந்து காப்பவரும், தேவர்களின் தலைவர், செல்வங்களின் தலைவர், யானைகளின் தலைவர், கணங்களின் தலைவர், மகேஶ்வரர், உயர்ந்ததினும் உயர்ந்தவரான அவரை எப்போதும் சரணடைகிறேன்."},
+ {id:"v3", n:"3", label:"Verse 3", short:"Samastaloka", verb:["नमस्करोमि","I salute"], hook:"Kind to every world — I salute the radiant one.",
+  lines:[
+   [["समस्तलोकशङ्करं","who brings good to all the worlds","samasta = all · loka = world · śaṅkara = maker of good"],["निरस्तदैत्यकुञ्जरं","who threw down the mighty elephant-like demons","nirasta = thrown away · daitya = demon · kuñjara = elephant (a mighty one)"]],
+   [["दरेतरोदरं","whose belly is big","dara = small · itara = other than · udara = belly"],["वरं","the best","vara = excellent"],["वरेभवक्त्रम्","with the face of a noble elephant","vara = noble · ibha = elephant · vaktra = face"],["अक्षरम्","the imperishable","akṣara = that which never perishes"]],
+   [["कृपाकरं","a mine of compassion","kṛpā = compassion · ākara = mine, source"],["क्षमाकरं","a mine of patience","kṣamā = patience, forgiveness · ākara = source"],["मुदाकरं","a mine of joy","mudā = joy · ākara = source"],["यशस्करं","who gives fame","yaśas = fame · kara = maker"]],
+   [["मनस्करं","who gives a good mind","manas = mind · kara = maker"],["नमस्कृतां","to those who bow","namaskṛt = one who bows (genitive plural)"],["नमस्करोमि","I salute","namaskaromi = I bow, I salute"],["भास्वरम्","the radiant one","bhāsvara = shining"]]
+  ],
+  en:"I salute the radiant one who brings good to all the worlds and threw down the mighty demons; the big-bellied, the best, with the face of a noble elephant, imperishable; a mine of compassion, patience and joy, who gives fame and a good mind to those who bow to him.",
+  ta:"எல்லா உலகங்களுக்கும் நன்மை செய்பவரும், யானை போன்ற வலிமையான அசுரர்களை விரட்டியவரும், பெரிய வயிறு உடையவரும், சிறந்தவரும், உயர்ந்த யானை முகம் கொண்டவரும், அழிவற்றவரும், கருணை, பொறுமை, மகிழ்ச்சி ஆகியவற்றின் இருப்பிடமும், புகழ் தருபவரும், வணங்குபவர்களுக்கு நல்ல மனதை அருள்பவருமான ஒளிமிக்க அவரை நமஸ்கரிக்கிறேன்."},
+ {id:"v4", n:"4", label:"Verse 4", short:"Akiñcanārti", verb:["भजे","I worship"], hook:"The ancient elephant who wipes away the sorrow of the poor.",
+  lines:[
+   [["अकिञ्चनार्तिमार्जनं","who wipes away the sorrow of the poor","akiñcana = one who has nothing · ārti = suffering · mārjana = wiping away"],["चिरन्तनोक्तिभाजनं","praised by the ancient words (the Vedas)","cirantana = ancient · ukti = words · bhājana = vessel, object"]],
+   [["पुरारिपूर्वनन्दनं","the elder son of Śiva","purāri = Śiva (enemy of Tripura) · pūrva = first · nandana = son"],["सुरारिगर्वचर्वणम्","who chews up the pride of the demons","surāri = demons · garva = pride · carvaṇa = chewing"]],
+   [["प्रपञ्चनाशभीषणं","fearsome at the dissolution of the universe","prapañca = universe · nāśa = dissolution · bhīṣaṇa = terrible"],["धनञ्जयादिभूषणं","adorned with serpents such as Dhanañjaya","dhanañjaya = a great serpent · ādi = and others · bhūṣaṇa = ornament"]],
+   [["कपोलदानवारणं","the elephant with ichor on his cheeks","kapola = cheek · dāna = ichor (temple-fluid) · vāraṇa = elephant"],["भजे","I worship","bhaje = I worship"],["पुराणवारणम्","the ancient elephant","purāṇa = ancient · vāraṇa = elephant"]]
+  ],
+  en:"I worship the ancient elephant who wipes away the sorrow of the poor, who is the subject of the ancient Vedic words, the elder son of Śiva, who crushes the pride of the demons, who is fearsome at the dissolution of the universe, who wears serpents like Dhanañjaya as ornaments, the elephant with ichor flowing on his cheeks.",
+  ta:"ஏழைகளின் துயரைத் துடைப்பவரும், பழமையான வேத வாக்குகளால் போற்றப்படுபவரும், சிவபெருமானின் மூத்த மகனும், அசுரர்களின் கர்வத்தை அடக்குபவரும், பிரளய காலத்தில் பயங்கரமானவரும், தனஞ்சயன் முதலிய நாகங்களை அணிகலனாகக் கொண்டவரும், கன்னங்களில் மதநீர் பெருகும் யானையுமான அந்தப் பழமையான யானைமுகனைப் போற்றுகிறேன்."},
+ {id:"v5", n:"5", label:"Verse 5", short:"Nitāntakānta", verb:["विचिन्तयामि","I meditate"], hook:"Always in the heart of yogis — I meditate on the single-tusked one.",
+  lines:[
+   [["नितान्तकान्तदन्तकान्तिम्","whose tusk has an exceedingly lovely shine","nitānta = exceedingly · kānta = lovely · danta = tusk · kānti = shine"],["अन्तकान्तकात्मजं","son of Śiva, the destroyer of Death","antaka = Yama, Death · antaka = destroyer · ātmaja = son"]],
+   [["अचिन्त्यरूपम्","whose form is beyond thought","acintya = unthinkable · rūpa = form"],["अन्तहीनम्","endless","anta = end · hīna = without"],["अन्तरायकृन्तनम्","who cuts away obstacles","antarāya = obstacle · kṛntana = cutting"]],
+   [["हृदन्तरे","within the heart","hṛd = heart · antare = inside"],["निरन्तरं","always","nirantaram = without a break"],["वसन्तम्","dwelling","vasat = living, dwelling"],["एव","truly","eva = indeed"],["योगिनाम्","of the yogis","yogin = yogi (genitive plural)"]],
+   [["तम्","him","tam = him"],["एकदन्तम्","the one with a single tusk","eka = one · danta = tusk"],["एव","alone","eva = only, indeed"],["तं","him","tam = him"],["विचिन्तयामि","I meditate on","vi + cintayāmi = I think deeply of"],["सन्ततम्","continuously","santatam = always"]]
+  ],
+  en:"I meditate continuously on that single-tusked one alone: whose tusk shines with exceeding beauty, the son of Śiva who destroyed Death, whose form is beyond thought, who is endless, who cuts away obstacles, and who lives always in the hearts of yogis.",
+  ta:"மிக அழகாக ஒளிரும் தந்தம் உடையவரும், யமனை வென்ற சிவனின் மகனும், நினைத்தற்கரிய வடிவம் உடையவரும், முடிவற்றவரும், தடைகளை வெட்டி எறிபவரும், யோகிகளின் இதயத்தில் எப்போதும் வசிப்பவருமான அந்த ஏகதந்தரையே இடைவிடாமல் தியானிக்கிறேன்."},
+ {id:"v6", n:"6", label:"Phala-śruti", short:"Phala-śruti", kind:"phala", hook:"Chant at dawn: health, learning and plenty follow.",
+  lines:[
+   [["महागणेशपञ्चरत्नम्","the five gems of Mahā Gaṇeśa","mahā = great · gaṇeśa · pañca = five · ratna = gem"],["आदरेण","with reverence","ādara = respect, care"],["यो","whoever","yaḥ = who"],["ऽन्वहं","every day","anu + aham = day after day"]],
+   [["प्रजल्पति","recites","pra + jalpati = speaks out, recites"],["प्रभातके","at dawn","prabhāta = daybreak"],["हृदि","in the heart","hṛd = heart"],["स्मरन्","remembering","smarat = remembering"],["गणेश्वरम्","Gaṇeśvara","gaṇa + īśvara = lord of the gaṇas"]],
+   [["अरोगताम्","good health","a = not · roga = illness · tā = -ness"],["अदोषतां","freedom from faults","a = not · doṣa = fault"],["सुसाहितीं","fine learning and speech","su = good · sāhitī = literary skill"],["सुपुत्रतां","good children","su = good · putra = child"]],
+   [["समाहितायुरष्टभूतिम्","a long, settled life and the eight kinds of wealth","samāhita = steady · āyus = life · aṣṭa = eight · bhūti = prosperity"],["अभ्युपैति","attains","abhi + upa + eti = reaches"],["सो","he or she","saḥ = that person"],["ऽचिरात्","soon","a = not · cirāt = after long"]]
+  ],
+  en:"Whoever recites these five gems of Mahā Gaṇeśa every day at dawn, with reverence, remembering Gaṇeśvara in the heart, soon gains good health, freedom from faults, fine learning, good children, a long and settled life, and the eight kinds of wealth.",
+  ta:"இந்த மஹா கணேஶ பஞ்சரத்னத்தை தினமும் அதிகாலையில், கணேஶ்வரரை இதயத்தில் நினைத்து, பக்தியுடன் சொல்பவர் விரைவில் நோயின்மை, குறையின்மை, நல்ல கல்வி, நல்ல மக்கட்பேறு, நிலையான நீண்ட ஆயுள், எட்டு வகைச் செல்வங்கள் ஆகியவற்றைப் பெறுவார்."}
+];
+const TITLE_DV = "श्रीगणेशपञ्चरत्नम्";
+
+const ICONS = [
+  {t:"Modaka in hand", w:"करात्तमोदकं", v:"v1", d:"the sweet he holds — the joy of knowledge", svg:'<circle cx="17" cy="20" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M17 11c-2 3-2 6 0 9M17 11c2 3 2 6 0 9M12 13c0 4 2 7 5 7M22 13c0 4-2 7-5 7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M14 9l3-4 3 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'},
+  {t:"Moon on his crown", w:"कलाधरावतंसकं", v:"v1", d:"the crescent moon as a crest jewel", svg:'<path d="M22 6a12 12 0 1 0 6 20A10 10 0 1 1 22 6z" fill="none" stroke="currentColor" stroke-width="2"/>'},
+  {t:"Slayer of Gajāsura", w:"विनाशितेभदैत्यकं", v:"v1", d:"destroyed the elephant-demon", svg:'<path d="M6 28L26 8M20 6l8 8M8 22l4 4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>'},
+  {t:"Rising-sun glow", w:"नवोदितार्कभास्वरं", v:"v2", d:"shines like the newly risen sun", svg:'<path d="M4 24h26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M9 24a8 8 0 0 1 16 0" fill="none" stroke="currentColor" stroke-width="2"/><path d="M17 8v4M8 12l3 3M26 12l-3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'},
+  {t:"Big belly", w:"दरेतरोदरं", v:"v3", d:"holds the whole universe within", svg:'<ellipse cx="17" cy="19" rx="11" ry="10" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="20" r="1.6" fill="currentColor"/>'},
+  {t:"Elephant face", w:"वरेभवक्त्रम्", v:"v3", d:"the face of a noble elephant", svg:'<path d="M9 12a8 8 0 0 1 16 0v6c0 3-2 4-4 5v5c0 2-3 2-3 0v-5M9 12c-3 0-5 3-4 6s4 3 4 0M25 12c3 0 5 3 4 6s-4 3-4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>'},
+  {t:"Elder son of Śiva", w:"पुरारिपूर्वनन्दनं", v:"v4", d:"first son of Purāri (Śiva)", svg:'<path d="M17 4v26M10 8c0 6 3 8 7 8s7-2 7-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'},
+  {t:"Serpent ornaments", w:"धनञ्जयादिभूषणं", v:"v4", d:"serpents like Dhanañjaya as jewels", svg:'<path d="M6 26c4 0 4-6 8-6s4 6 8 6 4-8 0-10-6-6-2-9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="22" cy="6" r="1.5" fill="currentColor"/>'},
+  {t:"Single tusk", w:"एकदन्तम्", v:"v5", d:"Ekadanta — one shining tusk", svg:'<path d="M10 6c0 12 6 20 16 22-6-6-8-14-8-22" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>'},
+  {t:"Remover of obstacles", w:"अन्तरायकृन्तनम्", v:"v5", d:"cuts every obstacle away", svg:'<circle cx="10" cy="24" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="24" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 21L26 6M22 21L8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'}
+];
+const BENEFITS = [["अरोगताम्","Good health"],["अदोषतां","Freedom from faults"],["सुसाहितीं","Learning & fine speech"],["सुपुत्रतां","Good children"],["समाहितायुः","Long, settled life"],["अष्टभूतिम्","Eight kinds of wealth"]];
+VERSES[0].meter = "anushtubh";
+const TIPS = {
+  dh:"Two halves: what he looks like (white, bright, four arms, smiling), then why we meditate (to calm all obstacles).",
+  v1:"Ends with <b>namāmi taṃ vināyakam</b> — “I bow to that Vināyaka”. Line 3 pairs a-nāyaka (no leader) with eka-nāyaka (the one leader).",
+  v2:"Line 3 is four lords in a row: sura · nidhi · gaja · gaṇa + <b>īśvaram</b>. Then <b>mah-eśvaram</b> starts line 4.",
+  v3:"Line 3 is four <b>-karam</b> words: kṛpā · kṣamā · mudā · yaśas. Line 4 starts with one more: manas-karam.",
+  v4:"Ends with two elephants: <b>kapola-dāna-vāraṇam</b> and <b>purāṇa-vāraṇam</b>. Listen for the -aṇam rhyme in every half-line.",
+  v5:"Full of <b>anta</b>: nitānta, kānta, danta, antaka, anta-hīnam, antarāya, hṛd-antare, nirantaram. Let the sound carry you.",
+  v6:"The benefits line is a list ending in -tām: aroga-tām · adoṣa-tām · suputra-tām (with susāhitīm in between)."
+};
+VERSES.forEach(v => v.tip = TIPS[v.id]);
+return {
+  key:"gp", titleDv:TITLE_DV, unit:"gem", verses:VERSES, icons:ICONS, benefits:BENEFITS,
+  meter:{name:"Pañcacāmara", kind:"chain",
+    intro:"Every line of the five gems has 16 syllables that go <b>short–long, short–long</b>, eight times.",
+    quiz:{q:"What is the metre of the five gems?", opts:["Pañcacāmara: short–long × 8, 16 syllables a line","Anuṣṭubh: 8 syllables a quarter","Bhujaṅgaprayāta: short–long–long × 4","Free verse with no fixed metre"],
+      why:"Pañcacāmara. Bhujaṅgaprayāta is the metre of the Subramanya and Sharada Bhujangams, also in the library."}},
+  // The ladder of devotion: each gem ends with a different verb.
+  overview({R, esc, VERSES}){
+    document.getElementById("ladder").innerHTML = VERSES.filter(v => v.verb).map((v, i) => `<div class="step"><span class="n">${v.n}</span><div><span class="vb">${R(v.verb[0])}</span> <span class="en">— ${esc(v.verb[1])}</span></div><span class="bar" style="width:${18 + i * 14}px"></span></div>`).join("");
+  }
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

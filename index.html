@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Daily Sadhana</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+<style>
+/* Daily Sadhana: today's list, japa counters, week lamps, month calendar, rewards.
+   Uses the shared palette tokens from sloka.css; no sidebar. */
+.wrap{max-width:1100px;margin:0 auto;padding-block:20px 80px;display:grid;gap:22px}
+.top2{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.top2 .row1{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
+.top2 .tools{display:flex!important;width:auto}
+.top2 .row1{flex-wrap:nowrap}
+.top2 .brand{min-width:0}
+.top2 .brand b,.top2 .brand span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top2 .brand > div{min-width:0}
+#backLink{max-width:42vw}
+#backLink .sh{display:none}
+@media (max-width:520px){#backLink .lg{display:none}#backLink .sh{display:inline}} /* sloka.css hides .tools on phones behind an Aa button the tracker does not have */
+.top2 nav{display:flex;gap:4px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+.top2 nav a{flex:none;text-decoration:none;color:var(--muted);font-weight:700;font-size:.92rem;padding:8px 14px;border-radius:999px}
+.top2 nav a.on{background:var(--terra);color:var(--on-accent)}
+.hero2{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:18px;align-items:center}
+.hero2 .day{font-family:var(--f-display);font-size:clamp(1.8rem,5vw,2.8rem);line-height:1.05}
+.hero2 .date{color:var(--muted);font-weight:700}
+.big-ring{width:110px;height:110px}
+.daynav{display:flex;gap:6px}
+.daynav button{padding:6px 12px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.stat b{display:block;font-family:var(--f-display);font-size:1.6rem;font-weight:600;line-height:1.1}
+.stat span{font-size:.8rem;color:var(--muted)}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.item{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 14px;border-radius:16px;background:var(--surface);border:1.5px solid var(--line);cursor:pointer;text-align:left;font-weight:400;user-select:none}
+.item:hover{border-color:var(--terra)}
+.item .chk{width:42px;height:42px;border-radius:50%;border:2.5px solid var(--line);display:grid;place-items:center;transition:transform .2s}
+.item .chk svg{width:22px;height:22px;opacity:0}
+.item b{font-family:var(--f-display);font-weight:600;font-size:1.05rem;display:block;line-height:1.2}
+.item small{color:var(--muted);font-size:.78rem}
+.item a{font-size:.78rem;font-weight:800;color:var(--terra-ink);text-decoration:none;padding:4px 8px;border-radius:8px;background:var(--surface-2)}
+.item.done{background:color-mix(in srgb,var(--good) 12%,var(--surface));border-color:var(--good)}
+.item.done .chk{background:var(--good);border-color:var(--good);color:var(--surface);transform:scale(1.05)}
+.item.done .chk svg{opacity:1}
+.item.done b{text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--good) 60%,transparent)}
+.japas{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.japa{background:var(--surface);border:1.5px solid var(--line);border-radius:18px;padding:16px;display:grid;gap:10px;justify-items:center;text-align:center}
+.japa.done{border-color:var(--good)}
+.japa h3{font-family:var(--f-display);font-size:1.3rem}
+.mala{width:180px;height:180px;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.mala:active{transform:scale(.98)}
+.japa .cnt{font-family:var(--f-mono);font-size:.85rem;color:var(--muted)}
+.japa .row{justify-content:center}
+.lamps{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.lamp{display:grid;justify-items:center;gap:4px;background:transparent;border:0;padding:6px 2px;border-radius:12px;font-weight:700;font-size:.8rem;color:var(--muted)}
+.lamp.today{background:var(--surface-2);color:var(--ink)}
+.lamp svg{width:40px;height:46px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.cal .dow{font-size:.72rem;font-weight:800;color:var(--muted);text-align:center;font-family:var(--f-mono)}
+.cell{aspect-ratio:1;border-radius:12px;border:1.5px solid transparent;background:var(--surface-2);display:grid;place-items:center;position:relative;font-weight:800;font-size:.9rem;padding:0;color:var(--ink)}
+.cell.out{opacity:.25}
+.cell.future{background:transparent;border:1.5px dashed var(--line);color:var(--muted)}
+.cell.today{border-color:var(--terra)}
+.cell.sel{outline:3px solid var(--ink);outline-offset:1px}
+.cell .pct{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);font-size:.55rem;font-family:var(--f-mono);font-weight:600;opacity:.8}
+.cell .star{position:absolute;top:3px;right:5px;font-size:.7rem}
+.legend2{display:flex;gap:10px;flex-wrap:wrap;font-size:.78rem;color:var(--muted);align-items:center}
+.legend2 i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:middle;margin-right:4px}
+.lotus{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:center}
+.lotus svg{width:120px;height:120px}
+.lvbar{height:12px;border-radius:99px;background:var(--surface-2);overflow:hidden;margin-top:8px}
+.lvbar i{display:block;height:100%;background:linear-gradient(90deg,var(--apricot),var(--terra))}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.badge{border-radius:14px;padding:12px;background:var(--surface-2);display:grid;gap:4px;justify-items:center;text-align:center;opacity:.45;filter:grayscale(1)}
+.badge.got{opacity:1;filter:none;background:var(--blush);color:#3b2b21}
+.badge svg{width:40px;height:40px}
+.badge b{font-family:var(--f-display);font-weight:600}
+.badge span{font-size:.75rem}
+.week{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.wk{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px}
+.wk h3{display:flex;justify-content:space-between;align-items:center}
+.wk ol{margin:8px 0 0;padding-left:20px;font-size:.9rem;display:grid;gap:3px}
+.wk.today{border-color:var(--terra);box-shadow:0 0 0 2px var(--terra) inset}
+.wk li a{color:var(--terra-ink);font-weight:700}
+.toast{position:fixed;left:16px;right:16px;margin:0 auto;width:fit-content;max-width:calc(100vw - 32px);bottom:max(18px,env(safe-area-inset-bottom,0px));z-index:70;background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:16px;font-weight:700;box-shadow:0 10px 30px rgba(33,27,22,.35)}
+.burst{position:fixed;pointer-events:none;z-index:80;font-size:22px;animation:fly 1s ease-out forwards}
+@keyframes fly{to{transform:translate(var(--dx),var(--dy)) scale(.6);opacity:0}}
+.tblstat{width:100%;border-collapse:collapse;font-size:.9rem}
+.tblstat td{padding:6px 8px;border-bottom:1px solid var(--grid)}
+.tblstat td:last-child{text-align:right;font-family:var(--f-mono)}
+.tblstat .barc{width:40%}
+.tblstat .barc i{display:block;height:8px;border-radius:99px;background:var(--apricot)}
+@media (max-width:700px){
+  .hero2{grid-template-columns:minmax(0,1fr) auto}
+  .hero2 .daynav{grid-column:1/-1}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .lotus{grid-template-columns:80px minmax(0,1fr)}
+  .lotus svg{width:80px;height:80px}
+}
+@media (prefers-reduced-motion: reduce){.burst{display:none}.item .chk{transition:none}}
+</style>
+</head>
+<body>
+<header class="top2">
+  <div class="gut row1">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">ஶ்ரீ</div>
+      <div><b>Daily Sadhana</b><span>Sridevi's sloka tracker</span></div>
+    </div>
+    <a class="xnav" id="backLink" href="ganesha-pancharatnam.html" title="Back to the sloka library" style="margin-left:auto">← Slokas</a>
+    <div class="tools">
+      <button id="themeBtn" aria-label="Switch light or dark">◐</button>
+    </div>
+  </div>
+  <nav class="gut" id="tabs">
+    <a href="#today">Today</a>
+    <a href="#calendar">Calendar</a>
+    <a href="#rewards">Rewards</a>
+    <a href="#week">Weekly plan</a>
+  </nav>
+</header>
+
+<main class="gut wrap">
+  <!-- TODAY -->
+  <section class="view" id="v-today">
+    <div class="hero2">
+      <svg class="big-ring" viewBox="0 0 110 110" id="ring"></svg>
+      <div><div class="day" id="dayName"></div><div class="date" id="dayDate"></div><p class="muted" id="dayMsg" style="margin-top:4px;font-size:.92rem"></p></div>
+      <div class="daynav"><button id="prevDay" aria-label="Previous day">‹</button><button id="todayBtn">Today</button><button id="nextDay" aria-label="Next day">›</button></div>
+    </div>
+    <div class="stats" id="stats"></div>
+    <div class="card">
+      <div class="sec-head"><h2>Slokas</h2><span class="muted" style="font-size:.85rem">Tap a sloka when you finish it. Tap again to undo.</span></div>
+      <div class="items" id="items" style="margin-top:14px"></div>
+    </div>
+    <div class="card" id="japaCard">
+      <div class="sec-head"><h2>Nāma japa</h2><span class="muted" style="font-size:.85rem" id="japaNote">Tap the mala for each repetition, or add a whole round.</span></div>
+      <div class="japas" id="japas" style="margin-top:14px"></div>
+    </div>
+    <div class="card">
+      <div class="sec-head"><h2>This week</h2><span class="muted" style="font-size:.85rem">One lamp for each day. It lights up as you complete the day.</span></div>
+      <div class="lamps" id="lamps" style="margin-top:12px"></div>
+    </div>
+  </section>
+
+  <!-- CALENDAR -->
+  <section class="view" id="v-calendar" hidden>
+    <div class="card">
+      <div class="sec-head">
+        <h2 id="monTitle"></h2>
+        <div class="daynav"><button id="prevMon" aria-label="Previous month">‹</button><button id="nextMon" aria-label="Next month">›</button></div>
+      </div>
+      <div class="legend2" style="margin-top:10px"><span><i style="background:var(--surface-2)"></i>not started</span><span><i style="background:color-mix(in srgb,var(--apricot) 45%,var(--surface-2))"></i>some</span><span><i style="background:var(--apricot)"></i>most</span><span><i style="background:var(--terra)"></i>all done</span><span>★ every sloka and japa</span></div>
+      <div class="cal" id="cal" style="margin-top:12px"></div>
+      <p class="muted" style="font-size:.85rem;margin-top:10px">Tap a day to open it. You can tick off a day you forgot to record.</p>
+    </div>
+    <div class="grid2">
+      <div class="card"><h3>This month</h3><div class="stats" id="monStats" style="margin-top:10px;grid-template-columns:repeat(2,minmax(0,1fr))"></div></div>
+      <div class="card"><h3>Most recited</h3><table class="tblstat" id="topTbl" style="margin-top:10px"></table></div>
+    </div>
+  </section>
+
+  <!-- REWARDS -->
+  <section class="view" id="v-rewards" hidden>
+    <div class="card lotus" id="levelCard"></div>
+    <div class="card">
+      <h2>How you earn puṇya points</h2>
+      <div class="grid3" style="margin-top:12px">
+        <div class="tip"><b>10 points</b> for each sloka recited</div>
+        <div class="tip"><b>1 point</b> for every 10 repetitions of japa</div>
+        <div class="tip"><b>+50 bonus</b> when the whole day is complete</div>
+      </div>
+      <p class="muted" style="font-size:.88rem;margin-top:10px">A day counts towards the streak when at least half of it is done. Once a week a missed day is covered by a <b>grace day</b>, so one busy day doesn't break the chain.</p>
+    </div>
+    <div class="card"><h2>Badges</h2><div class="badges" id="badges" style="margin-top:12px"></div></div>
+    <div class="card">
+      <h3>Backup</h3>
+      <p class="muted" style="font-size:.88rem;margin:4px 0 10px">Progress is saved in this browser only. Save a backup file now and then, or move it to another device.</p>
+      <div class="row"><button id="exportBtn">Download backup</button><label class="chip" style="cursor:pointer">Restore from file<input type="file" id="importFile" accept=".json" hidden></label></div>
+    </div>
+  </section>
+
+  <!-- WEEKLY PLAN -->
+  <section class="view" id="v-week" hidden>
+    <div class="card"><h2>Her weekly plan</h2><p class="muted" style="margin-top:4px">From her handwritten cards. Linked names open the learning page.</p></div>
+    <div class="week" id="weekPlan"></div>
+  </section>
+</main>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* ===== The weekly plan (from her cards). Japa items have a count target. ===== */
+const PAGES = { // slokas that have a learning page
+  "aditya-hrudayam":"aditya-hrudayam.html", "mahalakshmi-ashtakam":"mahalakshmi-ashtakam.html", "ashtalakshmi":"ashtalakshmi.html", "dhanalakshmi":"dhanalakshmi.html", "bhu-stuti":"bhu-stuti.html", "sri-stuti":"sri-stuti.html", "mahalakshmi-sahasranamam":"lakshmi-sahasranamam.html", "gunaratna-kosham":"gunaratna-kosham.html", "lalitha-sahasranamam":"lalitha-sahasranamam.html", "soundarya-lahari":"soundarya-lahari.html", "shodashayudha":"shodashayudha-stotram.html", "sudarshana":"sudarshana-kavacham.html", "kala-bhairava":"kala-bhairava-ashtakam.html", "subramanya-bhujangam":"subramanya-bhujangam.html", "gopala-vimshati":"gopala-vimshati.html", "ganapathy-pancharatnam":"ganesha-pancharatnam.html",
+  "rama-raksha":"laghu-rama-raksha.html", "nrisimha-stuti":"narasimha-stuti.html", "kamasikashtakam":"kamasikashtakam.html", "narasimha-ashtakam":"narasimha-ashtakam.html", "jagannatha-ashtakam":"jagannatha-ashtakam.html", "sri-suktam":"sri-suktam.html", "kanakadhara":"kanakadhara.html", "suprabhatam":"venkatesa-suprabhatam.html", "venkatesa-stotram":"venkatesa-suprabhatam.html", "mangala-sasanam":"venkatesa-suprabhatam.html", "damodarashtakam":"damodarashtakam.html", "guruvayupuresha":"guruvayupuresha-pancharatnam.html", "chatushloki":"chatushloki.html",
+  "vishnu-sahasranamam":"vishnu-sahasranamam.html", "hanuman-chalisa":"hanuman-chalisa.html", "ganapathy-atharvashirsham":"ganapathy-atharvashirsham.html"
+};
+const N = { // id: display name
+  "aditya-hrudayam":"Aditya Hrudayam", "vishnu-sahasranamam":"Vishnu Sahasranamam", "sri-suktam":"Sri Suktam", "kanakadhara":"Kanakadhara Stotram",
+  "kala-bhairava":"Kala Bhairava Ashtakam", "subramanya-bhujangam":"Subramanya Bhujangam", "sri-stuti":"Sri Stuti", "hanuman-chalisa":"Hanuman Chalisa",
+  "nrisimha-stuti":"Sri Nrisimha Stuti", "kamasikashtakam":"Kamasikashtakam", "narasimha-ashtakam":"Narasimha Ashtakam", "rama-raksha":"Sri Rama Raksha Stotram",
+  "jagannatha-ashtakam":"Jagannatha Ashtakam", "gopala-vimshati":"Sri Gopala Vimshati", "guruvayupuresha":"Guruvayupuresha Pancharatnam",
+  "damodarashtakam":"Damodarashtakam", "ganapathy-pancharatnam":"Ganapathy Pancharatnam", "ganapathy-atharvashirsham":"Ganapathy Atharvashirsham",
+  "suprabhatam":"Suprabhatam", "venkatesa-stotram":"Venkateshwara Stotram", "mangala-sasanam":"Mangala Sasanam",
+  "lalitha-sahasranamam":"Lalitha Sahasranamam", "bhu-stuti":"Bhu Stuti", "chatushloki":"Chatushloki", "mahalakshmi-ashtakam":"Mahalakshmi Ashtakam",
+  "ashtalakshmi":"Ashtalakshmi Stotram", "dhanalakshmi":"Dhanalakshmi Stotram", "mahalakshmi-sahasranamam":"Mahalakshmi Sahasranamam",
+  "gunaratna-kosham":"Sri Gunaratna Kosham", "soundarya-lahari":"Soundarya Lahari", "shodashayudha":"Shodashayudha Stotram", "sudarshana":"Sri Sudarshana Kavacham"
+};
+const JAPA = {shreem:{name:"Shreem", dv:"श्रीं", ta:"ஶ்ரீம்"}, ram:{name:"Ram", dv:"राम", ta:"ராம"}};
+// day 0 = Sunday. Japa: [id, target]
+const PLAN = [
+  {s:["aditya-hrudayam","vishnu-sahasranamam","sri-suktam","kanakadhara"], j:[["shreem",108],["ram",108]]},
+  {s:["kala-bhairava","vishnu-sahasranamam","subramanya-bhujangam","sri-suktam","sri-stuti"], j:[["shreem",1008],["ram",1008]]},
+  {s:["hanuman-chalisa","vishnu-sahasranamam","subramanya-bhujangam","nrisimha-stuti","kamasikashtakam","narasimha-ashtakam","rama-raksha","sri-suktam","kanakadhara"], j:[["shreem",108],["ram",108]]},
+  {s:["jagannatha-ashtakam","gopala-vimshati","guruvayupuresha","damodarashtakam","ganapathy-pancharatnam","ganapathy-atharvashirsham","sri-suktam","sri-stuti"], j:[]},
+  {s:["suprabhatam","venkatesa-stotram","mangala-sasanam","rama-raksha","vishnu-sahasranamam","nrisimha-stuti","kamasikashtakam","narasimha-ashtakam","sri-suktam","kanakadhara"], j:[["shreem",108],["ram",108]]},
+  {s:["sri-suktam","kanakadhara","lalitha-sahasranamam","sri-stuti","bhu-stuti","chatushloki","mahalakshmi-ashtakam","ashtalakshmi","dhanalakshmi","mahalakshmi-sahasranamam","gunaratna-kosham","soundarya-lahari"], j:[]},
+  {s:["shodashayudha","sudarshana","vishnu-sahasranamam"], j:[]}
+];
+const DOW = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+/* ===== Storage (this browser only; backup/restore in Rewards) ===== */
+const KEY = "sl-tracker";
+let D = (() => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){ return {}; } })();
+D.days = D.days || {}; D.targets = D.targets || {}; D.graceUsed = D.graceUsed || {};
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(D)); } catch(e){} };
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const dk = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+const fromKey = k => { const [y, m, d] = k.split("-").map(Number); return new Date(y, m - 1, d); };
+const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+const TODAY = () => dk(new Date());
+const dayRec = k => D.days[k] || (D.days[k] = {done:{}, japa:{}});
+const target = (k, id, def) => (D.targets[id] && D.targets[id][fromKey(k).getDay()]) || def;
+// Mark the day in the shared "practice days" list the sloka pages use for their streak.
+function markShared(k){ try { const a = JSON.parse(localStorage.getItem("sl-days") || "[]"); if (!a.includes(k)){ a.push(k); localStorage.setItem("sl-days", JSON.stringify(a.slice(-400))); } } catch(e){} }
+
+/* ===== Scoring ===== */
+function dayStats(k){
+  const p = PLAN[fromKey(k).getDay()], r = D.days[k] || {done:{}, japa:{}};
+  const sDone = p.s.filter(id => r.done[id]).length;
+  const jParts = p.j.map(([id, t]) => Math.min(1, (r.japa[id] || 0) / target(k, id, t)));
+  const total = p.s.length + p.j.length, got = sDone + jParts.reduce((a, b) => a + b, 0);
+  const japaCount = Object.values(r.japa || {}).reduce((a, b) => a + b, 0);
+  const frac = total ? got / total : 0;
+  return {frac, full: frac >= 0.999, sDone, sTotal: p.s.length, japaCount, points: sDone * 10 + Math.floor(japaCount / 10) + (frac >= 0.999 ? 50 : 0)};
+}
+function allStats(){
+  const keys = Object.keys(D.days).sort();
+  let points = 0, recits = 0, japa = 0, fulls = 0, per = {};
+  keys.forEach(k => { const s = dayStats(k); points += s.points; recits += s.sDone; japa += s.japaCount; if (s.full) fulls++; Object.keys(D.days[k].done || {}).forEach(id => per[id] = (per[id] || 0) + 1); });
+  return {points, recits, japa, fulls, per, ...streaks()};
+}
+// Streak: consecutive days at least half done. One missed day per calendar week is forgiven (grace day).
+function streaks(){
+  const ok = k => dayStats(k).frac >= 0.5;
+  let cur = 0, best = 0, run = 0, d = fromKey(Object.keys(D.days).sort()[0] || TODAY()), end = new Date(), grace = {};
+  const wk = x => dk(addDays(x, -x.getDay()));
+  for (; d <= end; d = addDays(d, 1)){
+    const k = dk(d);
+    if (ok(k)) run++;
+    else if (k === TODAY()) {} // today still in progress
+    else if (!grace[wk(d)] && run > 0){ grace[wk(d)] = k; }
+    else run = 0;
+    best = Math.max(best, run);
+  }
+  cur = run; D.graceUsed = grace;
+  return {streak: cur, best};
+}
+const LEVELS = [[0,"Bīja","Seed"],[300,"Aṅkura","Sprout"],[1000,"Patra","First leaf"],[2500,"Mukula","Bud"],[5000,"Padma","Lotus"],[10000,"Sahasra-dala","Thousand-petalled lotus"],[20000,"Pūrṇa","Full bloom"]];
+const BADGES = [
+  {id:"first", t:"First step", d:"Tick your first sloka", test:s => s.recits >= 1},
+  {id:"fullday", t:"Pūrṇa dina", d:"Complete a whole day", test:s => s.fulls >= 1},
+  {id:"streak7", t:"Seven lamps", d:"7-day streak", test:s => s.best >= 7},
+  {id:"streak21", t:"Mandala of 21", d:"21-day streak", test:s => s.best >= 21},
+  {id:"streak48", t:"Maṇḍalam", d:"48-day streak", test:s => s.best >= 48},
+  {id:"japa1008", t:"1008 in a day", d:"Finish a Monday japa of 1008", test:() => Object.values(D.days).some(r => Object.values(r.japa || {}).some(n => n >= 1008))},
+  {id:"japa10k", t:"Ten thousand names", d:"10,000 japa in all", test:s => s.japa >= 10000},
+  {id:"rec100", t:"Hundred recitations", d:"100 slokas ticked", test:s => s.recits >= 100},
+  {id:"vsn21", t:"Sahasranāma devotee", d:"Vishnu Sahasranamam 21 times", test:s => (s.per["vishnu-sahasranamam"] || 0) >= 21},
+  {id:"suktam50", t:"Lakṣmī's favourite", d:"Sri Suktam 50 times", test:s => (s.per["sri-suktam"] || 0) >= 50},
+  {id:"fullweek", t:"A perfect week", d:"Every day Sunday–Saturday complete", test:() => Object.keys(D.days).some(k => fromKey(k).getDay() === 0 && [0,1,2,3,4,5,6].every(i => dayStats(dk(addDays(fromKey(k), i))).full))},
+  {id:"early", t:"Brahma muhūrta", d:"Tick a sloka before 6 am", test:() => Object.values(D.days).some(r => Object.values(r.done || {}).some(t => new Date(t).getHours() < 6))}
+];
+const ICON_BADGE = '<svg viewBox="0 0 40 40"><path d="M20 4l4.5 9.6 10.5 1.3-7.7 7.2 2 10.4L20 27.4l-9.3 5.1 2-10.4L5 14.9l10.5-1.3z" fill="var(--apricot)" stroke="var(--terra-ink)" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+
+/* ===== Views ===== */
+let VIEW = "today", SEL = TODAY(), MON = new Date();
+function route(){
+  const h = (location.hash || "#today").slice(1); VIEW = ["today","calendar","rewards","week"].includes(h) ? h : "today";
+  ["today","calendar","rewards","week"].forEach(v => $("#v-" + v).hidden = v !== VIEW);
+  document.querySelectorAll("#tabs a").forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + VIEW));
+  render();
+}
+addEventListener("hashchange", route);
+function render(){ if (VIEW === "today") renderToday(); if (VIEW === "calendar") renderCal(); if (VIEW === "rewards") renderRewards(); if (VIEW === "week") renderWeek(); }
+
+function ringSVG(frac, size, label){
+  const r = size / 2 - 9, C = 2 * Math.PI * r;
+  return `<circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--surface-2)" stroke-width="11"/><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${frac >= .999 ? "var(--good)" : "var(--terra)"}" stroke-width="11" stroke-linecap="round" stroke-dasharray="${C * frac} ${C}" transform="rotate(-90 ${size/2} ${size/2})" style="transition:stroke-dasharray .5s"/><text x="${size/2}" y="${size/2 + 7}" text-anchor="middle" font-family="var(--f-display)" font-size="22" fill="var(--ink)">${label}</text>`;
+}
+const CHECK = '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function renderToday(){
+  const d = fromKey(SEL), p = PLAN[d.getDay()], r = dayRec(SEL), s = dayStats(SEL), isToday = SEL === TODAY();
+  $("#dayName").textContent = DOW[d.getDay()];
+  $("#dayDate").textContent = d.toLocaleDateString(undefined, {day:"numeric", month:"long", year:"numeric"}) + (isToday ? " · today" : "");
+  $("#dayMsg").textContent = s.full ? "Every sloka done. Wonderful!" : s.frac >= .5 ? `${s.sDone} of ${s.sTotal} slokas — over halfway, the streak is safe.` : s.sDone ? `${s.sDone} of ${s.sTotal} slokas done. Keep going.` : `${s.sTotal} slokas${p.j.length ? " and nāma japa" : ""} for ${DOW[d.getDay()]}.`;
+  $("#ring").innerHTML = ringSVG(s.frac, 110, Math.round(s.frac * 100) + "%");
+  $("#nextDay").disabled = SEL >= TODAY();
+  const A = allStats();
+  $("#stats").innerHTML = [[A.streak, "day streak"], [A.points.toLocaleString(), "puṇya points"], [s.points, "points today"], [LEVELS.filter(l => A.points >= l[0]).pop()[2], "level"]].map(([b, t]) => `<div class="stat"><b>${b}</b><span>${t}</span></div>`).join("");
+  // Slokas ticked from a sloka page on a day they are not planned show as "extra" (kept, not scored).
+  const extra = Object.keys(r.done).filter(id => !p.s.includes(id) && N[id]);
+  $("#items").innerHTML = p.s.concat(extra).map(id => `<div class="item ${r.done[id] ? "done" : ""}" role="button" tabindex="0" aria-pressed="${!!r.done[id]}" data-id="${id}"><span class="chk">${CHECK}</span><span><b>${esc(N[id])}</b><small>${r.done[id] ? "done at " + new Date(r.done[id]).toLocaleTimeString([], {hour:"numeric", minute:"2-digit"}) : "not yet"}${extra.includes(id) ? " · extra, not on today's plan" : ""}</small></span>${PAGES[id] ? `<a href="${PAGES[id]}#chant" onclick="event.stopPropagation()">Learn</a>` : ""}</div>`).join("");
+  $("#items").querySelectorAll(".item").forEach(el => {
+    const go = e => toggle(el.dataset.id, e);
+    el.onclick = go; el.onkeydown = e => { if (e.key === " " || e.key === "Enter"){ e.preventDefault(); go(e); } };
+  });
+  // Japa can be done any day: on days without planned japa the counters still show (free practice, not part of the day's score).
+  const jl = p.j.length ? p.j : Object.keys(JAPA).map(id => [id, 108]);
+  $("#japaNote").textContent = p.j.length ? "Tap the mala for each repetition, or add a whole round." : `Not on ${DOW[d.getDay()]}'s plan — count it any time. It earns puṇya points but does not change the day's ring.`;
+  $("#japas").innerHTML = jl.map(([id, t]) => { const n = r.japa[id] || 0, T = target(SEL, id, t); return `<div class="japa ${n >= T ? "done" : ""}" data-id="${id}">
+    <h3>${esc(JAPA[id].name)} <span style="font-family:'Noto Serif Tamil',serif;font-weight:400;color:var(--terra-ink)">${JAPA[id].ta}</span></h3>
+    <svg class="mala" viewBox="0 0 180 180" data-tap="${id}" role="button" aria-label="Add one ${esc(JAPA[id].name)}">${malaSVG(n, T)}</svg>
+    <span class="cnt">${n} / ${T} · ${Math.floor(n / 108)} mala${Math.floor(n / 108) === 1 ? "" : "s"}</span>
+    <div class="row"><button data-add="${id}" data-n="-1">−1</button><button data-add="${id}" data-n="10">+10</button><button class="primary" data-add="${id}" data-n="108">+108 mala</button></div>
+    <label class="muted" style="font-size:.78rem">Target <select data-tgt="${id}">${[108,216,324,540,1008].map(v => `<option ${v === T ? "selected" : ""}>${v}</option>`).join("")}</select> on ${DOW[d.getDay()]}s</label>
+  </div>`; }).join("");
+  $("#japas").querySelectorAll("[data-tap]").forEach(el => el.onclick = e => addJapa(el.dataset.tap, 1, e));
+  $("#japas").querySelectorAll("[data-add]").forEach(el => el.onclick = e => addJapa(el.dataset.add, +el.dataset.n, e));
+  $("#japas").querySelectorAll("[data-tgt]").forEach(el => el.onchange = () => { const id = el.dataset.tgt; D.targets[id] = D.targets[id] || {}; D.targets[id][d.getDay()] = +el.value; save(); render(); });
+  renderLamps();
+}
+// 108 beads around a circle; filled beads show progress through the current mala.
+function malaSVG(n, T){
+  const inMala = n >= T ? 108 : n % 108, beads = [];
+  for (let i = 0; i < 108; i++){ const a = -Math.PI / 2 + i / 108 * 2 * Math.PI; beads.push(`<circle cx="${(90 + 76 * Math.cos(a)).toFixed(1)}" cy="${(90 + 76 * Math.sin(a)).toFixed(1)}" r="3.2" fill="${i < inMala ? "var(--terra)" : "var(--sage)"}"/>`); }
+  return beads.join("") + `<circle cx="90" cy="14" r="6" fill="var(--olive)"/><text x="90" y="96" text-anchor="middle" font-family="var(--f-display)" font-size="34" fill="var(--ink)">${n}</text><text x="90" y="120" text-anchor="middle" font-size="12" fill="var(--muted)">tap to count</text>`;
+}
+function renderLamps(){
+  const sel = fromKey(SEL), sun = addDays(sel, -sel.getDay());
+  $("#lamps").innerHTML = [0,1,2,3,4,5,6].map(i => { const k = dk(addDays(sun, i)), fut = k > TODAY(), s = fut ? {frac:0} : dayStats(k), f = s.frac;
+    const flame = f > 0 ? `<path d="M20 ${16 - f * 10}c-5 6-6 9-3 12 2 2 4 2 6 0 3-3 2-6-3-12z" fill="${f >= .999 ? "#f0b43c" : "var(--apricot)"}" opacity="${.4 + f * .6}"/>` : "";
+    return `<button class="lamp ${k === SEL ? "today" : ""}" data-k="${k}" ${fut ? "disabled" : ""}><svg viewBox="0 0 40 46">${flame}<path d="M6 30h28c0 7-6 11-14 11S6 37 6 30z" fill="${f >= .999 ? "var(--terra)" : "var(--olive)"}"/><path d="M14 41h12v3H14z" fill="var(--olive-ink)"/></svg>${DOW[i].slice(0, 3)}</button>`; }).join("");
+  $("#lamps").querySelectorAll(".lamp:not([disabled])").forEach(b => b.onclick = () => { SEL = b.dataset.k; render(); });
+}
+
+function toggle(id, e){
+  const r = dayRec(SEL), before = dayStats(SEL);
+  if (r.done[id]) delete r.done[id];
+  else { r.done[id] = Date.now(); markShared(SEL); burst(e); }
+  save(); celebrate(before); render();
+}
+function addJapa(id, n, e){
+  const r = dayRec(SEL), before = dayStats(SEL);
+  r.japa[id] = Math.max(0, (r.japa[id] || 0) + n);
+  if (n > 0){ markShared(SEL); if (navigator.vibrate) try { navigator.vibrate(n === 1 ? 8 : 30); } catch(_){} }
+  const T = target(SEL, id, (PLAN[fromKey(SEL).getDay()].j.find(x => x[0] === id) || [id, 108])[1]);
+  if (n > 0 && r.japa[id] % 108 === 0) toast(`One mala of ${JAPA[id].name} complete 🙏`);
+  if (n > 0 && r.japa[id] >= T && r.japa[id] - n < T) { toast(`${JAPA[id].name} — ${T} done!`); burst(e); }
+  save(); celebrate(before); render();
+}
+// Rewards feedback: full day, new level, new badge.
+let lastBadges = null;
+function celebrate(before){
+  const after = dayStats(SEL), A = allStats();
+  if (!before.full && after.full) toast(`${DOW[fromKey(SEL).getDay()]} complete! +50 bonus`);
+  const lvl = p => LEVELS.filter(l => p >= l[0]).length;
+  const prevPts = A.points - (after.points - before.points);
+  if (lvl(A.points) > lvl(prevPts)) toast(`New level: ${LEVELS[lvl(A.points) - 1][2]} 🪷`);
+  const got = BADGES.filter(b => b.test(A)).map(b => b.id);
+  if (lastBadges){ const nw = got.filter(x => !lastBadges.includes(x)); if (nw.length) toast(`Badge earned: ${BADGES.find(b => b.id === nw[0]).t}`); }
+  lastBadges = got;
+}
+let tt = null;
+function toast(msg){ const t = $("#toast"); t.textContent = msg; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => t.hidden = true, 2600); }
+function burst(e){
+  if (!e || !e.clientX) return;
+  for (let i = 0; i < 8; i++){ const s = document.createElement("span"); s.className = "burst"; s.textContent = ["🌸","✨","🪷"][i % 3];
+    s.style.left = e.clientX + "px"; s.style.top = e.clientY + "px"; s.style.setProperty("--dx", (Math.cos(i / 8 * 6.28) * 60) + "px"); s.style.setProperty("--dy", (Math.sin(i / 8 * 6.28) * 60 - 20) + "px");
+    document.body.appendChild(s); setTimeout(() => s.remove(), 1000); }
+}
+
+function renderCal(){
+  const y = MON.getFullYear(), m = MON.getMonth(), first = new Date(y, m, 1), start = addDays(first, -first.getDay());
+  $("#monTitle").textContent = first.toLocaleDateString(undefined, {month:"long", year:"numeric"});
+  $("#nextMon").disabled = y > new Date().getFullYear() || (y === new Date().getFullYear() && m >= new Date().getMonth());
+  let html = ["S","M","T","W","T","F","S"].map(x => `<span class="dow">${x}</span>`).join(""), mDays = 0, mFull = 0, mRec = 0, mJapa = 0;
+  const cells = Math.ceil((first.getDay() + new Date(y, m + 1, 0).getDate()) / 7) * 7;
+  for (let i = 0; i < cells; i++){
+    const d = addDays(start, i), k = dk(d), out = d.getMonth() !== m, fut = k > TODAY(), s = dayStats(k);
+    if (!out && !fut && s.frac > 0){ mDays++; mRec += s.sDone; mJapa += s.japaCount; if (s.full) mFull++; }
+    const bg = fut ? "" : s.frac >= .999 ? "var(--terra)" : s.frac >= .5 ? "var(--apricot)" : s.frac > 0 ? "color-mix(in srgb,var(--apricot) 45%,var(--surface-2))" : "";
+    const fg = s.frac >= .999 ? "var(--on-accent)" : "";
+    html += `<button class="cell ${out ? "out" : ""} ${fut ? "future" : ""} ${k === TODAY() ? "today" : ""} ${k === SEL ? "sel" : ""}" data-k="${k}" ${fut ? "disabled" : ""} style="${bg ? `background:${bg};` : ""}${fg ? `color:${fg}` : ""}" title="${k}">${d.getDate()}${!fut && s.frac > 0 ? `<span class="pct">${Math.round(s.frac * 100)}%</span>` : ""}${s.full ? `<span class="star">★</span>` : ""}</button>`;
+  }
+  $("#cal").innerHTML = html;
+  $("#cal").querySelectorAll(".cell:not([disabled])").forEach(c => c.onclick = () => { SEL = c.dataset.k; location.hash = "#today"; });
+  $("#monStats").innerHTML = [[mDays, "days practised"], [mFull, "full days"], [mRec, "slokas recited"], [mJapa.toLocaleString(), "japa"]].map(([b, t]) => `<div class="stat"><b>${b}</b><span>${t}</span></div>`).join("");
+  const per = allStats().per, top = Object.entries(per).sort((a, b) => b[1] - a[1]).slice(0, 8), mx = top.length ? top[0][1] : 1;
+  $("#topTbl").innerHTML = top.length ? top.map(([id, n]) => `<tr><td>${esc(N[id] || id)}</td><td class="barc"><i style="width:${n / mx * 100}%"></i></td><td>${n}</td></tr>`).join("") : `<tr><td class="muted">Nothing recorded yet.</td></tr>`;
+}
+
+function lotusSVG(stage){ // 0..6: seed → full bloom
+  const petals = [0, 0, 0, 3, 5, 8, 12][stage], leaves = stage >= 2;
+  let g = `<rect x="10" y="96" width="100" height="14" rx="7" fill="color-mix(in srgb,var(--sage) 70%,transparent)"/>`;
+  if (stage === 0) return g + `<ellipse cx="60" cy="96" rx="9" ry="6" fill="var(--olive-ink)"/>`;
+  g += `<path d="M60 98V${stage === 1 ? 78 : 62}" stroke="var(--olive)" stroke-width="4" stroke-linecap="round"/>`;
+  if (stage === 1) return g + `<path d="M60 80c-8-4-12-10-10-16 6 1 10 6 10 16zM60 80c8-4 12-10 10-16-6 1-10 6-10 16z" fill="var(--olive)"/>`;
+  if (leaves) g += `<ellipse cx="34" cy="92" rx="20" ry="6" fill="var(--olive)"/><ellipse cx="88" cy="94" rx="16" ry="5" fill="var(--olive)"/>`;
+  if (stage === 2) return g + `<path d="M60 64c-6-6-6-14 0-20 6 6 6 14 0 20z" fill="var(--blush)"/>`;
+  for (let i = 0; i < petals; i++){ const a = (i / (petals - 1 || 1) - .5) * (stage >= 5 ? 2.6 : 1.8); g += `<path d="M60 64c-7-9-7-22 0-32 7 10 7 23 0 32z" fill="${i % 2 ? "var(--blush)" : "var(--apricot)"}" stroke="var(--terra)" stroke-width=".8" transform="rotate(${a * 57} 60 64)"/>`; }
+  return g + `<circle cx="60" cy="58" r="${stage >= 5 ? 6 : 4}" fill="#f0b43c"/>`;
+}
+function renderRewards(){
+  const A = allStats(), idx = LEVELS.filter(l => A.points >= l[0]).length - 1, L = LEVELS[idx], nx = LEVELS[idx + 1];
+  const f = nx ? (A.points - L[0]) / (nx[0] - L[0]) : 1;
+  $("#levelCard").innerHTML = `<svg viewBox="0 0 120 112">${lotusSVG(idx)}</svg><div><p class="eyebrow">Level ${idx + 1} of ${LEVELS.length}</p><h2>${esc(L[2])} <span class="muted" style="font-size:1rem">· ${esc(L[1])}</span></h2><p class="muted" style="margin-top:4px">${A.points.toLocaleString()} puṇya points${nx ? ` · ${(nx[0] - A.points).toLocaleString()} more to “${esc(nx[2])}”` : " · the highest level!"}</p><div class="lvbar"><i style="width:${f * 100}%"></i></div><p class="muted" style="font-size:.82rem;margin-top:8px">Current streak ${A.streak} · best ${A.best} · ${A.recits} slokas · ${A.japa.toLocaleString()} japa · ${A.fulls} full days</p></div>`;
+  const got = BADGES.filter(b => b.test(A)).map(b => b.id); lastBadges = got;
+  $("#badges").innerHTML = BADGES.map(b => `<div class="badge ${got.includes(b.id) ? "got" : ""}">${ICON_BADGE}<b>${esc(b.t)}</b><span>${esc(b.d)}</span></div>`).join("");
+}
+function renderWeek(){
+  const td = new Date().getDay();
+  $("#weekPlan").innerHTML = PLAN.map((p, i) => `<div class="wk ${i === td ? "today" : ""}"><h3>${DOW[i]} <span class="chip v">${p.s.length + p.j.length}</span></h3><ol>${p.s.map(id => `<li>${PAGES[id] ? `<a href="${PAGES[id]}">${esc(N[id])}</a>` : esc(N[id])}</li>`).join("")}${p.j.map(([id, t]) => `<li>${esc(JAPA[id].name)} — ${target(dk(addDays(new Date(), i - td)), id, t)}</li>`).join("")}</ol></div>`).join("");
+}
+
+/* ===== Controls ===== */
+$("#prevDay").onclick = () => { SEL = dk(addDays(fromKey(SEL), -1)); render(); };
+$("#nextDay").onclick = () => { if (SEL < TODAY()){ SEL = dk(addDays(fromKey(SEL), 1)); render(); } };
+$("#todayBtn").onclick = () => { SEL = TODAY(); render(); };
+$("#prevMon").onclick = () => { MON = new Date(MON.getFullYear(), MON.getMonth() - 1, 1); renderCal(); };
+$("#nextMon").onclick = () => { MON = new Date(MON.getFullYear(), MON.getMonth() + 1, 1); renderCal(); };
+$("#exportBtn").onclick = () => { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([JSON.stringify(D, null, 1)], {type:"application/json"})); a.download = `sadhana-backup-${TODAY()}.json`; a.click(); };
+$("#importFile").onchange = e => { const f = e.target.files[0]; if (!f) return; f.text().then(t => { try { const x = JSON.parse(t); if (!x.days) throw 0; D = x; save(); toast("Backup restored"); render(); } catch(_){ toast("That file isn't a Sadhana backup"); } }); };
+(() => { let th = null; try { th = JSON.parse(localStorage.getItem("sl-theme")); } catch(e){} if (th) document.documentElement.dataset.theme = th; })();
+// A sloka page open in another tab may tick a sloka or add japa: reload the data and redraw.
+addEventListener("storage", e => { if (e.key === KEY){ try { const x = JSON.parse(e.newValue) || {}; D.days = x.days || {}; D.targets = x.targets || {}; D.graceUsed = x.graceUsed || {}; } catch(_){} render(); } });
+// "← back" goes to the last sloka page she had open (sloka.js stores it), else the library's first page.
+(() => { let l = null; try { l = JSON.parse(localStorage.getItem("sl-last")); } catch(e){}
+  if (l && l.f && /^[\w-]+\.html$/.test(l.f) && l.f !== "index.html"){ const a = $("#backLink"); a.href = l.f; a.innerHTML = `<span class="lg">← ${esc(l.t)}</span><span class="sh">← Back</span>`; a.title = "Back to " + l.t; } })();
+$("#themeBtn").onclick = () => { const r = document.documentElement, dark = r.dataset.theme ? r.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; r.dataset.theme = dark ? "light" : "dark"; try { localStorage.setItem("sl-theme", JSON.stringify(r.dataset.theme)); } catch(e){} };
+// Roll over at midnight if the page stays open.
+let lastDay = TODAY(); setInterval(() => { if (TODAY() !== lastDay){ if (SEL === lastDay) SEL = TODAY(); lastDay = TODAY(); render(); } }, 60000);
+lastBadges = BADGES.filter(b => b.test(allStats())).map(b => b.id);
+route();
+</script>
+</body>
+</html>

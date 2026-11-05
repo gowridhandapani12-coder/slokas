@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Guruvayupuresha Pancharatnam</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Śeṅgalipuram Anantarāma Dīkṣitar · Sanskrit · 5 gems + 2</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Guruvayupuresha Pancharatnam</h1>
+          <p class="lead" style="margin-top:8px">Five gems for Guruvāyūrappan, the Lord of Guruvāyūr (“Vātālaya”, the home of Vāyu). Each verse is followed by sixteen <i>Nārāyaṇa</i>s — four lines of four — sung together like a bhajan.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><span>Composed by</span><b>Anantarāma Dīkṣitar</b><span>of Śeṅgalipuram, 20th c. — named in verse 6</span></div>
+        <div class="fact"><span>Deity</span><b>Guruvāyūrappan</b><span>Kṛṣṇa at Guruvāyūr, Kerala</span></div>
+        <div class="fact"><span>Metre</span><b>Upajāti</b><span>11 syllables a quarter</span></div>
+        <div class="fact"><span>Refrain</span><b>Nārāyaṇa × 16</b><span>after every verse</span></div>
+        <div class="fact"><span>Best</span><b>Three times a day</b><span>“trikālam” — verse 6</span></div>
+        <div class="fact"><span>On her plan</span><b>Wednesday</b><span>third of the day</span></div>
+      </div>
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h2>Guruvāyūr in the verses</h2>
+          <div class="tip"><b>1</b> conch, discus, mace — the four-armed Lord · <b>2</b> the temple full of devotees chanting Nārāyaṇa; the holy tank (Rudratīrtha) that heals · <b>3</b> the dawn darśan (nirmālya) · <b>4</b> annadānam to children · <b>5</b> worshipped by his parents and Uddhava · <b>6–7</b> the fruit.</div>
+        </div>
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each verse, in order.</p>
+          <div class="mn" id="openings"></div>
+          <div class="tip" style="margin-top:14px">Verses 1 and 3 end the same way: <b>vātālayādhīśa namo namaste</b> — “Lord of Guruvāyūr, salutations to you”.</div>
+        </div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+const UJ = {meter:"upajati", pat:"xGLGGLLGLGx", meterNote:"Upajāti: 11 syllables a quarter, long–long–short–long–long–short–short–long–short–long–long (the first may be short)."};
+const NA = [["नारायण","O Nārāyaṇa","nāra = beings · ayana = refuge"],["नारायण","O Nārāyaṇa","nārāyaṇa"],["नारायण","O Nārāyaṇa","nārāyaṇa"],["नारायण","O Nārāyaṇa","nārāyaṇa"]];
+const VAT = [["वातालयाधीश","O Lord of Vātālaya (Guruvāyūr)","vāta = Vāyu · ālaya = home · adhīśa = lord"],["नमो","salutations","namaḥ"],["नमस्ते","salutations to you","namaḥ · te"]];
+const v = (id, n, hook, tip, lines, en, ta, extra) => Object.assign({id, n, label:"Gem " + n, hook, tip, lines, en, ta}, UJ, extra || {});
+const VERSES = [
+ v("v1", "1", "Auspicious form in this Kali age, ocean of mercy, conch and discus in hand.", "Starts and repeats <b>kalyāṇa</b>: kalyāṇa-rūpāya · kalyāṇa-dātre. Ends <b>vātālayādhīśa namo namaste</b>.", [
+   [["कल्याणरूपाय","to the auspicious form","kalyāṇa · rūpa"],["कलौ","in the Kali age","kali"],["जनानाम्","for people","jana"]],
+   [["कल्याणदात्रे","to the giver of good","kalyāṇa · dātṛ"],["करुणासुधाब्धे","O ocean of the nectar of mercy","karuṇā · sudhā · abdhi"]],
+   [["कम्ब्वादिदिव्यायुधसत्कराय","whose fine hands hold the conch and other divine weapons","kambu = conch · ādi · divya · āyudha · sat · kara"]],
+   VAT],
+  "To the auspicious form, the giver of good to people in this Kali age, O ocean of the nectar of mercy, whose fine hands hold the conch and other divine weapons — O Lord of Guruvāyūr, salutations, salutations to you.",
+  "கலியுகத்தில் மக்களுக்கு மங்கள வடிவானவனும், நன்மை தருபவனும், கருணை அமுதக் கடலும், சங்கு முதலிய திவ்ய ஆயுதங்களைக் கைகளில் தாங்கியவனுமான குருவாயூரப்பா, உனக்கு நமஸ்காரம், நமஸ்காரம்."),
+ {id:"nm", n:"♪", label:"Nārāyaṇa refrain", short:"Nārāyaṇa × 16", kind:"refrain", meter:"refrain", meterNote:"Nārāyaṇa sixteen times — four lines of four. Sing it after every gem.",
+  hook:"Sung after every gem: Nārāyaṇa sixteen times.", tip:"After each verse, sing <b>nārāyaṇa</b> four times on each of four lines (her PDF prints it after every verse).",
+  lines:[NA, NA, NA, NA], en:"O Nārāyaṇa! (sixteen times)", ta:"நாராயணா! (பதினாறு முறை)"},
+ v("v2", "2", "Your temple is full of devotees chanting Nārāyaṇa; your holy tank cures all disease.", "Two places: the great temple (<b>pūrṇa-mahālaya</b>) loud with devotees, and its tank (<b>sva-tīrtha</b>) like Gaṅgā, which heals every illness.", [
+   [["नारायणेत्यादि","“Nārāyaṇa” and other names","nārāyaṇa · iti · ādi"],["जपद्भिरुच्चैः","by those chanting aloud","japadbhiḥ · uccaiḥ"]],
+   [["भक्तैस्सदा","always, by devotees","bhaktaiḥ · sadā"],["पूर्णमहालयाय","to him whose great temple is full","pūrṇa · mahā · ālaya"]],
+   [["स्वतीर्थगाङ्गोपमवारिमग्न","those bathing in his holy tank, water like the Gaṅgā","sva · tīrtha · gāṅga · upama · vāri · magna"]],
+   [["निवर्तिताशेषरुजे","to him who has removed all their diseases","nivartita · aśeṣa · ruj = disease"],["नमस्ते","salutations to you","namaḥ · te"]]],
+  "Salutations to you, whose great temple is always full of devotees chanting “Nārāyaṇa” and other names aloud, and who removes every illness of those who bathe in your holy tank, whose water is like the Gaṅgā.",
+  "“நாராயணா” முதலிய நாமங்களை உரக்க ஜபிக்கும் பக்தர்களால் எப்போதும் நிறைந்த பெரிய கோயிலை உடையவனும், கங்கை போன்ற தன் தீர்த்தத்தில் மூழ்குவோரின் எல்லா நோய்களையும் போக்குபவனுமான உனக்கு நமஸ்காரம்."),
+ v("v3", "3", "At brahma-muhūrta devotees see your supreme form; your oil cures disease.", "The dawn <b>darśan</b> at Guruvāyūr (<b>brāhme muhūrte</b>), and the healing <b>oil</b> (taila) from the abhiṣeka.", [
+   [["ब्राह्मे","at Brahma","brāhma"],["मुहूर्ते","muhūrta (before dawn)","muhūrta"],["परितस्स्वभक्तैः","by his devotees all around","paritaḥ · sva · bhakta"]],
+   [["सन्दृष्टसर्वोत्तमविश्वरूप","O you whose supreme cosmic form is seen","sandṛṣṭa · sarva · uttama · viśva-rūpa"]],
+   [["स्वतैलसंसेवकरोगहर्त्रे","to the remover of disease of those who use his oil","sva · taila · saṃsevaka · roga · hartṛ"]],
+   VAT],
+  "O you whose supreme cosmic form is seen by devotees all around at the brahma-muhūrta before dawn, who removes the illness of those who use your sacred oil — O Lord of Guruvāyūr, salutations, salutations to you.",
+  "பிரம்ம முகூர்த்தத்தில் சுற்றிலும் உள்ள பக்தர்களால் தரிசிக்கப்படும் உன்னத விஶ்வரூபனே, உன் எண்ணெயைப் பயன்படுத்துவோரின் நோய்களைப் போக்குபவனே — குருவாயூரப்பா, உனக்கு நமஸ்காரம், நமஸ்காரம்."),
+ v("v4", "4", "Worshipped by those who feed children and always read the Bhāgavatam.", "Guruvāyūr's <b>annadānam</b> (feeding) and the daily reading of the <b>purāṇa-ratnam</b> — the Bhāgavatam.", [
+   [["बालान्स्वकीयान्","his own children","bāla · svakīya"],["तव","your","tava"],["सन्निधाने","in your presence","sannidhāna"]],
+   [["दिव्यान्नदानात्परिपालयद्भिः","by those who look after them by giving divine food","divya · anna · dāna · paripālayat"]],
+   [["सदा","always","sadā"],["पठद्भिश्च","and by those reading","paṭhat · ca"],["पुराणरत्नं","the gem of purāṇas","purāṇa · ratna"]],
+   [["संसेवितायास्तु","to him who is worshipped","saṃsevita · astu"],["नमो","salutations","namaḥ"],["हरे","O Hari","hari"],["ते","to you","te"]]],
+  "Salutations, O Hari, to you — worshipped by those who care for their children in your presence with offerings of divine food, and by those who always read the gem of purāṇas.",
+  "உன் சன்னிதியில் தம் குழந்தைகளுக்கு திவ்ய அன்னம் அளித்துக் காப்பவர்களாலும், புராணரத்தினத்தை எப்போதும் படிப்பவர்களாலும் வழிபடப்படும் ஹரியே, உனக்கு நமஸ்காரம்."),
+ v("v5", "5", "Who feeds the brahmins daily, worshipped by gods at night, by his parents and Uddhava.", "Three groups worship him: <b>divisthaiḥ</b> (gods) at night · his <b>mother and father</b> · <b>Uddhava</b> — legend says they first worshipped this mūrti.", [
+   [["नित्यान्नदात्रे","to him who gives food daily","nitya · anna · dātṛ"],["च","and","ca"],["महीसुरेभ्यः","to the brahmins","mahīsura"]],
+   [["नित्यं","always","nityam"],["दिविस्थैर्निशि","by the gods, at night","divistha · niśi"],["पूजिताय","to him who is worshipped","pūjita"]],
+   [["मात्रा","by his mother","mātṛ"],["च","and","ca"],["पित्रा","by his father","pitṛ"],["च","and","ca"],["तथोद्धवेन","and by Uddhava","tathā · uddhava"]],
+   [["संपूजितायास्तु","to him who is worshipped","sampūjita · astu"],["नमो","salutations","namaḥ"],["नमस्ते","salutations to you","namaḥ · te"]]],
+  "Salutations, salutations to you — who gives food daily to the brahmins, who is worshipped every night by the gods, and who was worshipped by his mother and father and by Uddhava.",
+  "அந்தணர்களுக்கு நித்தம் அன்னம் அளிப்பவனும், இரவில் தேவர்களால் எப்போதும் பூஜிக்கப்படுபவனும், தாய், தந்தை, உத்தவர் ஆகியோரால் வழிபடப்பட்டவனுமான உனக்கு நமஸ்காரம், நமஸ்காரம்."),
+ v("p6", "6", "Whoever recites this hymn of Anantarāma three times a day gains every blessing.", "The author signs here: <b>anantarāmākhya-mahi-praṇītam</b>. Recite <b>trikālam</b> — three times a day.", [
+   [["अनन्तरामाख्यमहिप्रणीतं","composed by the great one named Anantarāma","anantarāma · ākhya · mahin · praṇīta"]],
+   [["स्तोत्रं","this hymn","stotra"],["पठेद्यस्तु","whoever recites","paṭhet · yaḥ · tu"],["नरस्त्रिकालम्","a person, three times a day","naraḥ · tri · kāla"]],
+   [["वातालयेशस्य","of the Lord of Guruvāyūr","vātālaya · īśa"],["कृपाबलेन","by the power of the mercy","kṛpā · bala"]],
+   [["लभेत","gains","labheta"],["सर्वाणि","all","sarva"],["च","and","ca"],["मङ्गलानि","blessings","maṅgala"]]],
+  "Whoever recites three times a day this hymn composed by the great Anantarāma gains every blessing by the power of the mercy of the Lord of Guruvāyūr.",
+  "அனந்தராமர் என்னும் பெரியவர் இயற்றிய இந்த ஸ்தோத்திரத்தை மூன்று வேளையும் படிப்பவர் குருவாயூரப்பனின் கருணையால் எல்லா மங்களங்களையும் பெறுவார்.",
+  {kind:"phala", short:"Phala 6", label:"Phala 6"}),
+ v("p7", "7", "Hari himself enters the heart of those who read it, radiant as ten thousand Kāmas.", "The last verse changes rhythm (aupacchandasika). Hari is <b>rati-nātha-ayuta-tulya</b> — lovely as ten thousand Manmathas.", [
+   [["गुरुवातपुरीशपञ्चकाख्यं","named the Guruvāyupurīśa Pañcaka","guru-vāta-purī · īśa · pañcaka · ākhya"],["स्तुतिरत्नं","this gem of a hymn","stuti · ratna"],["पठतां","for those who read","paṭhat"],["सुमङ्गलं","great good","su · maṅgala"],["स्यात्","may there be","syāt"]],
+   [["हृदि","in the heart","hṛd"],["चापि","and also","ca · api"],["विशेद्धरिः","may Hari enter","viśet · hariḥ"],["स्वयं","himself","svayam"],["तु","indeed","tu"],["रतिनाथायुततुल्यदेहकान्तिः","whose radiance equals ten thousand Kāmas","rati-nātha = Kāma · ayuta = ten thousand · tulya · deha · kānti"]]],
+  "May there be great good for those who read this gem of a hymn called the Guruvāyupurīśa Pañcaka, and may Hari himself — whose radiance equals ten thousand Kāmas — enter their hearts.",
+  "குருவாயுபுரீச பஞ்சகம் எனும் இந்தத் துதி ரத்தினத்தைப் படிப்பவர்களுக்குப் பெரும் மங்களம் உண்டாகட்டும்; பத்தாயிரம் மன்மதர்களுக்கு நிகரான ஒளியுடைய ஹரியே அவர்கள் இதயத்தில் புகட்டும்.",
+  {kind:"phala", short:"Phala 7", label:"Phala 7", meter:"aupacchandasika", pat:"LLGLLGLGLGx" + "LLGGLLGLGLGx", padaLen:11, meterNote:"Aupacchandasika: quarters of 11 and 12 syllables."})
+];
+return {
+  key:"gvp", titleDv:"श्रीगुरुवातपुरीशपञ्चरत्नम्", unit:"gem", verses:VERSES,
+  meter:{name:"Upajāti", kind:"upajati", hook:UJ.meterNote,
+    intro:"The five gems and verse 6 are in <b>upajāti</b> — 11 syllables a quarter (indravajrā / upendravajrā). Verse 7 is aupacchandasika, and the Nārāyaṇa refrain is a free chant.",
+    quiz:{q:"What is sung after every verse of this pañcaratnam?", opts:["“Nārāyaṇa” sixteen times","“Govinda” eight times","“Hari Om” three times","Nothing"],
+      why:"Four lines of four Nārāyaṇas — sixteen in all — after each gem."}}
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

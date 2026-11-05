@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mahalakshmi Ashtakam</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+<style>
+/* Page-only: the "how often" infographic */
+.times{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.time{border-radius:14px;background:var(--surface-2);padding:14px;display:grid;gap:6px;align-content:start}
+.time .suns{display:flex;gap:5px}
+.time .suns i{width:16px;height:16px;border-radius:50%;background:var(--apricot)}
+.time b{font-family:var(--f-display);font-size:1.1rem;font-weight:600}
+.time span{font-size:.86rem;color:var(--muted)}
+.refrain{font-family:var(--f-verse);font-size:1.5rem;color:var(--terra-ink);line-height:1.5}
+@media (max-width:620px){.times{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Indra · Padma Purāṇa · Sanskrit · 8 verses + 3 verses of phala-śruti</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Mahalakshmi Ashtakam</h1>
+          <p class="lead" style="margin-top:8px">“Eight verses to the Great Lakṣmī.” Indra, king of the gods, calls her by name after name — rider of Garuḍa, giver of every boon, the one seated on the lotus — and ends every verse the same way: <i>Mahālakṣmi, namo'stu te</i>.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+
+      <div class="facts">
+        <div class="fact"><span>Sung by</span><b>Indra</b><span>king of the gods</span></div>
+        <div class="fact"><span>Goddess</span><b>Mahālakṣmī</b><span>consort of Viṣṇu, giver of all good</span></div>
+        <div class="fact"><span>Metre</span><b>Anuṣṭubh</b><span>4 quarters of 8 syllables</span></div>
+        <div class="fact"><span>Title</span><b>Aṣṭaka</b><span>a group of eight verses</span></div>
+        <div class="fact"><span>Source</span><b>Padma Purāṇa</b><span>as given in her PDF</span></div>
+        <div class="fact"><span>Best time</span><b>1, 2 or 3 times a day</b><span>verses 10–11</span></div>
+      </div>
+
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h2>One refrain, eight times</h2>
+          <p class="muted" style="margin:6px 0 12px">Every verse ends with the same quarter. Once you know it, you only need to learn the first three quarters of each verse.</p>
+          <div class="refrain" id="refrain"></div>
+          <p style="margin-top:6px">“O Mahālakṣmī, salutations to you.”</p>
+          <div class="tip" style="margin-top:14px"><b>Almost every word is a way of calling her.</b> Names ending in <b>-e</b> or <b>-i</b> (garuḍārūḍhe, sarvajñe, bhayaṅkari) mean “O you who…”. Read each verse as a list of “O …” and it becomes easy to follow.</div>
+        </div>
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each verse, in order. Say it like a little chant.</p>
+          <div class="mn" id="openings"></div>
+          <div class="tip" style="margin-top:14px"><b>Verse pairs.</b> Verses 1 and 2 both begin with <i>namaste</i>. Verse 3 is the <i>sarva</i> verse (sarva = all, five times). Verses 7 and 8 both end with <i>jaganmātar</i>, “O Mother of the world”.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="sec-head"><h2>Lakṣmī, as the hymn describes her</h2><span class="muted" style="font-size:.85rem">Tap one to see the word in its verse</span></div>
+        <div class="icons" id="icons" style="margin-top:14px"></div>
+      </div>
+
+      <div class="card">
+        <h2>How often, and what it brings</h2>
+        <p class="muted" style="margin:6px 0 14px">The last three verses say: whoever reads this hymn with devotion gains every success and lasting prosperity. Then they count the times a day.</p>
+        <div class="times">
+          <div class="time"><div class="suns"><i></i></div><b>Once a day</b><span>destroys even great sins — <i>mahāpāpa-vināśanam</i></span></div>
+          <div class="time"><div class="suns"><i></i><i></i></div><b>Twice a day</b><span>blessed with wealth and grain — <i>dhana-dhānya-samanvitaḥ</i></span></div>
+          <div class="time"><div class="suns"><i></i><i></i><i></i></div><b>Three times a day</b><span>great enemies are destroyed, and Mahālakṣmī is always pleased, boon-giving and auspicious</span></div>
+        </div>
+        <div class="benefits" id="benefits" style="margin-top:14px"></div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+// lines: words as [devanagari, meaning, how-the-word-is-built]. Each line is a half-verse (two quarters of 8).
+const REF = [["महालक्ष्मि","O Mahālakṣmī","mahā = great · lakṣmī = the goddess of all good fortune"],["नमोऽस्तु","salutations be","namaḥ = salutation · astu = may it be"],["ते","to you","te = to you"]];
+const VERSES = [
+ {id:"v1", n:"1", label:"Verse 1", hook:"Great Māyā, seated on the Śrī-pīṭha, holding conch, discus and mace.",
+  tip:"Starts with <b>namaste'stu</b>. Then her place (<b>śrī-pīṭhe</b>), who worships her (<b>sura-pūjite</b>), and what she holds: <b>śaṅkha · cakra · gadā</b> — conch, discus, mace, in that order.",
+  lines:[
+   [["नमस्तेऽस्तु","salutations be to you","namaḥ = salutation · te = to you · astu = may it be"],["महामाये","O great Māyā","mahā = great · māyā = the Lord's wondrous power"],["श्रीपीठे","O you seated on the throne of Śrī","śrī = auspiciousness · pīṭha = seat, throne"],["सुरपूजिते","worshipped by the gods","sura = god · pūjitā = worshipped"]],
+   [["शङ्खचक्रगदाहस्ते","holding conch, discus and mace in your hands","śaṅkha = conch · cakra = discus · gadā = mace · hasta = hand"], ...REF]
+  ],
+  en:"Salutations to you, O great Māyā, seated on the throne of Śrī, worshipped by the gods, holding conch, discus and mace in your hands — O Mahālakṣmī, salutations to you.",
+  ta:"மஹாமாயையே, ஸ்ரீபீடத்தில் அமர்ந்தவளே, தேவர்களால் பூஜிக்கப்படுபவளே, சங்கு, சக்கரம், கதை ஏந்திய கைகளை உடையவளே, மஹாலக்ஷ்மியே, உனக்கு நமஸ்காரம்."},
+ {id:"v2", n:"2", label:"Verse 2", hook:"Rider of Garuḍa, terror of the demon Kola, remover of all sins.",
+  tip:"Again begins <b>namaste</b>. Picture it: she rides <b>Garuḍa</b>, frightens <b>Kolāsura</b>, and takes away <b>all sins</b> (sarva-pāpa).",
+  lines:[
+   [["नमस्ते","salutations to you","namaḥ = salutation · te = to you"],["गरुडारूढे","O rider of Garuḍa","garuḍa = the divine eagle · ārūḍhā = mounted on"],["कोलासुरभयङ्करि","O terror of the demon Kola","kola = Kolāsura · asura = demon · bhayaṅkarī = she who causes fear"]],
+   [["सर्वपापहरे","O remover of all sins","sarva = all · pāpa = sin · harā = she who takes away"],["देवि","O Goddess","devī = goddess"], ...REF]
+  ],
+  en:"Salutations to you who ride on Garuḍa, who struck terror into the demon Kola, O Goddess who removes all sins — O Mahālakṣmī, salutations to you.",
+  ta:"கருடன் மீது அமர்ந்தவளே, கோலாசுரனுக்கு அச்சம் தந்தவளே, எல்லாப் பாவங்களையும் போக்கும் தேவியே, மஹாலக்ஷ்மியே, உனக்கு நமஸ்காரம்."},
+ {id:"v3", n:"3", label:"Verse 3", hook:"The “sarva” verse: all-knowing, giver of all boons, remover of all sorrow.",
+  tip:"Count the <b>sarva</b>s: sarva-jñe · sarva-varade · sarva-duṣṭa · sarva-duḥkha — four in a row. Verse 2 ended with sarva-<i>pāpa</i>-hare, this one with sarva-<i>duḥkha</i>-hare.",
+  lines:[
+   [["सर्वज्ञे","O all-knowing one","sarva = all · jñā = knower"],["सर्ववरदे","O giver of every boon","sarva = all · vara = boon · dā = giver"],["सर्वदुष्टभयङ्करि","O terror of all the wicked","sarva = all · duṣṭa = wicked · bhayaṅkarī = causing fear"]],
+   [["सर्वदुःखहरे","O remover of all sorrow","sarva = all · duḥkha = sorrow · harā = remover"],["देवि","O Goddess","devī = goddess"], ...REF]
+  ],
+  en:"O all-knowing one, giver of every boon, terror of all the wicked, O Goddess who removes all sorrow — O Mahālakṣmī, salutations to you.",
+  ta:"எல்லாம் அறிந்தவளே, எல்லா வரங்களையும் தருபவளே, தீயவர்கள் அனைவருக்கும் அச்சம் தருபவளே, எல்லாத் துன்பங்களையும் போக்கும் தேவியே, மஹாலக்ஷ்மியே, உனக்கு நமஸ்காரம்."},
+ {id:"v4", n:"4", label:"Verse 4", hook:"Giver of success and wisdom, of joy in this world and freedom beyond.",
+  tip:"Two rhyming pairs: <b>siddhi-buddhi</b> (success, wisdom) and <b>bhukti-mukti</b> (enjoyment, liberation). Both end in “giver”: -prade, -pradāyini.",
+  lines:[
+   [["सिद्धिबुद्धिप्रदे","O giver of success and wisdom","siddhi = success, attainment · buddhi = wisdom · pradā = giver"],["देवि","O Goddess","devī = goddess"],["भुक्तिमुक्तिप्रदायिनि","O giver of worldly joy and liberation","bhukti = enjoyment · mukti = liberation · pradāyinī = giver"]],
+   [["मन्त्रमूर्ते","O you whose form is mantra","mantra = sacred formula · mūrti = form"],["सदा","always","sadā = always"],["देवि","O Goddess","devī = goddess"], ...REF]
+  ],
+  en:"O Goddess who gives success and wisdom, who gives both the joys of this world and liberation; O Goddess whose form is always the mantra — O Mahālakṣmī, salutations to you.",
+  ta:"சித்தியும் புத்தியும் அருள்பவளே, இவ்வுலக இன்பத்தையும் முக்தியையும் தருபவளே, எப்போதும் மந்திர வடிவாக இருக்கும் தேவியே, மஹாலக்ஷ்மியே, உனக்கு நமஸ்காரம்."},
+ {id:"v5", n:"5", label:"Verse 5", hook:"Without beginning or end — the first power, born of yoga.",
+  tip:"<b>ādy-anta</b> (beginning-end) and then <b>ādi-śakti</b> (first power) — both start with “ādi”. Then two <b>yoga</b> words: yoga-jñe, yoga-sambhūte.",
+  lines:[
+   [["आद्यन्तरहिते","O you without beginning or end","ādi = beginning · anta = end · rahitā = free from"],["देवि","O Goddess","devī = goddess"],["आदिशक्तिमहेश्वरि","O primal power, great sovereign","ādi = first · śakti = power · maheśvarī = great ruler"]],
+   [["योगज्ञे","O knower of yoga","yoga = union, discipline · jñā = knower"],["योगसम्भूते","O you who arise from yoga","yoga · sambhūtā = born, arisen"], ...REF]
+  ],
+  en:"O Goddess without beginning or end, the primal power, the great sovereign; knower of yoga, born of yoga — O Mahālakṣmī, salutations to you.",
+  ta:"ஆதியும் அந்தமும் இல்லாத தேவியே, ஆதிசக்தியே, மகேஶ்வரியே, யோகத்தை அறிந்தவளே, யோகத்தில் தோன்றியவளே, மஹாலக்ஷ்மியே, உனக்கு நமஸ்காரம்."},
+ {id:"v6", n:"6", label:"Verse 6", hook:"Gross and subtle, fierce and mighty — remover of great sins.",
+  tip:"The <b>mahā</b> verse: mahā-raudre · mahā-śakti · mah-odare · mahā-pāpa · mahā-lakṣmi — five “great”s.",
+  lines:[
+   [["स्थूलसूक्ष्ममहारौद्रे","O you who are the visible and the subtle, and very fierce","sthūla = gross, visible · sūkṣma = subtle · mahā = very · raudrā = fierce"],["महाशक्तिमहोदरे","O great power, who holds all the worlds within","mahā-śakti = great power · mahā + udarā = great-bellied (holding the universe)"]],
+   [["महापापहरे","O remover of great sins","mahā = great · pāpa = sin · harā = remover"],["देवि","O Goddess","devī = goddess"], ...REF]
+  ],
+  en:"O you who are both the visible and the subtle, the very fierce one, the great power who holds all the worlds within; O Goddess who removes great sins — O Mahālakṣmī, salutations to you.",
+  ta:"பருமையும் நுண்மையுமானவளே, மிகுந்த உக்கிரம் உடையவளே, மஹாசக்தியே, உலகங்களைத் தன்னுள் கொண்டவளே, பெரும் பாவங்களைப் போக்கும் தேவியே, மஹாலக்ஷ்மியே, உனக்கு நமஸ்காரம்."},
+ {id:"v7", n:"7", label:"Verse 7", hook:"Seated on the lotus, the Supreme Brahman, Mother of the world.",
+  tip:"<b>padma-āsana</b> (lotus seat), then two “para”s: <b>para-brahma</b>, <b>parameśi</b>. Ends <b>jaganmātar</b> — and so does verse 8.",
+  lines:[
+   [["पद्मासनस्थिते","O you seated on a lotus","padma = lotus · āsana = seat · sthitā = seated"],["देवि","O Goddess","devī = goddess"],["परब्रह्मस्वरूपिणि","O you whose nature is the Supreme Brahman","para = supreme · brahma = the Absolute · svarūpiṇī = having the nature of"]],
+   [["परमेशि","O supreme Goddess","parama = supreme · īśī = ruler"],["जगन्मातर्","O Mother of the world","jagat = world · mātaḥ = O mother"], ...REF]
+  ],
+  en:"O Goddess seated on the lotus, whose very nature is the Supreme Brahman; O supreme ruler, Mother of the world — O Mahālakṣmī, salutations to you.",
+  ta:"தாமரை ஆசனத்தில் அமர்ந்த தேவியே, பரப்பிரம்ம வடிவானவளே, பரமேஶ்வரியே, உலகின் தாயே, மஹாலக்ஷ்மியே, உனக்கு நமஸ்காரம்."},
+ {id:"v8", n:"8", label:"Verse 8", hook:"Dressed in white, adorned with ornaments, present throughout the world.",
+  tip:"What she wears: <b>śveta-ambara</b> (white cloth) and <b>nānā-alaṅkāra</b> (many ornaments). Then <b>jagat-sthite · jagan-mātar</b> — two “jagat”s.",
+  lines:[
+   [["श्वेताम्बरधरे","O you dressed in white","śveta = white · ambara = garment · dharā = wearing"],["देवि","O Goddess","devī = goddess"],["नानालङ्कारभूषिते","O you adorned with many ornaments","nānā = many · alaṅkāra = ornament · bhūṣitā = adorned"]],
+   [["जगत्स्थिते","O you who abide in the whole world","jagat = world · sthitā = abiding"],["जगन्मातर्","O Mother of the world","jagat = world · mātaḥ = O mother"], ...REF]
+  ],
+  en:"O Goddess dressed in white, adorned with many ornaments, present throughout the world, Mother of the world — O Mahālakṣmī, salutations to you.",
+  ta:"வெண்ணிற ஆடை அணிந்த தேவியே, பலவிதமான ஆபரணங்களால் அலங்கரிக்கப்பட்டவளே, உலகெங்கும் நிறைந்தவளே, உலகின் தாயே, மஹாலக்ஷ்மியே, உனக்கு நமஸ்காரம்."},
+ {id:"p9", n:"9", label:"Phala 9", short:"Phala 9", kind:"phala", hook:"Read with devotion: every success, and lasting prosperity.",
+  tip:"Two verbs that sound alike: <b>avāpnoti</b> and <b>prāpnoti</b> — both mean “attains”.",
+  lines:[
+   [["महालक्ष्म्यष्टकस्तोत्रं","this hymn of eight verses to Mahālakṣmī","mahālakṣmī · aṣṭaka = group of eight · stotra = hymn"],["यः","whoever","yaḥ = who"],["पठेद्","reads","paṭhet = would read, recite"],["भक्तिमान्","with devotion","bhakti = devotion · -mān = having"],["नरः","a person","naraḥ = a person"]],
+   [["सर्वसिद्धिम्","every success","sarva = all · siddhi = success"],["अवाप्नोति","obtains","ava + āpnoti = gains"],["राज्यं","sovereignty, a kingdom","rājya = kingdom, authority"],["प्राप्नोति","attains","pra + āpnoti = reaches"],["सर्वदा","always","sarvadā = at all times"]]
+  ],
+  en:"Whoever reads this hymn of eight verses to Mahālakṣmī with devotion gains every success and always attains sovereignty.",
+  ta:"இந்த மஹாலக்ஷ்மி அஷ்டகத்தை பக்தியுடன் படிப்பவர் எல்லா சித்திகளையும் அடைவார்; எப்போதும் உயர்ந்த நிலையையும் பெறுவார்."},
+ {id:"p10", n:"10", label:"Phala 10", short:"Phala 10", kind:"phala", hook:"Once a day: great sins go. Twice a day: wealth and grain.",
+  tip:"<b>eka-kāle</b> (once) → <b>dvi-kālaṃ</b> (twice) → next verse <b>tri-kālaṃ</b> (three times). The middle “yaḥ paṭhen nityaṃ” repeats.",
+  lines:[
+   [["एककाले","once a day","eka = one · kāla = time"],["पठेन्","if one reads","paṭhet = would read"],["नित्यं","daily","nityam = always, every day"],["महापापविनाशनम्","it destroys great sins","mahā = great · pāpa = sin · vināśana = destroying"]],
+   [["द्विकालं","twice a day","dvi = two · kāla = time"],["यः","whoever","yaḥ = who"],["पठेन्","reads","paṭhet = would read"],["नित्यं","daily","nityam = every day"],["धनधान्यसमन्वितः","is blessed with wealth and grain","dhana = wealth · dhānya = grain · samanvita = endowed with"]]
+  ],
+  en:"Read daily once a day, it destroys great sins. Whoever reads it daily twice a day is blessed with wealth and grain.",
+  ta:"தினமும் ஒரு வேளை படித்தால் பெரும் பாவங்கள் அழியும். இரண்டு வேளை படிப்பவர் செல்வமும் தானியமும் நிறைந்தவராவார்."},
+ {id:"p11", n:"11", label:"Phala 11", short:"Phala 11", kind:"phala", hook:"Three times a day: enemies vanish, and Lakṣmī is ever pleased.",
+  tip:"Ends with three words for her: <b>prasannā · varadā · śubhā</b> — pleased, boon-giving, auspicious.",
+  lines:[
+   [["त्रिकालं","three times a day","tri = three · kāla = time"],["यः","whoever","yaḥ = who"],["पठेन्","reads","paṭhet = would read"],["नित्यं","daily","nityam = every day"],["महाशत्रुविनाशनम्","it destroys even great enemies","mahā = great · śatru = enemy · vināśana = destroying"]],
+   [["महालक्ष्मीर्","Mahālakṣmī","mahālakṣmīḥ (before a voiced sound: -īr)"],["भवेन्","becomes","bhavet = would be"],["नित्यं","always","nityam = always"],["प्रसन्ना","pleased","prasannā = gracious, pleased"],["वरदा","boon-giving","vara = boon · dā = giver"],["शुभा","auspicious","śubhā = auspicious"]]
+  ],
+  en:"Whoever reads it daily three times a day — it destroys even great enemies, and Mahālakṣmī is always pleased with them, boon-giving and auspicious.",
+  ta:"மூன்று வேளை படித்தால் பெரும் பகைவர்களும் அழிவர்; மஹாலக்ஷ்மி எப்போதும் மகிழ்ந்து, வரம் தரும் மங்களமானவளாக இருப்பாள்."}
+];
+
+const ICONS = [
+  {t:"Conch, discus, mace", w:"शङ्खचक्रगदाहस्ते", v:"v1", d:"Viṣṇu's weapons in her hands", svg:'<circle cx="11" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="11" cy="12" r="2" fill="currentColor"/><path d="M24 6v22M20 9h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="6" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 26c3-4 9-4 12 0-3 3-9 3-12 0z" fill="none" stroke="currentColor" stroke-width="2"/>'},
+  {t:"Seat of Śrī", w:"श्रीपीठे", v:"v1", d:"seated on the auspicious throne", svg:'<path d="M7 26h20M9 26v-8h16v8M11 18v-6a6 6 0 0 1 12 0v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>'},
+  {t:"Rides Garuḍa", w:"गरुडारूढे", v:"v2", d:"the divine eagle carries her", svg:'<path d="M3 14c6-1 10 2 14 6 4-4 8-7 14-6-4 2-7 5-9 9h-10c-2-4-5-7-9-9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="17" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="2"/>'},
+  {t:"Slayer of Kolāsura", w:"कोलासुरभयङ्करि", v:"v2", d:"the demon Kola feared her", svg:'<path d="M6 28L26 8M20 6l8 8M8 22l4 4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>'},
+  {t:"Form of mantra", w:"मन्त्रमूर्ते", v:"v4", d:"her body is the sacred sound", svg:'<path d="M8 12c4-4 14-4 18 0M5 8c6-6 18-6 24 0M11 16c3-2 9-2 12 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="17" cy="23" r="4" fill="none" stroke="currentColor" stroke-width="2"/>'},
+  {t:"Born of yoga", w:"योगसम्भूते", v:"v5", d:"arising from deep union", svg:'<circle cx="17" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M17 11v8M9 16l8 3 8-3M6 27c4-3 8-4 11-4s7 1 11 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'},
+  {t:"Seated on a lotus", w:"पद्मासनस्थिते", v:"v7", d:"padmāsana — the lotus seat", svg:'<path d="M17 6c-4 5-4 12 0 18 4-6 4-13 0-18zM17 24c-6-1-10-6-11-12 5 1 9 5 11 12zM17 24c6-1 10-6 11-12-5 1-9 5-11 12zM6 27h22" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>'},
+  {t:"Dressed in white", w:"श्वेताम्बरधरे", v:"v8", d:"pure white garments", svg:'<path d="M11 5l-6 5 3 4 3-2v17h12V12l3 2 3-4-6-5c-1 3-3 4-6 4s-5-1-6-4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>'},
+  {t:"Many ornaments", w:"नानालङ्कारभूषिते", v:"v8", d:"adorned with jewels", svg:'<path d="M6 8c2 10 20 10 22 0" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="20" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="15" r="1.6" fill="currentColor"/><circle cx="25" cy="15" r="1.6" fill="currentColor"/>'},
+  {t:"Mother of the world", w:"जगन्मातर्", v:"v7", d:"jaganmātā — in verses 7 and 8", svg:'<circle cx="17" cy="17" r="11" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 17h22M17 6c-4 4-4 18 0 22M17 6c4 4 4 18 0 22" fill="none" stroke="currentColor" stroke-width="1.6"/>'}
+];
+const BENEFITS = [["सर्वसिद्धिम्","Every success"],["राज्यं","Sovereignty, standing"],["महापापविनाशनम्","Great sins removed"],["धनधान्यसमन्वितः","Wealth and grain"],["महाशत्रुविनाशनम्","Enemies overcome"],["प्रसन्ना","Lakṣmī's grace"]];
+
+return {
+  key:"mla", titleDv:"श्रीमहालक्ष्म्यष्टकम्", verses:VERSES, icons:ICONS, benefits:BENEFITS,
+  meter:{name:"Anuṣṭubh", kind:"anushtubh",
+    intro:"Each verse has four quarters of 8 syllables — shown here as two lines of 16. The beat is free at the start of each quarter, but syllables 5–6–7 keep a fixed swing: <b>short–long–long</b> in the first quarter, <b>short–long–short</b> in the second (outlined). A dashed outline marks where the poet bends the rule.",
+    quiz:{q:"What is the metre of the Mahālakṣmī Aṣṭakam?", opts:["Anuṣṭubh: 4 quarters of 8 syllables","Pañcacāmara: short–long × 8","Bhujaṅgaprayāta: short–long–long × 4","Free verse with no fixed metre"],
+      why:"Anuṣṭubh, the metre of most purāṇa hymns and of the Bhagavad Gītā. The Ganesha Pañcaratnam is in Pañcacāmara."}},
+  overview({R}){ document.getElementById("refrain").innerHTML = REF.map(w => R(w[0])).join(" "); }
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>
