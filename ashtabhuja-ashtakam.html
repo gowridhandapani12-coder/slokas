@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ashtabhuja Ashtakam</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Lexend:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="sloka.css">
+<script src="auth.js"></script>
+<style>
+.pair{font-family:var(--f-verse);font-size:1.2rem;color:var(--terra-ink);line-height:1.7;overflow-wrap:anywhere}
+.pair mark{background:var(--blush);color:#3b2b21;border-radius:4px;padding:0 2px}
+</style>
+</head>
+<body>
+<template id="overview">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Svāmi Vedānta Deśika · Sanskrit · taniyan + 8 verses + 2</p>
+          <div class="ttl" id="heroTitle"></div>
+          <h1>Ashtabhuja Ashtakam</h1>
+          <p class="lead" style="margin-top:8px">Eight verses of surrender (<i>śaraṇāgati</i>) to Aṣṭabhuja Perumāḷ, the eight-armed Lord of Aṣṭabhujakaram in Kāñcīpuram. Deśika sees himself as Gajendra: dragged by the senses as the elephant was by the crocodile, he calls on the Lord who rushed to save him.</p>
+        </div>
+        <div class="card ring" id="ringCard"></div>
+      </div>
+
+      <div class="facts">
+        <div class="fact"><span>Composed by</span><b>Vedānta Deśika</b><span>signs as “Veṅkaṭeśa” in verse 10</span></div>
+        <div class="fact"><span>Deity</span><b>Aṣṭabhuja Perumāḷ</b><span>the eight-armed Viṣṇu</span></div>
+        <div class="fact"><span>Place</span><b>Aṣṭabhujakaram</b><span>a Divya Deśam in Kāñcīpuram</span></div>
+        <div class="fact"><span>Theme</span><b>Śaraṇāgati</b><span>giving the burden of oneself to the Lord</span></div>
+        <div class="fact"><span>Metres</span><b>Upajāti · Anuṣṭubh</b><span>verses 1–8 · taniyan and 9–10</span></div>
+        <div class="fact"><span>Learning from</span><b>Sunder Kidāmbi</b><span>her Tamil PDF (prapatti.com)</span></div>
+      </div>
+
+      <div class="card">
+        <div class="sec-head"><h2>The shape of the hymn</h2><span class="muted" style="font-size:.85rem">Tap a block to open it</span></div>
+        <div class="gems" id="gems" style="margin-top:14px"></div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h2>Why eight arms?</h2>
+          <p class="muted" style="margin:6px 0 12px">Verse 10 gives Deśika's answer:</p>
+          <div class="pair" id="why8"></div>
+          <p style="margin-top:8px">“Hari, whose arms <b>doubled</b> in his hurry to rescue those who come to him for refuge.” Four arms were not fast enough. Verse 1 begins with the same hurry: <b>gajendra-rakṣā-tvaritam</b>, “rushing to save Gajendra”.</p>
+        </div>
+        <div class="card">
+          <h2>The heart of the hymn</h2>
+          <p class="muted" style="margin:6px 0 12px">Verse 6 ends with two lines that differ by one syllable:</p>
+          <div class="pair" id="heart"></div>
+          <p style="margin-top:8px">“If you act, what use are my efforts? If you don't, what use are my efforts?” Deśika says the same in Kāmāsikāṣṭakam verse 8: either way, only the Lord protects.</p>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h2>Remember the openings</h2>
+          <p class="muted" style="margin:6px 0 14px">The first sound of each verse, in order.</p>
+          <div class="mn" id="openings"></div>
+        </div>
+        <div class="card">
+          <h2>The story in the verses</h2>
+          <div class="tip"><b>1</b> I take refuge, like Gajendra · <b>2</b> I belong to you alone · <b>3</b> your gentleness hides your greatness · <b>4</b> you carry the burden of those who surrender · <b>5</b> no one else can make me fearless · <b>6</b> only your action counts · <b>7</b> I am too weak for the hard path · <b>8</b> grant me service at your feet · <b>9–10</b> the fruit, and Deśika's signature.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="sec-head"><h2>Pictures in the hymn</h2><span class="muted" style="font-size:.85rem">Tap one to see the word in its verse</span></div>
+        <div class="icons" id="icons" style="margin-top:14px"></div>
+      </div>
+</template>
+<script>
+const SLOKA = (() => {
+// "dv|meaning|breakdown; dv|meaning; …" → [[dv, meaning, breakdown], …]. A ";" inside a meaning stays with it.
+const W = s => s.split(";").reduce((a, x) => { if (!x.includes("|")) { a[a.length - 1][1] += ";" + x; return a; } a.push(x.split("|").map(y => y.trim())); return a; }, []).map(([dv, g, b]) => [dv, g, b || g]);
+const UJ = {meter:"upajati", pat:"xGLGGLLGLGx", meterNote:"Upajāti: 11 syllables a quarter, long–long–short–long–long–short–short–long–short–long–long (the first may be short)."};
+const ANU = {meter:"anushtubh", pat:undefined, meterNote:"Anuṣṭubh: 8 syllables a quarter, two quarters a line."};
+const v = (n, hook, tip, q, en, ta, extra) => Object.assign({id:"v" + n, n:String(n), label:"Verse " + n, hook, tip, lines:q.map(W), en, ta}, UJ, extra || {});
+const VERSES = [
+ Object.assign({id:"t0", n:"ॐ", label:"Taniyan", short:"Taniyan", kind:"dhyana", part:"Taniyan",
+  hook:"May Veṅkaṭanātha, lion among poets, best of Vedānta teachers, dwell in my heart.",
+  tip:"The taniyan for Deśika, said before every Deśika stotra. <b>kavi-tārkika-kesarī</b> — lion among poets and logicians — is his title.",
+  lines:[W("श्रीमान्|the glorious; वेङ्कटनाथार्यः|teacher Veṅkaṭanātha|veṅkaṭa-nātha · ārya; कवितार्किककेसरी|lion among poets and logicians|kavi · tārkika · kesarin"),
+         W("वेदान्ताचार्यवर्यो|the best of Vedānta teachers|vedānta · ācārya · varya; मे|my; सन्निधत्तां|may (he) dwell|sannidhattām; सदा|always; हृदि|in the heart|hṛd")],
+  en:"May the glorious teacher Veṅkaṭanātha, lion among poets and logicians, best of the teachers of Vedānta, always dwell in my heart.",
+  ta:"கவிதார்க்கிக சிம்மமும், வேதாந்த ஆசாரியர்களில் சிறந்தவருமான ஸ்ரீமான் வேங்கடநாத ஆசாரியர் எப்போதும் என் இதயத்தில் வீற்றிருக்கட்டும்."}, ANU),
+ v(1, "Dragged by the senses as Gajendra was by the crocodile, I surrender to the Eight-armed One who rushed to save him.",
+  "Starts with the rescue: <b>gajendra-rakṣā-tvaritam</b>, “hurrying to save Gajendra”. <b>grāhaiḥ iva</b> — “as if by crocodiles” — the senses are the crocodiles. Ends <b>aṣṭabhujaṃ prapadye</b>, “I surrender to the Eight-armed”.",
+  ["गजेन्द्ररक्षात्वरितं|who hurried to protect Gajendra|gaja-indra = king of elephants · rakṣā = protection · tvarita = hurrying; भवन्तं|you|bhavat",
+   "ग्राहैरिवाहं|I, as if by crocodiles|grāhaiḥ = by crocodiles · iva = as if · aham = I; विषयैर्विकृष्टः|dragged by the objects of the senses|viṣayaiḥ · vikṛṣṭa = dragged away",
+   "अपारविज्ञानदयानुभावम्|whose knowledge, compassion and power are boundless|apāra = boundless · vijñāna · dayā · anubhāva",
+   "आप्तं|the trusted friend|āpta; सतामष्टभुजं|of the good, the Eight-armed One|satām = of the good · aṣṭa-bhuja = eight-armed; प्रपद्ये|I surrender to|pra-pad = take refuge"],
+  "Dragged by the objects of the senses as if by crocodiles, I surrender to you, the Eight-armed One — who hurried to save Gajendra, whose knowledge, compassion and power are boundless, the trusted friend of the good.",
+  "முதலைகளால் இழுக்கப்பட்ட கஜேந்திரனைப் போல் புலன் விஷயங்களால் இழுக்கப்படும் நான், கஜேந்திரனைக் காக்க விரைந்தவனும், எல்லையற்ற ஞானமும் கருணையும் பெருமையும் உடையவனும், நல்லோர்க்கு நம்பிக்கைக்குரியவனுமான அஷ்டபுஜனான உன்னைச் சரணடைகிறேன்."),
+ v(2, "I exist only for you. You gave me the longing for your feet, and so I, who was as good as nothing, now truly exist.",
+  "<b>tvad-eka-śeṣaḥ</b> — “I am yours alone” — opens the verse. <b>asat-samaḥ</b> (like one who does not exist) turns into <b>sattām</b> (true existence). He calls the Lord <b>aṣṭabhujāspadeśa</b>, “Lord whose home is Aṣṭabhuja(karam)”.",
+  ["त्वदेकशेषोऽहमनात्मतन्त्रः|I belong to you alone, not my own master|tvad · eka · śeṣa = one who exists for another · aham · an-ātma-tantra = not self-ruled",
+   "त्वत्पादलिप्सां|the longing for your feet|tvad · pāda · lipsā = desire to gain; दिशता|by (you,) who granted|diśat = giving; त्वयैव|by you alone|tvayā · eva",
+   "असत्समोऽप्यष्टभुजास्पदेश|though I was like one who does not exist, O Lord whose home is Aṣṭabhuja|asat-sama = like the non-existent · api · aṣṭabhuja · āspada = abode · īśa",
+   "सत्तामिदानीमुपलम्भितोऽस्मि|now I have been made to gain true existence|sattā = existence · idānīm = now · upalambhita = made to attain · asmi = I am"],
+  "I belong to you alone and am not my own master. You alone gave me the longing for your feet; so, though I was as good as non-existent, O Lord whose home is Aṣṭabhuja, I have now been made to truly exist.",
+  "நான் உனக்கு மட்டுமே உரியவன், எனக்கு நானே எஜமான் அல்லன். உன் திருவடிகளை அடையும் ஆசையை நீயே தந்தாய்; ஆகவே இல்லாதவனுக்குச் சமமாக இருந்த நான், அஷ்டபுஜத்தில் வாழும் இறைவனே, இப்போது உண்மையான இருப்பைப் பெற்றேன்."),
+ v(3, "Your form, weapons and jewels proclaim your supremacy; your gentleness holds that awe back so people can come close.",
+  "Five things show his greatness: <b>svarūpa</b> (nature), <b>rūpa</b> (form), <b>astra</b> (weapons), <b>vibhūṣaṇa</b> (jewels), <b>ādi</b> (and more). Against them stands <b>śīla</b> — his easy gentleness.",
+  ["स्वरूपरूपास्त्रविभूषणाद्यैः|by your nature, form, weapons, jewels and the rest|sva-rūpa · rūpa · astra · vibhūṣaṇa · ādi",
+   "परत्वचिन्तां|the thought of your supremacy|paratva = supremacy · cintā = thought; त्वयि|in you; दुर्निवाराम्|that is hard to hold back|dur-nivāra = hard to stop",
+   "भोगे|in their enjoyment (of you)|bhoga; मृदूपक्रमतामभीप्सन्|wishing it to begin gently|mṛdu = soft · upakrama = beginning · abhīpsat = wishing",
+   "शीलादिभिर्वारयसीव|you seem to hold it back by your gentleness and other qualities|śīla = gentle accessibility · ādi · vārayasi = you hold back · iva = as if; पुंसाम्|of people|pumāṃs"],
+  "Your nature, form, weapons, jewels and the rest make it hard for people not to think of your supremacy. Wishing their enjoyment of you to begin gently, you seem to hold that thought back with your gentleness and other qualities.",
+  "உன் இயல்பு, வடிவம், ஆயுதங்கள், ஆபரணங்கள் முதலியவை உன் பரத்துவத்தை (மேன்மையை) நினைக்காமல் இருக்க முடியாதபடி செய்கின்றன. மக்கள் உன்னை அனுபவிப்பது மென்மையாகத் தொடங்க விரும்பி, உன் சீலம் முதலிய குணங்களால் அந்த எண்ணத்தைத் தடுப்பவன் போல் இருக்கிறாய்."),
+ v(4, "Having weighed other gods and other rewards, Lord, you carry the burden of those who have placed themselves in you.",
+  "This is <b>bhara-nyāsa</b>, laying down one's burden: <b>nyastātmanām … bibharṣi bhāram</b>, “you carry the burden of those who have placed themselves in you”. <b>santolya</b> — “having weighed” — like a pair of scales.",
+  ["शक्तिं|the power|śakti; शरण्यान्तरशब्दभाजां|of those merely called other refuges|śaraṇya = refuge · antara = other · śabda = name · bhāj = having",
+   "सारं|the worth|sāra; च|and; सन्तोल्य|having weighed|sam-tolya = having weighed on scales; फलान्तराणाम्|of other rewards|phala · antara",
+   "त्वद्दास्यहेतोस्त्वयि|in you, for the sake of serving you|tvad · dāsya = service · hetoḥ = for the sake of · tvayi = in you; निर्विशङ्कं|without hesitation|nir-viśaṅka = free of doubt",
+   "न्यस्तात्मनां|of those who have placed themselves|nyasta = laid down · ātman = self; नाथ|O Lord; बिभर्षि|you carry|bhṛ = bear; भारम्|the burden|bhāra"],
+  "Having weighed the power of those merely called other refuges, and the worth of other rewards, O Lord, you carry without hesitation the burden of those who, for the sake of serving you, have placed themselves in you.",
+  "‘வேறு புகலிடம்’ என்று மட்டும் பெயர் கொண்டவர்களின் சக்தியையும், வேறு பலன்களின் மதிப்பையும் எடைபோட்டு, உனக்குத் தொண்டு செய்வதற்காகத் தம்மை உன்னிடம் ஒப்படைத்தவர்களின் சுமையை, நாதா, நீ தயக்கமின்றிச் சுமக்கிறாய்."),
+ v(5, "I know no one but you who can make me fearless. With you kind, what fear? With you angry, what protection?",
+  "Two questions with the same shape: <b>bhayaṃ kutaḥ syāt tvayi sānukampe</b> · <b>rakṣā kutaḥ syāt tvayi jātaroṣe</b>. Only the last word changes: kind (sānukampe) / angry (jātaroṣe).",
+  ["अभीतिहेतोरनुवर्तनीयं|one to be followed for the sake of fearlessness|abhīti = fearlessness · hetoḥ · anuvartanīya = to be followed",
+   "नाथ|O Lord; त्वदन्यं|anyone other than you|tvad · anya; न|not; विभावयामि|do I see|vi-bhāvayāmi = I consider",
+   "भयं|fear|bhaya; कुतः|from where; स्यात्त्वयि|could there be, when you|syāt · tvayi; सानुकम्पे|are kind|sa-anukampa = with compassion",
+   "रक्षा|protection|rakṣā; कुतः|from where; स्यात्त्वयि|could there be, when you|syāt · tvayi; जातरोषे|are angry|jāta = arisen · roṣa = anger"],
+  "O Lord, I see no one but you to follow for fearlessness. When you are kind, how could there be fear? When you are angry, how could there be protection?",
+  "நாதா, அச்சமின்மைக்காகப் பின்பற்ற வேண்டியவனாக உன்னைத் தவிர வேறு யாரையும் நான் காணவில்லை. நீ கருணை கொண்டால் பயம் எங்கிருந்து வரும்? நீ கோபம் கொண்டால் காப்பு எங்கிருந்து வரும்?"),
+ v(6, "Companion of Lakṣmī, protect me yourself. If you act, what use my efforts? If you don't, what use my efforts?",
+  "The last two lines differ by one syllable: <b>tvayi pravṛtte</b> / <b>tvayy apravṛtte</b> — “if you act” / “if you don't act”. Both end <b>mama kiṃ prayāsaiḥ</b>, “what use are my efforts?”",
+  ["त्वदेकतन्त्रं|me, who depend on you alone|tvad · eka · tantra = depending; कमलासहायः|O companion of Kamalā (Lakṣmī)|kamalā · sahāya = companion",
+   "स्वेनैव|by your own self|svena · eva; मां|me; रक्षितुमर्हसि|you should protect|rakṣitum · arhasi = you ought; त्वम्|you",
+   "त्वयि|when you; प्रवृत्ते|act|pravṛtta = engaged; मम|my; किं|what use; प्रयासैः|efforts|prayāsa",
+   "त्वय्यप्रवृत्ते|when you do not act|tvayi · a-pravṛtta; मम|my; किं|what use; प्रयासैः|efforts|prayāsa"],
+  "O companion of Lakṣmī, you yourself should protect me, who depend on you alone. If you act, what use are my efforts? If you do not act, what use are my efforts?",
+  "கமலையின் துணைவனே, உன்னையே சார்ந்திருக்கும் என்னை நீயே காக்க வேண்டும். நீ செயல்பட்டால் என் முயற்சிகளால் என்ன பயன்? நீ செயல்படாவிட்டால் என் முயற்சிகளால் என்ன பயன்?"),
+ v(7, "My meditation keeps breaking. With you ready as my refuge, I, who have nothing, am ashamed to try the steep climb and fall.",
+  "<b>akiñcanaḥ</b> — “one who has nothing” — is the key word of prapatti. <b>dūrādhiroham patanaṃ ca</b>: the hard climb (other means, like yoga) and the fall.",
+  ["समाधिभङ्गेष्वपि|even when my meditation breaks|samādhi · bhaṅga = breaking · api; सम्पतत्सु|again and again|sampatat = befalling",
+   "शरण्यभूते|when you, who are the refuge|śaraṇya · bhūta; त्वयि|you; बद्धकक्ष्ये|are ready (with girded loins)|baddha · kakṣyā = girdle",
+   "अपत्रपे|I am ashamed|apa-trap = feel shame; सोढुमकिञ्चनोऽहं|I, who have nothing, to endure|soḍhum = to bear · akiñcana = with nothing · aham",
+   "दूराधिरोहं|the steep climb|dūra · adhiroha = ascent; पतनं|the fall|patana; च|and; नाथ|O Lord"],
+  "Though my meditation keeps breaking, you stand ready as my refuge. So, O Lord, I, who have nothing, am ashamed to bear the steep climb and the fall.",
+  "என் தியானம் மீண்டும் மீண்டும் உடைந்தாலும், புகலிடமான நீ இடை கட்டித் தயாராக இருக்கிறாய். ஆகவே நாதா, ஒன்றுமற்ற நான் கடினமான ஏற்றத்தையும் வீழ்ச்சியையும் தாங்க வெட்கப்படுகிறேன்."),
+ v(8, "By your grace I have my wish: grant me, at your lotus feet served by Lakṣmī, the joy of service — free of offence while the body lasts.",
+  "<b>padmā-niṣevye</b> — Lakṣmī herself serves these feet. <b>ātmānta-kaiṅkarya-rasa</b>: the joy of service “to the end of the self”, which has no end — service forever.",
+  ["प्राप्ताभिलाषं|(me,) who have gained my wish|prāpta · abhilāṣa = desire; त्वदनुग्रहान्माम्|by your grace, me|tvad · anugraha = grace · mām",
+   "पद्मानिषेव्ये|served by Padmā (Lakṣmī)|padmā · niṣevya = to be served; तव|your; पादपद्मे|at the lotus feet|pāda · padma",
+   "आदेहपातादपराधदूरम्|far from offence until the body falls|ā = until · deha-pāta = the body's fall · aparādha = offence · dūra = far",
+   "आत्मान्तकैङ्कर्यरसं|the joy of service lasting as long as the self|ātma · anta · kaiṅkarya = service · rasa = joy; विधेयाः|may you grant|vidheyāḥ"],
+  "By your grace I have gained my wish. At your lotus feet, which Lakṣmī serves, grant me — kept far from offence until this body falls — the joy of service that lasts as long as the self.",
+  "உன் அருளால் என் விருப்பத்தை அடைந்த எனக்கு, பத்மை (லக்ஷ்மி) சேவிக்கும் உன் திருவடித் தாமரைகளில், உடல் விழும் வரை குற்றங்களிலிருந்து விலகியவனாக, ஆத்மா உள்ளவரை நீடிக்கும் கைங்கர்ய ரசத்தை அருள்வாயாக."),
+ v(9, "This Aṣṭabhujāṣṭakam is food for the journey of those who have surrendered, and an elixir for those who wish to.",
+  "Two pictures: <b>pātheya</b> — packed food for a journey — and <b>rasāyana</b>, a life-giving elixir.",
+  ["प्रपन्नजनपाथेयं|journey-food for those who have surrendered|prapanna · jana · pātheya = provisions; प्रपित्सूनां|for those who wish to surrender|prapitsu; रसायनम्|an elixir|rasāyana",
+   "श्रेयसे|for the good|śreyas; जगतामेतत्|of the worlds, this|jagatām · etat; श्रीमदष्टभुजाष्टकम्|glorious Aṣṭabhujāṣṭakam|śrīmat · aṣṭabhuja · aṣṭaka"],
+  "This glorious Aṣṭabhujāṣṭakam, for the good of the worlds, is food for the journey of those who have surrendered and an elixir for those who wish to surrender.",
+  "உலகங்களின் நன்மைக்காக உள்ள இந்த ஸ்ரீமத் அஷ்டபுஜாஷ்டகம், சரணடைந்தவர்களுக்குப் பயண உணவும், சரணடைய விரும்புவோருக்கு அமுத மருந்தும் ஆகும்.",
+  Object.assign({kind:"phala", short:"Phala 9", label:"Phala 9", part:"Phala-śruti"}, ANU)),
+ v(10, "May Hari, whose arms doubled in his hurry to save those who come for refuge, accept this hymn of Veṅkaṭeśa.",
+  "Deśika signs his name: <b>veṅkaṭeśīyā stutiḥ</b>, “Veṅkaṭeśa's hymn”. <b>tvarā-dviguṇa-bāhunā</b> — the arms doubled from four to eight out of hurry.",
+  ["शरणागतसन्त्राणत्वराद्विगुणबाहुना|by him whose arms doubled in his hurry to save those who come for refuge|śaraṇa-āgata · santrāṇa = rescue · tvarā = hurry · dvi-guṇa = doubled · bāhu = arm",
+   "हरिणा|by Hari; वेङ्कटेशीया|of Veṅkaṭeśa (Deśika)|veṅkaṭeśīya; स्तुतिः|hymn|stuti; स्वीक्रियतामियम्|may this be accepted|svīkriyatām · iyam"],
+  "May this hymn of Veṅkaṭeśa be accepted by Hari, whose arms doubled in his hurry to rescue those who come to him for refuge.",
+  "சரணடைந்தவர்களைக் காக்கும் விரைவால் இரட்டிப்பான கைகளை உடைய ஹரியால், வேங்கடேசனின் இந்தத் துதி ஏற்றுக்கொள்ளப்படட்டும்.",
+  Object.assign({kind:"phala", short:"Phala 10", label:"Phala 10", part:"Phala-śruti"}, ANU)),
+ Object.assign({id:"c1", n:"ॐ", label:"Maṅgalam", short:"Maṅgalam", kind:"phala", part:"Closing",
+  hook:"Salutations to Veṅkaṭeśa, lion among poets, rich in good qualities, teacher of Vedānta.",
+  tip:"Said at the end of every Deśika stotra. It repeats his titles from the taniyan: <b>kavi-tārkika-siṃha</b> and <b>vedānta-guru</b>.",
+  lines:[W("कवितार्किकसिंहाय|to the lion among poets and logicians|kavi · tārkika · siṃha; कल्याणगुणशालिने|to him rich in auspicious qualities|kalyāṇa · guṇa · śālin"),
+         W("श्रीमते|to the glorious; वेङ्कटेशाय|to Veṅkaṭeśa; वेदान्तगुरवे|to the teacher of Vedānta|vedānta · guru; नमः|salutations")],
+  en:"Salutations to the glorious Veṅkaṭeśa, the teacher of Vedānta, lion among poets and logicians, rich in auspicious qualities.",
+  ta:"கவிதார்க்கிக சிம்மமும், மங்கள குணங்கள் நிறைந்தவரும், வேதாந்த குருவுமான ஸ்ரீமான் வேங்கடேசருக்கு நமஸ்காரம்."}, ANU)
+];
+const ICONS = [
+  {t:"Gajendra", w:"गजेन्द्ररक्षात्वरितं", v:"v1", d:"the elephant he rushed to save", svg:'<path d="M6 24v-8c0-5 4-9 10-9h4c5 0 8 4 8 8v3c0 2-1 4-3 4h-1M10 24v4M20 24v4M28 18c1 3 1 6-1 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="22" cy="13" r="1.4" fill="currentColor"/>'},
+  {t:"Crocodiles", w:"ग्राहैरिवाहं", v:"v1", d:"the senses that drag us", svg:'<path d="M3 20c4-3 8-3 12-1l6-3 4 2 6-1-5 4c-5 3-12 3-17 1L3 20z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M3 27c5-3 9 3 14 0s9 3 14 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'},
+  {t:"Scales", w:"सन्तोल्य", v:"v4", d:"other refuges weighed and found light", svg:'<path d="M17 5v24M10 29h14M6 11h22M6 11l-4 8h8zM28 11l-4 8h8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'},
+  {t:"Burden carried", w:"बिभर्षि भारम्", v:"v4", d:"bhara-nyāsa", svg:'<rect x="9" y="5" width="16" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 29l3-10h12l3 10M13 19v-4M21 19v-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'},
+  {t:"Lotus feet", w:"पादपद्मे", v:"v8", d:"served by Lakṣmī", svg:'<path d="M17 28c-6 0-11-4-11-9 4 0 8 2 11 6 3-4 7-6 11-6 0 5-5 9-11 9zM17 25c-3-4-3-10 0-16 3 6 3 12 0 16z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>'},
+  {t:"Food for the road", w:"प्रपन्नजनपाथेयं", v:"v9", d:"the hymn as journey-food", svg:'<path d="M8 13h18l-2 15H10zM12 13c0-4 2-7 5-7s5 3 5 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>'},
+  {t:"Eight arms", w:"त्वराद्विगुणबाहुना", v:"v10", d:"four doubled, out of hurry", svg:'<circle cx="17" cy="17" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M17 3v7M17 24v7M3 17h7M24 17h7M7 7l5 5M22 22l5 5M27 7l-5 5M12 22l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'}
+];
+return {
+  key:"abh", titleDv:"श्रीअष्टभुजाष्टकम्", verses:VERSES, icons:ICONS,
+  meter:{name:"Upajāti", kind:"upajati", hook:UJ.meterNote,
+    intro:"Verses 1–8 are in <b>upajāti</b> — 11 syllables a quarter, mixing indravajrā (starts long) and upendravajrā (starts short). The taniyan, verses 9–10 and the closing maṅgalam are <b>anuṣṭubh</b>, 8 syllables a quarter. Every line is checked against its pattern.",
+    quiz:{q:"In verse 10, why does Deśika say the Lord has eight arms?", opts:["His arms doubled in his hurry to save those who surrender","To hold eight different weapons","One arm for each of the eight directions","To bless eight great devotees"],
+      why:"<b>śaraṇāgata-santrāṇa-tvarā-dviguṇa-bāhunā</b> — his four arms doubled out of hurry to rescue those who come for refuge."}},
+  overview({R}){
+    const line = (vi, li) => VERSES[vi].L[li].words.map(w => R(w[0])).join(" ");
+    document.getElementById("why8").innerHTML = line(10, 0);
+    document.getElementById("heart").innerHTML = line(6, 2) + "<br>" + line(6, 3);
+  }
+};
+})();
+</script>
+<script src="sloka.js"></script>
+</body>
+</html>

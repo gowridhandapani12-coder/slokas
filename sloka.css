@@ -287,6 +287,10 @@ textarea{font:inherit;width:100%;min-height:80px;border-radius:12px;border:1.5px
 .rec .dot{width:10px;height:10px;border-radius:50%;background:var(--bad);display:inline-block;margin-right:6px;animation:blink 1s infinite}
 @keyframes blink{50%{opacity:.25}}
 .rec audio{height:36px;max-width:100%}
+.rec .recsave{width:100%;font-size:.85rem;font-weight:700;color:var(--muted)}
+.rec .recsave.ok{color:var(--olive-ink)}
+.rec .recsave.bad{color:var(--bad)}
+.rec .recsave button{padding:4px 10px;font-size:.8rem;margin-left:6px}
 .streak{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
 .ring > div{min-width:0}
 .streak i{width:22px;height:22px;border-radius:7px;background:var(--surface-2);display:grid;place-items:center;font-style:normal;font-size:.65rem;font-family:var(--f-mono);color:var(--muted)}

@@ -294,7 +294,7 @@ const LIB = [
  ["Devi & Ambal",[["Meenakshi Pancharatnam","Adi Shankara"],["Lalitha Sahasranamam","Brahmanda Purana","lalitha-sahasranamam.html"],["Soundarya Lahari","Adi Shankara","soundarya-lahari.html"],["Devi Khadgamala","Vamakeshvara Tantra"],["Bhavani Ashtakam","Adi Shankara"],["Shyamala Stotram","Traditional"],["Sharada Bhujangam","Adi Shankara"]]],
  ["Lakshmi & Thayar",[["Sri Suktam","Rig Veda (khila)","sri-suktam.html"],["Kanakadhara Stotram","Adi Shankara","kanakadhara.html"],["Mahalakshmi Sahasranamam","Traditional","lakshmi-sahasranamam.html"],["Sri Stuti","Vedanta Desikan","sri-stuti.html"],["Ashtalakshmi Stotram","Mukkur Srinivasa Varadachariar","ashtalakshmi.html"],["Mahalakshmi Ashtakam","Indra (Padma Purana)","mahalakshmi-ashtakam.html"],["Lakshmi Sahasranamam","Traditional"],["Dhanalakshmi Stotram","Shiva–Parvati dialogue","dhanalakshmi.html"],["Chatushloki","Alavandar","chatushloki.html"],["Gunaratna Kosham","Parashara Bhattar","gunaratna-kosham.html"],["Bhu Stuti","Vedanta Desikan","bhu-stuti.html"],["Varalakshmi Vratham","Vrata katha"]]],
  ["Andal (Goda)",[["Goda Stuti","Vedanta Desikan"],["Goda Chatushloki","Tirumalai Anantarya"],["Varanamayiram","Andal"]]],
- ["Vishnu, Rama & Krishna",[["Vishnu Sahasranamam","Mahabharata","vishnu-sahasranamam.html"],["Pancha Suktam","Vedas"],["Venkatesa Suprabhatam · Stotram · Mangalam","Prativadi Bhayankaram Annan","venkatesa-suprabhatam.html"],["Ranganatha Ashtakam","Adi Shankara"],["Jagannatha Ashtakam","Adi Shankara","jagannatha-ashtakam.html"],["Guruvayupuresha Pancharatnam","Anantarama Dikshitar","guruvayupuresha-pancharatnam.html"],["Damodara Ashtakam","Padma Purana","damodarashtakam.html"],["Gopala Vimshati","Vedanta Desikan","gopala-vimshati.html"],["Dehalisha Stuti","Vedanta Desikan"],["Shodashayudha Stotram","Vedanta Desikan","shodashayudha-stotram.html"],["Sudarshana Kavacham","Bhrigu Samhita","sudarshana-kavacham.html"],["Abhiti Stavam","Vedanta Desikan"],["Laghu Rama Raksha","Padma Purana","laghu-rama-raksha.html"],["Bhaja Govindam","Adi Shankara"]]],
+ ["Vishnu, Rama & Krishna",[["Vishnu Sahasranamam","Mahabharata","vishnu-sahasranamam.html"],["Pancha Suktam","Vedas"],["Venkatesa Suprabhatam · Stotram · Mangalam","Prativadi Bhayankaram Annan","venkatesa-suprabhatam.html"],["Ranganatha Ashtakam","Adi Shankara"],["Jagannatha Ashtakam","Adi Shankara","jagannatha-ashtakam.html"],["Guruvayupuresha Pancharatnam","Anantarama Dikshitar","guruvayupuresha-pancharatnam.html"],["Ashtabhuja Ashtakam","Vedanta Desikan","ashtabhuja-ashtakam.html"],["Damodara Ashtakam","Padma Purana","damodarashtakam.html"],["Gopala Vimshati","Vedanta Desikan","gopala-vimshati.html"],["Dehalisha Stuti","Vedanta Desikan"],["Shodashayudha Stotram","Vedanta Desikan","shodashayudha-stotram.html"],["Sudarshana Kavacham","Bhrigu Samhita","sudarshana-kavacham.html"],["Abhiti Stavam","Vedanta Desikan"],["Laghu Rama Raksha","Padma Purana","laghu-rama-raksha.html"],["Bhaja Govindam","Adi Shankara"]]],
  ["Narasimha",[["Lakshmi Narasimha Karavalambam","Adi Shankara"],["Karavalamba Stotram","44th Azhagiya Singar"],["Lakshmi Nrusimha Prapatti","44th Azhagiya Singar"],["Narasimha Stuti","Shani (Bhavishya Purana)","narasimha-stuti.html"],["Kamasikashtakam","Vedanta Desikan","kamasikashtakam.html"],["Narasimha Ashtakam","Azhagiya Manavala Jeeyar","narasimha-ashtakam.html"]]],
  ["Shiva",[["Kala Bhairava Ashtakam","Adi Shankara","kala-bhairava-ashtakam.html"]]],
  ["Hanuman, Surya & Ayyappa",[["Hanuman Chalisa","Tulsidas","hanuman-chalisa.html"],["Aditya Hrudayam","Agastya (Ramayana)","aditya-hrudayam.html"],["Harivarasanam","Kumbakudi Kulathur Iyer"]]],
@@ -343,7 +343,7 @@ const store = mkStore(SLOKA.key + "-"), gstore = mkStore("sl-");
 const S = {
   script: gstore.get("script", "ta"), font: gstore.get("font", "classic"), vs: gstore.get("vs", 1),
   theme: gstore.get("theme", null), status: store.get("status", {}), notes: store.get("notes", {}),
-  days: gstore.get("days", []), rec: {},
+  days: gstore.get("days", []), rec: {}, recBlob: {}, recSave: {},
   sub: gstore.get("sub", true), mean: gstore.get("mean", false), taM: gstore.get("taM", false),
   memV: null, memLevel: 0, lineMode: false, shown: 1, rhyV: null, meanV: "all", cur: null
 };
@@ -728,7 +728,9 @@ function renderRec(v){
   const box = $("#rec"), url = S.rec[v.id];
   if (!navigator.mediaDevices || !window.MediaRecorder){ box.innerHTML = `<p class="muted">Recording isn't supported in this browser.</p>`; return; }
   if (recorder && recorder.state === "recording"){ box.innerHTML = `<span><i class="dot"></i>Recording ${esc(v.label)}…</span><button class="primary" id="recStop">■ Stop recording</button>`; $("#recStop").onclick = () => recorder.stop(); return; }
-  box.innerHTML = `<button class="primary" id="recGo">● Record ${esc(v.label)}</button>${url ? `<audio controls src="${url}"></audio><button id="recDel">Delete</button>` : ""}`;
+  const sv = S.recSave[v.id];
+  box.innerHTML = `<button class="primary" id="recGo">● Record ${esc(v.label)}</button>${url ? `<audio controls src="${url}"></audio><button id="recDel">Delete</button>` : ""}${sv ? `<span class="recsave ${sv.cls}" role="status">${esc(sv.msg)}${sv.cls === "bad" ? ` <button id="recRetry">Try again</button>` : ""}</span>` : ""}`;
+  if (sv && sv.cls === "bad") $("#recRetry").onclick = () => saveRec(v);
   $("#recGo").onclick = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({audio:true});
@@ -737,13 +739,24 @@ function renderRec(v){
       recorder.onstop = () => {
         stream.getTracks().forEach(t => t.stop());
         if (S.rec[v.id]) URL.revokeObjectURL(S.rec[v.id]);
-        S.rec[v.id] = URL.createObjectURL(new Blob(chunks, {type: recorder.mimeType}));
-        recorder = null; markPractice(); renderRec(vById(S.memV));
+        const blob = new Blob(chunks, {type: recorder.mimeType});
+        S.rec[v.id] = URL.createObjectURL(blob); S.recBlob[v.id] = blob;
+        recorder = null; markPractice(); saveRec(v);
       };
       recorder.start(); renderRec(v);
     } catch(e){ box.insertAdjacentHTML("beforeend", `<p class="muted" style="width:100%">Microphone permission was not given.</p>`); }
   };
-  if (url) $("#recDel").onclick = () => { URL.revokeObjectURL(url); delete S.rec[v.id]; renderRec(v); };
+  if (url) $("#recDel").onclick = () => { URL.revokeObjectURL(url); delete S.rec[v.id]; delete S.recBlob[v.id]; delete S.recSave[v.id]; renderRec(v); };
+}
+// With Google sign-in on (auth.js), each new recording is also saved to the site owner's Google Drive.
+function saveRec(v){
+  const blob = S.recBlob[v.id], A = window.SLAUTH;
+  if (!blob || !A || !A.upload){ renderRec(vById(S.memV)); return; }
+  S.recSave[v.id] = {cls: "busy", msg: "Saving to Google Drive…"}; renderRec(vById(S.memV));
+  A.upload(blob, {title: document.title, verse: v.label}).then(
+    () => { if (S.recBlob[v.id] === blob) S.recSave[v.id] = {cls: "ok", msg: "✓ Saved to Google Drive"}; },
+    e => { if (S.recBlob[v.id] === blob) S.recSave[v.id] = {cls: "bad", msg: "Not saved: " + (e && e.message || "something went wrong")}; }
+  ).then(() => renderRec(vById(S.memV)));
 }
 $("#lineMode").onclick = () => { S.lineMode = !S.lineMode; S.shown = 1; renderMem(); };
 $("#nextLine").onclick = () => { S.shown++; renderMem(); };
